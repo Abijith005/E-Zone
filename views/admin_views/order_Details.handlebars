@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>Document</title>
+
+     <script
+              src="https://code.jquery.com/jquery-3.2.1.js"
+              integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+              crossorigin="anonymous"></script>
+
+      <!-- Latest compiled and minified CSS & JS -->
+      <link rel="stylesheet" media="screen"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body style="margin: 1rem;">
+    <nav class="navbar navbar-expand-lg navbar-light " style="background-color: rgb(217, 217, 217);">
+  <div class="container-fluid">
+    <a class="navbar-brand mx-5" href="#">logo</a>
+    <button class="navbar-toggler mx-5" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav" >
+      <ul class="navbar-nav">
+        <li class="nav-item">
+
+          <a class="nav-link active" aria-current="page" href="/admin/admin_home"><button class="btn btn-dark mx-5" style="font-size: larger;">HOME</button></a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/admin/admin_products"><button class="btn btn-dark mx-5" style="font-size: larger;">PRODUCT</button></a>
+
+        </li>
+        <li class="nav-item">
+       <a class="nav-link active" aria-current="page" href="/admin/user_Details"><button class="btn btn-dark mx-5" style="font-size: larger;">USER DETAILS</button></a>
+
+        </li>
+        <li class="nav-item">
+       <a class="nav-link active" aria-current="page" href="/admin/order_Details"><button class="btn btn-dark mx-5" style="font-size: larger;">ORDER DETAILS</button></a>
+        </li>
+
+<li class="nav-item">
+       <a class="nav-link active" aria-current="page" href="/admin/category"><button class="btn btn-dark mx-5" style="font-size: larger;">CATEGORY</button></a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+
+ <style>
+tr,th,td{
+  color: rgb(8, 8, 8);
+}
+ </style>
+ <nav class="navbar navbar-expand-lg navbar-light bg-light text-center">
+    
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      </li>
+    </ul>
+     <div class="row">
+      <div class="col-lg-4sm-4 ">
+        <a href="/create"><button  class="btn btn-success mr-auto" style="margin-right: auto;">Create</button></a>
+        </div>
+    <form class="form-inline my-2 my-lg-0" action="/admin/userSearch/" role="search" type="submit" method="post">
+        <div class="col-lg-4 sm-4">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" name="name" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </div>
+      </form>
+      <div class="col-lg-4 sm-4">
+      <a href="admin-logout"><button class="btn btn-danger">Log Out</button></a>
+      </div>
+      
+    
+
+    </div>
+  </div>
+</nav>
+<div>
+<table class="table">
+  <thead>
+    <tr>
+     <th scope="col">No.</th>
+      <th scope="col">Product Name</th>
+      <th scope="col">Category</th>
+      <th scope="col">customer Name</th>
+      <th scope="col">Ordre Date</th>
+      <th scope="col">Price</th>
+      <th scope="col">Order Status</th>
+      <th scope="col">Address</th>
+      <th scope="col">Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each data}}
+    <tr>
+      <th scope="row">{{@index}}</th>
+      <td>{{this.name}}</td>
+      <td>{{this.email}}</td>
+      <td><a href="user-edit/{{this._id}}"><button class="btn btn-primary btn-rounded">Edit</button></a> <a href="user-delete/{{this._id}}"><button class="btn btn-danger btn-rounded" onclick="return confirm('Do you want to delete {{this.name}}')">Delete</button></a></td>
+    </tr>{{/each}}
+<div>
+</div>
+  </tbody>
+</table>
+</div>
+</body>
+</html>

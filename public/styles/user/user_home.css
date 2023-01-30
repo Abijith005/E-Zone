@@ -1,0 +1,165 @@
+body{
+    margin: 0;
+    overflow-x: hidden;
+    
+}
+*{
+  margin: 0;
+}
+a{
+  text-decoration: none;
+}
+.bg-img{
+    background-image:url('/images/banner-bg.png');
+    /* background-color: blue; */
+    background-size: cover;
+    width: 100%;
+    height: 800px;
+    /* background-attachment: fixed; */
+    background-position: center;
+    /* background-repeat: no-repeat; */
+}
+.header-font{
+    display: flex;
+    justify-content: center;
+    margin-top: 160px;
+    color: #f8f9fa;
+    font-family: cursive;
+    letter-spacing: 3px;
+}
+.header-font h1{
+    font-size: 80px;
+}
+@media(max-width: 1000px) {
+    .header-font h1{
+        font-size: 50px;
+    }
+  }
+
+  @media(max-width: 600px) {
+    .header-font h1{
+        font-size: 30px;
+    }
+    .bg-img{
+      height: 600px;
+    }
+  }  
+
+  .flex-container {
+    display: flex;
+   
+  }
+  .flex-container > div {
+    
+    margin: 10px;
+    padding: 20px;
+    
+  }
+
+
+  .flex-Container {
+    display: flex;
+    flex-direction: row;
+    
+    font-size: 30px;
+    text-align: center;
+  }
+  
+  .flex-item-left {
+    background-color: #f1f1f1;
+    padding: 10px;
+    flex: 50%;
+  }
+  
+  .flex-item-right {
+    background-color: dodgerblue;
+    padding: 10px;
+    flex: 50%;
+  }
+  
+  /* Responsive layout - makes a one column-layout instead of two-column layout */
+  @media (max-width: 800px) {
+    .flex-Container {
+      flex-wrap: wrap;
+    }
+    .flex-item-left {
+      flex: 50%;
+      max-width: 50%;
+    }
+    .flex-item-right {
+      flex: 50%;
+    max-width: 50%;
+    }
+  }
+
+  .searchsize{
+    width: 650px;
+    height: 40px;
+    border-radius: 5px;
+  }
+  @media(max-width:1200px) {
+    .searchsize{
+      width: 384px;
+      height: 40px;
+    border-radius: 5px;
+    }
+  }
+  
+ @media(max-width:1000px ) {
+    .searchsize{
+      width: 250px;
+      height: 40px;
+    border-radius: 5px;
+    }
+  }
+
+  
+
+  img{
+    width: 100%;
+    height:100%;
+  }
+
+  .grid_img{
+    margin-top: .5rem;
+    background-color: rgb(2, 143, 143);
+  }
+  .img_div{
+    height:18rem;
+  }
+
+  .footer li{
+    font-weight: 700;
+    list-style: none;
+    text-align: start;
+  
+  }
+  .footer ul{
+    padding-left: 0;
+  }
+  .footer h4{
+    display: flex;
+    justify-content: start;
+  }
+
+  .paycards img{
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .footerBottom{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .icons{
+    margin-left:1rem;
+  }
+
+  .paycards{
+    display: flex;
+  }
+  .paycards div{
+    margin-right: 1rem;
+  }
