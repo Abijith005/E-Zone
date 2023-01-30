@@ -2,7 +2,6 @@ const express=require('express')
 const router=express.Router()
 const adminController=require('../controller/adminController')
 const bcrypt=require('bcrypt')
-var datas;
 router.get('/',adminController.admin_loginPage)
 
 router.post('/admin_login',adminController.admin_login)
@@ -33,7 +32,7 @@ router.get('/product_unflag/:id',adminController.admin_productUnflag)
 
 router.post('/user_search',adminController.admin_userSearch)
 
-router.get('/category',)
+router.get('/category',adminController.admin_categoryPage)
 
 module.exports= router;
 
