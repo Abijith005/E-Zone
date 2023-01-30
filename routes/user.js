@@ -1,65 +1,23 @@
 const express=require('express')
 const router=express.Router()
 const userController=require('../controller/userController')
-let invalidUser;
-router.get('/',(req,res)=>{
-    res.render('user_home')
-})
 
-router.get('/user_home',(req,res)=>{
-    res.render('user_home')
-})
 
-router.get('/user_login',(req,res)=>{
-    if(invalidUser){
-        res.render('user_login',{invalidUser})
-        invalidUser=false;
-    }
-    else
-    res.render('user_login')
-})
+router.get('/',userController.user_home)
 
-router.post('/user_signIn',(req,res)=>{
-    userController.doLogin(req.body).then((result)=>{
-        if(result.status){
-            res.redirect('/user_home')
-        }
-        else{
-            invalidUser=true;
-            res.redirect('/user_login')
-        }
-    })
-})
+router.get('/user_login',userController.user_login)
 
-router.post('/signup_OTP',(req,res)=>{
-    userController.doValidate(req.body).then((result)=>{
-        if(result){
-res.redirect('/user_signup')
-        }
-        else{
-            userController.doSignup(req.body).then((data)=>{
-                res.redirect('/signup_otp')
-            })  
-        }
-    })
+router.post('/user_signIn',userController.user_signin)
 
-})
+router.post('/signup_OTP',userController.user_otp)
 
-router.get('/user_signup',(req,res)=>{
-    res.render('user_signup')
-})
+router.get('/user_signup',userController.user_signup)
 
-router.get('/forgot_password',(req,res)=>{
-    res.render('forgot_password')
-})
+router.get('/forgot_password',userController.user_forgotPassword)
 
-router.get('/signup_otp',(req,res)=>{
-    res.render('signup_OTP')
-})
+router.get('/signup_otp',userController.user_otp)
 
-router.post('/submit_forgotOTP',(req,res)=>{
-    res.send(req.body)
-})
+router.post('/submit_forgotOTP',userController.user_submitOtp)
 
 
 
