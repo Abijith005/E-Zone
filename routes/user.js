@@ -17,6 +17,8 @@ router.get('/forgot_password',userController.user_forgotPassword)
 
 router.get('/signup_otp',userController.user_otp)
 
+router.post('/signup_otp',userController.user_validateSignUpOTP)
+
 router.post('/submit_forgotOTP',userController.user_submitOtp)
 
 

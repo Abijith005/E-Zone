@@ -1,5 +1,4 @@
 const nodemailer = require("nodemailer");
-const OTP=Math.floor(Math.random()*100000)
 const sentOTP=(email, otp)=> {
     return new Promise((resolve, reject)=>{
         let transporter = nodemailer.createTransport({
@@ -32,6 +31,4 @@ const sentOTP=(email, otp)=> {
     })
 }
 
-
-sentOTP('abijithsurendran005@gmail.com',OTP)
-//  module.exports=sentOTP;
+ module.exports=sentOTP;

@@ -18,22 +18,28 @@
                <div style="margin-top:1rem;text-align: center;">
                <h3 style="margin-top:2rem; font-weight: 700;">Verify Mail Id</h3></div> 
 <div class="my-5" style="text-align: center;">
-    <p>A text with a One time password(OTP) has been been sent to the mobile number</p>
+    {{#unless message}}
+    <p>A text with a One time password(OTP) has been been sent to your mail id</p>
+    {{/unless}}
 </div>
 
 <div style="text-align: center;">
+    {{#if message}}
+    <h5>{{message}}</h5>
+    {{else}}
         <h5 class="mb-3">Enter OTP :</h5>
+        {{/if}}
 <form action="" method="post">
-<input style="width:10%;" class="form-control-lg" type="password" name="otp">
-        <input style="width:10%;" class="form-control-lg" type="password" name="otp">
-    <input style="width:10%;" class="form-control-lg" type="password" name="otp">
-    <input style="width:10%;" class="form-control-lg" type="password" name="otp">    
-</div>
+<input style="width:40%;" class="form-control-lg" type="text" maxlength="6" minlength="6" name="otp" required> 
+    {{#if message}}
 <div class="text-center pt-2"> <a href="">resend OTP</a></div>
+    {{/if}}
+
 <div class="text-center">
 <button  type="submit" class="btn  rounded-pill mt-5 text-white"  style="background-color: rgb(4, 107, 4);">Submit</button>
-</div>
 </form>
+</div>
+</div>
             </div>
         </div>
         </div>

@@ -68,7 +68,7 @@ module.exports={
         },
 
         admin_productAdd:(req,res)=>{
-            adminService.add_product(req.body)
+            adminService.add_product(req.body,req.files)
             res.redirect('/admin/admin_products')
         },
         admin_productFlag:(req,res)=>{

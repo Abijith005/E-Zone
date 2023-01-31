@@ -2,6 +2,7 @@ const express=require('express')
 const router=express.Router()
 const adminController=require('../controller/adminController')
 const bcrypt=require('bcrypt')
+const multiUpload = require('../middleware/multer')
 router.get('/',adminController.admin_loginPage)
 
 router.post('/admin_login',adminController.admin_login)
@@ -24,7 +25,7 @@ router.post('/product_edit/:id',adminController.admin_productEdit)
 
 router.get('/product_add',adminController.admin_productAddPage)
 
-router.post('/product_add',adminController.admin_productAdd)
+router.post('/product_add',multiUpload,adminController.admin_productAdd)
 
 router.get('/product_flag/:id',adminController.admin_productFlag)
 

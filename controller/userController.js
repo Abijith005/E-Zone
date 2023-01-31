@@ -1,12 +1,17 @@
 const userService=require('../services/userService')
+const sentOTP = require('../helpers/otp');
 let invalidUser;
+let signUpDetails;
+let OTP=Math.floor(Math.random()*1000000);
+let checkOtp;
+let invalid_otp=false;
 
 module.exports={
 
     user_home:(req,res)=>{
         res.render('user_home')
     },
-
+ 
 
     user_login:(req,res)=>{
         if(invalidUser){
@@ -31,17 +36,34 @@ module.exports={
 
     user_signUp:(req,res)=>{
         userService.doValidate(req.body).then((result)=>{
-            console.log('hai');
             if(result){
     res.redirect('/user_signup')
             }
             else{
-                userService.doSignup(req.body).then((data)=>{
+signUpDetails=req.body
+sentOTP(req.body.email,OTP)
+checkOtp=OTP;
+
                     res.redirect('/signup_otp')
-                })  
+                 
             }
         })
     
+    },
+    user_validateSignUpOTP:(req,res)=>{
+if(req.body.otp==checkOtp){
+    userService.doSignup(signUpDetails).then((data)=>{
+        res.redirect('/')
+        checkOtp=null;
+        signUpDetails=null;
+                        })  
+}
+else{
+    invalid_otp=true;
+    res.redirect('/signup_otp')
+}
+               
+
     },
 
     user_signUpPage:(req,res)=>{
@@ -53,7 +75,13 @@ module.exports={
     },
 
     user_otp:(req,res)=>{
+        if(invalid_otp){
+            res.render('signup_OTP',{message:'Invalid OTP :'})
+            invalid_otp=false
+        }
+        else
         res.render('signup_OTP')
+
     },
 
 user_submitOtp:(req,res)=>{
@@ -61,3 +89,5 @@ user_submitOtp:(req,res)=>{
 }
     
 }
+
+

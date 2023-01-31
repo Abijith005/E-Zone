@@ -27,8 +27,9 @@ module.exports={
             db.get().collection(collections.USER_COLLECTION).updateOne({_id:ObjectId(id)},{$set:{block:false}})
         })
     },
-    add_product:(productData)=>{
+    add_product:(productData,img)=>{
         productData.flag=false;
+        productData.image=img
         return new Promise((resolve, reject) => {
             db.get().collection(collections.PRODUCT_COLLECTION).insertOne(productData)
         })

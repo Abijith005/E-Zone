@@ -2,7 +2,6 @@ const db=require('../config/connection')
 const collections=require('../models/collections')
 const bcrypt=require('bcrypt')
 const ObjectId=require('mongodb').ObjectId
-
 module.exports={
     doSignup:(userData)=>{
         return new Promise(async(resolve, reject) => {
