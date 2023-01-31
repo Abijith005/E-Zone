@@ -90,6 +90,10 @@ module.exports={
 
         admin_categoryPage:(req,res)=>{
             res.render('category')
+        },
+
+        admin_addCategoryPage:(req,res)=>{
+            res.render('add_category')
         }
 
 

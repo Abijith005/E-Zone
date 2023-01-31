@@ -34,6 +34,9 @@ router.post('/user_search',adminController.admin_userSearch)
 
 router.get('/category',adminController.admin_categoryPage)
 
+router.get('/add_categoryPage',adminController.admin_addCategoryPage)
+
+
 module.exports= router;
 
 
