@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+const dotenv=require('dotenv').config()
 const sentOTP=(email, otp)=> {
     return new Promise((resolve, reject)=>{
         let transporter = nodemailer.createTransport({
@@ -6,12 +7,12 @@ const sentOTP=(email, otp)=> {
             port: 465, // Port for SMTP (usually 465)
             secure: true, // Usually true if connecting to port 465
             auth: {
-              user: 'abijithsurendran005@gmail.com', // Your email address
-              pass: 'isxakvpmztltvldj', // Password (for gmail, your app password)
+              user:process.env.SITE_EMAIL , // Your email address
+              pass:process.env.SITE_PASSWORD, // Password (for gmail, your app password)
             },
           });
             var mailOptions={
-              from: 'abijithsurendran005@gmail.com',
+              from:process.env.EMAIL,
               to: email,
               subject: " Email verification",
               html: `

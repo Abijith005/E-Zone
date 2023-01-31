@@ -28,10 +28,10 @@ module.exports={
         })
     },
     add_product:(productData,img)=>{
-        productData.flag=false;
-        productData.image=img
+        // productData.flag=false;
+        // productData.image=img
         return new Promise((resolve, reject) => {
-            db.get().collection(collections.PRODUCT_COLLECTION).insertOne(productData)
+            db.get().collection(collections.PRODUCT_COLLECTION).insertOne({...productData,...img})
         })
     },
     list_product:()=>{
