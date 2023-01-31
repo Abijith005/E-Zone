@@ -21,7 +21,7 @@ router.get('/user_Unblock/:id',adminController.admin_userUnblock)
 
 router.get('/product_edit/:id',adminController.admin_productEditPage)
 
-router.post('/product_edit/:id',adminController.admin_productEdit)
+router.post('/product_edit/:id',multiUpload,adminController.admin_productEdit)
 
 router.get('/product_add',adminController.admin_productAddPage)
 

@@ -27,11 +27,10 @@ module.exports={
             db.get().collection(collections.USER_COLLECTION).updateOne({_id:ObjectId(id)},{$set:{block:false}})
         })
     },
-    add_product:(productData,img)=>{
-        // productData.flag=false;
-        // productData.image=img
+    add_product:(productData,image)=>{
+        productData.flag=false;
         return new Promise((resolve, reject) => {
-            db.get().collection(collections.PRODUCT_COLLECTION).insertOne({...productData,...img})
+            db.get().collection(collections.PRODUCT_COLLECTION).insertOne({...productData,image})
         })
     },
     list_product:()=>{
@@ -50,9 +49,9 @@ return new Promise((resolve, reject) => {
 })
     },
 
-    update_product:(id,productData)=>{
+    update_product:(id,productData,files)=>{
         return new Promise((resolve, reject) => {
-            db.get().collection(collections.PRODUCT_COLLECTION).updateOne({_id:ObjectId(id)},{$set:{product_name:productData.product_name,image:productData.image,category:productData.category,company:productData.company,price:productData.price,product_Details:productData.product_Details}})
+            db.get().collection(collections.PRODUCT_COLLECTION).updateOne({_id:ObjectId(id)},{$set:{product_name:productData.product_name,category:productData.category,company:productData.company,price:productData.price,product_Details:productData.product_Details,image:files}})
         })
     },
 

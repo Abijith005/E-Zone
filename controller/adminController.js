@@ -57,8 +57,8 @@ module.exports={
             res.render('edit_product',{data})
         },
 
-        admin_productEdit:async(req,res)=>{
-            adminService.update_product(req.params.id,req.body)
+     admin_productEdit:async(req,res)=>{
+            adminService.update_product(req.params.id,req.body,req.files)
                 res.redirect('/admin/admin_products')
         
         },

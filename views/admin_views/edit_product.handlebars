@@ -21,7 +21,7 @@
     <div class="container-fluid">
         <div class="text-center" style="background-color: black;"><h1 style="color: #ffff; line-height: 2.5;">EDIT PRODUCT</h1></div>
         <div class="container" style="border-style: solid; border-radius: .8rem; background-color: rgba(160, 155, 192, 0.377);">
-            <form action="/admin/product_edit/{{data._id}}" method="post">
+            <form action="/admin/product_edit/{{data._id}}" method="post" enctype="multipart/form-data">
                 <div class="row mt-4">
                     <div class="col-6 ">
                         <label for="">Product name :</label><br>
