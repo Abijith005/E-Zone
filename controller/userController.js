@@ -43,9 +43,9 @@ module.exports = {
                 res.redirect('/user_signup')
             }
             else {
-                signUpDetails = req.body
+                req.session.signUpDetails = req.body
                 sentOTP(req.body.email, OTP)
-                checkOtp = OTP;
+                req.session.checkOtp = OTP;
 
                 res.redirect('/signup_otp')
 
@@ -54,16 +54,16 @@ module.exports = {
 
     },
     user_validateSignUpOTP: (req, res) => {
-        if (req.body.otp == checkOtp) {
-            userService.doSignup(signUpDetails).then((data) => {
+        if (req.body.otp == req.session.checkOtp) {
+            userService.doSignup(req.session.signUpDetails).then((data) => {
                 res.redirect('/')
-                checkOtp = null;
-                signUpDetails = null;
+                req.session.checkOtp = null;
+                req.session.signUpDetails = null;
             })
         }
         else {
-            invalid_otp = true;
-            checkOtp = null
+            req.session.invalid_otp = true;
+            req.session.checkOtp = null
             res.redirect('/signup_otp')
         }
 
@@ -75,18 +75,18 @@ module.exports = {
     },
 
     user_forgotPassword: (req, res) => {
-        resetPassword ? message = true : message = false
+        req.session.resetPassword ?message = true : message = false
         let display
-        checkOtp ? display = true : display = false
+        req.session.checkOtp ?display = true :display = false
         res.render('forgot_password', { message, display })
-       display = false
-        resetPassword = false
+        req.session.display = false
+       req.session.resetPassword = false
     },
 
     user_otp: (req, res) => {
-        if (invalid_otp) {
+        if (req.session.invalid_otp) {
             res.render('signup_OTP', { message: 'Invalid OTP :' })
-            invalid_otp = false
+            req.session.invalid_otp = false
         }
         else
             res.render('signup_OTP')
@@ -94,23 +94,23 @@ module.exports = {
     },
     user_submitForgotPasswordMail: (req, res) => {
         sentOTP(req.body.email, OTP)
-        checkOtp = OTP;
+        req.session.checkOtp = OTP;
         res.redirect('/forgot_password')
     },
 
     user_submitForgotOTP: (req, res) => {
-        if (req.body.otp == checkOtp) {
-            checkOtp = null;
-            resetPassword = true
+        if (req.body.otp ==req.session.checkOtp) {
+            req.session.checkOtp = null;
+            req.session.resetPassword = true
             res.redirect('/forgot_password')
 
         }
         else {
-            checkOtp = null;
+            req.session.checkOtp = null;
             res.redirect('/forgot_password')
         }
     },
-
+    
     user_productList:(req,res)=>{
        let argument=req.params.id?req.params.id:req.body.category
         userService.user_searchProduct(argument).then((productData)=>{
