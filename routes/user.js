@@ -2,7 +2,6 @@ const express=require('express')
 const router=express.Router()
 const userController=require('../controller/userController')
 
-
 router.get('/',userController.user_home)
 
 router.get('/user_login',userController.user_login)

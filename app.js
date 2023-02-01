@@ -6,7 +6,8 @@ const db=require('./config/connection')
 var usersRouter=require('./routes/user')
 var adminRouter=require('./routes/admin')
 var bodyParser = require('body-parser')
-var cookieParser=require('cookie-parser')
+var cookieParser=require('cookie-parser');
+const session = require('express-session');
 
 db.connect((err)=>{
     if(err){
@@ -15,10 +16,6 @@ db.connect((err)=>{
 
 })
 //setting session
-
-// app.use({
-    
-// })
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
