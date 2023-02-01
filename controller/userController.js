@@ -2,10 +2,11 @@ const userService = require('../services/userService')
 const sentOTP = require('../helpers/otp');
 let invalidUser;
 let signUpDetails;
-let OTP = Math.floor(Math.random() * 1000000);
+let OTP = Math.floor(Math.random()*1000000);
 let checkOtp;
 let invalid_otp = false;
 let resetPassword = false;
+
 
 
 module.exports = {
@@ -78,7 +79,7 @@ module.exports = {
         let display
         checkOtp ? display = true : display = false
         res.render('forgot_password', { message, display })
-        display = false
+       display = false
         resetPassword = false
     },
 
@@ -108,6 +109,14 @@ module.exports = {
             checkOtp = null;
             res.redirect('/forgot_password')
         }
+    },
+
+    user_productList:(req,res)=>{
+       let argument=req.params.id?req.params.id:req.body.category
+        userService.user_searchProduct(argument).then((productData)=>{
+            res.render('user_productList',{productData})
+
+        })
     }
 
 }

@@ -11,11 +11,16 @@ const session = require('express-session');
 
 db.connect((err)=>{
     if(err){
-    // console.log('data base not connected'+err);
+    console.log('data base not connected'+err);
     }
 
 })
 //setting session
+app.use(session({
+    secret:'secret',
+    saveUninitialized:false,
+    resave:true
+}))
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))

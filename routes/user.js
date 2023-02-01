@@ -22,6 +22,13 @@ router.post('/submit_forgotOTP',userController.user_submitForgotOTP)
 
 router.post('/submit_mailForgotPassword',userController.user_submitForgotPasswordMail)
 
+router.get('/productList/:id',userController.user_productList)
+
+router.post('/productList',userController.user_productList)
+
+
+
+
 
 
 module.exports=router;

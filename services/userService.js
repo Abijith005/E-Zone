@@ -43,7 +43,16 @@ module.exports={
                 resolve(result)
             })
         })
-    }
+    },
 
+
+    user_searchProduct:(productData)=>{
+        return new Promise((resolve, reject) => {
+            db.get().collection(collections.PRODUCT_COLLECTION).find({$or:[{product_name:productData},{company:productData},{category:productData}]}).toArray().then((result)=>{
+                resolve(result)
+            })
+        })
+        
+    }
 
 }

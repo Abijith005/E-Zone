@@ -1,6 +1,5 @@
 const adminService = require('../services/adminService')
 var datas;
-const session = require('express-session')
 module.exports = {
 
     admin_loginPage: (req, res) => {
