@@ -60,6 +60,7 @@ if(req.body.otp==checkOtp){
 }
 else{
     invalid_otp=true;
+    checkOtp=null
     res.redirect('/signup_otp')
 }
                
@@ -84,10 +85,25 @@ else{
 
     },
 
-user_submitOtp:(req,res)=>{
-    res.send(req.body)
+// user_submitOtp:(req,res)=>{
+//     res.send(req.body)
+// },
+user_submitForgotPasswordMail:(req,res)=>{
+sentOTP(req.body.email,OTP)
+checkOtp=OTP;
+res.redirect('/forgot_password')
+},
+
+user_submitForgotOTP:(req,res)=>{
+if(req.body.otp==checkOtp){
+    // res.render('reset_password')
+    res.send('reset password')
+    checkOtp=null;
+}
+else{
+    checkOtp=null;
+    res.redirect('/forgot_password')
+}
 }
     
 }
-
-

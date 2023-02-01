@@ -12,7 +12,7 @@ const sentOTP=(email, otp)=> {
             },
           });
             var mailOptions={
-              from:process.env.EMAIL,
+              from:process.env.SITE_EMAIL,
               to: email,
               subject: " Email verification",
               html: `
