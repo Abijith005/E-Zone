@@ -1,21 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <div class="row">
         <div class="col">
-            <form action="">
+            <form action="add_category" method="post">
                 <label for="">Category :</label><br>
-                <input type="text" name="category"><br>
-                <label for="">brands :</label><br>
-                <input type="text" name="brands">
+                <input type="text" name="category" ><br>
+                <button class="btn-success" type="submit">submit</button>
             </form>
+            <label for="">brands :</label><br>
+                <input type="text" id="brand">
+                <button class="btn-success" onclick="addBrands()">Add Brands</button><br><br>
         </div>
     </div>
+    <script>
+        let brands = new Array();
+        let addBrands = () => {
+        let elements=document.getElementById('brand').value;
+        brands.push(elements)
+        }
+    </script>
 </body>
+
 </html>

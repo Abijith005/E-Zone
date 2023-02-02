@@ -2,7 +2,7 @@ const userService = require('../services/userService')
 const sentOTP = require('../helpers/otp');
 let invalidUser;
 let signUpDetails;
-let OTP = Math.floor(Math.random()*1000000);
+let OTP = Math.floor(Math.random() * 1000000);
 let checkOtp;
 let invalid_otp = false;
 let resetPassword = false;
@@ -44,7 +44,9 @@ module.exports = {
             }
             else {
                 req.session.signUpDetails = req.body
-                sentOTP(req.body.email, OTP)
+                req.session.email = req.body.email
+
+                sentOTP(req.session.email, OTP)
                 req.session.checkOtp = OTP;
 
                 res.redirect('/signup_otp')
@@ -57,6 +59,7 @@ module.exports = {
         if (req.body.otp == req.session.checkOtp) {
             userService.doSignup(req.session.signUpDetails).then((data) => {
                 res.redirect('/')
+                req.session.email=null
                 req.session.checkOtp = null;
                 req.session.signUpDetails = null;
             })
@@ -75,12 +78,12 @@ module.exports = {
     },
 
     user_forgotPassword: (req, res) => {
-        req.session.resetPassword ?message = true : message = false
+        req.session.resetPassword ? message = true : message = false
         let display
-        req.session.checkOtp ?display = true :display = false
+        req.session.checkOtp ? display = true : display = false
         res.render('forgot_password', { message, display })
         req.session.display = false
-       req.session.resetPassword = false
+        req.session.resetPassword = false
     },
 
     user_otp: (req, res) => {
@@ -99,7 +102,7 @@ module.exports = {
     },
 
     user_submitForgotOTP: (req, res) => {
-        if (req.body.otp ==req.session.checkOtp) {
+        if (req.body.otp == req.session.checkOtp) {
             req.session.checkOtp = null;
             req.session.resetPassword = true
             res.redirect('/forgot_password')
@@ -110,13 +113,21 @@ module.exports = {
             res.redirect('/forgot_password')
         }
     },
-    
-    user_productList:(req,res)=>{
-       let argument=req.params.id?req.params.id:req.body.category
-        userService.user_searchProduct(argument).then((productData)=>{
-            res.render('user_productList',{productData})
+
+    user_productList: (req, res) => {
+        let argument = req.params.id ? req.params.id : req.body.category
+        userService.user_searchProduct(argument).then((productData) => {
+            res.render('user_productList', { productData })
 
         })
+    },
+
+    resendOTP: (req, res) => {
+        console.log(req.session.email);
+        console.log('otp resended');
+        sentOTP(req.session.email, OTP)
+        req.session.checkOtp = OTP
     }
 
 }
+

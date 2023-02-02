@@ -1,6 +1,6 @@
-const nodemailer = require("nodemailer");
+const nodemailer =require("nodemailer");
 const dotenv=require('dotenv').config()
-const sentOTP=(email, otp)=> {
+const sentOTP=(email,otp)=> {
     return new Promise((resolve, reject)=>{
         let transporter = nodemailer.createTransport({
             host: "smtp.gmail.com", // SMTP server address (usually mail.your-domain.com)

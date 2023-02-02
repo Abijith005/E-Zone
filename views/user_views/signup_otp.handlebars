@@ -32,7 +32,7 @@
 <form action="" method="post">
 <input style="width:40%;" class="form-control-lg" type="text" maxlength="6" minlength="6" name="otp" required> 
     {{#if message}}
-<div class="text-center pt-2" id="otpdiv"></div>
+<div class="text-center pt-2" style="color: rgb(10, 65, 100);" id="otpdiv"></div>
     {{/if}}
 
 <div class="text-center">
@@ -46,13 +46,13 @@
         
     </div> 
     <script>
-        let count=60
+        let count=30
 let countdown=setInterval(()=>{
-    console.log(count--)
-    document.getElementById('otpdiv').innerHTML=count
-    if(count==45){
+    count--;
+    document.getElementById('otpdiv').innerHTML='Resend OTP in '+count+' seconds'
+    if(count==0){
         clearInterval(countdown)
-        document.getElementById('otpdiv').innerHTML='<a href="">resend OTP</a>'
+        document.getElementById('otpdiv').innerHTML='<a href="/resendOTP">resend OTP</a>'
     }
 },1000)
 

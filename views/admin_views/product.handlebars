@@ -1,145 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="/styles/admin/product.css">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link rel="stylesheet" href="/styles/admin/product.css">
+  <title>Document</title>
 
-     <script
-              src="https://code.jquery.com/jquery-3.2.1.js"
-              integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-              crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+    crossorigin="anonymous"></script>
 
-      <!-- Latest compiled and minified CSS & JS -->
-      <link rel="stylesheet" media="screen"
-            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-      
+  <!-- Latest compiled and minified CSS & JS -->
+  <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
+
 <body style="margin: 1rem; overflow-x: hidden;">
-    <nav class="navbar navbar-expand-lg navbar-light " style="background-color: rgb(217, 217, 217);">
-  <div class="container-fluid">
-    <a class="navbar-brand mx-5" href="#">logo</a>
-    <button class="navbar-toggler mx-5" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav" >
-      <ul class="navbar-nav">
-        <li class="nav-item">
+  <nav class="navbar navbar-expand-lg navbar-light " style="background-color: rgb(217, 217, 217);">
+    <div class="container-fluid">
+      <a class="navbar-brand mx-5" href="#">logo</a>
+      <button class="navbar-toggler mx-5" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
 
-          <a class="nav-link active" aria-current="page" href="/admin/admin_home"><button class="btn btn-dark mx-5" style="font-size: larger;">HOME</button></a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="/admin/admin_products"><button class="btn btn-dark mx-5" style="font-size: larger;">PRODUCT</button></a>
+            <a class="nav-link active" aria-current="page" href="/admin/admin_home"><button class="btn btn-dark mx-5"
+                style="font-size: larger;">HOME</button></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/admin/admin_products"><button
+                class="btn btn-dark mx-5" style="font-size: larger;">PRODUCT</button></a>
 
-        </li>
-        <li class="nav-item">
-       <a class="nav-link active" aria-current="page" href="/admin/user_Details"><button class="btn btn-dark mx-5" style="font-size: larger;">USER DETAILS</button></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/admin/user_Details"><button class="btn btn-dark mx-5"
+                style="font-size: larger;">USER DETAILS</button></a>
 
-        </li>
-        <li class="nav-item">
-       <a class="nav-link active" aria-current="page" href="/admin/order_Details"><button class="btn btn-dark mx-5" style="font-size: larger;">ORDER DETAILS</button></a>
-        </li>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/admin/order_Details"><button class="btn btn-dark mx-5"
+                style="font-size: larger;">ORDER DETAILS</button></a>
+          </li>
 
-<li class="nav-item">
-       <a class="nav-link active" aria-current="page" href="/admin/category"><button class="btn btn-dark mx-5" style="font-size: larger;">CATEGORY</button></a>
-        </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/admin/category"><button class="btn btn-dark mx-5"
+                style="font-size: larger;">CATEGORY</button></a>
+          </li>
 
-      </ul>
-    </div>
-  </div>
-</nav>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-
-
- <style>
-tr,th,td{
-  color: rgb(8, 8, 8);
-}
- </style>
- <nav class="navbar navbar-expand-lg navbar-light bg-light text-center">
-    
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      </li>
-    </ul>
-     <div class="row">
-      <div class="col d-flex" style="flex-direction: row-reverse">
-        <a href="/admin/product_add"><button  class="btn btn-success mx-5">Add Product</button></a>
-
-        </div>
-    <form class="form-inline my-2 my-lg-0" action="/admin/user_search" role="search" type="submit" method="post">
-        <div class="col my-5">
-      <input class="form-control" style="width: 50%;" type="search" placeholder="Search" name="name" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </ul>
       </div>
-      </form>
     </div>
-  </div>
-</nav>
-<div class="">
-  <div class="row">
-    <div class="col-12">
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">No.</th>
-      <th scope="col">Product Name</th>
-      <th scope="col" style="margin: right 75px;">Image</th>
-      <th scope="col">Category</th>
-      <th scope="col">Company</th>
-      <th scope="col">Price</th>
-      <th scope="col">Product Details</th>
-      <th scope="col">Product Status</th>
-      <th scope="col">Options</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each result}}
-    <tr>
-      <th scope="row">{{@index}}</th>
-      <td>{{this.product_name}}</td>
-      <td><img src="/images/{{this.image.image.[0].filename}}" alt="" style="width: 40px; height: 50px;"></td>
-      <td>{{this.category}}</td>
-            <td>{{this.company}}</td>
-                  <td>{{this.price}}</td>
-                        <td>{{this.product_Details}}</td>
-                        {{#if this.flag}}
-                        <td>flagged</td>
-                        {{else}}
-                        <td>Unflagged</td>
-                        {{/if}}
-                        <td><div id="container">
-            <div id="menu-wrap">
-            <input type="checkbox" class="toggler"/> 
-            <div class="dots">
-              <div></div>
-            </div>
-            <div class="menu">
-              <div>
-                <ul>
-                  <li><a href="product_edit/{{this._id}}" class="link">Edit Product</a></li>
-                  {{#if this.flag}}
-                  <li><a href="product_unflag/{{this._id}}" class="link">Unflag Product</a></li>
-                  {{else}}
-                                    <li><a href="product_flag/{{this._id}}" class="link">Flag Product</a></li>
-{{/if}}
-                </ul>
-              </div>
-            </div>
-          </div>
+  </nav>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
+
+
+  <style>
+    tr,
+    th,
+    td {
+      color: rgb(8, 8, 8);
+    }
+  </style>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light text-center">
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        </li>
+      </ul>
+      <div class="row">
+        <div class="col d-flex" style="flex-direction: row-reverse">
+          <a href="/admin/product_add"><button class="btn btn-success mx-5">Add Product</button></a>
+
         </div>
-      </body></td>
-    </tr>{{/each}}
+        <form class="form-inline my-2 my-lg-0" action="/admin/user_search" role="search" type="submit" method="post">
+          <div class="col my-5">
+            <input class="form-control" style="width: 50%;" type="search" placeholder="Search" name="name"
+              aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </nav>
+  <div class="">
+    <div class="row">
+      <div class="col-12">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">No.</th>
+              <th scope="col">Product Name</th>
+              <th scope="col" style="margin: right 75px;">Image</th>
+              <th scope="col">Category</th>
+              <th scope="col">Company</th>
+              <th scope="col">Price</th>
+              <th scope="col">Product Details</th>
+              <th scope="col">Product Status</th>
+              <th scope="col">Options</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each result}}
+            <tr>
+              <th scope="row">{{@index}}</th>
+              <td>{{this.product_name}}</td>
+              <td><img src="/images/{{this.image.image.[0].filename}}" alt="" style="width: 40px; height: 50px;"></td>
+              <td>{{this.category}}</td>
+              <td>{{this.company}}</td>
+              <td>{{this.price}}</td>
+              <td>{{this.product_Details}}</td>
+              {{#if this.flag}}
+              <td>flagged</td>
+              {{else}}
+              <td>Unflagged</td>
+              {{/if}}
+              <td>
+                <div id="container">
+                  <div id="menu-wrap">
+                    <input type="checkbox" class="toggler" />
+                    <div class="dots">
+                      <div></div>
+                    </div>
+                    <div class="menu">
+                      <div>
+                        <ul>
+                          <li><a href="product_edit/{{this._id}}" class="link">Edit Product</a></li>
+                          {{#if this.flag}}
+                          <li><a href="product_unflag/{{this._id}}" class="link">Unflag Product</a></li>
+                          {{else}}
+                          <li><a href="product_flag/{{this._id}}" class="link">Flag Product</a></li>
+                          {{/if}}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+</body>
+</td>
+</tr>{{/each}}
 <div>
 </div>
-  </tbody>
+</tbody>
 </table>
 </div>
 </div>
-  </div>
+</div>
 </body>
+
 </html>

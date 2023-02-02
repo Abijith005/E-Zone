@@ -37,6 +37,8 @@ router.get('/category',adminController.admin_categoryPage)
 
 router.get('/add_categoryPage',adminController.admin_addCategoryPage)
 
+router.post('/add_category',adminController.admin_addCategory)
+
 
 module.exports= router;
 

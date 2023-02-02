@@ -26,6 +26,8 @@ router.get('/productList/:id',userController.user_productList)
 
 router.post('/productList',userController.user_productList)
 
+router.get('/resendOTP',userController.resendOTP)
+
 
 
 
