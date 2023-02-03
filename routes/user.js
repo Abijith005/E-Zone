@@ -28,6 +28,8 @@ router.post('/productList',userController.user_productList)
 
 router.get('/resendOTP',userController.resendOTP)
 
+router.get('/user_profile',userController.user_profilePage)
+
 
 
 

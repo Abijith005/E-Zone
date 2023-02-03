@@ -131,6 +131,10 @@ module.exports = {
         sentOTP(req.session.email, OTP)
         req.session.checkOtp = OTP
         res.redirect('/signup_otp')
+    },
+
+    user_profilePage:(req,res)=>{
+        res.render('user_profile')
     }
 
 }

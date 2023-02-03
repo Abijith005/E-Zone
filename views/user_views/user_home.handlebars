@@ -90,6 +90,7 @@
 					<!-- /SEARCH BAR -->
 
 					<!-- ACCOUNT -->
+					{{#if userName}}
 					<div class="col-md-3 clearfix">
 						<div class="header-ctn">
 							<!-- Wishlist -->
@@ -157,13 +158,14 @@
 
 						</div>
 					</div>
-					<div class="col-1">
+					{{/if}}
+					<div class="col-1 d-flex">
 						<div class="dropdown">
 							{{#unless userName}}
-							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+							<button class="btn btn-secondary text-white dropdown-toggle" type="button" id="dropdownMenuButton"
 								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</button>
 								{{else}}
-								<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+								<button class="btn btn-secondary text-white dropdown-toggle" type="button" id="dropdownMenuButton"
 								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{userName}}</button>
 								{{/unless}}
 
@@ -172,8 +174,8 @@
 								{{#unless userName}}
 								<a class="dropdown-item" href="/user_login">Login</a>
 								{{else}}
-								<a class="dropdown-item" href="#">Profile</a>
-								<a class="dropdown-item" href="#">Log Out</a>
+								<a class="dropdown-item" href="/user_profile">Profile</a>
+								<a class="dropdown-item" href="/user_logout">Log Out</a>
 								{{/unless}}
 							</div>
 						</div>
