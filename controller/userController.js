@@ -12,7 +12,9 @@ let resetPassword = false;
 module.exports = {
 
     user_home: (req, res) => {
-        res.render('user_home')
+        let userName;
+        req.session.user?userName=req.session.user:userName=null
+        res.render('user_home',{userName})
     },
 
 
@@ -27,7 +29,9 @@ module.exports = {
 
     user_signin: (req, res) => {
         userService.doLogin(req.body).then((result) => {
+            
             if (result.status) {
+                req.session.user=result.user
                 res.redirect('/')
             }
             else {
@@ -88,7 +92,7 @@ module.exports = {
 
     user_otp: (req, res) => {
         if (req.session.invalid_otp) {
-            res.render('signup_OTP', { message: 'Invalid OTP :' })
+            res.render('signup_OTP', { message: 'Invalid OTP' })
             req.session.invalid_otp = false
         }
         else
@@ -124,7 +128,6 @@ module.exports = {
 
     resendOTP: (req, res) => {
         console.log(req.session.email);
-        console.log('otp resended');
         sentOTP(req.session.email, OTP)
         req.session.checkOtp = OTP
         res.redirect('/signup_otp')

@@ -49,8 +49,8 @@
 					<li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
 				</ul>
 				<ul class="header-links pull-right">
-					<li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-					<li><a href="/user_login"><i class="fa fa-user-o"></i> Login</a></li>
+					{{!-- <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
+					<li><a href="/user_login"><i class="fa fa-user-o"></i> Login</a></li> --}}
 				</ul>
 			</div>
 		</div>
@@ -61,10 +61,10 @@
 			<!-- container -->
 			<div class="container">
 				<!-- row -->
-				<div class="row">
+				<div class="row align-items-center">
 					<!-- LOGO -->
-					<div class="col-md-3">
-						<div class="header-logo">
+					<div class="col-md-2">
+						<div class="header-logo ">
 							<a href="#" class="logo">
 								<h4 class="font-weight-bold">
 									<h3 style="color: #ffff;">E-<font color="#FFD523">Zone</font>
@@ -80,7 +80,9 @@
 					<div class="col-md-6">
 						<div class="header-search">
 							<form action="/productList" method="post">
-								<input class="input" style="border-top-left-radius:2rem;border-bottom-left-radius:2rem;" type="text" name="category" placeholder="Search here">
+								<input class="input"
+									style="border-top-left-radius:2rem;border-bottom-left-radius:2rem; width: 80%;"
+									type="text" name="category" placeholder="Search here">
 								<button class="search-btn">Search</button>
 							</form>
 						</div>
@@ -91,6 +93,7 @@
 					<div class="col-md-3 clearfix">
 						<div class="header-ctn">
 							<!-- Wishlist -->
+
 							<div>
 								<a href="#">
 									<i class="fa fa-heart-o"></i>
@@ -151,8 +154,31 @@
 								</a>
 							</div>
 							<!-- /Menu Toogle -->
+
 						</div>
 					</div>
+					<div class="col-1">
+						<div class="dropdown">
+							{{#unless userName}}
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</button>
+								{{else}}
+								<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{userName}}</button>
+								{{/unless}}
+
+
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								{{#unless userName}}
+								<a class="dropdown-item" href="/user_login">Login</a>
+								{{else}}
+								<a class="dropdown-item" href="#">Profile</a>
+								<a class="dropdown-item" href="#">Log Out</a>
+								{{/unless}}
+							</div>
+						</div>
+					</div>
+
 					<!-- /ACCOUNT -->
 				</div>
 				<!-- row -->
