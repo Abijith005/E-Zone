@@ -32,7 +32,5 @@ router.get('/resendOTP',userController.resendOTP)
 
 
 
-
 module.exports=router;
-
 

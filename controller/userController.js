@@ -127,7 +127,7 @@ module.exports = {
         console.log('otp resended');
         sentOTP(req.session.email, OTP)
         req.session.checkOtp = OTP
+        res.redirect('/signup_otp')
     }
 
 }
-

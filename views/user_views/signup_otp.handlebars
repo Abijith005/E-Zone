@@ -30,7 +30,9 @@
         <h5 class="mb-3">Enter OTP :</h5>
         {{/if}}
 <form action="" method="post">
-<input style="width:40%;" class="form-control-lg" type="text" maxlength="6" minlength="6" name="otp" required> 
+<input style="width:40%;" class="form-control-lg" type="text" maxlength="6" minlength="6" name="otp" required><br> 
+<div class="text-center pt-2" style="color: rgb(10, 65, 100);" id="otpdiv"></div>
+
     {{#if message}}
 <div class="text-center pt-2" style="color: rgb(10, 65, 100);" id="otpdiv"></div>
     {{/if}}

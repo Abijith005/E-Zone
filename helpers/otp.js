@@ -7,7 +7,7 @@ const sentOTP=(email,otp)=> {
             port: 465, // Port for SMTP (usually 465)
             secure: true, // Usually true if connecting to port 465
             auth: {
-              user:process.env.SITE_EMAIL , // Your email address
+              user:process.env.SITE_EMAIL, // Your email address
               pass:process.env.SITE_PASSWORD, // Password (for gmail, your app password)
             },
           });
