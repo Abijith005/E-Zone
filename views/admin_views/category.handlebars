@@ -95,10 +95,8 @@ tr,th,td{
     {{#each result}}
     <tr>
       <th scope="row">{{@index}}</th>
-      <td>{{this.name}}</td>
-      <td>{{this.email}}</td>
-      <td>{{this.mob_no}}</td>
-      <td>{{this.address}}</td>
+      <td>{{this.category}}</td>
+      <td>{{this.brandName}}</td>
       {{#if this.block}}
       <td><a href="user_Unblock/{{this._id}}"><button onclick="return confirm('Do you want to unblock {{this.name}}')" class="btn btn-primary btn-rounded">Unblock</button></a> </td>
       {{else}} 

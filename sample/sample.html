@@ -1,28 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <input type="text" id="brand">
-    <button type="submit" onclick="get()">click</button>
+    <button type="submit" onclick="get()">click</button><br><br><br><br>
 
+    <button onclick="writ()">submit</button>
 
     <script>
-                    arr=new Array()
+        let arr = new Array()
 
-        function get(){
-            
-            let a=document.getElementById('brand').value;
-            document.getElementById('brand').innerText='hjjkk'
+        function get() {
 
+            let a = document.getElementById('brand').value;
             arr.push(a)
-       console.log(arr);
+            console.log(arr);
+        };
+
+        function writ() {
+            document.getElementById('brand').value = arr
+
         }
-       
+
+        arr.forEach(element => {
+            
+        });
+
     </script>
 </body>
+
 </html>

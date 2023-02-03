@@ -33,9 +33,9 @@ module.exports={
             db.get().collection(collections.PRODUCT_COLLECTION).insertOne({...productData,image})
         })
     },
-    list_product:()=>{
+    list_productOrCategory:(argCollection)=>{
 return new Promise((resolve, reject) => {
-    db.get().collection(collections.PRODUCT_COLLECTION).find().sort({name:1}).toArray().then((result)=>{
+    db.get().collection(argCollection).find().sort({name:1}).toArray().then((result)=>{
         resolve(result)
 
     })
@@ -72,6 +72,12 @@ return new Promise((resolve, reject) => {
             db.get().collection(collections.USER_COLLECTION).find({$or:[{name:new RegExp(userData.name,'i')},{email: userData.name},{mob_no:userData.name}]}).toArray().then((result)=>{
                 resolve(result)
             })
+        })
+    },
+
+    addCategory:(categoryData)=>{
+        return new Promise((resolve, reject) => {
+            db.get().collection(collections.CATEGORY_COLLECTION).insertOne(categoryData)
         })
     }
 

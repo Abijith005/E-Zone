@@ -1,3 +1,5 @@
+const { resolve } = require('promise');
+const collections = require('../models/collections');
 const adminService = require('../services/adminService')
 var datas;
 module.exports = {
@@ -20,7 +22,7 @@ module.exports = {
         res.render('admin_home')
     },
     admin_product: (req, res) => {
-        adminService.list_product().then((result) => {
+        adminService.list_productOrCategory(collections.PRODUCT_COLLECTION).then((result) => {
             res.render('product', { result })
         })
     },
@@ -63,7 +65,11 @@ module.exports = {
     },
 
     admin_productAddPage: (req, res) => {
-        res.render('add_product')
+        adminService.list_productOrCategory(collections.CATEGORY_COLLECTION).then((result)=>{
+            console.log(result);
+            res.render('add_product',{result})
+
+        })
     },
 
     admin_productAdd: (req, res) => {
@@ -88,7 +94,10 @@ module.exports = {
     },
 
     admin_categoryPage: (req, res) => {
-        res.render('category')
+        adminService.list_productOrCategory(collections.CATEGORY_COLLECTION).then((result)=>{
+            res.render('category',{result})
+         
+        })
     },
 
     admin_addCategoryPage: (req, res) => {
@@ -96,7 +105,12 @@ module.exports = {
     },
 
     admin_addCategory:(req,res)=>{
-        res.send(req.body)
+        const {category, brandName}=req.body
+        adminService.addCategory({
+            category,
+            brandName:brandName.split(",")
+        })
+        res.redirect('/admin/category')
     }
 
 
