@@ -66,7 +66,6 @@ module.exports = {
 
     admin_productAddPage: (req, res) => {
         adminService.list_productOrCategory(collections.CATEGORY_COLLECTION).then((result)=>{
-            console.log(result);
             res.render('add_product',{result})
 
         })

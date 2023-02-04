@@ -12,7 +12,6 @@ if(err){
     return done(err)
 }
 else{
-    console.log('db connected');
     state.db=data.db(dbname)
     done();
 

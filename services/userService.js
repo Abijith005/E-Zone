@@ -8,7 +8,7 @@ module.exports={
              userData.password =await bcrypt.hash(userData.password,10)
              let block=false
              let {name,email,mob_no,password,address,pincode}=userData
-            db.get().collection(collections.USER_COLLECTION).insertOne({name,email,mob_no,password,address,pincode,block}).then((data)=>{
+            db.get().collection(collections.USER_COLLECTION).insertOne({name,email,mob_no,password,address,pincode,block,user_cart:[],user_wishList:[]}).then((data)=>{
                 resolve(data)
                 
             })
@@ -62,15 +62,22 @@ module.exports={
 
         })
     },
-user_add_to_cart:(id)=>{
+user_add_to_cart:(user_id,product_id)=>{
     return new Promise((resolve, reject) => {
-        db.get().collection(collections.PRODUCT_COLLECTION).findOne({_id:ObjectId(id)}).then((result)=>{
+        db.get().collection(collections.PRODUCT_COLLECTION).findOne({_id:ObjectId(product_id)}).then((result)=>{
+            db.get().collection(collections.USER_COLLECTION).updateOne({_id:ObjectId(user_id)},{$push:{user_cart:result}},{upsert:true})
+      
+        })
+    })
+},
+
+get_userDetails:(id)=>{
+    return new Promise((resolve, reject) => {
+        db.get().collection(collections.USER_COLLECTION).findOne({_id:ObjectId(id)}).then((result)=>{
             resolve(result)
         })
     })
 }
    
-
-    
 
 }

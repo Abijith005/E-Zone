@@ -127,7 +127,6 @@ module.exports = {
     },
 
     resendOTP: (req, res) => {
-        console.log(req.session.email);
         sentOTP(req.session.email, OTP)
         req.session.checkOtp = OTP
         res.redirect('/signup_otp')
@@ -144,15 +143,15 @@ module.exports = {
     },
 
     user_cartPage: (req, res) => {
-cartData=req.session.userCart
-        res.render('user_cart',{cartData})
+userService.get_userDetails(req.session.userDetails._id).then((result)=>{
+let cartData=result;
+    res.render('user_cart',{cartData})
+})
     },
 
     product_to_cart: (req, res) => {
-        userService.user_add_to_cart(req.params.id).then((result) => {
-            req.session.userCart = result;
+        userService.user_add_to_cart(req.session.userDetails._id ,req.params.id)
             res.redirect('/cart')
-        })
     }
 
 
