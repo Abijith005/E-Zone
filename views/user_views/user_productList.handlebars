@@ -222,7 +222,7 @@
 		<div class="row">
 			<!-- product -->
 			{{#each productData}}
-			<div class="col-md-4 col-xs-6">
+			<div class="col-md-3 col-xs-6">
 				<div class="product">
 					<div class="product-img">
 						<img style="height:35rem;" src="/images/{{this.image.image.[0].filename}}" alt="">
@@ -251,8 +251,10 @@
 									view</span></button>
 						</div>
 					</div>
-					<div class="add-to-cart">
-						<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+					<div class="add-to-cart text-center">
+						<a href="/add_to_cart/{{this._id}}">
+						<button class="add-to-cart-btn my-2"><i class="fa fa-shopping-cart"></i> add to cart</button>
+						</a>
 					</div>
 				</div>
 			</div>

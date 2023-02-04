@@ -34,6 +34,8 @@ router.post('/update_profile',userController.user_profileUpdate)
 
 router.get('/cart',userController.user_cartPage)
 
+router.get('/add_to_cart/:id',userController.product_to_cart)
+
 
 
 

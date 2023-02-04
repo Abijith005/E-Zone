@@ -62,7 +62,13 @@ module.exports={
 
         })
     },
-
+user_add_to_cart:(id)=>{
+    return new Promise((resolve, reject) => {
+        db.get().collection(collections.PRODUCT_COLLECTION).findOne({_id:ObjectId(id)}).then((result)=>{
+            resolve(result)
+        })
+    })
+}
    
 
     

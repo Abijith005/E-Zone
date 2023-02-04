@@ -13,8 +13,8 @@ module.exports = {
 
     user_home: (req, res) => {
         let userName;
-        req.session.userDetails?userName=req.session.userDetails.name:userName=null
-        res.render('user_home',{userName})
+        req.session.userDetails ? userName = req.session.userDetails.name : userName = null
+        res.render('user_home', { userName })
     },
 
 
@@ -29,9 +29,9 @@ module.exports = {
 
     user_signin: (req, res) => {
         userService.doLogin(req.body).then((result) => {
-            
+
             if (result.status) {
-                req.session.userDetails=result.userDetails
+                req.session.userDetails = result.userDetails
                 res.redirect('/')
             }
             else {
@@ -63,7 +63,7 @@ module.exports = {
         if (req.body.otp == req.session.checkOtp) {
             userService.doSignup(req.session.signUpDetails).then((data) => {
                 res.redirect('/')
-                req.session.email=null
+                req.session.email = null
                 req.session.checkOtp = null;
                 req.session.signUpDetails = null;
             })
@@ -133,19 +133,26 @@ module.exports = {
         res.redirect('/signup_otp')
     },
 
-    user_profilePage:(req,res)=>{
-        let data=req.session.userDetails
-        res.render('user_profile',{data})
+    user_profilePage: (req, res) => {
+        let data = req.session.userDetails
+        res.render('user_profile', { data })
     },
 
-    user_profileUpdate:(req,res)=>{
-        userService.user_profileUpdate(req.body,req.session.userDetails._id)
+    user_profileUpdate: (req, res) => {
+        userService.user_profileUpdate(req.body, req.session.userDetails._id)
         res.redirect('/')
     },
 
-    user_cartPage:(req,res)=>{
+    user_cartPage: (req, res) => {
+cartData=req.session.userCart
+        res.render('user_cart',{cartData})
+    },
 
-        res.render('user_cart')
+    product_to_cart: (req, res) => {
+        userService.user_add_to_cart(req.params.id).then((result) => {
+            req.session.userCart = result;
+            res.redirect('/cart')
+        })
     }
 
 
