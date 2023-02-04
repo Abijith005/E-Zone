@@ -13,7 +13,7 @@ module.exports = {
 
     user_home: (req, res) => {
         let userName;
-        req.session.user?userName=req.session.user:userName=null
+        req.session.userDetails?userName=req.session.userDetails.name:userName=null
         res.render('user_home',{userName})
     },
 
@@ -31,7 +31,7 @@ module.exports = {
         userService.doLogin(req.body).then((result) => {
             
             if (result.status) {
-                req.session.user=result.user
+                req.session.userDetails=result.userDetails
                 res.redirect('/')
             }
             else {
@@ -134,7 +134,14 @@ module.exports = {
     },
 
     user_profilePage:(req,res)=>{
-        res.render('user_profile')
+        let data=req.session.userDetails
+        res.render('user_profile',{data})
+    },
+
+    user_profileUpdate:(req,res)=>{
+        console.log('function called');
+        userService.user_profileUpdate(req.body,req.session.userDetails._id)
+        res.redirect('/')
     }
 
 }
