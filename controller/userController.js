@@ -139,9 +139,14 @@ module.exports = {
     },
 
     user_profileUpdate:(req,res)=>{
-        console.log('function called');
         userService.user_profileUpdate(req.body,req.session.userDetails._id)
         res.redirect('/')
+    },
+
+    user_cartPage:(req,res)=>{
+
+        res.render('user_cart')
     }
+
 
 }

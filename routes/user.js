@@ -32,6 +32,8 @@ router.get('/user_profile',userController.user_profilePage)
 
 router.post('/update_profile',userController.user_profileUpdate)
 
+router.get('/cart',userController.user_cartPage)
+
 
 
 

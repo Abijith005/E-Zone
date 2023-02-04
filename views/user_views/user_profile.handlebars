@@ -37,20 +37,23 @@ border-width: 2px;
 
 <body>
     <div class="container">
-        <div class="row my-5 rounded d-felx justify-content-center " style="border-style: solid;">
+        <div class="row mb-2- rounded d-felx justify-content-center">
+                                <h1 class="my-5 text-center">User Profile</h1>
+
             <div class="col-4" >
                 <div class="content">
-                    <h1 class="my-5 text-center">User Profile</h1>
-                    <form class="my-5 " action="/update_profile" method="post">
-                        <input type="text" name="name" value="{{data.name}}" required><br>
-                        <input type="tel" name="mob_no" value="{{data.mob_no}}" required><br>
+                    <form class="mt-3 " action="/update_profile" method="post">
+                        <input type="text" name="name" value="{{data.name}}" placeholder="Name" required><br>
+                        <input type="tel" name="mob_no" value="{{data.mob_no}}" placeholder="Mob No" required><br>
                         {{!-- <input type="text" class="address" name="address" placeholder="Address" required><br> --}}
-                        <textarea name="address"  cols="38" rows="3"  required>{{data.address}}</textarea>
+                        <textarea name="address"  cols="39" rows="3" placeholder="Address- 1" required>{{data.address}}</textarea>
+                        {{#each data.address}}
+                        <textarea name="address"  cols="39" rows="3"  required>{{this}}</textarea>
+                        {{/each}}
                         <div id='input-cont'>
                             <!--Input container-->
                         </div>
-                        <label for="">Pin Code :</label><br>
-                        <input type="text" value="{{data.pincode}}" name="pincode" required><br>
+                        <input type="text" value="{{data.pincode}}" name="pincode" placeholder="Pin Code" required><br>
                         <div class="d-flex justify=-content-center">
                             <button class="btn btn-success" type="submit">Submit</button>
                         </div>
@@ -58,7 +61,7 @@ border-width: 2px;
                     </form>
                 </div>
                 </div>
-                <div class="col-2 d-flex align-items-center" style="margin-top: 10rem;">
+                <div class="col-2 d-flex align-items-center" style="margin-top: .5rem;">
                     <div class="">
                     <button class="btn btn-primary my-1" onclick='addInput()'>Add Address</button>
                     <div id="remove_button">
@@ -72,16 +75,14 @@ border-width: 2px;
     </div>
     <script>
         const container = document.getElementById('input-cont');
-        var inputCount = 1;
+        var inputCount =1
         // Call addInput() function on button click
         function addInput() {
             document.getElementById('remove_button').innerHTML='<button class="btn btn-danger" onclick="removeInput()">Remove Address</button>'
-
             if (inputCount <=2) {
-
                 inputCount++; // Increment input count by one
                 let input = document.createElement('input');
-                input.placeholder='Address-'+inputCount
+                input.placeholder='Address- '+inputCount
                 input.name='address_'+inputCount
                 input.id = inputCount
                 container.appendChild(input)

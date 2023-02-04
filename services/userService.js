@@ -57,15 +57,13 @@ module.exports={
     },
 
     user_profileUpdate:(userData,id)=>{
-        console.log(userData.address_2+'      '+userData.address_3);
         return new Promise((resolve, reject) => {
-            db.get().collection(collections.USER_COLLECTION).update({_id:ObjectId(id)},{$set:{name:userData.name,mob_no:userData.mob_no,address:[userData.address,userData.address_2,userData.address_3],pincode:userData.pincode}}).then((result)=>{
-console.log(result);
-                resolve()
-            })
+            db.get().collection(collections.USER_COLLECTION).update({_id:ObjectId(id)},{$set:{name:userData.name,mob_no:userData.mob_no,address:[userData.address,userData.address_2,userData.address_3],pincode:userData.pincode}})
 
         })
     },
+
+   
 
     
 

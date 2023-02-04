@@ -26,16 +26,31 @@
                     <div class="col-6 ">
                         <label for="">Product name :</label><br>
                         <input type="text" name="product_name" value={{data.product_name}}><br>
-                        <label for="">Company Name :</label> <label style="margin-left:12% ;" for="">Category :</label><br>
-                        <input type="text" name="company" style="width: 29%;" value={{data.company}}> <input style="width: 29%; margin-left: 2%;" type="text" name="category" value={{data.category}}><br>
+                        <label for="">Category :</label> <label style="margin-left:20% ;" for="">Brands :</label><br>
+                          <select style="width: 29%;  margin-bottom: 2rem; border-radius: .5rem;" name="category" id="" required>
+                            <option value="">Select Category</option>
+                            {{#each data}}
+                            <option value="{{this.category}}">{{this.category}}</option>
+                            {{/each}}
+                        </select>
+                        <select style="width: 29%; margin-left: 2%;border-radius: .5rem;" name="brandName" id="" required>
+                            <option value="">Select Brand</option>
+                            {{#each data}}
+                            {{#each this.brandName}}
+                            <option value="{{this}}">{{this}}</option>
+                            {{/each}}
+                            {{/each}}
+                        </select><br>
+                        {{!-- <input type="text" name="company" style="width: 29%;" value={{data.company}}> <input style="width: 29%; margin-left: 2%;" type="text" name="category" value={{data.category}}><br> --}}
                         <label for="">Products Details :</label><br>
                         <input type="text" name="product_Details" style="width:60%;height: 8rem;"  value={{data.product_Details}}><br>
                         <label for="">Price:</label><br>
                         <input style="width: 30%;" type="text" name="price" value={{data.price}}>
                     </div>
-                    <div class="col-6 ">
+                    <div class="col-6">
                         <label for="">Image :</label><br>
-                        <input type="file" name="image" style="border-style:solid;width:50%;height: 50%;" value="/images/{{data.image.image.[0].filename}}">
+                        <img type="file" name="image" style="border-style:solid;width:50%;height: 50%;" src="/images/{{data.image.image.[0].filename}}"><br>
+                        <input type="file" name="image" style="border-style:solid;margin-top: 1rem;width: 50%;" value="/images/{{data.image.image.[0].filename}}" required>
                     </div>
                 </div>
                 <div class="text-center mb-5 mt-2">

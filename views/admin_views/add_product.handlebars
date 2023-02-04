@@ -32,28 +32,26 @@
                     <div class="col-6 ">
                         <label for="">Product name :</label><br>
                         <input type="text" name="product_name"><br>
-                        <label for="">Company Name :</label> <label style="margin-left:12% ; margin-right: 20%;" for="">Category :</label> <label  for="">Brands :</label><br>
-                        <input type="text" name="company" style="width: 29%;">
+                        <label style=" margin-right: 20%;" for="">Category :</label> <label  for="">Brands :</label><br>
 
-                        <select style="width: 29%; margin-left: 2%;border-radius: .5rem;" name="category" id="" required>
+                        <select style="width: 29%;  margin-bottom: 2rem; border-radius: .5rem;" name="category" id="" required>
                             <option value="">Select Category</option>
                             {{#each result}}
                             <option value="{{this.category}}">{{this.category}}</option>
                             {{/each}}
                         </select>
-                        <select style="width: 29%; margin-left: 2%;border-radius: .5rem;" name="category" id="" required>
+                        <select style="width: 29%; margin-left: 2%;border-radius: .5rem;" name="brandName" id="" required>
                             <option value="">Select Brand</option>
                             {{#each result}}
                             {{#each this.brandName}}
                             <option value="{{this}}">{{this}}</option>
                             {{/each}}
                             {{/each}}
-                        </select>
-                        {{!-- <input style="width: 29%; margin-left: 2%;" type="text" name="category"><br> --}}
+                        </select><br>
                         <label for="">Products Details :</label><br>
-                        <input type="text" name="product_Details" style="width:60%;height: 8rem;"><br>
+                        <textarea  name="product_Details" style="border-radius: .5rem;border-style: solid;border-width: 2px;" cols="49" rows="5"></textarea><br>
                         <label for="">Price:</label><br>
-                        <input style="width: 30%;" type="number" name="price">
+                        <input style="width: 30%;" type="text" name="price">
                     </div>
                     <div class="col-6 ">
                         <label for="">Image :</label><br>

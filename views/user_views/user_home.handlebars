@@ -105,13 +105,17 @@
 							<!-- /Wishlist -->
 
 							<!-- Cart -->
+							
+
 							<div class="dropdown">
-								<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+								<a href="/cart" aria-expanded="true">
 									<i class="fa fa-shopping-cart"></i>
 									<span>Your Cart</span>
 									<div class="qty">3</div>
 								</a>
-								<div class="cart-dropdown">
+								</div>
+							
+								{{!-- <div class="cart-dropdown">
 									<div class="cart-list">
 										<div class="product-widget">
 											<div class="product-img">
@@ -143,8 +147,8 @@
 										<a href="#">View Cart</a>
 										<a href="#">Checkout <i class="fa fa-arrow-circle-right"></i></a>
 									</div>
-								</div>
-							</div>
+								</div> --}}
+							
 							<!-- /Cart -->
 
 							<!-- Menu Toogle -->
@@ -159,7 +163,7 @@
 						</div>
 					</div>
 					{{/if}}
-					<div class="col-1 d-flex">
+					<div class="col-1 ms-auto">
 						<div class="dropdown">
 							{{#unless userName}}
 							<button class="btn btn-secondary text-white dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -203,8 +207,8 @@
 					<li><a href="#">Hot Deals</a></li>
 					<li><a href="/productList/Laptop">Laptops</a></li>
 					<li><a href="/productList/SmartPhone">Smartphones</a></li>
-					<li><a href="/productList/SmartWatchs">Smart Watchs</a></li>
-					<li><a href="/productList/HeadPhones">Head Phones</a></li>
+					<li><a href="/productList/Smart Watch">Smart Watchs</a></li>
+					<li><a href="/productList/HeadPhone">Head Phones</a></li>
 
 				</ul>
 				<!-- /NAV -->

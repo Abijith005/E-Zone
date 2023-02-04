@@ -176,8 +176,8 @@
 					<li><a href="#">Hot Deals</a></li>
 					<li><a href="/productList/Laptop">Laptops</a></li>
 					<li><a href="/productList/SmartPhone">Smartphones</a></li>
-					<li><a href="/productList/SmartWatchs">Smart Watchs</a></li>
-					<li><a href="/productList/HeadPhones">Head Phones</a></li>
+					<li><a href="/productList/Smart Watch">Smart Watchs</a></li>
+					<li><a href="/productList/HeadPhone">Head Phones</a></li>
 					<!-- /NAV -->
 			</div>
 			<!-- /responsive-nav -->
@@ -225,23 +225,23 @@
 			<div class="col-md-4 col-xs-6">
 				<div class="product">
 					<div class="product-img">
-						<img src="/images/{{this.image.image.[0].filename}}" alt="">
+						<img style="height:35rem;" src="/images/{{this.image.image.[0].filename}}" alt="">
 						<div class="product-label">
-							<span class="sale">-30%</span>
+							<span class="sale">11.1% off</span>
 							<span class="new">NEW</span>
 						</div>
 					</div>
-					<div class="product-body">
+					<div class="product-body" style="height: 14rem;">
 						<p class="product-category">{{this.category}}</p>
-						<h3 class="product-name"><a href="#">product name goes here</a></h3>
-						<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-						<div class="product-rating">
+						<h3 class="product-name"><a href="#">{{this.product_name}}</a></h3>
+						<h4 class="product-price">₹{{this.price}}/- <del class="product-old-price">₹100,000/-</del></h4>
+						{{!-- <div class="product-rating">
 							<i class="fa fa-star"></i>
 							<i class="fa fa-star"></i>
 							<i class="fa fa-star"></i>
 							<i class="fa fa-star"></i>
 							<i class="fa fa-star"></i>
-						</div>
+						</div> --}}
 						<div class="product-btns">
 							<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to
 									wishlist</span></button>
