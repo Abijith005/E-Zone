@@ -9,6 +9,12 @@ var bodyParser = require('body-parser')
 var cookieParser=require('cookie-parser');
 const session = require('express-session');
 
+// app.use((req,res,next)=>{
+//     // if(!req.user)
+//       res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+//       next();
+//   })
+
 db.connect((err)=>{
     if(err){
     console.log('data base not connected'+err);
