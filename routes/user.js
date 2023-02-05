@@ -8,11 +8,15 @@ router.get('/user_login',userController.user_login)
 
 router.post('/user_signIn',userController.user_signin)
 
-router.post('/user_signUP',userController.user_signUp)
-
 router.get('/user_signUp',userController.user_signUpPage)
 
+router.post('/user_signUP',userController.user_signUp)
+
+router.get('/user_logOut',userController.userLogOut)
+
 router.get('/forgot_password',userController.user_forgotPassword)
+
+router.post('/resetPassword',userController.user_resetPassword)
 
 router.get('/signup_otp',userController.user_otp)
 

@@ -1,11 +1,7 @@
 const userService = require('../services/userService')
 const sentOTP = require('../helpers/otp');
 let invalidUser;
-let signUpDetails;
 let OTP = Math.floor(Math.random() * 1000000);
-let checkOtp;
-let invalid_otp = false;
-let resetPassword = false;
 
 
 
@@ -19,18 +15,24 @@ module.exports = {
 
 
     user_login: (req, res) => {
-        if (invalidUser) {
-            res.render('user_login', { invalidUser })
-            invalidUser = false;
-        }
-        else
-            res.render('user_login')
-    },
+if(req.session.user){
+    res.redirect('/')
+}
+else{
+    if (invalidUser) {
+        res.render('user_login', { invalidUser })
+        invalidUser = false;
+    }
+    else
+        res.render('user_login')
+}
+},
+
 
     user_signin: (req, res) => {
         userService.doLogin(req.body).then((result) => {
-
             if (result.status) {
+                req.session.user=true;
                 req.session.userDetails = result.userDetails
                 res.redirect('/')
             }
@@ -39,6 +41,11 @@ module.exports = {
                 res.redirect('/user_login')
             }
         })
+    },
+
+    userLogOut: (req, res) => {
+        req.session.destroy();
+        res.redirect('/')
     },
 
     user_signUp: (req, res) => {
@@ -82,11 +89,14 @@ module.exports = {
     },
 
     user_forgotPassword: (req, res) => {
+        let display;
+        let matchPassword;
+        let message;
+        req.session.passwordNotMatching?matchPassword=false:matchPassword=true
         req.session.resetPassword ? message = true : message = false
-        let display
         req.session.checkOtp ? display = true : display = false
-        res.render('forgot_password', { message, display })
-        req.session.display = false
+        res.render('forgot_password', { message, display,matchPassword })
+        req.session.checkOtp = false
         req.session.resetPassword = false
     },
 
@@ -100,9 +110,17 @@ module.exports = {
 
     },
     user_submitForgotPasswordMail: (req, res) => {
-        sentOTP(req.body.email, OTP)
-        req.session.checkOtp = OTP;
-        res.redirect('/forgot_password')
+        userService.doValidate(req.body).then((result)=>{
+            if (result) {
+                sentOTP(req.body.email, OTP)
+                req.session.checkOtp = OTP;
+                res.redirect('/forgot_password')
+            }
+            else{
+
+                res.redirect('/forgot_password')
+            }
+        })
     },
 
     user_submitForgotOTP: (req, res) => {
@@ -118,23 +136,35 @@ module.exports = {
         }
     },
 
+    user_resetPassword:(req,res)=>{
+if(req.body.newPassword==req.body.confirmPassword){
+    userService.user_changePassword(req.body.newPassword).then(()=>{
+        res.redirect('/user_login')
+    })
+}
+else{
+    req.session.passwordNotMatching=true
+    res.redirect('/forgot_password')
+}
+    },
+
     user_productList: (req, res) => {
         let argument = req.params.id ? req.params.id : req.body.searchInput
         userService.user_searchProduct(argument).then((productData) => {
-            req.session.productList=productData
+            req.session.productList = productData
             res.redirect('/showProductList')
         })
     },
-    show_productList:(req,res)=>{
-    let products=req.session.productList
-res.render('user_productList',{products})
+    show_productList: (req, res) => {
+        let products = req.session.productList
+        res.render('user_productList', { products })
     },
 
-    search_product_with_category:(req,res)=>{
-userService.searchProductWithCategory(req.body.searchInput,req.session.productList[0].category).then((productData)=>{
-    req.session.productList=productData
-    res.redirect('/showProductList')
-})
+    search_product_with_category: (req, res) => {
+        userService.searchProductWithCategory(req.body.searchInput, req.session.productList[0].category).then((productData) => {
+            req.session.productList = productData
+            res.redirect('/showProductList')
+        })
     },
 
     resendOTP: (req, res) => {
@@ -154,15 +184,16 @@ userService.searchProductWithCategory(req.body.searchInput,req.session.productLi
     },
 
     user_cartPage: (req, res) => {
-userService.get_userDetails(req.session.userDetails._id).then((result)=>{
-let cartData=result;
-    res.render('user_cart',{cartData})
-})
+        userService.get_userDetails(req.session.userDetails._id).then((result) => {
+            let cartData = result;
+            res.render('user_cart', { cartData })
+        })
     },
 
     product_to_cart: (req, res) => {
-        userService.user_add_to_cart(req.session.userDetails._id ,req.params.id)
-            res.redirect('/cart')
+        userService.user_add_to_cart(req.session.userDetails._id, req.params.id)
+        res.redirect('/cart')
     }
 
 }
+
