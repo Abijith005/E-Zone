@@ -26,6 +26,10 @@ router.get('/productList/:id',userController.user_productList)
 
 router.post('/productList',userController.user_productList)
 
+router.post('/search_product_with_category/:id',userController.search_product_with_category)
+
+router.get('/showProductList',userController.show_productList)
+
 router.get('/resendOTP',userController.resendOTP)
 
 router.get('/user_profile',userController.user_profilePage)

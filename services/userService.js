@@ -56,6 +56,14 @@ module.exports={
         
     },
 
+    searchProductWithCategory:(input,category)=>{
+return new Promise((resolve, reject) => {
+    db.get().collection(collections.PRODUCT_COLLECTION).find({$and:[{category:category},{$or:[{product_name:new RegExp(input)},{brandName:new RegExp(input)}]}]}).toArray().then((result)=>{
+        resolve(result)
+    })
+})
+    },
+
     user_profileUpdate:(userData,id)=>{
         return new Promise((resolve, reject) => {
             db.get().collection(collections.USER_COLLECTION).update({_id:ObjectId(id)},{$set:{name:userData.name,mob_no:userData.mob_no,address:[userData.address,userData.address_2,userData.address_3],pincode:userData.pincode}})

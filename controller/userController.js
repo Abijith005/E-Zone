@@ -121,9 +121,20 @@ module.exports = {
     user_productList: (req, res) => {
         let argument = req.params.id ? req.params.id : req.body.searchInput
         userService.user_searchProduct(argument).then((productData) => {
-            res.render('user_productList', { productData })
-
+            req.session.productList=productData
+            res.redirect('/showProductList')
         })
+    },
+    show_productList:(req,res)=>{
+    let products=req.session.productList
+res.render('user_productList',{products})
+    },
+
+    search_product_with_category:(req,res)=>{
+userService.searchProductWithCategory(req.body.searchInput,req.params.id).then((productData)=>{
+    req.session.productList=productData
+    res.redirect('/showProductList')
+})
     },
 
     resendOTP: (req, res) => {

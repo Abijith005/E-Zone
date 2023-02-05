@@ -75,14 +75,9 @@
 					<!-- SEARCH BAR -->
 					<div class="col-md-6">
 						<div class="header-search">
-							<form action="">
-								<select class="input-select">
-									<option value="0">All Categories</option>
-									<option value="1">Category 01</option>
-									<option value="1">Category 02</option>
-								</select>
-								<input class="input" placeholder="Search here">
-								<button class="search-btn">Search</button>
+							<form action='/search_product_with_category/{{products.category}}' method="post">
+								<input class="input" name="searchInput" placeholder="Search here">
+								<button class="search-btn" type="submit">Search</button>
 							</form>
 						</div>
 					</div>
@@ -221,7 +216,7 @@
 		<!-- store products -->
 		<div class="row">
 			<!-- product -->
-			{{#each productData}}
+			{{#each products}}
 			<div class="col-md-3 col-xs-6">
 				<div class="product">
 					<div class="product-img">
