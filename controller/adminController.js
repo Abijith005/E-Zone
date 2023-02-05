@@ -100,7 +100,7 @@ if (req.session.admin) {
     admin_productEditPage: async (req, res) => {
 
 if (req.session.admin) {
-    let data = await adminService.findToUpdate(req.params)
+    let data = await adminService.findToUpdate(req.params,collections.PRODUCT_COLLECTION)
     res.render('edit_product', { data })
     
 } else {
@@ -198,7 +198,9 @@ if (req.session.admin) {
 
     admin_addCategoryPage: (req, res) => {
         if (req.session.admin) {
-            res.render('add_category')
+            let data 
+            req.session.categoryDetails?data=req.session.categoryDetails:data=null
+            res.render('add_category',{data})
             
         } else {
             res.redirect('/admin')
@@ -219,6 +221,41 @@ if (req.session.admin) {
             res.redirect('/admin')
 
         }
+    },
+
+    flagAndUnflag_category:(req,res)=>{
+        if (req.session.admin) {
+            adminService.flag_or_unflagCategory(req.params.id).then(()=>{
+                res.redirect('/admin/category')
+            })
+            
+        } else {
+            res.redirect('/admin')
+            
+        }
+    },
+
+    edit_category:(req,res)=>{
+if (req.session.admin) {
+    adminService.findToUpdate(req.params.id,collections.CATEGORY_COLLECTION).then((result)=>{
+req.session.categoryDetails=result
+res.redirect('/admin/add_categoryPage')
+    })
+} else {
+    res.redirect('/admin')
+    
+}
+    },
+
+    update_category:(req,res)=>{
+if (req.session.admin) {
+    adminService.categoryUpdate(req.params.id,req.body)
+    res.redirect('/admin/category')
+
+} else {
+    res.redirect('/admin')
+
+}
     }
 
 

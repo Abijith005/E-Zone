@@ -39,6 +39,12 @@ router.get('/add_categoryPage',adminController.admin_addCategoryPage)
 
 router.post('/add_category',adminController.admin_addCategory)
 
+router.get('/flag_and_unFlag_category/:id',adminController.flagAndUnflag_category)
+
+router.get('/editCategory/:id',adminController.edit_category)
+
+router.post('/updateCategory/:id',adminController.update_category)
+
 
 module.exports= router;
 
