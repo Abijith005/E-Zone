@@ -49,7 +49,7 @@ module.exports={
 
     user_searchProduct:(productData)=>{
         return new Promise((resolve, reject) => {
-            db.get().collection(collections.PRODUCT_COLLECTION).find({$or:[{product_name:productData},{company:productData},{category:productData}]}).toArray().then((result)=>{
+            db.get().collection(collections.PRODUCT_COLLECTION).find({$or:[{product_name:new RegExp(productData,'i')},{company:new RegExp(productData,'i')},{category:new RegExp(productData,'i')}]}).toArray().then((result)=>{
                 resolve(result)
             })
         })

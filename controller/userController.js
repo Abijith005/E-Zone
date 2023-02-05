@@ -119,7 +119,7 @@ module.exports = {
     },
 
     user_productList: (req, res) => {
-        let argument = req.params.id ? req.params.id : req.body.category
+        let argument = req.params.id ? req.params.id : req.body.searchInput
         userService.user_searchProduct(argument).then((productData) => {
             res.render('user_productList', { productData })
 
