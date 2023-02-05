@@ -26,7 +26,7 @@ router.get('/productList/:id',userController.user_productList)
 
 router.post('/productList',userController.user_productList)
 
-router.post('/search_product_with_category/:id',userController.search_product_with_category)
+router.post('/search_product_with_category',userController.search_product_with_category)
 
 router.get('/showProductList',userController.show_productList)
 

@@ -57,8 +57,9 @@ module.exports={
     },
 
     searchProductWithCategory:(input,category)=>{
+        console.log(input+'*************'+category);
 return new Promise((resolve, reject) => {
-    db.get().collection(collections.PRODUCT_COLLECTION).find({$and:[{category:category},{$or:[{product_name:new RegExp(input)},{brandName:new RegExp(input)}]}]}).toArray().then((result)=>{
+    db.get().collection(collections.PRODUCT_COLLECTION).find({$and:[{category:category},{$or:[{product_name:new RegExp(input,'i')},{brandName:new RegExp(input,'i')}]}]}).toArray().then((result)=>{
         resolve(result)
     })
 })

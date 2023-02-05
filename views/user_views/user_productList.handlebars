@@ -75,7 +75,7 @@
 					<!-- SEARCH BAR -->
 					<div class="col-md-6">
 						<div class="header-search">
-							<form action='/search_product_with_category/{{products.category}}' method="post">
+							<form action='/search_product_with_category' method="post">
 								<input class="input" name="searchInput" placeholder="Search here">
 								<button class="search-btn" type="submit">Search</button>
 							</form>
@@ -229,7 +229,8 @@
 					<div class="product-body" style="height: 14rem;">
 						<p class="product-category">{{this.category}}</p>
 						<h3 class="product-name"><a href="#">{{this.product_name}}</a></h3>
-						<h4 class="product-price">₹{{this.price}}/- <del class="product-old-price">₹100,000/-</del></h4>
+						<h3 class="product-name">{{this.brandName}}</h3>						
+						<h4 class="product-price">₹{{this.price}}/- <del class="product-old-price">₹{{this.price}}/-</del></h4>
 						{{!-- <div class="product-rating">
 							<i class="fa fa-star"></i>
 							<i class="fa fa-star"></i>

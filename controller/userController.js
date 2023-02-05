@@ -131,7 +131,7 @@ res.render('user_productList',{products})
     },
 
     search_product_with_category:(req,res)=>{
-userService.searchProductWithCategory(req.body.searchInput,req.params.id).then((productData)=>{
+userService.searchProductWithCategory(req.body.searchInput,req.session.productList[0].category).then((productData)=>{
     req.session.productList=productData
     res.redirect('/showProductList')
 })
@@ -164,6 +164,5 @@ let cartData=result;
         userService.user_add_to_cart(req.session.userDetails._id ,req.params.id)
             res.redirect('/cart')
     }
-
 
 }
