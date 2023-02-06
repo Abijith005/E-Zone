@@ -15,24 +15,24 @@ module.exports = {
 
 
     user_login: (req, res) => {
-if(req.session.user){
-    res.redirect('/')
-}
-else{
-    if (invalidUser) {
-        res.render('user_login', { invalidUser })
-        invalidUser = false;
-    }
-    else
-        res.render('user_login')
-}
-},
+        if (req.session.user) {
+            res.redirect('/')
+        }
+        else {
+            if (invalidUser) {
+                res.render('user_login', { invalidUser })
+                invalidUser = false;
+            }
+            else
+                res.render('user_login')
+        }
+    },
 
 
     user_signin: (req, res) => {
         userService.doLogin(req.body).then((result) => {
             if (result.status) {
-                req.session.user=true;
+                req.session.user = true;
                 req.session.userDetails = result.userDetails
                 res.redirect('/')
             }
@@ -44,11 +44,40 @@ else{
     },
 
     userLogOut: (req, res) => {
+        
         req.session.destroy();
         res.redirect('/')
     },
 
+    // router.post('/signup',check('Name').notEmpty().withMessage("please Enter a Name"),check('Email')
+    // .matches(/^\w+([\._]?\w+)?@\w+(\.\w{2,3})(\.\w{2})?$/)
+    //     .withMessage("Must be a valid Email id"),check('Password').matches(/[\w\d!@#$%^&*?]{6,}/)
+    //     .withMessage("Password must contain atleast 6 characters"),
+    //   (req, res) => {
+    //     const errors = validationResult(req)
+    //     let error1 = errors.errors.find(item => item.param === 'Name') || '';
+    //     let error2 = errors.errors.find(item => item.param === 'Email') || '';
+    //     let error3 = errors.errors.find(item => item.param === 'Password') || '';
+    
+    //     if (!errors.isEmpty()) {
+    //       res.render('signup', {nameMsg: error1.msg, emailMsg: error2.msg, passwordMsg: error3.msg })
+
+
+
+
     user_signUp: (req, res) => {
+
+        const errors = validationResult(req)
+        //     let error1 = errors.errors.find(item => item.param === 'Name') || '';
+        //     let error2 = errors.errors.find(item => item.param === 'Email') || '';
+        //     let error3 = errors.errors.find(item => item.param === 'Password') || '';
+        
+        //     if (!errors.isEmpty()) {
+        //       res.render('signup', {nameMsg: error1.msg, emailMsg: error2.msg, passwordMsg: error3.msg })
+
+
+
+        // ************************************************************
         userService.doValidate(req.body).then((result) => {
             if (result) {
                 res.redirect('/user_signup')
@@ -85,38 +114,58 @@ else{
     },
 
     user_signUpPage: (req, res) => {
-        res.render('user_signup')
+        if (req.session.user) {
+            res.redirect('/')
+        } else {
+        //    res.render('signup', {nameMsg: error1.msg, emailMsg: error2.msg, passwordMsg: error3.msg })
+            
+            res.render('user_signup')
+        }
     },
 
     user_forgotPassword: (req, res) => {
-        let display;
-        let matchPassword;
-        let message;
-        req.session.passwordNotMatching?matchPassword=false:matchPassword=true
-        req.session.resetPassword ? message = true : message = false
-        req.session.checkOtp ? display = true : display = false
-        res.render('forgot_password', { message, display,matchPassword })
-        req.session.checkOtp = false
-        req.session.resetPassword = false
+if (req.session.user) {
+    res.redirect('/')
+} else {
+    
+            let display;
+            let matchPassword;
+            let message;
+            req.session.passwordNotMatching ? matchPassword = false : matchPassword = true
+            req.session.resetPassword ? message = true : message = false
+            req.session.checkOtp ? display = true : display = false
+            res.render('forgot_password', { message, display, matchPassword })
+            req.session.checkOtp = false
+            req.session.resetPassword = false
+    
+}
+
     },
 
     user_otp: (req, res) => {
-        if (req.session.invalid_otp) {
-            res.render('signup_OTP', { message: 'Invalid OTP' })
-            req.session.invalid_otp = false
-        }
-        else
-            res.render('signup_OTP')
+if (req.session.user) {
+    res.redirect('/')
+} else {
+    
+    if (req.session.invalid_otp) {
+        res.render('signup_OTP', { message: 'Invalid OTP' })
+        req.session.invalid_otp = false
+    }
+    else
+        res.render('signup_OTP')
+}
+
+
 
     },
     user_submitForgotPasswordMail: (req, res) => {
-        userService.doValidate(req.body).then((result)=>{
+        userService.doValidate(req.body).then((result) => {
             if (result) {
                 sentOTP(req.body.email, OTP)
                 req.session.checkOtp = OTP;
                 res.redirect('/forgot_password')
             }
-            else{
+            else {
 
                 res.redirect('/forgot_password')
             }
@@ -136,16 +185,16 @@ else{
         }
     },
 
-    user_resetPassword:(req,res)=>{
-if(req.body.newPassword==req.body.confirmPassword){
-    userService.user_changePassword(req.body.newPassword).then(()=>{
-        res.redirect('/user_login')
-    })
-}
-else{
-    req.session.passwordNotMatching=true
-    res.redirect('/forgot_password')
-}
+    user_resetPassword: (req, res) => {
+        if (req.body.newPassword == req.body.confirmPassword) {
+            userService.user_changePassword(req.body.newPassword).then(() => {
+                res.redirect('/user_login')
+            })
+        }
+        else {
+            req.session.passwordNotMatching = true
+            res.redirect('/forgot_password')
+        }
     },
 
     user_productList: (req, res) => {
@@ -174,8 +223,13 @@ else{
     },
 
     user_profilePage: (req, res) => {
-        let data = req.session.userDetails
-        res.render('user_profile', { data })
+        if (req.session.user) {
+            let data = req.session.userDetails
+            res.render('user_profile', { data })
+            
+        } else {
+            res.redirect('/')
+        }
     },
 
     user_profileUpdate: (req, res) => {
@@ -184,15 +238,25 @@ else{
     },
 
     user_cartPage: (req, res) => {
-        userService.get_userDetails(req.session.userDetails._id).then((result) => {
-            let cartData = result;
-            res.render('user_cart', { cartData })
-        })
+        if (req.session.user) {
+            
+            userService.get_userDetails(req.session.userDetails._id).then((result) => {
+                let cartData = result;
+                res.render('user_cart', { cartData })
+            })
+        } else {
+            res.redirect('/')
+        }
     },
 
     product_to_cart: (req, res) => {
-        userService.user_add_to_cart(req.session.userDetails._id, req.params.id)
-        res.redirect('/cart')
+        if (req.session.user) {
+            
+            userService.user_add_to_cart(req.session.userDetails._id, req.params.id)
+            res.redirect('/cart')
+        } else {
+            res.redirect('/')
+        }
     }
 
 }

@@ -62,22 +62,21 @@
 					<div class="col-md-2">
 						<div class="header-logo ">
 							<a href="#" class="logo">
-								<h4 class="font-weight-bold">
-									<h3 style="color: #ffff;">E-<font color="#FFD523">Zone</font>
-									</h3>
-								</h4>
-
+								<h1 class="font-weight-bold"
+									 style="color: #ffff;">E-<font color="#FFD523">Zone</font>
+									
+								</h1>
 							</a>
 						</div>
 					</div>
 					<!-- /LOGO -->
 
 					<!-- SEARCH BAR -->
-					<div class="col-md-6">
+					<div class="col-md-8 text-center">
 						<div class="header-search">
 							<form action="/productList" method="post">
 								<input class="input"
-									style="border-top-left-radius:2rem;border-bottom-left-radius:2rem; width: 80%;"
+									style="border-top-left-radius:2rem;border-bottom-left-radius:2rem; width: 60%;"
 									type="text" name="category" placeholder="Search here">
 								<button class="search-btn">Search</button>
 							</form>
@@ -155,7 +154,7 @@
 						</div>
 					</div>
 					{{/if}} --}}
-					<div class="col-1 ms-auto">
+					<div class="col-2 ms-auto">
 						<div class="dropdown">
 								<button class="btn btn-secondary text-white dropdown-toggle" type="button" id="dropdownMenuButton"
 								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{!--{{userName}}  --}}Abijith Surendran</button>
@@ -215,7 +214,7 @@
                             <td data-th="Product">
                                 <div class="row">
                                     <div class="col-md-6 col-12 ">
-                                        <img  src="{{this.img}}" alt="" class="img-fluid  ">
+                                        <img  src="images/{{this.image.image.[0].filename}}" alt="" class="img-fluid  ">
                                     </div>
                                   
                                 </div>
@@ -250,7 +249,7 @@
                 <a href="catalog.html" class="btn btn-warning mb-4 btn-lg pl-5 pr-5">Checkout</a>
             </div>
             <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
-                <a href="/home">
+                <a href="/">
                     <i class="fas fa-arrow-left mr-2"></i> Continue Shopping</a>
             </div>
         </div>

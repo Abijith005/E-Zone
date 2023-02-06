@@ -49,7 +49,7 @@ module.exports={
     
     user_searchProduct:(productData)=>{
         return new Promise((resolve, reject) => {
-            db.get().collection(collections.PRODUCT_COLLECTION).find({$or:[{product_name:new RegExp(productData,'i')},{company:new RegExp(productData,'i')},{category:new RegExp(productData,'i')}]}).toArray().then((result)=>{
+            db.get().collection(collections.PRODUCT_COLLECTION).find({$and:[{flag:false},{$or:[{product_name:new RegExp(productData,'i')},{brandName:new RegExp(productData,'i')},{category:new RegExp(productData,'i')}]}]}).toArray().then((result)=>{
                 resolve(result)
             })
         })
@@ -57,9 +57,8 @@ module.exports={
     },
 
     searchProductWithCategory:(input,category)=>{
-        console.log(input+'*************'+category);
 return new Promise((resolve, reject) => {
-    db.get().collection(collections.PRODUCT_COLLECTION).find({$and:[{category:category},{$or:[{product_name:new RegExp(input,'i')},{brandName:new RegExp(input,'i')}]}]}).toArray().then((result)=>{
+    db.get().collection(collections.PRODUCT_COLLECTION).find({$and:[{category:category},{flag:false},{$or:[{product_name:new RegExp(input,'i')},{brandName:new RegExp(input,'i')}]}]}).toArray().then((result)=>{
         resolve(result)
     })
 })

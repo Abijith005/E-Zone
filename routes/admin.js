@@ -48,6 +48,8 @@ router.post('/updateCategory/:id',adminController.update_category)
 router.get('/log_Out',adminController.adminLogOut)
 
 
+
+
 module.exports= router;
 
 

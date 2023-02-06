@@ -28,18 +28,20 @@
                         <input type="text" name="product_name" value={{data.product_name}}><br>
                         <label for="">Category :</label> <label style="margin-left:20% ;" for="">Brands :</label><br>
                           <select style="width: 29%;  margin-bottom: 2rem; border-radius: .5rem;" name="category" id="" required>
-                            <option value="">Select Category</option>
-                            {{#each data}}
+                            <option value="">{{data.category}}</option>
+                            {{#each result}}                           
                             <option value="{{this.category}}">{{this.category}}</option>
                             {{/each}}
+
                         </select>
                         <select style="width: 29%; margin-left: 2%;border-radius: .5rem;" name="brandName" id="" required>
-                            <option value="">Select Brand</option>
-                            {{#each data}}
+                            <option value="">{{data.brandName}}</option>
+                            {{#each result}}
                             {{#each this.brandName}}
                             <option value="{{this}}">{{this}}</option>
                             {{/each}}
                             {{/each}}
+                            
                         </select><br>
                         {{!-- <input type="text" name="company" style="width: 29%;" value={{data.company}}> <input style="width: 29%; margin-left: 2%;" type="text" name="category" value={{data.category}}><br> --}}
                         <label for="">Products Details :</label><br>

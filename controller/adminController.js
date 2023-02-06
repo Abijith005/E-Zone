@@ -101,7 +101,8 @@ module.exports = {
 
         if (req.session.admin) {
             let data = await adminService.findToUpdate(req.params, collections.PRODUCT_COLLECTION)
-            res.render('edit_product', { data })
+            let result=await adminService.list_productOrCategory(collections.CATEGORY_COLLECTION)
+            res.render('edit_product', { data,result})
 
         } else {
             res.redirect('/admin')
