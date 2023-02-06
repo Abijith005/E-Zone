@@ -1,4 +1,5 @@
 const express=require('express')
+const { check } = require('express-validator')
 const router=express.Router()
 const userController=require('../controller/userController')
 
@@ -10,12 +11,12 @@ router.post('/user_signIn',userController.user_signin)
 
 router.get('/user_signUp',userController.user_signUpPage)
 
-router.post('/user_signUP',userController.user_signUp)
-
-// ,check('name').notEmpty().withMessage("please Enter a Name"),check('email')
-// .matches(/^\w+([\._]?\w+)?@\w+(\.\w{2,3})(\.\w{2})?$/)
-//     .withMessage("Must be a valid Email id"),check('Password').matches(/[\w\d!@#$%^&*?]{6,}/)
-//     .withMessage("Password must contain atleast 6 characters") 
+router.post('/user_signUP'
+,check('userName').notEmpty().withMessage("Enter a Valid Name"),check('email')
+.matches(/^\w+([\._]?\w+)?@\w+(\.\w{2,3})(\.\w{2})?$/)
+    .withMessage("Enter a Valid Email id"),check('password').matches(/[\w\d!@#$%^&*?]{6,}/)
+    .withMessage("Password must contain atleast 6 characters")
+    ,userController.user_signUp)
 
 router.get('/user_logOut',userController.userLogOut)
 
