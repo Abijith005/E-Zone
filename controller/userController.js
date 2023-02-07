@@ -196,18 +196,16 @@ module.exports = {
     },
 
     user_profilePage: (req, res) => {
-        // if (req.session.user) {
-            let data = req.session.userDetails
-            res.render('user_profile', { data })
 
-        // } else {
-        //     res.redirect('/')
-        // }
-    },
+        userService.get_userDetails(req.session.userDetails._id).then((data)=>{
+            data.address.length>=3?maxAddress=true:maxAddress=false
+            req.session.addAddress? addAddress=true:addAddress=false
+            res.render('user_profile', { data,addAddress,maxAddress })
+            req.session.addAddress=false
+            addAddress=false
+        })
 
-    user_profileUpdate: (req, res) => {
-        userService.user_profileUpdate(req.body, req.session.userDetails._id)
-        res.redirect('/')
+        
     },
 
     user_cartPage: (req, res) => {
@@ -222,6 +220,17 @@ module.exports = {
         //     res.redirect('/')
         // }
     },
+
+addAddressPage:(req,res)=>{
+    req.session.addAddress=true
+res.redirect('/user_profile')
+},
+
+    add_Address:(req,res)=>{
+        userService.user_addAddress(req.session.userDetails._id,req.body).then(()=>{
+            res.redirect('/user_profile')
+        })
+    }
 
 
 }

@@ -44,11 +44,13 @@ router.get('/resendOTP',userSession.ifNoUser,userController.resendOTP)
 
 router.get('/user_profile',userSession.ifUser, userController.user_profilePage)
 
-router.post('/update_profile',userSession.ifUser, userController.user_profileUpdate)
-
 router.get('/cart',userSession.ifUser, userController.user_cartPage)
 
 router.get('/add_to_cart/:id',userSession.ifUser,productController.product_to_cart)
+
+router.get('/addAddress',userSession.ifUser,userController.addAddressPage)
+
+router.post('/addAddress',userSession.ifUser,userController.add_Address)
 
 
 
