@@ -8,7 +8,7 @@ module.exports={
              userData.password =await bcrypt.hash(userData.password,10)
              let block=false
              let {name,email,mob_no,password,address,pincode}=userData
-            db.get().collection(collections.USER_COLLECTION).insertOne({name,email,mob_no,password,address,pincode,block,user_cart:[],user_wishList:[]}).then((data)=>{
+            db.get().collection(collections.USER_COLLECTION).insertOne({name,email,mob_no,password,pincode,block,user_cart:[],user_wishList:[],address:[address]}).then((data)=>{
                 resolve(data)
                 
             })
@@ -66,7 +66,7 @@ return new Promise((resolve, reject) => {
 
     user_profileUpdate:(userData,id)=>{
         return new Promise((resolve, reject) => {
-            db.get().collection(collections.USER_COLLECTION).update({_id:ObjectId(id)},{$set:{name:userData.name,mob_no:userData.mob_no,address:[userData.address,userData.address_2,userData.address_3],pincode:userData.pincode}})
+            db.get().collection(collections.USER_COLLECTION).updateOne({_id:ObjectId(id)},{$set:{name:userData.name,mob_no:userData.mob_no,address:[userData.address,userData.address_2,userData.address_3],pincode:userData.pincode}})
 
         })
     },

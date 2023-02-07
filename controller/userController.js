@@ -2,6 +2,7 @@ const userService = require('../services/userService')
 const sentOTP = require('../helpers/otp');
 const { validationResult } = require('express-validator');
 let invalidUser;
+let nameMsg,emailMsg,passwordMsg,mobnoMsg;
 let OTP = Math.floor(Math.random() * 1000000);
 
 
@@ -55,12 +56,14 @@ module.exports = {
     user_signUp: (req, res) => {
 
         const errors = validationResult(req)
-        let error1 = errors.errors.find(item => item.param === 'userName') || '';
+        let error1 = errors.errors.find(item => item.param === 'name') || '';
         let error2 = errors.errors.find(item => item.param === 'email') || '';
         let error3 = errors.errors.find(item => item.param === 'password') || '';
+        let error4 = errors.errors.find(item => item.param === 'mob_no') || '';
 
         if (!errors.isEmpty()) {
-            res.render('user_signup', { nameMsg: error1.msg, emailMsg: error2.msg, passwordMsg: error3.msg })
+            nameMsg=error1.msg, emailMsg=error2.msg, passwordMsg=error3.msg,mobnoMsg=error4.msg 
+            res.redirect('/user_signup')
         }
         else {
             userService.doValidate(req.body).then((result) => {
@@ -79,10 +82,10 @@ module.exports = {
                 }
             })
         }
-
-
+        
+        
         // ************************************************************
-
+        
     },
     user_validateSignUpOTP: (req, res) => {
         if (req.body.otp == req.session.checkOtp) {
@@ -98,17 +101,16 @@ module.exports = {
             req.session.checkOtp = null
             res.redirect('/signup_otp')
         }
-
-
+        
+        
     },
-
+    
     user_signUpPage: (req, res) => {
         if (req.session.user) {
             res.redirect('/')
         } else {
-            //    res.render('signup', {nameMsg: error1.msg, emailMsg: error2.msg, passwordMsg: error3.msg })
-
-            res.render('user_signup')
+            res.render('user_signup',{nameMsg,emailMsg,passwordMsg,mobnoMsg})
+            nameMsg=null,emailMsg=null,passwordMsg=null;mobnoMsg=null
         }
     },
 

@@ -5,3 +5,6 @@
 // console.log(element);
 // });
 
+array.forEach(element => {
+    
+});

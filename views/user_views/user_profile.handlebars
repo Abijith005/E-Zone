@@ -46,7 +46,8 @@ border-width: 2px;
                         <input type="text" name="name" value="{{data.name}}" placeholder="Name" required><br>
                         <input type="tel" name="mob_no" value="{{data.mob_no}}" placeholder="Mob No" required><br>
                         {{!-- <input type="text" class="address" name="address" placeholder="Address" required><br> --}}
-                        <textarea name="address"  cols="39" rows="3" placeholder="Address- 1" required>{{data.address}}</textarea>
+                        {{!-- <textarea name="address"  cols="39" rows="3" placeholder="Address- 1" required>{{data.address[0]}}</textarea> --}}
+                        
                         {{#each data.address}}
                         <textarea name="address"  cols="39" rows="3"  required>{{this}}</textarea>
                         {{/each}}
@@ -88,7 +89,6 @@ border-width: 2px;
                 container.appendChild(input)
               
 
-
             }
         }
 
@@ -103,6 +103,12 @@ border-width: 2px;
             }
 
         }
+    </script>
+
+    <script>
+        array.forEach(element => {
+    
+});
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"

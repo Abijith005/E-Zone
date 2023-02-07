@@ -113,6 +113,7 @@ module.exports = {
 
     admin_productEdit: async (req, res) => {
         if (req.session.admin) {
+            console.log(req.files);
             adminService.update_product(req.params.id, req.body, req.files)
             res.redirect('/admin/admin_products')
 
@@ -202,6 +203,7 @@ module.exports = {
             let data
             req.session.categoryDetails ? data = req.session.categoryDetails : data = null
             res.render('add_category', { data })
+            req.session.categoryDetails=null
 
         } else {
             res.redirect('/admin')

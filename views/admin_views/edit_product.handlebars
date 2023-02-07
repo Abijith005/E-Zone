@@ -27,15 +27,15 @@
                         <label for="">Product name :</label><br>
                         <input type="text" name="product_name" value={{data.product_name}}><br>
                         <label for="">Category :</label> <label style="margin-left:20% ;" for="">Brands :</label><br>
-                          <select style="width: 29%;  margin-bottom: 2rem; border-radius: .5rem;" name="category" id="" required>
-                            <option value="">{{data.category}}</option>
-                            {{#each result}}                           
+                          <select style="width: 29%;  margin-bottom: 2rem; border-radius: .5rem;" name="category" id="">
+                            <option value="{{data.category}}">{{data.category}}</option>
+                            {{#each result}}
                             <option value="{{this.category}}">{{this.category}}</option>
                             {{/each}}
 
                         </select>
-                        <select style="width: 29%; margin-left: 2%;border-radius: .5rem;" name="brandName" id="" required>
-                            <option value="">{{data.brandName}}</option>
+                        <select style="width: 29%; margin-left: 2%;border-radius: .5rem;" name="brandName" id="" >
+                            <option value="{{data.brandName}}">{{data.brandName}}</option>
                             {{#each result}}
                             {{#each this.brandName}}
                             <option value="{{this}}">{{this}}</option>
@@ -52,7 +52,8 @@
                     <div class="col-6">
                         <label for="">Image :</label><br>
                         <img type="file" name="image" style="border-style:solid;width:50%;height: 50%;" src="/images/{{data.image.image.[0].filename}}"><br>
-                        <input type="file" name="image" style="border-style:solid;margin-top: 1rem;width: 50%;" value="/images/{{data.image.image.[0].filename}}" required>
+                        {{!-- <input type="text" value="{{data.image.image}}"> --}}
+                        <input type="file" name="image" style="border-style:solid;margin-top: 1rem;width: 50%;" value="{{data.image.image}}">
                     </div>
                 </div>
                 <div class="text-center mb-5 mt-2">

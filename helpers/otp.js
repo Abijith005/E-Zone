@@ -13,6 +13,7 @@ const sentOTP = (email, otp) => {
         pass: 'wmqyzknyoqitfeje',
 
       },
+
     });
     var mailOptions = {
       // from: process.env.SITE_EMAIL,
@@ -25,7 +26,6 @@ const sentOTP = (email, otp) => {
                 <h2>${otp}</h2>
               `,
     }
-
 
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
@@ -80,3 +80,5 @@ module.exports = sentOTP;
 // }
 
 // module.exports = sentOTP;
+
+
