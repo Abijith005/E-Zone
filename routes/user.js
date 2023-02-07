@@ -2,17 +2,15 @@ const express = require('express')
 const { check } = require('express-validator')
 const router = express.Router()
 const userController = require('../controller/userController')
-
+const productController=require('../controller/productController')
+const userSession=require('../middleware/userSession')
 router.get('/', userController.user_home)
 
-router.get('/user_login', userController.user_login)
+router.get('/user_login',userSession.ifNoUser, userController.user_login)
 
-router.post('/user_signIn', userController.user_signin)
+router.post('/user_signIn',userSession.ifNoUser, userController.user_signin)
 
-router.get('/user_signUp', userController.user_signUpPage)
-
-
-// .matches(/^\w+([\._]?\w+)?@\w+(\.\w{2,3})(\.\w{2})?$/)
+router.get('/user_signUp',userSession.ifNoUser, userController.user_signUpPage)
 
 router.post('/user_signUP'
     , check('name').matches(/[a-zA-Z0-9]+/).withMessage("Enter a Valid Name"), check('email')
@@ -22,35 +20,36 @@ router.post('/user_signUP'
 
 router.get('/user_logOut', userController.userLogOut)
 
-router.get('/forgot_password', userController.user_forgotPassword)
+router.get('/forgot_password',userSession.ifNoUser, userController.user_forgotPassword)
 
-router.post('/resetPassword', userController.user_resetPassword)
+router.post('/resetPassword',userSession.ifNoUser ,userController.user_resetPassword)
 
-router.get('/signup_otp', userController.user_otp)
+router.get('/signup_otp',userSession.ifNoUser, userController.user_otp)
 
-router.post('/signup_otp', userController.user_validateSignUpOTP)
+router.post('/signup_otp',userSession.ifNoUser, userController.user_validateSignUpOTP)
 
-router.post('/submit_forgotOTP', userController.user_submitForgotOTP)
+router.post('/submit_forgotOTP',userSession.ifNoUser, userController.user_submitForgotOTP)
 
-router.post('/submit_mailForgotPassword', userController.user_submitForgotPasswordMail)
+router.post('/submit_mailForgotPassword',userSession.ifNoUser, userController.user_submitForgotPasswordMail)
 
-router.get('/productList/:id', userController.user_productList)
+router.get('/productList/:id',productController.user_productList)
 
-router.post('/productList', userController.user_productList)
+router.post('/productList',productController.user_productList)
 
-router.post('/search_product_with_category', userController.search_product_with_category)
+router.post('/search_product_with_category',productController.search_product_with_category)
 
-router.get('/showProductList', userController.show_productList)
+router.get('/showProductList',productController.show_productList)
 
-router.get('/resendOTP', userController.resendOTP)
+router.get('/resendOTP',userSession.ifNoUser,userController.resendOTP)
 
-router.get('/user_profile', userController.user_profilePage)
+router.get('/user_profile',userSession.ifUser, userController.user_profilePage)
 
-router.post('/update_profile', userController.user_profileUpdate)
+router.post('/update_profile',userSession.ifUser, userController.user_profileUpdate)
 
-router.get('/cart', userController.user_cartPage)
+router.get('/cart',userSession.ifUser, userController.user_cartPage)
 
-router.get('/add_to_cart/:id', userController.product_to_cart)
+router.get('/add_to_cart/:id',userSession.ifUser,productController.product_to_cart)
+
 
 
 

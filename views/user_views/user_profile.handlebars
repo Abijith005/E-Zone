@@ -7,10 +7,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+
+
+
+    <style>
+
+.profile-main{
+    width: 100vw;
+    min-height: 100vh;
+    background-color: var(--lightWhite);
+}
+.profile-container{
+    background-color: #fff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+.profil-row button{
+    width: 70px;
+    height: 35px;
+    border: none;
+    outline: none;
+    background-color: rgb(37, 35, 35);
+    color: white;
+    font-weight: 500;
+    font-size: .9rem;
+    margin-top: 20px;
+}
+.profil-row button:last-child{
+   background-color: rgb(248, 50, 50);
+}
+.profil-row i{
+    font-size: .7rem;
+}
+.profile-items{
+    display: flex;
+    flex-direction: column;
+}
+.profile-item{
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    margin-top: 20px;
+    padding: 0px 20px;
+    color: var(--black);
+}
+.manage-profile-address{
+    display: flex;
+    flex-direction: column;
+}
+.manage-address-row{
+    background-color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.man-ad-left{
+    display: flex;
+    flex-direction: column;
+}
+.man-ad-right{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.man-ad-right i{
+    font-size: 1.2rem;
+    color: red;
+    font-weight: 500;
+}
+.man-ad-right i:last-child{
+    color: blue;
+}
+
+    </style>
+
+
+</style>
+
 
     <title>E-Zone</title>
 </head>
-<style>
+{{!-- <style>
     input {
         width: 80%;
         margin-bottom: 1.5rem;
@@ -33,10 +119,100 @@ border-width: 2px;
     form {
         padding-left: 2rem;
     }
-</style>
+</style> --}}
 
 <body>
-    <div class="container">
+
+
+
+
+ <div class="profile-main">
+        <div class="container pt-5">
+            <h3>Profile</h3>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="profile-container">
+                        <h4>General</h4>
+                        <div class="profil-row">
+                            <b>Name : </b><span>{{data.name}}</span>
+                        </div>
+                        <div class="profil-row">
+                            <b>Mob No : </b><span>{{data.mob_no}}</span>
+                        </div>
+                       
+                        <div class="profil-row">
+                            <button onclick="window.location.href='/edit-profile'">Edit</button>
+                            <a href="/user_logOut">
+                                <button>Logout</button>
+    
+                            </a>
+                        </div>
+                    </div>
+                    <div class="porfile-items">
+                        <a href="/cart" class="profile-item">
+                            <b>Cart</b>
+                            <i class="ri-shopping-cart-line"></i>
+                        </a>
+                    </div>
+                    <div class="porfile-items">
+                        <a href="/wishlist" class="profile-item">
+                            <b>Wishlist</b>
+                            <i class="ri-heart-line"></i>
+                        </a>
+                    </div>
+                    <div class="porfile-items">
+                        <a href="/orders" class="profile-item">
+                            <b>Order History</b>
+                            <i class="ri-shopping-bag-2-line"></i>
+                        </a>
+                    </div>
+                    {{!-- <div class="porfile-items">
+                        <a href="/coupons" class="profile-item">
+                            <b>Coupons</b>
+                            <i class="ri-coupon-2-line"></i>
+                        </a>
+                    </div> --}}
+                    <div class="row"></div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="manage-profile-address pt-3">
+                        <div class="d-flex justify-content-between">
+                            <h4>Manage address </h4>
+                            <a href="/add-address" class="btn btn-dark rounded-0 ">Add</a>
+                        </div>
+                        <% user.address.forEach((item)=>{  %> 
+                        <div class="manage-address-row">
+                            <div class="man-ad-left">
+                                <b><%=item.name  %> </b>
+                                <b><%=item.mobile  %> </b>
+                                <b><%=item.address  %> </b>
+                                <b>PIN: <%=item.pincode  %> </b>
+                            </div>
+                            <div class="man-ad-right">
+                                <i class="ri-delete-bin-5-line" onclick="deleteAddress('<%=item.id%>')"></i>
+                                <a href="/edit-address/<%=item.id %>"><i class="ri-edit-box-line"></i></a>
+                            </div>
+                        </div>
+                        <% }) %> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function deleteAddress(id){
+            if(confirm("Are you sure delete this address")){
+                window.location.href="/delete-address/"+id
+            }
+        }
+    </script>
+
+
+
+
+
+
+    {{!-- <div class="container">
         <div class="row mb-2- rounded d-felx justify-content-center">
                                 <h1 class="my-5 text-center">User Profile</h1>
 
@@ -48,7 +224,7 @@ border-width: 2px;
                         {{!-- <input type="text" class="address" name="address" placeholder="Address" required><br> --}}
                         {{!-- <textarea name="address"  cols="39" rows="3" placeholder="Address- 1" required>{{data.address[0]}}</textarea> --}}
                         
-                        {{#each data.address}}
+                        {{!-- {{#each data.address}}
                         <textarea name="address"  cols="39" rows="3"  required>{{this}}</textarea>
                         {{/each}}
                         <div id='input-cont'>
@@ -73,8 +249,8 @@ border-width: 2px;
                     </div>
             </div>
         </div>
-    </div>
-    <script>
+    </div> --}}
+    {{!-- <script>
         const container = document.getElementById('input-cont');
         var inputCount =1
         // Call addInput() function on button click
@@ -109,7 +285,7 @@ border-width: 2px;
         array.forEach(element => {
     
 });
-    </script>
+    </script> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>

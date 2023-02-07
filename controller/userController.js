@@ -17,17 +17,17 @@ module.exports = {
 
 
     user_login: (req, res) => {
-        if (req.session.user) {
-            res.redirect('/')
-        }
-        else {
+        // if (req.session.user) {
+        //     res.redirect('/')
+        // }
+        // else {
             if (invalidUser) {
                 res.render('user_login', { invalidUser })
                 invalidUser = false;
             }
             else
                 res.render('user_login')
-        }
+        // }
     },
 
 
@@ -84,7 +84,6 @@ module.exports = {
         }
         
         
-        // ************************************************************
         
     },
     user_validateSignUpOTP: (req, res) => {
@@ -106,18 +105,19 @@ module.exports = {
     },
     
     user_signUpPage: (req, res) => {
-        if (req.session.user) {
-            res.redirect('/')
-        } else {
+        // if (req.session.user) {
+        //     res.redirect('/')
+        // } 
+        // else {
             res.render('user_signup',{nameMsg,emailMsg,passwordMsg,mobnoMsg})
             nameMsg=null,emailMsg=null,passwordMsg=null;mobnoMsg=null
-        }
+        // }
     },
 
     user_forgotPassword: (req, res) => {
-        if (req.session.user) {
-            res.redirect('/')
-        } else {
+        // if (req.session.user) {
+        //     res.redirect('/')
+        // } else {
 
             let display;
             let matchPassword;
@@ -129,14 +129,14 @@ module.exports = {
             req.session.checkOtp = false
             req.session.resetPassword = false
 
-        }
+        // }
 
     },
 
     user_otp: (req, res) => {
-        if (req.session.user) {
-            res.redirect('/')
-        } else {
+        // if (req.session.user) {
+        //     res.redirect('/')
+        // } else {
 
             if (req.session.invalid_otp) {
                 res.render('signup_OTP', { message: 'Invalid OTP' })
@@ -144,7 +144,7 @@ module.exports = {
             }
             else
                 res.render('signup_OTP')
-        }
+        // }
 
 
 
@@ -187,25 +187,7 @@ module.exports = {
             res.redirect('/forgot_password')
         }
     },
-
-    user_productList: (req, res) => {
-        let argument = req.params.id ? req.params.id : req.body.searchInput
-        userService.user_searchProduct(argument).then((productData) => {
-            req.session.productList = productData
-            res.redirect('/showProductList')
-        })
-    },
-    show_productList: (req, res) => {
-        let products = req.session.productList
-        res.render('user_productList', { products })
-    },
-
-    search_product_with_category: (req, res) => {
-        userService.searchProductWithCategory(req.body.searchInput, req.session.productList[0].category).then((productData) => {
-            req.session.productList = productData
-            res.redirect('/showProductList')
-        })
-    },
+    
 
     resendOTP: (req, res) => {
         sentOTP(req.session.email, OTP)
@@ -214,13 +196,13 @@ module.exports = {
     },
 
     user_profilePage: (req, res) => {
-        if (req.session.user) {
+        // if (req.session.user) {
             let data = req.session.userDetails
             res.render('user_profile', { data })
 
-        } else {
-            res.redirect('/')
-        }
+        // } else {
+        //     res.redirect('/')
+        // }
     },
 
     user_profileUpdate: (req, res) => {
@@ -229,26 +211,18 @@ module.exports = {
     },
 
     user_cartPage: (req, res) => {
-        if (req.session.user) {
+        // if (req.session.user) {
 
             userService.get_userDetails(req.session.userDetails._id).then((result) => {
                 let cartData = result;
                 res.render('user_cart', { cartData })
             })
-        } else {
-            res.redirect('/')
-        }
+        // } 
+        // else {
+        //     res.redirect('/')
+        // }
     },
 
-    product_to_cart: (req, res) => {
-        if (req.session.user) {
-
-            userService.user_add_to_cart(req.session.userDetails._id, req.params.id)
-            res.redirect('/cart')
-        } else {
-            res.redirect('/')
-        }
-    }
 
 }
 

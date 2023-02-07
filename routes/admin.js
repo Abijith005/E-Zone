@@ -3,47 +3,50 @@ const router=express.Router()
 const adminController=require('../controller/adminController')
 const bcrypt=require('bcrypt')
 const multiUpload = require('../middleware/multer')
-router.get('/',adminController.admin_loginPage)
+const categoryController = require('../controller/categoryController')
+const adminSession=require('../middleware/adminSession')
 
-router.post('/admin_login',adminController.admin_login)
+router.get('/',adminSession.ifNoAdmin,adminController.admin_loginPage)
 
-router.get('/admin_home',adminController.admin_home)
+router.post('/admin_login',adminSession.ifNoAdmin,adminController.admin_login)
 
-router.get('/admin_products',adminController.admin_product)
+router.get('/admin_home',adminSession.ifAdmin,adminController.admin_home)
 
-router.get('/user_Details',adminController.admin_userDetails)
+router.get('/admin_products',adminSession.ifAdmin,adminController.admin_product)
 
-router.get('/order_Details',adminController.admin_orderDetails)
+router.get('/user_Details',adminSession.ifAdmin,adminController.admin_userDetails)
+ 
+router.get('/order_Details',adminSession.ifAdmin,adminController.admin_orderDetails)
 
-router.get('/user_Block/:id',adminController.admin_userBlock)
+router.get('/user_Block/:id',adminSession.ifAdmin,adminController.admin_userBlock)
 
-router.get('/user_Unblock/:id',adminController.admin_userUnblock)
+router.get('/user_Unblock/:id',adminSession.ifAdmin,adminController.admin_userUnblock)
 
-router.get('/product_edit/:id',adminController.admin_productEditPage)
+router.get('/product_edit/:id',adminSession.ifAdmin,adminController.admin_productEditPage)
 
-router.post('/product_edit/:id',multiUpload,adminController.admin_productEdit)
+router.post('/product_edit/:id',adminSession.ifAdmin,multiUpload,adminController.admin_productEdit)
 
-router.get('/product_add',adminController.admin_productAddPage)
+router.get('/product_add',adminSession.ifAdmin,adminController.admin_productAddPage)
 
 router.post('/product_add',multiUpload,adminController.admin_productAdd)
 
-router.get('/product_flag/:id',adminController.admin_productFlag)
+router.get('/product_flag/:id',adminSession.ifAdmin,adminController.admin_productFlag)
 
-router.get('/product_unflag/:id',adminController.admin_productUnflag)
+router.get('/product_unflag/:id',adminSession.ifAdmin,adminController.admin_productUnflag)
 
-router.post('/user_search',adminController.admin_userSearch)
+router.post('/user_search',adminSession.ifAdmin,adminController.admin_userSearch)
 
-router.get('/category',adminController.admin_categoryPage)
+router.get('/category',adminSession.ifAdmin,categoryController.admin_categoryPage)
 
-router.get('/add_categoryPage',adminController.admin_addCategoryPage)
+router.get('/add_categoryPage',adminSession.ifAdmin,categoryController.admin_addCategoryPage)
 
-router.post('/add_category',adminController.admin_addCategory)
+router.post('/add_category',adminSession.ifAdmin,categoryController.admin_addCategory)
 
-router.get('/flag_and_unFlag_category/:id',adminController.flagAndUnflag_category)
+router.get('/flag_and_unFlag_category/:id',adminSession.ifAdmin,categoryController.flagAndUnflag_category)
 
-router.get('/editCategory/:id',adminController.edit_category)
+router.get('/editCategory/:id',adminSession.ifAdmin,categoryController.edit_category)
 
-router.post('/updateCategory/:id',adminController.update_category)
+router.post('/updateCategory/:id',adminSession.ifAdmin,categoryController.update_category)
 
 router.get('/log_Out',adminController.adminLogOut)
 
