@@ -199,9 +199,12 @@ module.exports = {
 
         userService.get_userDetails(req.session.userDetails._id).then((data)=>{
             data.address.length>=3?maxAddress=true:maxAddress=false
+            req.session.editAddress?edit=req.session.editAddress:edit=null
             req.session.addAddress? addAddress=true:addAddress=false
-            res.render('user_profile', { data,addAddress,maxAddress })
+            res.render('user_profile', { data,addAddress,maxAddress,edit})
             req.session.addAddress=false
+            req.session.editAddress=null
+            edit=null
             addAddress=false
         })
 
@@ -227,15 +230,27 @@ res.redirect('/user_profile')
 },
 
     add_Address:(req,res)=>{
-        console.log('**********************');
         userService.user_addAddress(req.session.userDetails._id,req.body).then(()=>{
             res.redirect('/user_profile')
         })
     },
 
     deleteAddress:(req,res)=>{
-        console.log(req.params.id+'**********'+req.session.userDetails._id);
-        userService.user_delete_address(req.session.userDetails._id, req.params.id).then(()=>{
+        userService.user_delete_address(req.session.userDetails._id,parseInt(req.params.id)).then((result)=>{
+            console.log(result);
+            res.redirect('/user_profile')
+        })
+    },
+
+     getUserAddress:(req,res)=>{
+        userService.getAddress(req.session.userDetails._id,parseInt(req.params.id)).then((result)=>{
+            req.session.editAddress=result;
+            res.redirect('/addAddress')
+        })
+    },
+
+    address_Update:(req,res)=>{
+        userService.addressUpdate(parseInt(req.params.id),req.body).then(()=>{
             res.redirect('/user_profile')
         })
     }

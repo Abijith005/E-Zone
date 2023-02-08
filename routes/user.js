@@ -54,6 +54,11 @@ router.post('/addAddress',userSession.ifUser,userController.add_Address)
 
 router.get('/delete_user_address/:id',userSession.ifUser,userController.deleteAddress)
 
+router.get('/edit_Address/:id',userSession.ifUser,userController.getUserAddress)
+
+router.post('/update_address/:id',userSession.ifUser,userController.address_Update)
+
+
 
 
 
