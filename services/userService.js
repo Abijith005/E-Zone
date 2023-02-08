@@ -6,9 +6,9 @@ module.exports={
     doSignup:(userData)=>{
         return new Promise(async(resolve, reject) => {
              userData.password =await bcrypt.hash(userData.password,10)
-             let block=false
+             let block=false,address_id=Date.now()
              let {name,email,mob_no,password,address,pincode}=userData
-            db.get().collection(collections.USER_COLLECTION).insertOne({name,email,mob_no,password,pincode,block,user_cart:[],user_wishList:[],address:[{name,email,mob_no,password,address,pincode}]}).then((data)=>{
+            db.get().collection(collections.USER_COLLECTION).insertOne({name,email,mob_no,password,block,user_cart:[],user_wishList:[],address:[{name,email,mob_no,password,address,pincode,address_id}]}).then((data)=>{
                 resolve(data)
                 
             })
@@ -84,14 +84,23 @@ get_userDetails:(id)=>{
 
 
 user_addAddress:(user_id,userData)=>{
-
+console.log('********** ******                     ********************');
     return new Promise((resolve, reject) => {
         userData.address_id=Date.now()
         db.get().collection(collections.USER_COLLECTION).updateOne({_id:ObjectId(user_id)},{$push:{address:userData}}).then(()=>{
             resolve()
         })
     })
+},
+
+user_delete_address:(userId,addressId)=>{
+    console.log(userId+'**********'+addressId);
+
+return new Promise((resolve, reject) => {
+    db.get().collection(collections.USER_COLLECTION).updateOne({_id:ObjectId(userId)},{$pull:{address:{address_id:addressId}}},false,true)
+})
 }
    
-
 }
+
+

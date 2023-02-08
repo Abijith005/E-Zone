@@ -196,10 +196,13 @@
                                 <b>{{this.name}}</b>
                                 <b>{{this.mob_no}} </b>
                                 <b>{{this.address}}</b>
-                                <b>PIN:{{this.pincode}}</b>
+                                <b>PIN:{{this.address_id}}</b>
                             </div>
                             <div class="man-ad-right">
-                                <i class="ri-delete-bin-5-line" onclick="deleteAddress('<%=item.id%>')"></i>
+                                <a href="/delete_user_address/{{this.address_id}}">
+                                <i class="ri-delete-bin-5-line"></i>
+                                </a>
+                                {{!-- <i class="ri-delete-bin-5-line" onclick="deleteAddress('<%=item.id%>')"></i> --}}
                                 <a href="/edit-address/<%=item.id %>"><i class="ri-edit-box-line"></i></a>
                             </div>
                         </div>
@@ -269,13 +272,13 @@
         </div>
     </div>
 
-    <script>
+    {{!-- <script>
         function deleteAddress(id) {
             if (confirm("Are you sure delete this address")) {
                 window.location.href = "/delete-address/" + id
             }
         }
-    </script>
+    </script> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>

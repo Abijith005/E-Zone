@@ -227,7 +227,15 @@ res.redirect('/user_profile')
 },
 
     add_Address:(req,res)=>{
+        console.log('**********************');
         userService.user_addAddress(req.session.userDetails._id,req.body).then(()=>{
+            res.redirect('/user_profile')
+        })
+    },
+
+    deleteAddress:(req,res)=>{
+        console.log(req.params.id+'**********'+req.session.userDetails._id);
+        userService.user_delete_address(req.session.userDetails._id, req.params.id).then(()=>{
             res.redirect('/user_profile')
         })
     }
