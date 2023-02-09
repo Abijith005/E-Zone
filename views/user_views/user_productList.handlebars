@@ -221,8 +221,10 @@
 		<div class="row">
 			<!-- product -->
 			{{#each products}}
+		
 			<div class="col-md-3 col-xs-6">
 				<div class="product">
+					<a href="/singleProductPage/{{this._id}}">
 					<div class="product-img">
 						<img style="height:35rem;" src="/images/{{this.image.image.[0].filename}}" alt="">
 						<div class="product-label">
@@ -230,6 +232,7 @@
 							<span class="new">NEW</span>
 						</div>
 					</div>
+					</a>
 					<div class="product-body" style="height: 14rem;">
 						<p class="product-category">{{this.category}}</p>
 						<h3 class="product-name"><a href="#">{{this.product_name}}</a></h3>

@@ -70,7 +70,7 @@
             background-color: #fff;
             padding: 20px;
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
             margin-top: 10px;
         }
 
@@ -188,7 +188,7 @@
 
                     {{#unless addAddress}}
                     <div class="manage-profile-address pt-3">
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-around">
                             <h4>Manage address </h4>
                             {{#unless maxAddress}}
                             <a href="/addAddress" class="btn btn-dark rounded-4 ">Add Address</a>
@@ -212,7 +212,7 @@
                         </div>
                         {{/each}}
 
-                        <div class="mt-3">
+                        <div class="mt-3 text-center">
 
                                   <b class="font-weight-bold"><span class="text-danger font-weight-bold "> NOTE: </span>Only 3 Address Can Be Added</b>
                         </div>

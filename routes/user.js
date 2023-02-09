@@ -58,6 +58,8 @@ router.get('/edit_Address/:id',userSession.ifUser,userController.getUserAddress)
 
 router.post('/update_address/:id',userSession.ifUser,userController.address_Update)
 
+router.get('/singleProductPage/:id',userController.singleProductPage)
+
 
 
 

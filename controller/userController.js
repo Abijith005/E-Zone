@@ -253,6 +253,13 @@ res.redirect('/user_profile')
         userService.addressUpdate(parseInt(req.params.id),req.body).then(()=>{
             res.redirect('/user_profile')
         })
+    },
+
+    singleProductPage:(req,res)=>{
+        userService.singleProductDetails(req.params.id).then((result)=>{
+            res.render('singleProductDetails',{result})
+
+        })
     }
 
 

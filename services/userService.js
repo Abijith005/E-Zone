@@ -91,7 +91,7 @@ module.exports = {
                     console.log(element);
                 }
                 else{
-                    console.log("fabna");
+                    console.log("dfdf");
                 }
 
         });
@@ -131,6 +131,14 @@ module.exports = {
             db.get().collection(collections.USER_COLLECTION).updateOne({ address: { $elemMatch: { address_id: address_Idd } } }, { $set: { 'address.$': data } }).then((result) => {
                 resolve()
 
+            })
+        })
+    },
+
+    singleProductDetails:(id)=>{
+        return new Promise((resolve, reject) => {
+            db.get().collection(collections.PRODUCT_COLLECTION).findOne({_id:ObjectId(id)}).then((result)=>{
+                resolve(result)
             })
         })
     }
