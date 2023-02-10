@@ -2,25 +2,28 @@ const express=require('express')
 const app=express();
 const exphbs=require('express-handlebars')
 const path=require('path')
-const db=require('./config/connection')
 var usersRouter=require('./routes/user')
 var adminRouter=require('./routes/admin')
 var bodyParser = require('body-parser')
 var cookieParser=require('cookie-parser');
 const session = require('express-session');
+const dbConnect = require('./config/connection');
 
 app.use((req,res,next)=>{
     // if(!req.user)
       res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
       next();
   })
+  //data base connection
 
-db.connect((err)=>{
-    if(err){
-    console.log('data base not connected'+err);
-    }
+dbConnect()
 
-})
+// db.connect((err)=>{
+//     if(err){
+//     console.log('data base not connected'+err);
+//     }
+
+// })
 //setting session
 app.use(session({
     secret:'secret',

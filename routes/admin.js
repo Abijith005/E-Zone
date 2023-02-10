@@ -52,7 +52,6 @@ router.get('/log_Out',adminController.adminLogOut)
 
 
 
-
 module.exports= router;
 
 

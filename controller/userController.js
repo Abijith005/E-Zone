@@ -1,6 +1,9 @@
 const userService = require('../services/userService')
 const sentOTP = require('../helpers/otp');
 const { validationResult } = require('express-validator');
+const userModel = require('../models/userModel');
+const categoryModel=require('../models/categoryModel');
+const productModel = require('../models/productModel');
 let invalidUser;
 let nameMsg,emailMsg,passwordMsg,mobnoMsg;
 let OTP = Math.floor(Math.random() * 1000000);
@@ -9,10 +12,11 @@ let OTP = Math.floor(Math.random() * 1000000);
 
 module.exports = {
 
-    user_home: (req, res) => {
+    user_home: async(req, res) => {
+        let data=await categoryModel.find().lean()
         let userName;
         req.session.userDetails ? userName = req.session.userDetails.name : userName = null
-        res.render('user_home', { userName })
+        res.render('user_home', { userName,data})
     },
 
 
@@ -51,6 +55,7 @@ module.exports = {
         res.redirect('/')
     },
 
+    
 
 
     user_signUp: (req, res) => {
@@ -105,13 +110,9 @@ module.exports = {
     },
     
     user_signUpPage: (req, res) => {
-        // if (req.session.user) {
-        //     res.redirect('/')
-        // } 
-        // else {
+     
             res.render('user_signup',{nameMsg,emailMsg,passwordMsg,mobnoMsg})
             nameMsg=null,emailMsg=null,passwordMsg=null;mobnoMsg=null
-        // }
     },
 
     user_forgotPassword: (req, res) => {
@@ -212,16 +213,25 @@ module.exports = {
     },
 
     user_cartPage: (req, res) => {
-        // if (req.session.user) {
-
-            userService.get_userDetails(req.session.userDetails._id).then((result) => {
-                let cartData = result;
-                res.render('user_cart', { cartData })
+        let cartData=[];
+return new Promise((resolve, reject) => {
+    userModel.findOne({_id:req.session.userDetails._id}).then((result)=>{
+        console.log(result.user_cart);
+    result.user_cart.forEach(element => {
+            productModel.find({_id:element}).lean().then((product)=>{
+               cartData.push(...product)
+               console.log(cartData);
             })
-        // } 
-        // else {
-        //     res.redirect('/')
-        // }
+        });
+        
+    })
+    res.render('user_cart', { cartData })
+    
+})
+            // userService.get_userDetails(req.session.userDetails._id).then((result) => {
+            //     let cartData = result;
+            //     res.render('user_cart', { cartData })
+            // })
     },
 
 addAddressPage:(req,res)=>{
@@ -237,7 +247,6 @@ res.redirect('/user_profile')
 
     deleteAddress:(req,res)=>{
         userService.user_delete_address(req.session.userDetails._id,parseInt(req.params.id)).then((result)=>{
-            console.log(result);
             res.redirect('/user_profile')
         })
     },

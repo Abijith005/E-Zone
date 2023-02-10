@@ -1,10 +1,12 @@
 module.exports={
     ifAdmin:(req,res,next)=>{
-    if(req.session.admin){
-        next();
-    }
-    else{
-        res.redirect('/admin')    }
+    // if(req.session.admin){
+    //     next();
+    // }
+    // else{
+    //     res.redirect('/admin')  
+    //   }
+    next()
 },
 
 ifNoAdmin:(req,res,next)=>{

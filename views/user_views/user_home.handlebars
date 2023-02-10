@@ -66,9 +66,8 @@
 					<div class="col-md-2">
 						<div class="header-logo ">
 							<a href="#" class="logo">
-								<h1 class="font-weight-bold"
-									 style="color: #ffff;">E-<font color="#FFD523">Zone</font>
-									
+								<h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
+
 								</h1>
 
 							</a>
@@ -105,7 +104,7 @@
 							<!-- /Wishlist -->
 
 							<!-- Cart -->
-							
+
 
 							<div class="dropdown">
 								<a href="/cart" aria-expanded="true">
@@ -113,42 +112,42 @@
 									<span>Your Cart</span>
 									<div class="qty">3</div>
 								</a>
-								</div>
-							
-								{{!-- <div class="cart-dropdown">
-									<div class="cart-list">
-										<div class="product-widget">
-											<div class="product-img">
-												<img src="/img/product01.png" alt="">
-											</div>
-											<div class="product-body">
-												<h3 class="product-name"><a href="#">product name goes here</a></h3>
-												<h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
-											</div>
-											<button class="delete"><i class="fa fa-close"></i></button>
-										</div>
+							</div>
 
-										<div class="product-widget">
-											<div class="product-img">
-												<img src="/img/product02.png" alt="">
-											</div>
-											<div class="product-body">
-												<h3 class="product-name"><a href="#">product name goes here</a></h3>
-												<h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-											</div>
-											<button class="delete"><i class="fa fa-close"></i></button>
+							{{!-- <div class="cart-dropdown">
+								<div class="cart-list">
+									<div class="product-widget">
+										<div class="product-img">
+											<img src="/img/product01.png" alt="">
 										</div>
+										<div class="product-body">
+											<h3 class="product-name"><a href="#">product name goes here</a></h3>
+											<h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
+										</div>
+										<button class="delete"><i class="fa fa-close"></i></button>
 									</div>
-									<div class="cart-summary">
-										<small>3 Item(s) selected</small>
-										<h5>SUBTOTAL: $2940.00</h5>
+
+									<div class="product-widget">
+										<div class="product-img">
+											<img src="/img/product02.png" alt="">
+										</div>
+										<div class="product-body">
+											<h3 class="product-name"><a href="#">product name goes here</a></h3>
+											<h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
+										</div>
+										<button class="delete"><i class="fa fa-close"></i></button>
 									</div>
-									<div class="cart-btns">
-										<a href="#">View Cart</a>
-										<a href="#">Checkout <i class="fa fa-arrow-circle-right"></i></a>
-									</div>
-								</div> --}}
-							
+								</div>
+								<div class="cart-summary">
+									<small>3 Item(s) selected</small>
+									<h5>SUBTOTAL: $2940.00</h5>
+								</div>
+								<div class="cart-btns">
+									<a href="#">View Cart</a>
+									<a href="#">Checkout <i class="fa fa-arrow-circle-right"></i></a>
+								</div>
+							</div> --}}
+
 							<!-- /Cart -->
 
 							<!-- Menu Toogle -->
@@ -166,12 +165,14 @@
 					<div class="col-1 ms-auto">
 						<div class="dropdown">
 							{{#unless userName}}
-							<button class="btn btn-secondary text-white dropdown-toggle" type="button" id="dropdownMenuButton"
-								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</button>
-								{{else}}
-								<button class="btn btn-secondary text-white dropdown-toggle" type="button" id="dropdownMenuButton"
-								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{userName}}</button>
-								{{/unless}}
+							<button class="btn btn-secondary text-white dropdown-toggle" type="button"
+								id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">Account</button>
+							{{else}}
+							<button class="btn btn-secondary text-white dropdown-toggle" type="button"
+								id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">{{userName}}</button>
+							{{/unless}}
 
 
 							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -205,10 +206,13 @@
 				<ul class="main-nav nav navbar-nav flex-row">
 					<li class="active"><a href="#">Home</a></li>
 					<li><a href="#">Hot Deals</a></li>
-					<li><a href="/productList/Laptop">Laptops</a></li>
+					{{#each data}}
+					<li><a href="/productList/{{this._id}}">{{this.category}}</a></li>
+					{{/each}}
+					{{!-- <li><a href="/productList/Laptop">Laptops</a></li>
 					<li><a href="/productList/SmartPhone">Smartphones</a></li>
 					<li><a href="/productList/Smart Watch">Smart Watchs</a></li>
-					<li><a href="/productList/HeadPhone">Head Phones</a></li>
+					<li><a href="/productList/HeadPhone">Head Phones</a></li> --}}
 
 				</ul>
 				<!-- /NAV -->

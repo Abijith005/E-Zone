@@ -1,5 +1,7 @@
 const { resolve } = require('promise');
-const collections = require('../models/collections');
+const categoryModel = require('../models/categoryModel');
+// const collections = require('../models/collections');
+const productModel = require('../models/productModel');
 const adminService = require('../services/adminService')
 var datas;
 module.exports = {
@@ -35,7 +37,7 @@ module.exports = {
     admin_product: (req, res) => {
         // if (req.session.admin) {
 
-            adminService.list_productOrCategory(collections.PRODUCT_COLLECTION).then((result) => {
+            adminService.list_productOrCategory(productModel).then((result) => {
                 res.render('product', { result })
             })
         // } else {
@@ -74,21 +76,17 @@ module.exports = {
     },
 
     admin_userBlock: (req, res) => {
-        // if (req.session.admin) {
 
-            adminService.block_user(req.params)
+            adminService.block_user(req.params.id)
             res.redirect('/admin/user_Details')
-        // } else {
-            // res.redirect('/admin')
-
-        // }
+       
 
     },
 
     admin_userUnblock: (req, res) => {
         // if (req.session.admin) {
 
-            adminService.unblock_user(req.params)
+            adminService.unblock_user(req.params.id)
             res.redirect('/admin/user_Details')
         // } else {
             // res.redirect('/admin')
@@ -100,8 +98,12 @@ module.exports = {
     admin_productEditPage: async (req, res) => {
 
         // if (req.session.admin) {
-            let data = await adminService.findToUpdate(req.params, collections.PRODUCT_COLLECTION)
-            let result=await adminService.list_productOrCategory(collections.CATEGORY_COLLECTION)
+            let data = await adminService.findToUpdate(req.params.id, productModel)
+            // let result=await adminService.list_productOrCategory(categoryModel)
+            let result = await categoryModel.find().sort({ name: 1 }).lean()
+        
+            resolve(result)
+
             res.render('edit_product', { data,result})
 
         // } else {
@@ -113,7 +115,6 @@ module.exports = {
 
     admin_productEdit: async (req, res) => {
         // if (req.session.admin) {
-            console.log(req.files);
             adminService.update_product(req.params.id, req.body, req.files)
             res.redirect('/admin/admin_products')
 
@@ -124,12 +125,15 @@ module.exports = {
 
     },
 
-    admin_productAddPage: (req, res) => {
+    admin_productAddPage:async (req, res) => {
         // if (req.session.admin) {
-            adminService.list_productOrCategory(collections.CATEGORY_COLLECTION).then((result) => {
+            // adminService.list_productOrCategory(categoryModel).then((result) => {
+                // console.log(result.brandName);
+
+           let result=await categoryModel.find().lean()
                 res.render('add_product', { result })
 
-            })
+            // })
 
         // } else {
             // res.redirect('/admin')
@@ -150,7 +154,7 @@ module.exports = {
     admin_productFlag: (req, res) => {
 
         // if (req.session.admin) {
-            adminService.flag_product(req.params)
+            adminService.flag_product(req.params.id)
             res.redirect('/admin/admin_products')
 
         // } else {
@@ -161,7 +165,7 @@ module.exports = {
 
     admin_productUnflag: (req, res) => {
         // if (req.session.admin) {
-            adminService.unflag_product(req.params)
+            adminService.unflag_product(req.params.id)
             res.redirect('/admin/admin_products')
 
         // } else {

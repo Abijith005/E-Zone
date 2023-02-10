@@ -209,12 +209,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{#each cartData.user_cart}}
+                        {{#each cartData}}
                         <tr>
                             <td data-th="Product">
                                 <div class="row">
                                     <div class="col-md-6 col-12 ">
-                                        <img  src="images/{{this.image.image.[0].filename}}" alt="" class="img-fluid  ">
+                                        <img  src="images/{{this.image.[0].filename}}" alt="" class="img-fluid  ">
                                     </div>
                                   
                                 </div>

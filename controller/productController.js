@@ -1,8 +1,10 @@
+const { resolve } = require('promise');
+const categoryModel = require('../models/categoryModel');
 const userService = require('../services/userService')
 
 
 
-module.exports={
+module.exports = {
     user_productList: (req, res) => {
         let argument = req.params.id ? req.params.id : req.body.searchInput
         userService.user_searchProduct(argument).then((productData) => {
@@ -24,15 +26,11 @@ module.exports={
     },
 
     product_to_cart: (req, res) => {
-        // if (req.session.user) {
 
-            userService.user_add_to_cart(req.session.userDetails._id, req.params.id)
-            res.redirect('/cart')
-        // } 
-        // else {
-        //     res.redirect('/')
-        // }
+        userService.user_add_to_cart(req.session.userDetails._id, req.params.id)
+        res.redirect('/cart')
     }
 
 
 }
+
