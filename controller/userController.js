@@ -213,25 +213,19 @@ module.exports = {
     },
 
     user_cartPage: (req, res) => {
-        let cartData=[];
-return new Promise((resolve, reject) => {
-    userModel.findOne({_id:req.session.userDetails._id}).then((result)=>{
-        console.log(result.user_cart);
-    result.user_cart.forEach(element => {
-            productModel.find({_id:element}).lean().then((product)=>{
-               cartData.push(...product)
-               console.log(cartData);
-            })
-        });
-        
-    })
-    res.render('user_cart', { cartData })
-    
+return new Promise(async(resolve, reject) => {
+   let result=await userModel.findOne({_id:req.session.userDetails._id})
+   let cartQuantities={}
+  const cartID=result.user_cart.map(item=>{
+    cartQuantities[item.id]=item.quantity
+    return item.id
+  })
+  let cartData=  await productModel.find({_id:{$in:cartID}}).lean()
+  let cartDatas=cartData.map((item, index)=>{
+    return {...item, quantity:cartQuantities[item._id]}
+  })
+        res.render('user_cart', { cartDatas}) 
 })
-            // userService.get_userDetails(req.session.userDetails._id).then((result) => {
-            //     let cartData = result;
-            //     res.render('user_cart', { cartData })
-            // })
     },
 
 addAddressPage:(req,res)=>{

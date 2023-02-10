@@ -60,6 +60,10 @@ router.post('/update_address/:id',userSession.ifUser,userController.address_Upda
 
 router.get('/singleProductPage/:id',userController.singleProductPage)
 
+// router.get('/increaseQuantity/:id',productController)
+
+// router.get('/decreaseQuantity/:id',productController)
+
 
 
 

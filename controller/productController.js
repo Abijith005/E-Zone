@@ -16,6 +16,7 @@ module.exports = {
     show_productList: (req, res) => {
         let products = req.session.productList
         res.render('user_productList', { products })
+        req.session.productList=null;
     },
 
     search_product_with_category: (req, res) => {
@@ -26,7 +27,6 @@ module.exports = {
     },
 
     product_to_cart: (req, res) => {
-
         userService.user_add_to_cart(req.session.userDetails._id, req.params.id)
         res.redirect('/cart')
     }

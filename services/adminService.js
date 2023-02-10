@@ -13,12 +13,13 @@ module.exports = {
 
         })
     },
-    user_details: () => {
-        return new Promise((resolve, reject) => {
-            userModel.find().sort({ name: 1 }).lean().then((result) => {
+    user_details:() => {
+        return new Promise(async(resolve, reject) => {
+            await userModel.find().sort({ name: 1 }).lean().then((result)=>{
+    
                 resolve(result)
             })
-
+            
         })
     },
     block_user: (id) => {
@@ -50,8 +51,8 @@ module.exports = {
     list_productOrCategory: (argCollection) => {
         return new Promise(async (resolve, reject) => {
             let result = await argCollection.find().sort({ name: 1 }).lean()
-            result.forEach(element => {
-               categoryModel.findOne({ _id: element.category }).then((data) => {
+            result.forEach(async element => {
+              await categoryModel.findOne({ _id: element.category }).then((data) => {
                     element.category = data.category
                 })
             });
@@ -94,9 +95,9 @@ module.exports = {
     },
 
 
-    user_search: (userData) => {
-        return new Promise((resolve, reject) => {
-            userModel.find({ $or: [{ name: new RegExp(userData.name, 'i') }, { email: userData.name }, { mob_no: userData.name }] }).lean().then((result) => {
+    user_search:(userData) => {
+        return new Promise(async(resolve, reject) => {
+            await userModel.find({ $or: [{ name: new RegExp(userData.name, 'i') }, { email: userData.name }, { mob_no: userData.name }] }).lean().then((result) => {
                 resolve(result)
             })
         })
@@ -127,7 +128,7 @@ module.exports = {
 
     categoryUpdate: (id, categoryData) => {
         return new Promise((resolve, reject) => {
-            categoryModel.updateOne({ _id: ObjectId(id) }, { $set: { category: categoryData.category, brandName: categoryData.brandName } }).then(() => {
+            categoryModel.updateOne({ _id: id}, { $set: { category: categoryData.category, brandName: categoryData.brandName } }).then(() => {
                 resolve()
             })
         })

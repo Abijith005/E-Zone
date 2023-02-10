@@ -102,7 +102,7 @@ module.exports = {
             // let result=await adminService.list_productOrCategory(categoryModel)
             let result = await categoryModel.find().sort({ name: 1 }).lean()
         
-            resolve(result)
+            // resolve(result)
 
             res.render('edit_product', { data,result})
 
