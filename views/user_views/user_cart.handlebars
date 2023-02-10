@@ -224,7 +224,7 @@
                           </td>
                             <td data-th="Price">{{this.price}}</td>
                             <td data-th="Quantity">
-                                <input type="number"  min="1" max="10" class="form-control form-control-lg text-center" value="{{this.quantity}}"> <a href="/increaseQuantity"><button>^</button></a> <a href="/decreaseQuantity"><button>v</button></a> 
+                                <input type="number"  min="1" max="10" class="form-control form-control-lg text-center" value="{{this.quantity}}">{{#if this.quantity}} <a href="/changeQuantity/{{this._id}}/{{this.quantity}}/1"><button>^</button></a>{{/if}} {{#if this.quantity}} <a href="/changeQuantity/{{this._id}}/{{this.quantity}}/-1"><button>v</button></a>{{/if}} 
                             </td>
                             <td class="actions" data-th="">
                                 <div class="text-right">

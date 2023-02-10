@@ -87,12 +87,16 @@ module.exports = {
             cart.user_cart.forEach(async element => {
                 if (element.id == product_id) {
                     duplicate=true
-                    console.log('element matched');
-                    await userModel.updateOne({ _id: user_id, user_cart: { $elemMatch: { id: product_id } } }, { $inc: { 'user_cart.$.quantity': 1 } })
+                    if (element.quantity<10) {
+                        await userModel.updateOne({ _id: user_id, user_cart: { $elemMatch: { id: product_id } } }, { $inc: { 'user_cart.$.quantity': 1 } })
+                        resolve
+                    }
+                    else{
+                    resolve
+                    }
                 }
             });
             if(!duplicate){
-console.log('not duplicate');
                 let quantity = 1
                 await userModel.updateOne({ _id: user_id }, { $addToSet: { user_cart: { id: product_id, quantity: 1 } } }, { upsert: true })
                 resolve()

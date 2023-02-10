@@ -4,6 +4,8 @@ const router = express.Router()
 const userController = require('../controller/userController')
 const productController=require('../controller/productController')
 const userSession=require('../middleware/userSession')
+
+
 router.get('/', userController.user_home)
 
 router.get('/user_login',userSession.ifNoUser, userController.user_login)
@@ -60,7 +62,7 @@ router.post('/update_address/:id',userSession.ifUser,userController.address_Upda
 
 router.get('/singleProductPage/:id',userController.singleProductPage)
 
-// router.get('/increaseQuantity/:id',productController)
+router.get('/changeQuantity/:id/:quantity/:cond',productController.productQuantityIncreaseOrDecrease)
 
 // router.get('/decreaseQuantity/:id',productController)
 
