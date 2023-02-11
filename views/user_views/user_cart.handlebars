@@ -223,14 +223,16 @@
                               <h5>{{this.product_Details}}</h5>
                           </td>
                             <td data-th="Price">{{this.price}}</td>
-                            <td data-th="Quantity">
-                                <input type="number"  min="1" max="10" class="form-control form-control-lg text-center" value="{{this.quantity}}">{{#if this.quantity}} <a href="/changeQuantity/{{this._id}}/{{this.quantity}}/1"><button>^</button></a>{{/if}} {{#if this.quantity}} <a href="/changeQuantity/{{this._id}}/{{this.quantity}}/-1"><button>v</button></a>{{/if}} 
+                            <td data-th="Quantity d-flex">
+                                {{#if this.quantity}} <a href="/changeQuantity/{{this._id}}/{{this.quantity}}/1"><button>^</button></a>{{/if}} <input type="number"  min="1" max="10" class="form-control form-control-lg text-center" value="{{this.quantity}}">{{#if this.quantity}} <a href="/changeQuantity/{{this._id}}/{{this.quantity}}/-1"><button>v</button></a>{{/if}} 
                             </td>
                             <td class="actions" data-th="">
                                 <div class="text-right">
             
                                     <button class="btn btn-white border-secondary bg-white btn-md mb-2">
+										<a href="/deleteFromCart/{{this._id}}">
                                         <i class="fas fa-trash"></i>
+										</a>
                                     </button>
                                 </div>
                             </td>
@@ -240,7 +242,7 @@
                 </table>
                 <div class="float-right text-right">
                     <h4>Subtotal:</h4>
-                    <h1>24000.00</h1>
+                    <h1>{{cartDatas.totalAmount}}</h1>
                 </div>
             </div>
         </div>

@@ -71,7 +71,7 @@ module.exports = {
 
     update_product: (id, productData, files) => {
         return new Promise((resolve, reject) => {
-            productModel.updateOne({ _id: id }, { $set: { product_name: productData.product_name, category: productData.category, company: productData.company, price: productData.price, product_Details: productData.product_Details, image: files } }).then(() => {
+            productModel.updateOne({ _id: id }, { $set: { product_name: productData.product_name, category: productData.category, company: productData.company, price: productData.price, product_Details: productData.product_Details, image:files.image } }).then(() => {
                 resolve()
             })
         })

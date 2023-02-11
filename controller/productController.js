@@ -53,6 +53,14 @@ module.exports = {
 
 
         })
+    },
+
+    deleteFromCart:(req,res)=>{
+        return new Promise((resolve, reject) => {
+            userModel.updateOne({_id:req.session.userDetails._id},{$pull:{user_cart:{id:req.params.id}}},{multi:true}).then((result)=>{
+                res.redirect('/cart')
+            })
+        })
     }
 
 

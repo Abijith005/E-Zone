@@ -64,7 +64,7 @@ router.get('/singleProductPage/:id',userController.singleProductPage)
 
 router.get('/changeQuantity/:id/:quantity/:cond',productController.productQuantityIncreaseOrDecrease)
 
-// router.get('/decreaseQuantity/:id',productController)
+router.get('/deleteFromCart/:id',productController.deleteFromCart)
 
 
 
