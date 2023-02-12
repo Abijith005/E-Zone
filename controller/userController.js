@@ -225,12 +225,9 @@ return new Promise(async(resolve, reject) => {
     return {...item, quantity:cartQuantities[item._id]}
   })
   let sum=0;
-  console.log(cartDatas);
   cartDatas.map( item=>{
-    console.log(item.price+'        '+item.quantity);
  sum=sum+parseInt(item.price)*item.quantity
   })
-  console.log(sum);
   cartDatas.totalAmount=sum
         res.render('user_cart', { cartDatas}) 
 })

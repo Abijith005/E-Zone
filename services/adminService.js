@@ -48,9 +48,9 @@ module.exports = {
         })
 
     },
-    list_productOrCategory: (argCollection) => {
+    list_product: () => {
         return new Promise(async (resolve, reject) => {
-            let result = await argCollection.find().sort({ name: 1 }).lean()
+            let result = await productModel.find().sort({ name: 1 }).lean()
             result.forEach(async element => {
               await categoryModel.findOne({ _id: element.category }).then((data) => {
                     element.category = data.category
@@ -61,8 +61,7 @@ module.exports = {
         })
     },
 
-
-    findToUpdate: (id, collectionn) => {
+    findToUpdate: (id) => {
         return new Promise(async (resolve, reject) => {
             let result = await productModel.findOne({ _id: id }).lean()
             resolve(result)
@@ -104,9 +103,9 @@ module.exports = {
     },
 
     addCategory: (categoryData) => {
-        return new Promise((resolve, reject) => {
+        return new Promise(async(resolve, reject) => {
             let flag = false;
-            categoryModel.create({ ...categoryData, flag })
+          await  categoryModel.create({ ...categoryData, flag })
         })
     },
 
@@ -127,8 +126,9 @@ module.exports = {
     },
 
     categoryUpdate: (id, categoryData) => {
-        return new Promise((resolve, reject) => {
-            categoryModel.updateOne({ _id: id}, { $set: { category: categoryData.category, brandName: categoryData.brandName } }).then(() => {
+        categoryData.brandName=categoryData.brandName.split(',')
+        return new Promise(async(resolve, reject) => {
+           await categoryModel.updateOne({ _id: id}, { $set: { category: categoryData.category, brandName: categoryData.brandName } }).then(() => {
                 resolve()
             })
         })

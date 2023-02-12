@@ -37,7 +37,7 @@ module.exports = {
     admin_product: (req, res) => {
         // if (req.session.admin) {
 
-            adminService.list_productOrCategory(productModel).then((result) => {
+            adminService.list_product().then((result) => {
                 res.render('product', { result })
             })
         // } else {
