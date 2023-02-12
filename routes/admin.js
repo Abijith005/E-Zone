@@ -5,6 +5,7 @@ const bcrypt=require('bcrypt')
 const multiUpload = require('../middleware/multer')
 const categoryController = require('../controller/categoryController')
 const adminSession=require('../middleware/adminSession')
+const { ifAdmin } = require('../middleware/adminSession')
 
 router.get('/',adminSession.ifNoAdmin,adminController.admin_loginPage)
 
@@ -39,6 +40,8 @@ router.post('/user_search',adminSession.ifAdmin,adminController.admin_userSearch
 router.get('/category',adminSession.ifAdmin,categoryController.admin_categoryPage)
 
 router.get('/add_categoryPage',adminSession.ifAdmin,categoryController.admin_addCategoryPage)
+
+// router.post('/getCategoryForProduct',adminSession.ifAdmin,categoryController.categoryForProduct)
 
 router.post('/add_category',adminSession.ifAdmin,categoryController.admin_addCategory)
 

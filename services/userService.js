@@ -72,6 +72,8 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             await productModel.find({ $and: [{ category: category }, { flag: false }, { $or: [{ product_name: new RegExp(input, 'i') }, { brandName: new RegExp(input, 'i') }] }] }).lean().then((result) => {
                 resolve(result)
+            }).catch((err)=>{
+                reject()
             })
         })
 

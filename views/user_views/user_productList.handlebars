@@ -172,11 +172,10 @@
 				<!-- NAV -->
 				<ul class="main-nav nav navbar-nav flex-row">
 					<li class="active"><a href="/">Home</a></li>
-					<li><a href="#">Hot Deals</a></li>
-					<li><a href="/productList/Laptop">Laptops</a></li>
-					<li><a href="/productList/SmartPhone">Smartphones</a></li>
-					<li><a href="/productList/Smart Watch">Smart Watchs</a></li>
-					<li><a href="/productList/HeadPhone">Head Phones</a></li>
+					{{!-- <li><a href="#">Hot Deals</a></li> --}}
+					{{#each category}}
+					<li><a href="/productList/{{this._id}}">{{this.category}}</a></li>
+					{{/each}}
 					<!-- /NAV -->
 			</div>
 			<!-- /responsive-nav -->

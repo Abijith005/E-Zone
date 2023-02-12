@@ -4,7 +4,6 @@ const categoryModel = require('../models/categoryModel')
 const collections = require('../models/collections')
 const productModel = require('../models/productModel')
 const userModel = require('../models/userModel')
-const ObjectId = require('mongodb').ObjectId
 module.exports = {
     adminLogin: () => {
         return new Promise((resolve, reject) => {
@@ -50,13 +49,14 @@ module.exports = {
     },
     list_product: () => {
         return new Promise(async (resolve, reject) => {
-            let result = await productModel.find().sort({ name: 1 }).lean()
-            result.forEach(async element => {
-              await categoryModel.findOne({ _id: element.category }).then((data) => {
-                    element.category = data.category
-                })
-            });
-            resolve(result)
+           await productModel.find().sort({ name: 1 }).lean().then((result)=>{
+               result.forEach(async element => {
+                     await categoryModel.findOne({ _id: element.category }).then((data) => {
+                          element.category = data.category
+                      })
+                  });
+                  resolve(result)
+            })
 
         })
     },
@@ -69,7 +69,7 @@ module.exports = {
     },
 
     update_product: (id, productData, files) => {
-        return new Promise((resolve, reject) => {
+        return new Promise ((resolve, reject) => {
             productModel.updateOne({ _id: id }, { $set: { product_name: productData.product_name, category: productData.category, company: productData.company, price: productData.price, product_Details: productData.product_Details, image:files.image } }).then(() => {
                 resolve()
             })

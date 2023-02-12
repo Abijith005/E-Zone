@@ -118,27 +118,20 @@ module.exports = {
             adminService.update_product(req.params.id, req.body, req.files)
             res.redirect('/admin/admin_products')
 
-        // } else {
-            // res.redirect('/admin')
-
-        // }
-
     },
 
-    admin_productAddPage:async (req, res) => {
-        // if (req.session.admin) {
-            // adminService.list_productOrCategory(categoryModel).then((result) => {
-                // console.log(result.brandName);
+    admin_productAddPage:(req, res) => {
+        return new Promise(async(resolve, reject) => {
+            let result=await categoryModel.find({}).lean()
+            // let result=await categoryModel.find({},{brandName:0}).lean()
+            // let brandName=req.session.brandForProduct
+                // res.render('add_product', { result,brandName })
+                // brandName=null
+                res.render('add_product', { result})
+        
+        })
 
-           let result=await categoryModel.find().lean()
-                res.render('add_product', { result })
 
-            // })
-
-        // } else {
-            // res.redirect('/admin')
-
-        // }
     },
 
     admin_productAdd: (req, res) => {

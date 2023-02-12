@@ -27,6 +27,17 @@ module.exports = {
     },
 
 
+    // categoryForProduct:(req,res)=>{
+// return new Promise((resolve, reject) => {
+//     categoryModel.findOne({category:req.body.category}).then((result)=>{
+//         req.session.brandForProduct=result.brandName
+//         res.redirect('/admin/product_add')
+        
+//     })
+// })
+//     },
+
+
     admin_addCategory: (req, res) => {
         let { category, brandName } = req.body
         brandName = brandName.split(',')

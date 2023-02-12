@@ -15,15 +15,21 @@ module.exports = {
     },
 
     show_productList: (req, res) => {
-        let products = req.session.productList
-        res.render('user_productList', { products })
-        req.session.productList = null;
+        return new Promise(async(resolve, reject) => {
+            let category=await categoryModel.find().lean()
+
+            let products = req.session.productList
+            res.render('user_productList', { products,category })
+            // req.session.productList = null;
+        })
     },
 
     search_product_with_category: (req, res) => {
         userService.searchProductWithCategory(req.body.searchInput, req.session.productList[0].category).then((productData) => {
             req.session.productList = productData
             res.redirect('/showProductList')
+        }).catch((err)=>{
+            res.redirect('/')
         })
     },
 

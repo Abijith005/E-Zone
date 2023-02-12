@@ -26,30 +26,45 @@
         <div class="text-center" style="background-color: black;">
             <h1 style="color: #ffff; line-height: 2.5;">ADD PRODUCT</h1>
         </div>
-        <div class="container" style="border-style: solid; border-radius: .8rem; background-color: rgba(160, 155, 192, 0.769);">
+        <div class="container"
+            style="border-style: solid; border-radius: .8rem; background-color: rgba(160, 155, 192, 0.769);">
+            {{!-- {{#if brandName}} --}}
             <form action="/admin/product_add" method="post" enctype="multipart/form-data">
+                {{!-- {{else}}
+                <form action="/admin/getCategoryForProduct" method="post"></form>
+                {{/if}} --}}
                 <div class="row mt-4">
                     <div class="col-6 ">
                         <label for="">Product name :</label><br>
                         <input type="text" name="product_name"><br>
-                        <label style=" margin-right: 20%;" for="">Category :</label> <label  for="">Brands :</label><br>
+                        <label style=" margin-right: 20%;" for="">Category :</label> <label for="">Brands :</label><br>
 
-                        <select style="width: 29%;  margin-bottom: 2rem; border-radius: .5rem;" name="category" id="" required>
+                        <select style="width: 29%;  margin-bottom: 2rem; border-radius: .5rem;" name="category" id=""
+                            required>
                             <option value="">Select Category</option>
                             {{#each result}}
                             <option value="{{this.category}}">{{this.category}}</option>
                             {{/each}}
                         </select>
-                        <select style="width: 29%; margin-left: 2%;border-radius: .5rem;" name="brandName" id="" >
+                        {{!-- <button class="btn btn-success" type="submit" style="width: 29%; margin-left: 2%;">Select
+                            Brand</button> --}}
+                        <select style="width: 29%; margin-left: 2%;border-radius: .5rem;" name="brandName" id="">
                             <option value="">Select Brand</option>
                             {{#each result}}
                             {{#each this.brandName}}
                             <option value="{{this}}">{{this}}</option>
                             {{/each}}
                             {{/each}}
+
+                            {{!-- {{#each brandName}}
+                            <option value="{{this}}">{{this}}</option>
+                            {{/each}} --}}
+
                         </select><br>
                         <label for="">Products Details :</label><br>
-                        <textarea  name="product_Details" style="border-radius: .5rem;border-style: solid;border-width: 2px;" cols="49" rows="5"></textarea><br>
+                        <textarea name="product_Details"
+                            style="border-radius: .5rem;border-style: solid;border-width: 2px;" cols="49"
+                            rows="5"></textarea><br>
                         <label for="">Price:</label><br>
                         <input style="width: 30%;" type="text" name="price">
                     </div>
