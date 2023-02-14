@@ -213,6 +213,11 @@
 							</tr>
 						</thead>
 						<tbody>
+							{{#if message}}
+							<td>njdjk</td>
+							{{else}}
+							<td>mkmm</td>
+							{{/if}}
 							{{#each cartDatas}}
 							<tr>
 								<td data-th="Product">
@@ -227,21 +232,19 @@
 									<h5>{{this.product_Details}}</h5>
 								</td>
 								<td data-th="Price">{{this.price}}</td>
-								<td data-th="Quantity" style="display: flex;">
-									{{#if this.quantity}} <a
-										href="/changeQuantity/{{this._id}}/{{this.quantity}}/-1"><button
-											class="btn btn-danger mx-1">-</button></a>{{/if}}
+								<td data-th="Quantity" style="display: flex;">									
+									<a href="/changeQuantity/{{this._id}}/{{this.quantity}}/-1"><button
+											class="btn btn-danger mx-1">-</button></a>
 									<input type="text" style="width:5rem;" min="1" max="10"
 										class="form-control form-control-lg text-center" value="{{this.quantity}}">
-									{{#if this.quantity}} <a
-										href="/changeQuantity/{{this._id}}/{{this.quantity}}/1"><button
-											class="btn btn-success mx-1">+</button></a>{{/if}}
+									<a href="/changeQuantity/{{this._id}}/{{this.quantity}}/1"><button
+											class="btn btn-success mx-1">+</button></a>
 								</td>
 								<td class="actions" data-th="">
 									<div class="text-right">
 
 										<button class="btn btn-white border-secondary bg-white btn-md mb-2">
-											<a href="/deleteFromCart/{{this._id}}">
+											<a href="/deleteFromCart/{{this._id}}/{{this.quantity}}">
 												<i class="fas fa-trash"></i>
 											</a>
 										</button>

@@ -22,6 +22,11 @@ let productSchema = new mongoose.Schema({
         required: true
     },
 
+    stockQuantity: {
+        type: Number,
+        required: true
+    },
+
     price: {
         type: String,
         required: true
@@ -33,18 +38,18 @@ let productSchema = new mongoose.Schema({
     },
 
     image: {
-        type:Array,
-        required:true
+        type: Array,
+        required: true
     },
 
-    sub_image:{
-        type:Array,
-        required:true
+    sub_image: {
+        type: Array,
+        required: true
     }
 
 
 })
 
-let productModel=mongoose.model('product',productSchema)
-module.exports=productModel;
+let productModel = mongoose.model('product', productSchema)
+module.exports = productModel;
 

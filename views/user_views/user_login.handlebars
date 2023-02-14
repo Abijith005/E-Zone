@@ -22,10 +22,16 @@
     {{#if invalidUser}}
                <label for="" style="color:rgb(195, 249, 17); margin-bottom: 1rem;">Invalid Username Or Password</label>
                {{/if}}
-    <input style="width:70%;" class="form-control-lg" type="email" name="email" placeholder="Email-id" required>
+            {{#if nameMsg}}   
+    <p style="color: rgb(201, 4, 4) ;">{{nameMsg}}</p>
+    {{/if}}
+    <input style="width:70%;" class="form-control-lg" type="email" name="email" placeholder="Email-id" >
 </div>
 <div style="text-align: center;">
-    <input style="width:70%;" class="form-control-lg" type="password" name="password" placeholder="Password" required>
+    {{#if passwordMsg}}
+        <p style="color: rgb(201, 4, 4) ;">{{passwordMsg}}</p>
+{{/if}}
+    <input style="width:70%;" class="form-control-lg" type="password" name="password" placeholder="Password" >
     
 </div>
 <div class="text-end pe-5 me-5 pt-1"> <a href="/forgot_password">Forgot Password</a></div>

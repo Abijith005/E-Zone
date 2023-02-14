@@ -10,7 +10,8 @@ router.get('/', userController.user_home)
 
 router.get('/user_login',userSession.ifNoUser, userController.user_login)
 
-router.post('/user_signIn',userSession.ifNoUser, userController.user_signin)
+router.post('/user_signIn', check('email')
+.matches(/[a-zA-Z0-9_\-\.]+[@][a-z]+[\.][a-z]{2,3}/).withMessage("Enter a Valid Email id"),check('password').notEmpty().withMessage('Enter your password'),userSession.ifNoUser, userController.user_signin)
 
 router.get('/user_signUp',userSession.ifNoUser, userController.user_signUpPage)
 
@@ -64,7 +65,7 @@ router.get('/singleProductPage/:id',userController.singleProductPage)
 
 router.get('/changeQuantity/:id/:quantity/:cond',productController.productQuantityIncreaseOrDecrease)
 
-router.get('/deleteFromCart/:id',productController.deleteFromCart)
+router.get('/deleteFromCart/:id/:quantity',productController.deleteFromCart)
 
 
 

@@ -72,7 +72,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             await productModel.find({ $and: [{ category: category }, { flag: false }, { $or: [{ product_name: new RegExp(input, 'i') }, { brandName: new RegExp(input, 'i') }] }] }).lean().then((result) => {
                 resolve(result)
-            }).catch((err)=>{
+            }).catch((err) => {
                 reject()
             })
         })
@@ -84,25 +84,38 @@ module.exports = {
 
     user_add_to_cart: (user_id, product_id) => {
         return new Promise(async (resolve, reject) => {
-            let duplicate=false
-            let cart = await userModel.findOne({ _id: user_id }, { user_cart: 1, _id: 0 })
-            cart.user_cart.forEach(async element => {
-                if (element.id == product_id) {
-                    duplicate=true
-                    if (element.quantity<10) {
-                        await userModel.updateOne({ _id: user_id, user_cart: { $elemMatch: { id: product_id } } }, { $inc: { 'user_cart.$.quantity': 1 } })
-                        resolve
+            await productModel.findOne({_id:product_id},{stockQuantity:1}).then(async(result)=>{
+            if (result.stockQuantity>0) {
+                let duplicate = false
+                let cart = await userModel.findOne({ _id: user_id }, { user_cart: 1, _id: 0 })
+                cart.user_cart.forEach(async element => {
+                    if (element.id == product_id) {
+                        duplicate = true
+                        if (element.quantity < 10) {
+                            await userModel.updateOne({ _id: user_id, user_cart: { $elemMatch: { id: product_id } } }, { $inc: { 'user_cart.$.quantity': 1 } }).then(async () => {
+                                await productModel.updateOne({ _id: product_id }, { $inc: { stockQuantity: -1 } })
+                                resolve()
+                            })
+                        }
+                        else {
+                            resolve()
+                        }
                     }
-                    else{
-                    resolve
-                    }
+                });
+                if (!duplicate) {
+                    let quantity = 1
+                    await userModel.updateOne({ _id: user_id }, { $addToSet: { user_cart: { id: product_id, quantity: 1 } } }, { upsert: true }).then(async()=>{
+                        await productModel.updateOne({ _id: product_id }, { $inc: { stockQuantity: -1 } })
+    
+                        resolve()
+                    })
                 }
-            });
-            if(!duplicate){
-                let quantity = 1
-                await userModel.updateOne({ _id: user_id }, { $addToSet: { user_cart: { id: product_id, quantity: 1 } } }, { upsert: true })
+                
+            }
+            else{
                 resolve()
             }
+        })
         })
     },
 
