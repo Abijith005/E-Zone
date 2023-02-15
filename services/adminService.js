@@ -8,19 +8,21 @@ module.exports = {
     adminLogin: () => {
         return new Promise((resolve, reject) => {
             var data = adminModel.findOne({ name: 'admin' })
-            resolve(data)
+            resolve(data) 
 
         })
     },
-    user_details:() => {
-        return new Promise(async(resolve, reject) => {
-            await userModel.find().sort({ name: 1 }).lean().then((result)=>{
-    
+
+    user_details: () => {
+        return new Promise(async (resolve, reject) => {
+            await userModel.find().sort({ name: 1 }).lean().then((result) => {
+
                 resolve(result)
             })
-            
+
         })
     },
+
     block_user: (id) => {
         return new Promise((resolve, reject) => {
             userModel.updateOne({ _id: id }, { $set: { block: true } }).then(() => {
@@ -28,6 +30,7 @@ module.exports = {
             })
         })
     },
+
     unblock_user: (id) => {
         return new Promise((resolve, reject) => {
             userModel.updateOne({ _id: id }, { $set: { block: false } }).then(() => {
@@ -35,6 +38,7 @@ module.exports = {
             })
         })
     },
+
     add_product: (productData, image) => {
         productData.flag = false;
         return new Promise((resolve, reject) => {
@@ -47,18 +51,17 @@ module.exports = {
         })
 
     },
+
     list_product: () => {
         return new Promise(async (resolve, reject) => {
-           await productModel.find().sort({ name: 1 }).lean().then((result)=>{
-               result.forEach(async element => {
-                     await categoryModel.findOne({ _id: element.category }).then((data) => {
-                          element.category = data.category
-                      })
-                  });
-                  resolve(result)
-            })
-
+            let result = await productModel.find().sort({ name: 1 }).lean()
+            for (const i of result) {
+                let data = await categoryModel.findOne({ _id: i.category })
+                i.category = data.category
+            }
+            resolve(result)
         })
+
     },
 
     findToUpdate: (id) => {
@@ -69,8 +72,8 @@ module.exports = {
     },
 
     update_product: (id, productData, files) => {
-        return new Promise ((resolve, reject) => {
-            productModel.updateOne({ _id: id }, { $set: { product_name: productData.product_name, category: productData.category, company: productData.company, price: productData.price, product_Details: productData.product_Details, image:files.image } }).then(() => {
+        return new Promise((resolve, reject) => {
+            productModel.updateOne({ _id: id }, { $set: { product_name: productData.product_name, category: productData.category, company: productData.company, price: productData.price, product_Details: productData.product_Details, image: files.image } }).then(() => {
                 resolve()
             })
         })
@@ -94,8 +97,8 @@ module.exports = {
     },
 
 
-    user_search:(userData) => {
-        return new Promise(async(resolve, reject) => {
+    user_search: (userData) => {
+        return new Promise(async (resolve, reject) => {
             await userModel.find({ $or: [{ name: new RegExp(userData.name, 'i') }, { email: userData.name }, { mob_no: userData.name }] }).lean().then((result) => {
                 resolve(result)
             })
@@ -103,9 +106,9 @@ module.exports = {
     },
 
     addCategory: (categoryData) => {
-        return new Promise(async(resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             let flag = false;
-          await  categoryModel.create({ ...categoryData, flag })
+            await categoryModel.create({ ...categoryData, flag })
         })
     },
 
@@ -126,9 +129,9 @@ module.exports = {
     },
 
     categoryUpdate: (id, categoryData) => {
-        categoryData.brandName=categoryData.brandName.split(',')
-        return new Promise(async(resolve, reject) => {
-           await categoryModel.updateOne({ _id: id}, { $set: { category: categoryData.category, brandName: categoryData.brandName } }).then(() => {
+        categoryData.brandName = categoryData.brandName.split(',')
+        return new Promise(async (resolve, reject) => {
+            await categoryModel.updateOne({ _id: id }, { $set: { category: categoryData.category, brandName: categoryData.brandName } }).then(() => {
                 resolve()
             })
         })

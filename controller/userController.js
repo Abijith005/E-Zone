@@ -22,9 +22,9 @@ module.exports = {
 
     user_login: (req, res) => {
         if (nameMsg || passwordMsg) {
-            res.render('user_login', {nameMsg,passwordMsg})
-            nameMsg=null
-            passwordMsg=null
+            res.render('user_login', { nameMsg, passwordMsg })
+            nameMsg = null
+            passwordMsg = null
         }
         else if (invalidUser) {
             res.render('user_login', { invalidUser })
@@ -230,9 +230,10 @@ module.exports = {
                 sum = sum + parseInt(item.price) * item.quantity
             })
             cartDatas.totalAmount = sum
-            req.session.maxQuantityReached?message='Reached limit,cant add more ':message=false
-            res.render('user_cart', { cartDatas,message })
-            req.session.maxQuantityReached=false
+            req.session.orderDatas = cartDatas
+            req.session.maxQuantityReached ? message = 'Reached limit,cant add more ' : message = false
+            res.render('user_cart', { cartDatas, message })
+            req.session.maxQuantityReached = false
         })
     },
 

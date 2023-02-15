@@ -4,6 +4,7 @@ const router = express.Router()
 const userController = require('../controller/userController')
 const productController=require('../controller/productController')
 const userSession=require('../middleware/userSession')
+const orderController = require('../controller/orderController')
 
 
 router.get('/', userController.user_home)
@@ -47,7 +48,7 @@ router.get('/resendOTP',userSession.ifNoUser,userController.resendOTP)
 
 router.get('/user_profile',userSession.ifUser, userController.user_profilePage)
 
-router.get('/cart',userSession.ifUser, userController.user_cartPage)
+router.get('/cart',userSession.ifUser,userController.user_cartPage)
 
 router.get('/add_to_cart/:id',userSession.ifUser,productController.product_to_cart)
 
@@ -63,9 +64,13 @@ router.post('/update_address/:id',userSession.ifUser,userController.address_Upda
 
 router.get('/singleProductPage/:id',userController.singleProductPage)
 
-router.get('/changeQuantity/:id/:quantity/:cond',productController.productQuantityIncreaseOrDecrease)
+router.get('/changeQuantity/:id/:quantity/:cond',userSession.ifUser,productController.productQuantityIncreaseOrDecrease)
 
-router.get('/deleteFromCart/:id/:quantity',productController.deleteFromCart)
+router.get('/deleteFromCart/:id/:quantity',userSession.ifUser,productController.deleteFromCart)
+
+router.get('/checkOutPage',userSession.ifUser,orderController.checkOutPage)
+
+router.get('/selectAddress',userSession.ifUser,orderController.selectAddress)
 
 
 

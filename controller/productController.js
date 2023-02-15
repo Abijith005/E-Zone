@@ -35,16 +35,18 @@ module.exports = {
     },
 
     product_to_cart: (req, res) => {
-        userService.user_add_to_cart(req.session.userDetails._id, req.params.id)
-        res.redirect('/cart')
+        userService.user_add_to_cart(req.session.userDetails._id, req.params.id).then(()=>{
+
+            res.redirect('/cart')
+        })
     },
 
     productQuantityIncreaseOrDecrease: (req, res) => {
         return new Promise((resolve, reject) => {
             productModel.findOne({_id:req.params.id},{stockQuantity:1}).then((result)=>{
-                if(result.stockQuantity>0){
-                    let value;
-                    req.params.cond == 1 ? value = 1 : value = -1
+                let value;
+                req.params.cond == 1 ? value = 1 : value = -1
+                if(result.stockQuantity>0||value == -1){
                     if (value == -1 && req.params.quantity > 1) {
                         userModel.updateOne({ _id: req.session.userDetails._id, user_cart: { $elemMatch: { id: req.params.id } } }, { $inc: { 'user_cart.$.quantity': value } }).then(() => {
                             productModel.updateOne({ _id: req.params.id }, { $inc: { stockQuantity: 1 } }).then((result)=>{

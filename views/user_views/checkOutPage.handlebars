@@ -1,0 +1,205 @@
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.0.2/css/boxicons.min.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  
+  <link rel="stylesheet" href="/css/checkOut.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+
+
+  <title>Hello, world!</title>
+</head>
+
+<body>
+
+  <header class="sticky-top">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark main-menu sticky-top"
+      style=" box-shadow:none; width: 100%; z-index:100;">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <h4 class="font-weight-bold">
+            <h3>Gadget<font color="#FFD523">Zon</font>
+            </h3>
+          </h4>
+        </a>
+
+
+      </div>
+    </nav>
+  </header>
+ 
+        
+      
+
+   <form action="/postCheckout" method="post">
+  <section style="height: 480px;" class="gradient-custom">
+  <div class="container py-5" style="height: 405px;">
+    <div class="row d-flex justify-content-center my-4">
+      
+      <div class="col-md-6">
+        <div class="card mb-4">
+          <div class="card-header py-3">
+            <h5 class="mb-0">Delivery address</h5>
+          </div>
+          <div class="card-body">
+           
+
+            <!-- Single item -->
+            <div class="row">
+              <div class="card mb-2" style="width: 100%;">
+          <div class="card-body" >
+            {{#if status}}
+            <div class="row" >
+              
+              <div style="text-align: left;" class="col-sm-8">
+
+                <textarea  style="border-color: #f5f7f62e;" name="address" rows="4" cols="50" readonly> {{result.fname}} {{result.lname}}, {{result.phone}}, {{result.address}}, {{result.city}}, {{result.state}}, {{result.zip}}</textarea>
+              </div>
+              <div class="col-sm-4">
+               <a href="/editAddress" ><i  style="margin-top: 10px;" class="bi bi-pencil-square pdtDelete"></i></a>
+              </div>
+            
+            </div>
+            {{else}}
+                <a style="font-size: 25px;
+    text-decoration: none;
+    margin-top: 39px;
+    margin-left: 33px;
+    font-family: emoji;" id="test" href="/editAddress" >Add  <img style="width: 30px; height: 30px;" src="\images\location.png" alt=""></a>
+
+
+            {{/if}}
+          </div>
+        </div>
+            <div class="card-body">
+            <p><strong>Payment method</strong></p>
+              
+     <div style="    font-size: 17px;text-align: left;">
+      
+        <input type="radio" name="payment" value="cod" checked>
+        <label for="html">Pay on Delivery</label><br>
+        <input type="radio" id="css" name="payment" value="online">
+        <label for="css">Online payment</label>
+     </div> 
+          </div>
+             
+            </div>
+            <!-- Single item -->
+          </div>
+        </div> 
+     
+          
+       
+             {{!-- <a style="text-decoration: none; display: flex; font-size: 20px; margin-top: 63px;"  id="test"href="/home"><i style="margin-top: 7px;" class="bi bi-arrow-left"></i>&nbsp; Continue Shopping</a> --}}
+
+      </div>
+      
+      <div class="col-md-6">
+           <div class="card mb-2">
+      
+          
+        </div>
+        <div class="card mb-4">
+          <div class="card-header py-3">
+            <h5 class="mb-0">Summary</h5>
+          </div>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+              <div>
+                  <strong>products</strong>
+                  
+                </div>
+                <span><strong>Qty &emsp;&emsp; Price</strong></span>
+              </li>
+              <input type="hidden" name="products" value="{{products}}" >
+              {{#each products}}
+              <li  class="list-group-item d-flex justify-content-between align-items-center px-0">
+                {{this.productname}}
+                <span>   <p style="height: 0px;">{{this.cartQuantity}}&emsp;&emsp;{{ this.price}}</p>  </span>                
+              </li>
+              {{/each}}
+
+              {{!-- <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                 <div>
+                  <strong>shipping</strong>
+                  
+                </div>
+                <span>80.00</span>
+              </li> --}}
+              {{#if couponStat}}
+               <input type="hidden" name="couponStat" value="{{couponStat}}" >
+              <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                 <strong> Coupon Discount</strong>
+                <span><strong>{{discount}}.00</strong> </span>
+              </li>
+              {{/if}}<hr>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-2">
+                <div>
+                  <strong>Total amount</strong>
+                  
+                </div>
+                <input type="hidden" name="totalPrice" value="{{totalPrice}}">
+                <span><strong>{{totalPrice}}.00</strong></span>
+              </li>
+            </ul>
+
+            <button type="submit" class="btn btn-warning btn-lg btn-block">
+             Place Order
+            </button>
+          </div>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+</form>
+<div class="card" style="height: 90px; width: 35%; margin-left: 215px; margin-top: 10px;">
+          
+        <form action="/redeemCoupon" method="post">
+          {{!-- <div style="background-color: #dad9d9;height: 50px;">
+         <h4 style="margin-left: 8px; margin-top: 5px;"> &nbsp; Coupon<img style="width: 50px; height: 50px;" src="\images\voucher.png" alt=""> </h4>
+          </div> --}}
+          <div class="card-body p-4 d-flex flex-row" style="    margin-top: -12px;">
+          <h6  > &nbsp; Coupon<img style="width: 50px; height: 50px;" src="\images\voucher.png" alt=""> </h6>
+
+            <div class="form-outline flex-fill ">
+              <input type="text" id="form1" name="couponCode" class="form-control form-control-lg"  required/>
+            </div>
+            <button style="width: 127px; height: 47px;" type="submit" class="btn btn-dark  ms-3">Apply</button>
+           
+          </div >
+           {{#if validCoupon}}<h6 style="color: red; text-align: center;">Coupon is expired</h6>{{/if}}
+           {{#if invalidCoupon}} <h6 style="color: red; text-align: center;">Invalid coupon code </h6>{{/if}}
+              </form>
+           </div>
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</body>
+</html>

@@ -101,7 +101,7 @@ module.exports = {
                             resolve()
                         }
                     }
-                });
+                })
                 if (!duplicate) {
                     let quantity = 1
                     await userModel.updateOne({ _id: user_id }, { $addToSet: { user_cart: { id: product_id, quantity: 1 } } }, { upsert: true }).then(async()=>{

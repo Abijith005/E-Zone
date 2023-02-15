@@ -35,14 +35,11 @@ module.exports = {
         // }
     },
     admin_product: (req, res) => {
-        // if (req.session.admin) {
 
             adminService.list_product().then((result) => {
                 res.render('product', { result })
             })
-        // } else {
-            // res.redirect('/admin')
-        // }
+        
     },
 
     admin_userDetails: (req, res) => {

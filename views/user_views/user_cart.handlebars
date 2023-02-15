@@ -213,11 +213,6 @@
 							</tr>
 						</thead>
 						<tbody>
-							{{#if message}}
-							<td>njdjk</td>
-							{{else}}
-							<td>mkmm</td>
-							{{/if}}
 							{{#each cartDatas}}
 							<tr>
 								<td data-th="Product">
@@ -231,7 +226,7 @@
 								<td>
 									<h5>{{this.product_Details}}</h5>
 								</td>
-								<td data-th="Price">{{this.price}}</td>
+								<td data-th="Price"><b>{{this.price}}</b></td>
 								<td data-th="Quantity" style="display: flex;">									
 									<a href="/changeQuantity/{{this._id}}/{{this.quantity}}/-1"><button
 											class="btn btn-danger mx-1">-</button></a>
@@ -256,13 +251,13 @@
 					</table>
 					<div class="float-right text-right">
 						<h4>Subtotal:</h4>
-						<h1>{{cartDatas.totalAmount}}</h1>
+						<h1>₹: {{cartDatas.totalAmount}}/-</h1>
 					</div>
 				</div>
 			</div>
 			<div class="row mt-4 d-flex align-items-center">
 				<div class="col-sm-6 order-md-2 text-right">
-					<a href="catalog.html" class="btn btn-warning mb-4 btn-lg pl-5 pr-5">Checkout</a>
+					<a href="/checkOutPage" class="btn btn-warning mb-4 btn-lg pl-5 pr-5">Checkout</a>
 				</div>
 				<div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
 					<a href="/">
