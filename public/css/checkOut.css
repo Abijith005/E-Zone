@@ -2,6 +2,40 @@ body{
     margin: 0;
 }
 
+.manage-profile-address {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .manage-address-row {
+            background-color: #fff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .man-ad-left {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .man-ad-right {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .man-ad-right i {
+            font-size: 1.2rem;
+            color: red;
+            font-weight: 500;
+        }
+
+        .man-ad-right i:last-child {
+            color: blue;
+        }
+
 .header{
     width: 100%;
     min-width: 100%;

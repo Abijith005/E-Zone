@@ -5,7 +5,42 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+ <style>
+        <style>
+        .manage-profile-address {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .manage-address-row {
+            background-color: #fff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .man-ad-left {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .man-ad-right {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .man-ad-right i {
+            font-size: 1.2rem;
+            color: red;
+            font-weight: 500;
+        }
+
+        .man-ad-right i:last-child {
+            color: blue;
+        }
+    </style>    <title>Document</title>
 </head>
 <body>
      <div class="col-12 col-md-6">
@@ -46,12 +81,12 @@
 {{!-- ************************************************************************************************************************ --}}
 <div class="container">
   <div class="row mx-0 justify-content-center">
-    <div class="col-md-7 col-lg-5 px-lg-2 col-xl-4 px-xl-0 px-xxl-3 " style="width: 65%;">
+    <div class="col-md-7 col-lg-5 px-lg-2 col-xl-4 px-xl-0 px-xxl-3" style="width: 65%;">
         {{#unless edit}}
       <form
         method="POST"
-        class=" rounded-1 p-4 border bg-secondary"
-        action="addAddress"
+        class=" rounded-1 p-4 border border bg-secondary"
+        action="checkOutAddAddress"
       >
       <label class="d-block mb-4">
           <span class="form-label d-block">Name :</span>

@@ -10,15 +10,19 @@
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.0.2/css/boxicons.min.css" />
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-  
+
   <link rel="stylesheet" href="/css/checkOut.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+    integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
 
 
-  <title>Hello, world!</title>
+
+  <title>E-Zone</title>
 </head>
 
 <body>
@@ -29,7 +33,7 @@
       <div class="container">
         <a class="navbar-brand" href="#">
           <h4 class="font-weight-bold">
-            <h3>Gadget<font color="#FFD523">Zon</font>
+            {{!-- <h3>Gadget<font color="#FFD523">Zon</font> --}}
             </h3>
           </h4>
         </a>
@@ -38,156 +42,290 @@
       </div>
     </nav>
   </header>
- 
-        
-      
 
-   <form action="/postCheckout" method="post">
-  <section style="height: 480px;" class="gradient-custom">
-  <div class="container py-5" style="height: 405px;">
-    <div class="row d-flex justify-content-center my-4">
-      
-      <div class="col-md-6">
-        <div class="card mb-4">
-          <div class="card-header py-3">
-            <h5 class="mb-0">Delivery address</h5>
-          </div>
-          <div class="card-body">
-           
 
-            <!-- Single item -->
-            <div class="row">
-              <div class="card mb-2" style="width: 100%;">
-          <div class="card-body" >
-            {{#if status}}
-            <div class="row" >
-              
-              <div style="text-align: left;" class="col-sm-8">
 
-                <textarea  style="border-color: #f5f7f62e;" name="address" rows="4" cols="50" readonly> {{result.fname}} {{result.lname}}, {{result.phone}}, {{result.address}}, {{result.city}}, {{result.state}}, {{result.zip}}</textarea>
+  {{#unless changeAddress}}
+  <form action="/placeOrder" method="post">
+    <section style="height: 480px;" class="gradient-custom">
+      <div class="container py-5" style="height: 405px;">
+        <div class="row d-flex justify-content-center my-4">
+          <div class="col-md-6">
+            <div class="card mb-4">
+              <div class="card-header py-3">
+                <h5 class="mb-0">Delivery address</h5>
               </div>
-              <div class="col-sm-4">
-               <a href="/editAddress" ><i  style="margin-top: 10px;" class="bi bi-pencil-square pdtDelete"></i></a>
+              <div class="card-body">
+
+
+                <!-- Single item -->
+                <div class="row">
+                  <div class="card mb-2" style="width: 100%;">
+                    <div class="card-body">
+                      <div class="row">
+
+                        <div style="text-align: left;" class="col-sm-8">
+                          {{#unless selectAddress}}
+                          <textarea style="border-color: #f5f7f62e;" name="address" rows="4" cols="50"
+                            readonly>{{data.address.[0].name}},{{data.address.[0].address}},PIN:{{data.address.[0].pincode}},MOB:{{data.address.[0].mob_no}}</textarea>
+                          {{else}}
+                          <textarea style="border-color: #f5f7f62e;" name="address" rows="4" cols="50"
+                            readonly>{{selectAddress.name}},{{selectAddress.address}},PIN:{{selectAddress.pincode}},MOB:{{selectAddress.mob_no}}</textarea>
+                          {{/unless}}
+                        </div>
+                        <div class="col-sm-4">
+                          <a href="/changeAddress"><i style="margin-top: 10px;"
+                              class="bi bi-pencil-square pdtDelete"></i></a>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <p><strong>Payment method</strong></p>
+
+                    <div style="    font-size: 17px;text-align: left;">
+
+                      <input type="radio" name="Payment-Method" value="cod" checked>
+                      <label for="html">Pay on Delivery</label><br>
+                      <input type="radio" id="css" name="Payment-Method" value="online">
+                      <label for="css">Online payment</label>
+                    </div>
+                  </div>
+
+                </div>
               </div>
-            
             </div>
-            {{else}}
-                <a style="font-size: 25px;
-    text-decoration: none;
-    margin-top: 39px;
-    margin-left: 33px;
-    font-family: emoji;" id="test" href="/editAddress" >Add  <img style="width: 30px; height: 30px;" src="\images\location.png" alt=""></a>
-
-
-            {{/if}}
           </div>
+          {{else}}
+          <section style="height: 480px;" class="gradient-custom">
+            {{!-- <div class="container py-5" style="height: 405px;"> --}}
+              <div class="row d-flex justify-content-center my-4">
+                <div class="col-12 col-md-6">
+                  {{#unless addAddress}}
+                  <div class="manage-profile-address pt-3">
+                    <div class="d-flex justify-content-around">
+                      <h4>Manage address </h4>
+                      {{#unless maxAddress}}
+                      <a href="/checkOutAddAddress" class="btn btn-dark rounded-4 ">Add Address</a>
+                      {{/unless}}
+                    </div>
+                    {{#each data.address}}
+                    <div class="manage-address-row">
+                      <div class="man-ad-left">
+                        <b>{{this.name}}</b>
+                        <b>{{this.mob_no}} </b>
+                        <b>{{this.address}}</b>
+                        <b>PIN:{{this.pincode}}</b>
+                      </div>
+                      <div class="man-ad-right">
+                        <a href="/deleteCheckOutAddress/{{this.address_id}}">
+                          <i class="ri-delete-bin-5-line"></i>
+                        </a>
+                        {{!-- <i class="ri-delete-bin-5-line" onclick="deleteAddress('<%=item.id%>')"></i> --}}
+                        <a href='/editCheckOutAddress/{{this.address_id}}'><i class="ri-edit-box-line"></i></a>
+                      </div>
+                      <div>
+                        <a href="/selectAddress/{{this.address_id}}">
+                        <button class="btn btn-success rounded-pill">Select</button></a>
+                      </div>
+                    </div>
+                    {{/each}}
+
+                    <div class="mt-3 text-center">
+
+                      <b class="font-weight-bold"><span class="text-danger font-weight-bold "> NOTE: </span>Only 3
+                        Address Can
+                        Be Added</b>
+                    </div>
+
+                  </div>
+                  {{else}}
+                  {{!--
+                  ************************************************************************************************************************
+                  --}}
+                  <div class="container">
+                    <div class="row mx-0 justify-content-center">
+                      <div class="col-md-12 col-lg-5 px-lg-2 col-xl-4 px-xl-0 px-xxl-3 " style="width: 100%;">
+                        {{#unless edit}}
+                        <form method="POST" class=" rounded-1 p-4 border bg-secondary" style="width: 100%;"
+                          action="checkOutAddAddress">
+                          <label class="d-block mb-4">
+                            <span class="form-label d-block">Name :</span>
+                            <input style="width: 100%;" name="name" type="text" class="form-control" />
+                          </label>
+
+                          <label class="d-block mb-4">
+                            <span class="form-label d-block">Mobile No :</span>
+                            <input style="width: 100%;" name="mob_no" type="text" class="form-control" placeholder="" />
+                          </label>
+
+                          <label class="d-block mb-4">
+                            <span class="form-label d-block">Pin Code :</span>
+                            <input style="width: 100%;" name="pincode" type="text" class="form-control"
+                              placeholder="" />
+                          </label>
+
+                          <label class="d-block mb-4">
+                            <span class="form-label d-block">Address :</span>
+                            <input style="width: 100%; height: 5rem;" name="address" type="text" class="form-control"
+                              placeholder="" />
+                          </label>
+
+                          <div class="mb-3 text-center">
+
+                            <button type="submit" class="btn btn-primary px-3 rounded-3">
+                              Save
+                            </button>
+
+
+
+                          </div>
+                        </form>
+                        {{else}}
+                        <form method="POST" class=" rounded-1 p-4 border bg-secondary"
+                          action="updateCheckOutAddress/{{edit.address_id}}">
+                          <label class="d-block mb-4">
+                            <span class="form-label d-block">Name :</span>
+                            <input style="width: 100%;" name="name" type="text" class="form-control"
+                              value="{{edit.name}}" />
+                          </label>
+
+                          <label class="d-block mb-4">
+                            <span class="form-label d-block">Mobile No :</span>
+                            <input style="width: 100%;" name="mob_no" type="text" class="form-control" placeholder=""
+                              value="{{edit.mob_no}}" />
+                          </label>
+
+                          <label class="d-block mb-4">
+                            <span class="form-label d-block">Pin Code :</span>
+                            <input style="width: 100%;" name="pincode" type="text" class="form-control" placeholder=""
+                              value="{{edit.pincode}}" />
+                          </label>
+
+                          <label class="d-block mb-4">
+                            <span class="form-label d-block">Address :</span>
+                            <input style="width: 100%; height: 5rem;" name="address" type="text" class="form-control"
+                              placeholder="" value="{{edit.address}}" />
+                          </label>
+
+                          <div class="mb-3 text-center">
+
+                            <button type="submit" class="btn btn-primary px-3 rounded-3">
+                              Save
+                            </button>
+
+
+
+                          </div>
+                        </form>
+                        {{/unless}}
+
+                      </div>
+                    </div>
+                  </div>
+
+                  {{/unless}}
+
+
+
+                  {{!--
+                  ************************************************************************************************************************
+                  --}}
+
+                </div>
+                {{/unless}}
+
+                <div class="col-md-6">
+                  <div class="card mb-2">
+
+
+                  </div>
+                  <div class="card mb-4">
+                    <div class="card-header py-3">
+                      <h5 class="mb-0">Summary</h5>
+                    </div>
+                    <div class="card-body">
+                      <ul class="list-group list-group-flush">
+                        <li
+                          class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                          <div>
+                            <strong>products</strong>
+
+                          </div>
+                          <span><strong>Qty &emsp;&emsp; Price</strong></span>
+                        </li>
+
+                        {{#each orderDatas}}
+                        <input type="hidden" name="Products" value="{{this.product_name}}">
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                          {{this.product_name}}
+                          <span>
+                            <p style="height: 0px;">{{this.quantity}}&emsp;&emsp;{{ this.price}}</p>
+                          </span>
+                        </li>
+                        {{/each}}
+
+                        {{!-- <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                          <div>
+                            <strong>shipping</strong>
+
+                          </div>
+                          <span>80.00</span>
+                        </li> --}}
+                        {{!-- {{#if couponStat}} --}}
+                        <input type="hidden" name="couponStat" value="{{couponStat}}">
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                          <strong> Coupon Discount</strong>
+                          <span><strong>{{discount}}.00</strong> </span>
+                        </li>
+                        {{!-- {{/if}}
+                        <hr> --}}
+                        <li
+                          class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-2">
+                          <div>
+                            <strong>Total Amount</strong>
+
+                          </div>
+                          <input type="hidden" name="Total-Amount" value="{{orderDatas.totalAmount}}">
+                          <span><strong>{{orderDatas.totalAmount}}.00</strong></span>
+                        </li>
+                      </ul>
+
+                      <button type="submit" class="btn btn-warning btn-lg btn-block">
+                        Place Order
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </section>
+  </form>
+  {{#unless changeAddress}}
+  <div class="card" style="height: 90px; width: 35%; margin-left: 215px; margin-top: 10px;">
+
+    <form action="/redeemCoupon" method="post">
+      {{!-- <div style="background-color: #dad9d9;height: 50px;">
+        <h4 style="margin-left: 8px; margin-top: 5px;"> &nbsp; Coupon<img style="width: 50px; height: 50px;"
+            src="\images\voucher.png" alt=""> </h4>
+      </div> --}}
+      <div class="card-body p-4 d-flex flex-row align-items-center" style="    margin-top: -12px;">
+        <h6> Coupon&nbsp;&nbsp;</h6>
+
+        <div class="form-outline flex-fill ">
+          <input type="text" id="form1" name="couponCode" class="form-control form-control-lg" required />
         </div>
-            <div class="card-body">
-            <p><strong>Payment method</strong></p>
-              
-     <div style="    font-size: 17px;text-align: left;">
-      
-        <input type="radio" name="payment" value="cod" checked>
-        <label for="html">Pay on Delivery</label><br>
-        <input type="radio" id="css" name="payment" value="online">
-        <label for="css">Online payment</label>
-     </div> 
-          </div>
-             
-            </div>
-            <!-- Single item -->
-          </div>
-        </div> 
-     
-          
-       
-             {{!-- <a style="text-decoration: none; display: flex; font-size: 20px; margin-top: 63px;"  id="test"href="/home"><i style="margin-top: 7px;" class="bi bi-arrow-left"></i>&nbsp; Continue Shopping</a> --}}
+        <button style="width: 127px; height: 47px;" type="submit" class="btn btn-dark  ms-3">Apply</button>
 
       </div>
-      
-      <div class="col-md-6">
-           <div class="card mb-2">
-      
-          
-        </div>
-        <div class="card mb-4">
-          <div class="card-header py-3">
-            <h5 class="mb-0">Summary</h5>
-          </div>
-          <div class="card-body">
-            <ul class="list-group list-group-flush">
-              <li
-                class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-              <div>
-                  <strong>products</strong>
-                  
-                </div>
-                <span><strong>Qty &emsp;&emsp; Price</strong></span>
-              </li>
-              <input type="hidden" name="products" value="{{products}}" >
-              {{#each products}}
-              <li  class="list-group-item d-flex justify-content-between align-items-center px-0">
-                {{this.productname}}
-                <span>   <p style="height: 0px;">{{this.cartQuantity}}&emsp;&emsp;{{ this.price}}</p>  </span>                
-              </li>
-              {{/each}}
-
-              {{!-- <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                 <div>
-                  <strong>shipping</strong>
-                  
-                </div>
-                <span>80.00</span>
-              </li> --}}
-              {{#if couponStat}}
-               <input type="hidden" name="couponStat" value="{{couponStat}}" >
-              <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                 <strong> Coupon Discount</strong>
-                <span><strong>{{discount}}.00</strong> </span>
-              </li>
-              {{/if}}<hr>
-              <li
-                class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-2">
-                <div>
-                  <strong>Total amount</strong>
-                  
-                </div>
-                <input type="hidden" name="totalPrice" value="{{totalPrice}}">
-                <span><strong>{{totalPrice}}.00</strong></span>
-              </li>
-            </ul>
-
-            <button type="submit" class="btn btn-warning btn-lg btn-block">
-             Place Order
-            </button>
-          </div>
-        </div>
-        
-      </div>
-      
-    </div>
+      {{!-- {{#if validCoupon}}<h6 style="color: red; text-align: center;">Coupon is expired</h6>{{/if}} --}}
+      {{!-- {{#if invalidCoupon}} <h6 style="color: red; text-align: center;">Invalid coupon code </h6>{{/if}} --}}
+    </form>
   </div>
-</section>
-</form>
-<div class="card" style="height: 90px; width: 35%; margin-left: 215px; margin-top: 10px;">
-          
-        <form action="/redeemCoupon" method="post">
-          {{!-- <div style="background-color: #dad9d9;height: 50px;">
-         <h4 style="margin-left: 8px; margin-top: 5px;"> &nbsp; Coupon<img style="width: 50px; height: 50px;" src="\images\voucher.png" alt=""> </h4>
-          </div> --}}
-          <div class="card-body p-4 d-flex flex-row" style="    margin-top: -12px;">
-          <h6  > &nbsp; Coupon<img style="width: 50px; height: 50px;" src="\images\voucher.png" alt=""> </h6>
-
-            <div class="form-outline flex-fill ">
-              <input type="text" id="form1" name="couponCode" class="form-control form-control-lg"  required/>
-            </div>
-            <button style="width: 127px; height: 47px;" type="submit" class="btn btn-dark  ms-3">Apply</button>
-           
-          </div >
-           {{#if validCoupon}}<h6 style="color: red; text-align: center;">Coupon is expired</h6>{{/if}}
-           {{#if invalidCoupon}} <h6 style="color: red; text-align: center;">Invalid coupon code </h6>{{/if}}
-              </form>
-           </div>
+  {{/unless}}
 
 
   <!-- Optional JavaScript -->
@@ -202,4 +340,5 @@
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
 </body>
+
 </html>

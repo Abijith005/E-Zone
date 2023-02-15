@@ -46,6 +46,11 @@ let userSchema=new mongoose.Schema({
     address:{
         type:Array,
        default:[],
+    },
+
+    orders:{
+        type:Array,
+        default:[]
     }
 
 })

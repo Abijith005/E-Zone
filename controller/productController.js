@@ -76,9 +76,8 @@ module.exports = {
 
     deleteFromCart: (req, res) => {
         return new Promise((resolve, reject) => {
-            console.log(req.params.quantity);
             userModel.updateOne({ _id: req.session.userDetails._id }, { $pull: { user_cart: { id: req.params.id } } }, { multi: true }).then(() => {
-                productModel.updateOne({ _id: req.params.id }, { $inc: { stockQuantity: -1 } }).then((result)=>{
+                productModel.updateOne({ _id: req.params.id }, { $inc: { stockQuantity: req.params.quantity } }).then((result)=>{
                     res.redirect('/cart')
                 })
             })

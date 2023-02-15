@@ -70,7 +70,21 @@ router.get('/deleteFromCart/:id/:quantity',userSession.ifUser,productController.
 
 router.get('/checkOutPage',userSession.ifUser,orderController.checkOutPage)
 
-router.get('/selectAddress',userSession.ifUser,orderController.selectAddress)
+router.get('/changeAddress',userSession.ifUser,orderController.changeAddress)
+
+router.get('/checkOutAddAddress',userSession.ifUser,orderController.checkOutAddAddressPage)
+
+router.post('/checkOutAddAddress',userSession.ifUser,orderController.checkOutAddAddress)
+
+router.get('/deleteCheckOutAddress/:id',userSession.ifUser,orderController.deleteCheckOutAddress)
+
+router.get('/editCheckOutAddress/:id',userSession.ifUser,orderController.editCheckOutAddress)
+
+router.post('/updateCheckOutAddress/:id',userSession.ifUser,orderController.updateCheckOutAddress)
+
+router.get('/selectAddress/:id',userSession.ifUser,orderController.selectAddress)
+
+router.post('/placeOrder',userSession.ifUser,orderController.placeOrder)
 
 
 
