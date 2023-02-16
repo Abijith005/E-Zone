@@ -1,4 +1,5 @@
 const categoryModel = require('../models/categoryModel');
+const userModel = require('../models/userModel');
 // const collections = require('../models/collections');
 const adminService = require('../services/adminService')
 
@@ -68,4 +69,6 @@ module.exports = {
 
        
     },
+
+   
 }

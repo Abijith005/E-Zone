@@ -5,27 +5,34 @@ const userService = require("../services/userService")
 
 module.exports={
     checkOutPage:(req,res)=>{
-        userService.get_userDetails(req.session.userDetails._id).then((data)=>{
-            orderDatas=req.session.orderDatas
-            let sum = 0;
-            orderDatas.forEach(item => {
-                sum = sum + parseInt(item.price) * item.quantity
+        userModel.findOne({_id:req.session.userDetails._id},{user_cart:1}).then((cart)=>{
+           if(cart.user_cart.length>0){
+            userService.get_userDetails(req.session.userDetails._id).then((data)=>{
+                orderDatas=req.session.orderDatas
+                let sum = 0;
+                orderDatas.forEach(item => {
+                    sum = sum + parseInt(item.price) * item.quantity
+                })
+                orderDatas.totalAmount=sum
+                req.session.selectAddress?selectAddress=req.session.selectAddress:selectAddress=null
+                req.session.changeAddress?changeAddress=true:changeAddress=false
+                data.address.length >= 3 ? maxAddress = true : maxAddress = false
+                req.session.editCheckOutAddress ? edit = req.session.editCheckOutAddress : edit = null
+                req.session.checkOutAddAddress ? addAddress = true : addAddress = false
+                res.render('checkOutPage',{orderDatas,data,changeAddress,addAddress, maxAddress, edit,selectAddress})
+                req.session.changeAddress=false
+                req.session.checkOutAddAddress= false
+                req.session.editCheckOutAddress = null
+                req.session.selectAddress=null
+                edit = null
+                addAddress = false
             })
-            console.log(orderDatas);
-            orderDatas.totalAmount=sum
-            req.session.selectAddress?selectAddress=req.session.selectAddress:selectAddress=null
-            req.session.changeAddress?changeAddress=true:changeAddress=false
-            data.address.length >= 3 ? maxAddress = true : maxAddress = false
-            req.session.editCheckOutAddress ? edit = req.session.editCheckOutAddress : edit = null
-            req.session.checkOutAddAddress ? addAddress = true : addAddress = false
-            res.render('checkOutPage',{orderDatas,data,changeAddress,addAddress, maxAddress, edit,selectAddress})
-            req.session.changeAddress=false
-            req.session.checkOutAddAddress= false
-            req.session.editCheckOutAddress = null
-            req.session.selectAddress=null
-            edit = null
-            addAddress = false
-        })
+
+        }
+        else{
+            res.redirect('/cart')
+        }
+       })
         // req.session.orderDatas=null
     },
     
@@ -90,10 +97,23 @@ module.exports={
     placeOrder:(req,res)=>{
         return new Promise((resolve, reject) => {
             let data=req.body
-            userModel.updateOne({_id:req.session.userDetails._id},{$push:{orders:data}}).then((result)=>{
-                console.log(result);
-                res.render('orderConfirm')
-                resolve()
+            for (let i=0;i<data.products_id.length;i++) {
+               let amount=data.price[i]*data.quantity[i]
+                orderId=Date.now()
+                userModel.updateOne({_id:req.session.userDetails._id},{$push:{orders:{order_id:orderId,deliveryAddress:data.deliveryAddress,paymentMethod:data.paymentMethod,product_id:data.products_id[i],productName:data.productsName[i],quantity:data.quantity[i],couponStatus:data.couponStatus,totalAmount:amount,orderDate:Date(),orderStatus:'Not Delivered'}}}).then((result)=>{
+                })
+            }
+                userModel.updateOne({_id:req.session.userDetails._id},{$unset:{user_cart:{}}}).then(()=>{
+                    res.render('orderConfirm')
+                    resolve()
+            })
+        })
+    },
+
+    adminCancelOrder:(req,res)=>{
+        return new Promise((resolve, reject) => {
+            userModel.updateOne({_id:req.params.user_id},{$pull:{orders:{order_id:parseInt(req.params.id)}}}).then((result)=>{
+                res.redirect('/admin/order_Details')
             })
         })
     }

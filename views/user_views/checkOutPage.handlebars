@@ -66,10 +66,10 @@
 
                         <div style="text-align: left;" class="col-sm-8">
                           {{#unless selectAddress}}
-                          <textarea style="border-color: #f5f7f62e;" name="address" rows="4" cols="50"
+                          <textarea style="border-color: #f5f7f62e;" name="deliveryAddress" rows="4" cols="50"
                             readonly>{{data.address.[0].name}},{{data.address.[0].address}},PIN:{{data.address.[0].pincode}},MOB:{{data.address.[0].mob_no}}</textarea>
                           {{else}}
-                          <textarea style="border-color: #f5f7f62e;" name="address" rows="4" cols="50"
+                          <textarea style="border-color: #f5f7f62e;" name="deliveryAddress" rows="4" cols="50"
                             readonly>{{selectAddress.name}},{{selectAddress.address}},PIN:{{selectAddress.pincode}},MOB:{{selectAddress.mob_no}}</textarea>
                           {{/unless}}
                         </div>
@@ -86,9 +86,9 @@
 
                     <div style="    font-size: 17px;text-align: left;">
 
-                      <input type="radio" name="Payment-Method" value="cod" checked>
+                      <input type="radio" name='paymentMethod' value="Cash On Delivery" checked>
                       <label for="html">Pay on Delivery</label><br>
-                      <input type="radio" id="css" name="Payment-Method" value="online">
+                      <input type="radio" id="css" name='paymentMethod' value="UPI Payment">
                       <label for="css">Online payment</label>
                     </div>
                   </div>
@@ -257,7 +257,10 @@
                         </li>
 
                         {{#each orderDatas}}
-                        <input type="hidden" name="Products" value="{{this.product_name}}">
+                        <input type="hidden" name="products_id" value="{{this._id}}">
+                        <input type="hidden" name="productsName" value="{{this.product_name}}">
+                        <input type="hidden" name="price" value="{{this.price}}">
+                        <input type="hidden" name="quantity" value="{{this.quantity}}">
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                           {{this.product_name}}
                           <span>
@@ -274,7 +277,7 @@
                           <span>80.00</span>
                         </li> --}}
                         {{!-- {{#if couponStat}} --}}
-                        <input type="hidden" name="couponStat" value="{{couponStat}}">
+                        <input type="hidden" name="couponStatus" value="{{couponStatus}}">
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                           <strong> Coupon Discount</strong>
                           <span><strong>{{discount}}.00</strong> </span>
@@ -287,7 +290,7 @@
                             <strong>Total Amount</strong>
 
                           </div>
-                          <input type="hidden" name="Total-Amount" value="{{orderDatas.totalAmount}}">
+                          <input type="hidden" name="total-Amount" value="{{orderDatas.totalAmount}}">
                           <span><strong>{{orderDatas.totalAmount}}.00</strong></span>
                         </li>
                       </ul>

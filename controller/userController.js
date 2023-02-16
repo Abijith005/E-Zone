@@ -215,6 +215,8 @@ module.exports = {
 
     user_cartPage: (req, res) => {
         return new Promise(async (resolve, reject) => {
+            let cart = await userModel.findOne({ _id: req.session.userDetails._id }, { user_cart: 1 })
+            cart.user_cart.length > 0 ? checkOut = true : checkOut = false
             let result = await userModel.findOne({ _id: req.session.userDetails._id })
             let cartQuantities = {}
             const cartID = result.user_cart.map(item => {
@@ -232,7 +234,7 @@ module.exports = {
             cartDatas.totalAmount = sum
             req.session.orderDatas = cartDatas
             req.session.maxQuantityReached ? message = 'Reached limit,cant add more ' : message = false
-            res.render('user_cart', { cartDatas, message })
+            res.render('user_cart', { cartDatas, message, checkOut })
             req.session.maxQuantityReached = false
         })
     },

@@ -6,6 +6,7 @@ const multiUpload = require('../middleware/multer')
 const categoryController = require('../controller/categoryController')
 const adminSession=require('../middleware/adminSession')
 const { ifAdmin } = require('../middleware/adminSession')
+const orderController = require('../controller/orderController')
 
 router.get('/',adminSession.ifNoAdmin,adminController.admin_loginPage)
 
@@ -50,6 +51,8 @@ router.get('/flag_and_unFlag_category/:id',adminSession.ifAdmin,categoryControll
 router.get('/editCategory/:id',adminSession.ifAdmin,categoryController.edit_category)
 
 router.post('/updateCategory/:id',adminSession.ifAdmin,categoryController.update_category)
+
+router.get('/adminCancelOrder/:id/:user_id',adminSession.ifAdmin,orderController.adminCancelOrder)
 
 router.get('/log_Out',adminController.adminLogOut)
 

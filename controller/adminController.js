@@ -2,6 +2,7 @@ const { resolve } = require('promise');
 const categoryModel = require('../models/categoryModel');
 // const collections = require('../models/collections');
 const productModel = require('../models/productModel');
+const userModel = require('../models/userModel');
 const adminService = require('../services/adminService')
 var datas;
 module.exports = {
@@ -62,14 +63,12 @@ module.exports = {
     },
 
     admin_orderDetails: (req, res) => {
-
-        // if (req.session.admin) {
-
-            res.render('order_Details')
-        // } else {
-            // res.redirect('/admin')
-
-        // }
+        return new Promise((resolve, reject) => {
+            userModel.find({orders:{$ne:null}},{name:1,orders:1}).lean().then((result)=>{
+                res.render('order_Details',{result}) 
+            
+            })
+        })
     },
 
     admin_userBlock: (req, res) => {
