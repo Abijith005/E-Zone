@@ -1,4 +1,5 @@
 const session = require("express-session")
+const productModel = require("../models/productModel")
 const userModel = require("../models/userModel")
 const userService = require("../services/userService")
 
@@ -97,10 +98,11 @@ module.exports={
     placeOrder:(req,res)=>{
         return new Promise((resolve, reject) => {
             let data=req.body
-            for (let i=0;i<data.products_id.length;i++) {
+            console.log(data);
+            for (let i=0;i<data.products_id.length;i++){
                let amount=data.price[i]*data.quantity[i]
-                orderId=Date.now()
-                userModel.updateOne({_id:req.session.userDetails._id},{$push:{orders:{order_id:orderId,deliveryAddress:data.deliveryAddress,paymentMethod:data.paymentMethod,product_id:data.products_id[i],productName:data.productsName[i],quantity:data.quantity[i],couponStatus:data.couponStatus,totalAmount:amount,orderDate:Date(),orderStatus:'Not Delivered'}}}).then((result)=>{
+                   orderId=Date.now()
+                userModel.updateOne({_id:req.session.userDetails._id},{$push:{orders:{order_id:orderId,deliveryAddress:data.deliveryAddress,paymentMethod:data.paymentMethod,product_id:data.products_id[i],productName:data.productsName[i],category:data.category[i],quantity:data.quantity[i],couponStatus:data.couponStatus,totalAmount:amount,orderDate:Date(),orderStatus:'Not Delivered'}}}).then((result)=>{
                 })
             }
                 userModel.updateOne({_id:req.session.userDetails._id},{$unset:{user_cart:{}}}).then(()=>{
@@ -112,7 +114,8 @@ module.exports={
 
     adminCancelOrder:(req,res)=>{
         return new Promise((resolve, reject) => {
-            userModel.updateOne({_id:req.params.user_id},{$pull:{orders:{order_id:parseInt(req.params.id)}}}).then((result)=>{
+            userModel.updateOne({_id:req.params.user_id},{$pull:{orders:{order_id:parseInt(req.params.id)}}}).then(()=>{
+                productModel.updateOne({_id:req.params.product_id},{$inc:{stockQuantity:req.params.quantity}})
                 res.redirect('/admin/order_Details')
             })
         })

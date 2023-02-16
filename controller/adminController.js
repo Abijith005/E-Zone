@@ -65,6 +65,13 @@ module.exports = {
     admin_orderDetails: (req, res) => {
         return new Promise((resolve, reject) => {
             userModel.find({orders:{$ne:null}},{name:1,orders:1}).lean().then((result)=>{
+                for (const i of result) {
+                    for (const j of i.orders) {
+                        categoryModel.findOne({_id:j.category},{category:1}).then((result)=>{
+                            j.category=result.category
+                        })
+                    }
+                }
                 res.render('order_Details',{result}) 
             
             })

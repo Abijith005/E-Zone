@@ -126,7 +126,7 @@
           <td>{{this.quantity}}</td>
           <td>₹: {{this.totalAmount}} /-</td>
           <td>{{this.orderStatus}}</td>
-          <td><a href="adminCancelOrder/{{this.order_id}}/{{../_id}}"><button class="btn btn-danger rounded-pill">cancel</button></a></td>
+          <td><a href="adminCancelOrder/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}"><button class="btn btn-danger rounded-pill">cancel</button></a></td>
           {{/each}}
         </tr>{{/each}}
       </tbody>
