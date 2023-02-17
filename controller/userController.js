@@ -274,8 +274,27 @@ module.exports = {
             res.render('singleProductDetails', { result })
 
         })
-    }
+    },
 
+    orderHistory: (req, res) => {
+        return new Promise((resolve, reject) => {
+            userModel.findOne({ _id: req.session.userDetails._id }, { orders: 1 }).then((result) => {
+                console.log(result);
+                let products = [];
+                for (const i of result.orders){
+                    productModel.findOne({ _id: i.product_id },{product_name:1,brandName:1,price:1,image:1}).lean().then((product) => {
+                        product.quantity = i.quantity
+                        product.totalAmount=product.price*i.quantity
+                        product.order_id=i.order_id
+                        products.push(product)
+                        console.log(product);
+                    })
+                }
+                res.render('orderHistory', { result, products })
+            })
+            products=null
+        })
+    }
 
 }
 

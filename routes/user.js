@@ -86,6 +86,9 @@ router.get('/selectAddress/:id',userSession.ifUser,orderController.selectAddress
 
 router.post('/placeOrder',userSession.ifUser,orderController.placeOrder)
 
+router.get('/orderHistory',userSession.ifUser,userController.orderHistory)
+
+
 
 
 
