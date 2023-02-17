@@ -285,16 +285,13 @@ module.exports = {
                         product.quantity = i.quantity
                         product.totalAmount = product.price * i.quantity
                         product.order_id = i.order_id
-                        console.log(i.orderStatus);
                         if (i.orderStatus == 'cancelled') {
-                            console.log('cancelled***********');
                             product.orderStatus = false
                         }
                         else {
                             product.orderStatus = true
                         }
                         products.push(product)
-                        console.log(product);
                     })
                 }
                 res.render('orderHistory', { result, products })

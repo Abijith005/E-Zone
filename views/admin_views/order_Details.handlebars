@@ -16,6 +16,14 @@
   <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel='stylesheet' href='/stylesheets/style.css' />
+
+  
+
+
+
+
+
+    <link rel="stylesheet" href="/styles/admin/product.css">
 </head>
 
 <body style="margin: 1rem;">
@@ -74,31 +82,6 @@
       color: rgb(8, 8, 8);
     }
   </style>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light text-center">
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        </li>
-      </ul>
-      <div class="row">
-        <div class="col-lg-4sm-4 ">
-          <a href="/create"><button class="btn btn-success mr-auto" style="margin-right: auto;">Create</button></a>
-        </div>
-        <form class="form-inline my-2 my-lg-0" action="/admin/userSearch/" role="search" type="submit" method="post">
-          <div class="col-lg-4 sm-4">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" name="name" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </div>
-        </form>
-        <div class="col-lg-4 sm-4">
-          <a href="admin-logout"><button class="btn btn-danger">Log Out</button></a>
-        </div>
-
-
-
-      </div>
-    </div>
-  </nav>
   <div>
     <table class="table">
       <thead>
@@ -126,12 +109,36 @@
           <td>{{this.quantity}}</td>
           <td>₹: {{this.totalAmount}} /-</td>
           <td>{{this.orderStatus}}</td>
-          <td><a href="adminCancelOrder/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}"><button class="btn btn-danger rounded-pill">cancel</button></a></td>
+          <td>
+            <div id="container">
+                  <div id="menu-wrap">
+                    <input type="checkbox" class="toggler" />
+                    <div class="dots">
+                                            <div></div>
+
+                    </div>
+                    <div class="menu">
+                      <div>
+                        <ul>
+                          <li><a href="adminOrderUpdate/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}/delivered" class="link">Delivered</a></li>
+                          {{!-- {{#if this.flag}} --}}
+                          <li><a href="adminOrderUpdate/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}/cancel" class="link">Cancel Order</a></li>
+                          {{!-- {{/if}} --}}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            
+            
+            {{!-- <a href="adminCancelOrder/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}"><button class="btn btn-danger rounded-pill">cancel</button></a> --}}
+            </td>
           {{/each}}
         </tr>{{/each}}
       </tbody>
     </table>
   </div>
+  
 </body>
 
 </html>

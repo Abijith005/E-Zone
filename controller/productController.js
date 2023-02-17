@@ -36,7 +36,6 @@ module.exports = {
 
     product_to_cart: (req, res) => {
         userService.user_add_to_cart(req.session.userDetails._id, req.params.id).then(() => {
-
             res.redirect('/cart')
         })
     },

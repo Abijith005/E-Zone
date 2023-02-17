@@ -114,27 +114,36 @@ module.exports = {
                     resolve()
                 })
             }
-            userModel.updateOne({_id:req.session.userDetails._id},{$unset:{user_cart:{}}}).then(()=>{
-            res.render('orderConfirm')
-            resolve()
+            userModel.updateOne({ _id: req.session.userDetails._id }, { $unset: { user_cart: {} } }).then(() => {
+                res.render('orderConfirm')
+                resolve()
             })
         })
     },
 
-    adminCancelOrder: (req, res) => {
+    adminOrderUpdate: (req, res) => {
         return new Promise((resolve, reject) => {
-            userModel.updateOne({ _id: req.params.user_id }, { $pull: { orders: { order_id: parseInt(req.params.id) } } }).then(() => {
-                productModel.updateOne({ _id: req.params.product_id }, { $inc: { stockQuantity: req.params.quantity } }).then((result) => {
+            if (req.params.update == 'cancel') {
+                userModel.updateOne({ _id: req.params.user_id, orders: { $elemMatch: { order_id: parseInt(req.params.id) } } }, { $set: { 'orders.$.orderStatus': 'cancelled' } }).then(() => {
+                    productModel.updateOne({ _id: req.params.product_id }, { $inc: { stockQuantity: req.params.quantity } }).then((result) => {
+                        res.redirect('/admin/order_Details')
+                    })
+                })
+            }
+            else {
+                userModel.updateOne({ _id:  req.params.user_id, orders: { $elemMatch: { order_id: parseInt(req.params.id) } } }, { $set: { 'orders.$.orderStatus': 'Delivered' } }).then((result) => {
                     res.redirect('/admin/order_Details')
                 })
-            })
+
+            }
         })
     },
-    
-    userOrderCancel: (req, res) => {
+
+    userOrderUpdate: (req, res) => {
         userModel.updateOne({ _id: req.session.userDetails._id, orders: { $elemMatch: { order_id: parseInt(req.params.id) } } }, { $set: { 'orders.$.orderStatus': 'cancelled' } }).then((result) => {
-            
-            res.redirect('/orderHistory')
+            productModel.updateOne({ _id: req.params.product_id }, { $inc: { stockQuantity: req.params.quantity } }).then((result) => {
+                res.redirect('/orderHistory')
+            })
         })
     }
 }

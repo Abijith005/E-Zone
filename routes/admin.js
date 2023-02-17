@@ -52,7 +52,7 @@ router.get('/editCategory/:id',adminSession.ifAdmin,categoryController.edit_cate
 
 router.post('/updateCategory/:id',adminSession.ifAdmin,categoryController.update_category)
 
-router.get('/adminCancelOrder/:id/:user_id/:product_id/:quantity',adminSession.ifAdmin,orderController.adminCancelOrder)
+router.get('/adminOrderUpdate/:id/:user_id/:product_id/:quantity/:update',adminSession.ifAdmin,orderController.adminOrderUpdate)
 
 router.get('/log_Out',adminController.adminLogOut)
 
