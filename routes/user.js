@@ -88,6 +88,8 @@ router.post('/placeOrder',userSession.ifUser,orderController.placeOrder)
 
 router.get('/orderHistory',userSession.ifUser,userController.orderHistory)
 
+router.get('/userOrderCancel/:id',userSession.ifUser,orderController.userOrderCancel)
+
 
 
 

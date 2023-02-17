@@ -65,20 +65,27 @@
                                         </div>
                                         <div
                                             class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0 small">Price:₹ {{this.price}} /-</p>
+                                            <p class="text-muted mb-0 small">Price ₹: {{this.price}} /-</p>
                                         </div>
                                         <div
-                                            class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            class="col-md-1 text-center d-flex justify-content-center align-items-center">
                                             <p class="text-muted mb-0 small">Quantity: {{this.quantity}}</p>
                                         </div>
                                         <div
                                             class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0 small">Total Amount:₹ {{this.totalAmount}} /-</p>
+                                            <p class="text-muted mb-0 small">Total Amount ₹: {{this.totalAmount}} /-</p>
                                         </div>
+                                        {{#if this.orderStatus}}
                                         <div
-                                            class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <a href="" class="btn btn-danger rounded-pill">cancel</a>
+                                            class="col-md-1 text-center d-flex justify-content-center align-items-center">
+                                            <a href="/userOrderCancel/{{this.order_id}}/{{this._id}}/{{this.quantity}}" class="btn btn-danger rounded-pill">cancel</a>
                                         </div>
+                                        {{else}}
+                                         <div
+                                            class="col-md-1 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-danger">Order Cancelled</p>
+                                        </div>
+                                        {{/if}}
 
                                     </div>
                                     <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
