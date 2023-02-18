@@ -101,13 +101,20 @@
 							<!-- /Wishlist -->
 
 							<!-- Cart -->
-							<div class="dropdown">
-								<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+							{{!-- <div class="dropdown"> --}}
+								{{!-- <a class="dropdown-toggle"  aria-expanded="true">
+									<i class="fa fa-shopping-cart"></i>
+									<span>Your Cart</span>
+									<div class="qty">3</div>
+								</a> --}}
+								<div class="dropdown">
+								<a href="/cart" aria-expanded="true">
 									<i class="fa fa-shopping-cart"></i>
 									<span>Your Cart</span>
 									<div class="qty">3</div>
 								</a>
-								<div class="cart-dropdown">
+							</div>
+								{{!-- <div class="cart-dropdown">
 									<div class="cart-list">
 										<div class="product-widget">
 											<div class="product-img">
@@ -139,8 +146,8 @@
 										<a href="#">View Cart</a>
 										<a href="#">Checkout <i class="fa fa-arrow-circle-right"></i></a>
 									</div>
-								</div>
-							</div>
+								</div> --}}
+							{{!-- </div> --}}
 							<!-- /Cart -->
 
 							<!-- Menu Toogle -->
@@ -226,10 +233,10 @@
 					<a href="/singleProductPage/{{this._id}}">
 					<div class="product-img">
 						<img style="height:35rem;" src="/images/{{this.image.[0].filename}}" alt="">
-						<div class="product-label">
+						{{!-- <div class="product-label">
 							<span class="sale">11.1% off</span>
 							<span class="new">NEW</span>
-						</div>
+						</div> --}}
 					</div>
 					</a>
 					<div class="product-body" style="height: 14rem;">
@@ -247,8 +254,8 @@
 						<div class="product-btns">
 							<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to
 									wishlist</span></button>
-							<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to
-									compare</span></button>
+							{{!-- <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to
+									compare</span></button> --}}
 							<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick
 									view</span></button>
 						</div>
