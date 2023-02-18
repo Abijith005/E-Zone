@@ -26,8 +26,8 @@
             <div class="row align-items-center">
                 <div class="col-md-2">
                     <div class="header-logo ">
-                            <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
-                            </h1>
+                        <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
+                        </h1>
                     </div>
                 </div>
                 <div class="col-10 text-center">
@@ -36,24 +36,23 @@
             </div>
         </div>
     </div>
-    </div>
-    </div>
+    {{#each products}}
     <section class="h-100 gradient-custom">
-        <div class="container py-5 h-100">
+        <div class="container py-2 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-lg-12 col-xl-12">
-                    <div class="card" style="border-radius: 10px;">
+                    <div class="card" style="border-radius: 10px; border-color: black;">
                         {{!-- <div class="card-header px-4 py-5">
                             <h5 class="text-muted mb-0 text-center"></h5>
                         </div> --}}
-                        {{#each products}}
-                        <div class="card-body p-4">
-                            <div class="card shadow-0 border mb-4">
+                        <div class="card-body p-4 ">
+                        <div class="card-body p-4 ">
+                            <div class="card shadow-0 border mb-4"  style=" background-color: #E4E7ED ;">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-2">
-                                            <img src="/images/{{this.image.[0].filename}}"
-                                                class="img-fluid" alt="Phone">
+                                            <img src="/images/{{this.image.[0].filename}}" class="img-fluid"
+                                                alt="Phone">
                                         </div>
                                         <div
                                             class="col-md-2 text-center d-flex justify-content-center align-items-center">
@@ -78,10 +77,11 @@
                                         {{#if this.orderStatus}}
                                         <div
                                             class="col-md-1 text-center d-flex justify-content-center align-items-center">
-                                            <a href="/userOrderUpdate/{{this.order_id}}/{{this._id}}/{{this.quantity}}" class="btn btn-danger rounded-pill">cancel</a>
+                                            <a href="/userOrderUpdate/{{this.order_id}}/{{this._id}}/{{this.quantity}}"
+                                                class="btn btn-danger rounded-pill">cancel</a>
                                         </div>
                                         {{else}}
-                                         <div
+                                        <div
                                             class="col-md-1 text-center d-flex justify-content-center align-items-center">
                                             <p class="text-danger">Order Cancelled</p>
                                         </div>
@@ -107,7 +107,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-between pt-2">
+                            {{!-- <div class="d-flex justify-content-between pt-2">
                                 <p class="fw-bold mb-0">Order Details</p>
                                 <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> $898.00</p>
                             </div>
@@ -120,25 +120,20 @@
                             <div class="d-flex justify-content-between">
                                 <p class="text-muted mb-0">Invoice Date : 22 Dec,2019</p>
                                 <p class="text-muted mb-0"><span class="fw-bold me-4">GST 18%</span> 123</p>
-                            </div>
+                            </div> --}}
 
-                            <div class="d-flex justify-content-between mb-5">
+                            {{!-- <div class="d-flex justify-content-between mb-5">
                                 <p class="text-muted mb-0">Recepits Voucher : 18KU-62IIK</p>
                                 <p class="text-muted mb-0"><span class="fw-bold me-4">Delivery Charges</span> Free</p>
-                            </div>
-                        </div>
-                        {{/each}}
-                        <div class="card-footer border-0 px-4 py-5"
-                            style="background-color: #D10024; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
-                            <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">
-                                Total
-                                paid: <span class="h2 mb-0 ms-2">$1040</span></h5>
+                            </div> --}}
+                        
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    {{/each}}
 </body>
-
+  
 </html>

@@ -4,6 +4,7 @@ const { validationResult } = require('express-validator');
 const userModel = require('../models/userModel');
 const categoryModel = require('../models/categoryModel');
 const productModel = require('../models/productModel');
+const { createId } = require('../middleware/createId');
 let invalidUser;
 let nameMsg, emailMsg, passwordMsg, mobnoMsg;
 let OTP = Math.floor(Math.random() * 1000000);
@@ -300,7 +301,53 @@ module.exports = {
         })
     },
 
-    
+    addToWishList: (req, res) => {
+        return new Promise((resolve, reject) => {
+            id = createId()
+            userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { user_whishList: { _id: id, product_id: req.params.id } } }).then((result) => {
+                res.redirect('back')
+            })
+        })
+    },
+
+    getWishList: (req, res) => {
+        return new Promise((resolve, reject) => {
+            userModel.findOne({ _id: req.session.userDetails._id }, { user_whishList: 1 }).then(async (result) => {
+                let whishId = {}
+                const productId = result.user_whishList.map(item => {
+                    whishId[item.product_id] = item._id
+                    return item.product_id
+                })
+                let productData = await productModel.find({ _id: { $in: productId } }).lean()
+                let productDatas = productData.map((item, index) => {
+                    return { ...item, whish_id: whishId[item._id] }
+                })
+                for (const i of productDatas) {
+                    i.stockQuantity > 0 ? i.stockQuantity = true : i.stockQuantity = false
+                }
+                res.render('whishList', { productDatas })
+            })
+        })
+    },
+
+    removeFromWishList:(req,res)=>{
+        return new Promise((resolve, reject) => {
+            userModel.updateOne({_id:req.session.userDetails._id},{$pull:{user_whishList:{_id:req.params.id}}}).then(()=>{
+                res.redirect('back')
+            })
+        })
+    },
+
+    addToCartFromWishList:(req,res)=>{
+        return new Promise((resolve, reject) => {
+            console.log(req.params.wishId);
+            userService.user_add_to_cart(req.session.userDetails._id, req.params.id).then(() => {
+                userModel.updateOne({_id:req.session.userDetails._id},{$pull:{user_whishList:{_id:req.params.wishId}}}).then(()=>{
+                    res.redirect('/cart')})
+                })
+
+        })
+    }
 
 }
 

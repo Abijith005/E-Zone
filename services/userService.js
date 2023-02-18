@@ -146,7 +146,6 @@ module.exports = {
             //     else {
             //         console.log("dfdf");
             //     }
-
             // });
             // console.log({ address });
             userData.address_id = Date.now()

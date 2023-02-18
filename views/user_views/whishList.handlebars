@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/orderHistory.css">
+    <link type="text/css" rel="stylesheet" href="/css/style.css" />
+    {{!--
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="/css/nouislider.min.css" />
+    <link type="text/css" rel="stylesheet" href="/css/slick.css" />
+    <link type="text/css" rel="stylesheet" href="/css/slick-theme.css" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet"> --}}
+
+
+
+
+    <title>E-Zone</title>
+</head>
+
+<body>
+    <div id="header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-2">
+                    <div class="header-logo ">
+                        <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
+                        </h1>
+                    </div>
+                </div>
+                <div class="col-10 text-center">
+                    <h2 class="text-white">ORDER HISTORY</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{#each productDatas}}
+    <section class="h-100 gradient-custom">
+        <div class="container py-2 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-12 col-xl-12">
+                    {{!-- <div class="card-header px-4 py-5">
+                        <h5 class="text-muted mb-0 text-center"></h5>
+                    </div> --}}
+                    <div class="card-body ">
+                        <div class="card-body  ">
+                            <div class="card shadow-0 border mb-4" style=" background-color: #E4E7ED ;">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <img src="/images/{{this.image.[0].filename}}" class="img-fluid"
+                                                alt="Phone">
+                                        </div>
+
+                                        <div
+                                            class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small" style="text-align:start;">
+                                                {{this.product_Details}}</p>
+                                        </div>
+
+                                        <div
+                                            class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small">{{this.product_name}}</p>
+                                        </div>
+                                        <div
+                                            class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small">Price ₹: {{this.price}} /-</p>
+                                        </div>
+                                        {{#if this.stockQuantity}}
+                                        <div
+                                            class="col-md-1 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small"><span style="color: green;">In Stock</span>
+                                            </p>
+                                        </div>
+                                        {{else}}
+                                        <div
+                                            class="col-md-1 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small"><span style="color: rgb(201, 8, 8);">Out Stock</span>
+                                            </p>
+                                        </div>
+                                        {{/if}}
+                                        <div
+                                            class="col-md-1 text-center d-flex justify-content-center align-items-center">
+                                            <a href="/removeFromWishList/{{this.whish_id}}"
+                                                class="btn btn-info rounded-pill text-white">Remove</a>
+                                        </div>
+
+                                        <div
+                                            class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <a href="addToCartFromWishList/{{this._id}}/{{this.whish_id}}" 
+                                                class="btn rounded-pill text-white" style="background-color: green;">Add To Cart</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        {{!-- <div class="d-flex justify-content-between pt-2">
+                            <p class="fw-bold mb-0">Order Details</p>
+                            <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> $898.00</p>
+                        </div>
+
+                        <div class="d-flex justify-content-between pt-2">
+                            <p class="text-muted mb-0">Invoice Number : 788152</p>
+                            <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> $19.00</p>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <p class="text-muted mb-0">Invoice Date : 22 Dec,2019</p>
+                            <p class="text-muted mb-0"><span class="fw-bold me-4">GST 18%</span> 123</p>
+                        </div> --}}
+
+                        {{!-- <div class="d-flex justify-content-between mb-5">
+                            <p class="text-muted mb-0">Recepits Voucher : 18KU-62IIK</p>
+                            <p class="text-muted mb-0"><span class="fw-bold me-4">Delivery Charges</span> Free</p>
+                        </div> --}}
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    {{/each}}
+</body>
+
+</html>

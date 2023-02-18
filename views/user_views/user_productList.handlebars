@@ -28,6 +28,7 @@
 	<!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="/css/style.css" />
 
+
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -66,9 +67,8 @@
 					<div class="col-md-3">
 						<div class="header-logo">
 							<a href="#" class="logo">
-								<h1 class="font-weight-bold"
-									 style="color: #ffff;">E-<font color="#FFD523">Zone</font>
-									
+								<h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
+
 								</h1>
 							</a>
 						</div>
@@ -79,7 +79,9 @@
 					<div class="col-md-6">
 						<div class="header-search">
 							<form action='/search_product_with_category' method="post">
-								<input class="input" name="searchInput" style="border-top-left-radius:2rem;border-bottom-left-radius:2rem; width: 80%;"  placeholder="Search here">
+								<input class="input" name="searchInput"
+									style="border-top-left-radius:2rem;border-bottom-left-radius:2rem; width: 80%;"
+									placeholder="Search here">
 								<button class="search-btn" type="submit">Search</button>
 							</form>
 
@@ -102,18 +104,18 @@
 
 							<!-- Cart -->
 							{{!-- <div class="dropdown"> --}}
-								{{!-- <a class="dropdown-toggle"  aria-expanded="true">
+								{{!-- <a class="dropdown-toggle" aria-expanded="true">
 									<i class="fa fa-shopping-cart"></i>
 									<span>Your Cart</span>
 									<div class="qty">3</div>
 								</a> --}}
 								<div class="dropdown">
-								<a href="/cart" aria-expanded="true">
-									<i class="fa fa-shopping-cart"></i>
-									<span>Your Cart</span>
-									<div class="qty">3</div>
-								</a>
-							</div>
+									<a href="/cart" aria-expanded="true">
+										<i class="fa fa-shopping-cart"></i>
+										<span>Your Cart</span>
+										<div class="qty">3</div>
+									</a>
+								</div>
 								{{!-- <div class="cart-dropdown">
 									<div class="cart-list">
 										<div class="product-widget">
@@ -147,7 +149,8 @@
 										<a href="#">Checkout <i class="fa fa-arrow-circle-right"></i></a>
 									</div>
 								</div> --}}
-							{{!-- </div> --}}
+								{{!--
+							</div> --}}
 							<!-- /Cart -->
 
 							<!-- Menu Toogle -->
@@ -222,28 +225,29 @@
 			</ul>
 		</div>
 		<!-- /store top filter -->
-
+</div>
 		<!-- store products -->
 		<div class="row">
 			<!-- product -->
 			{{#each products}}
-		
+
 			<div class="col-md-3 col-xs-6">
 				<div class="product">
 					<a href="/singleProductPage/{{this._id}}">
-					<div class="product-img">
-						<img style="height:35rem;" src="/images/{{this.image.[0].filename}}" alt="">
-						{{!-- <div class="product-label">
-							<span class="sale">11.1% off</span>
-							<span class="new">NEW</span>
-						</div> --}}
-					</div>
+						<div class="product-img">
+							<img style="height:35rem;" src="/images/{{this.image.[0].filename}}" alt="">
+							{{!-- <div class="product-label">
+								<span class="sale">11.1% off</span>
+								<span class="new">NEW</span>
+							</div> --}}
+						</div>
 					</a>
 					<div class="product-body" style="height: 14rem;">
 						<p class="product-category">{{this.category}}</p>
 						<h3 class="product-name"><a href="#">{{this.product_name}}</a></h3>
-						<h3 class="product-name">{{this.brandName}}</h3>						
-						<h4 class="product-price">₹{{this.price}}/- <del class="product-old-price">₹{{this.price}}/-</del></h4>
+						<h3 class="product-name">{{this.brandName}}</h3>
+						<h4 class="product-price">₹{{this.price}}/- <del
+								class="product-old-price">₹{{this.price}}/-</del></h4>
 						{{!-- <div class="product-rating">
 							<i class="fa fa-star"></i>
 							<i class="fa fa-star"></i>
@@ -252,17 +256,21 @@
 							<i class="fa fa-star"></i>
 						</div> --}}
 						<div class="product-btns">
-							<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to
+							{{#unless wishlist}}
+							<button onclick="window.location.href='/addToWhishList/{{this._id}}'" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to
 									wishlist</span></button>
-							{{!-- <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to
-									compare</span></button> --}}
+							{{else}}
+							<button class="add-to-wishlist"><i style="color: red;" class="fa fa-heart"
+									aria-hidden="true"></i></i></span></button>
+							{{/unless}}
 							<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick
 									view</span></button>
 						</div>
 					</div>
 					<div class="add-to-cart text-center">
 						<a href="/add_to_cart/{{this._id}}">
-						<button class="add-to-cart-btn mt-4 mb-2"><i class="fa fa-shopping-cart"></i> add to cart</button>
+							<button class="add-to-cart-btn mt-4 mb-2"><i class="fa fa-shopping-cart"></i> add to
+								cart</button>
 						</a>
 					</div>
 				</div>
@@ -270,7 +278,7 @@
 			{{/each}}
 			<!-- /product -->
 
-			
+
 			<!-- /store bottom filter -->
 		</div>
 

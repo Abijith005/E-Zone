@@ -5,6 +5,7 @@ const userController = require('../controller/userController')
 const productController=require('../controller/productController')
 const userSession=require('../middleware/userSession')
 const orderController = require('../controller/orderController')
+const { ifUser } = require('../middleware/userSession')
 
 
 router.get('/', userController.user_home)
@@ -88,7 +89,15 @@ router.post('/placeOrder',userSession.ifUser,orderController.placeOrder)
 
 router.get('/orderHistory',userSession.ifUser,userController.orderHistory)
 
-router.get('/userOrderUpdate/:id/:product_id/:quantity',userSession.ifUser,orderController.userOrderUpdate)
+router.get('/userOrderUpdate/:id/:product_id/:quantity',ifUser,orderController.userOrderUpdate)
+
+router.get('/addToWhishList/:id',ifUser,userController.addToWishList)
+
+router.get('/getWhishList',ifUser,userController.getWishList)
+
+router.get('/removeFromWishList/:id',ifUser,userController.removeFromWishList)
+
+router.get('/addToCartFromWishList/:id/:wishId',ifUser,userController.addToCartFromWishList)
 
 
 
