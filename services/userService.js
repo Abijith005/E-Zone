@@ -60,6 +60,8 @@ module.exports = {
             await productModel.find({ $and: [{ flag: false }, { $or: [{ product_name: new RegExp(productData, 'i') }, { brandName: new RegExp(productData, 'i') }, { category: new RegExp(productData, 'i') }] }] }).lean().then((result) => {
                 resolve(result)
 
+            }).catch(()=>{
+                reject()
             })
         })
 

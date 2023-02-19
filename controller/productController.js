@@ -12,6 +12,8 @@ module.exports = {
         userService.user_searchProduct(argument).then((productData) => {
             req.session.productList = productData
             res.redirect('/showProductList')
+        }).catch(()=>{
+            res.send('hello')
         })
     },
 
