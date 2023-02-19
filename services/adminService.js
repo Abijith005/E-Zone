@@ -9,7 +9,6 @@ module.exports = {
         return new Promise((resolve, reject) => {
             var data = adminModel.findOne({ name: 'admin' })
             resolve(data) 
-
         })
     },
 
@@ -18,6 +17,8 @@ module.exports = {
             await userModel.find().sort({ name: 1 }).lean().then((result) => {
 
                 resolve(result)
+            }).catch(()=>{
+                reject()
             })
 
         })
@@ -27,6 +28,8 @@ module.exports = {
         return new Promise((resolve, reject) => {
             userModel.updateOne({ _id: id }, { $set: { block: true } }).then(() => {
                 resolve()
+            }).catch(()=>{
+                reject()
             })
         })
     },
@@ -35,6 +38,8 @@ module.exports = {
         return new Promise((resolve, reject) => {
             userModel.updateOne({ _id: id }, { $set: { block: false } }).then(() => {
                 resolve()
+            }).catch(()=>{
+                reject()
             })
         })
     },
@@ -47,6 +52,8 @@ module.exports = {
                 productModel.create({ ...productData, ...image }).then(() => {
                     resolve()
                 })
+            // }).catch(()=>{
+            //     reject()
             })
         })
 
@@ -73,8 +80,11 @@ module.exports = {
 
     update_product: (id, productData, files) => {
         return new Promise((resolve, reject) => {
-            productModel.updateOne({ _id: id }, { $set: { product_name: productData.product_name, category: productData.category, company: productData.company, price: productData.price, product_Details: productData.product_Details, image: files.image } }).then(() => {
+            productModel.updateOne({ _id: id }, { $set: { product_name: productData.product_name, category: productData.category, company: productData.company, price: productData.price,stockQuantity:productData.stockQuantity,product_Details: productData.product_Details, image: files.image } }).then((result) => {
+                console.log(result);
                 resolve()
+            }).catch(()=>{
+                reject()
             })
         })
     },
@@ -83,6 +93,8 @@ module.exports = {
         return new Promise((resolve, reject) => {
             productModel.updateOne({ _id: id }, { $set: { flag: true } }).then(() => {
                 resolve()
+            }).catch(()=>{
+                reject()
             })
         })
     },
@@ -91,7 +103,8 @@ module.exports = {
         return new Promise((resolve, reject) => {
             productModel.updateOne({ _id: id }, { $set: { flag: false } }).then(() => {
                 resolve()
-
+            }).catch(()=>{
+                reject()
             })
         })
     },
@@ -101,6 +114,8 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             await userModel.find({ $or: [{ name: new RegExp(userData.name, 'i') }, { email: userData.name }, { mob_no: userData.name }] }).lean().then((result) => {
                 resolve(result)
+            }).catch(()=>{
+                reject()
             })
         })
     },
@@ -112,7 +127,6 @@ module.exports = {
         })
     },
 
-
     flag_or_unflagCategory: (id) => {
         let flag = true;
         return new Promise((resolve, reject) => {
@@ -123,6 +137,8 @@ module.exports = {
                 categoryModel.findByIdAndUpdate({ _id: id }, { $set: { flag: flag } }).then(() => {
                     resolve()
                 })
+            }).catch(()=>{
+                reject()
             })
 
         })
@@ -133,6 +149,8 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             await categoryModel.updateOne({ _id: id }, { $set: { category: categoryData.category, brandName: categoryData.brandName } }).then(() => {
                 resolve()
+            }).catch(()=>{
+                reject()
             })
         })
     }

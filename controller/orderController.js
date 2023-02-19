@@ -28,14 +28,16 @@ module.exports = {
                     req.session.selectAddress = null
                     edit = null
                     addAddress = false
+                    req.session.orderDatas=null
                 })
 
             }
             else {
                 res.redirect('/cart')
             }
+        }).catch(()=>{
+            res.send(error404)
         })
-        // req.session.orderDatas=null
     },
 
 
@@ -128,11 +130,15 @@ module.exports = {
                     productModel.updateOne({ _id: req.params.product_id }, { $inc: { stockQuantity: req.params.quantity } }).then((result) => {
                         res.redirect('/admin/order_Details')
                     })
+                }).catch(()=>{
+                    res.send(error404)
                 })
             }
             else {
                 userModel.updateOne({ _id:  req.params.user_id, orders: { $elemMatch: { order_id: parseInt(req.params.id) } } }, { $set: { 'orders.$.orderStatus': 'Delivered' } }).then((result) => {
                     res.redirect('/admin/order_Details')
+                }).catch(()=>{
+                    res.send(error404)
                 })
             }
         })
@@ -143,6 +149,8 @@ module.exports = {
             productModel.updateOne({ _id: req.params.product_id }, { $inc: { stockQuantity: req.params.quantity } }).then((result) => {
                 res.redirect('/orderHistory')
             })
+        }).catch(()=>{
+            res.send(error404)
         })
     },
 

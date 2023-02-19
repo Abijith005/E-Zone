@@ -20,10 +20,11 @@ module.exports = {
     show_productList: (req, res) => {
         return new Promise(async (resolve, reject) => {
             let category = await categoryModel.find().lean()
-
             let products = req.session.productList
             res.render('user_productList', { products, category })
             // req.session.productList = null;
+        }).catch(()=>{
+            res.send(error404)
         })
     },
 
@@ -31,14 +32,16 @@ module.exports = {
         userService.searchProductWithCategory(req.body.searchInput, req.session.productList[0].category).then((productData) => {
             req.session.productList = productData
             res.redirect('/showProductList')
-        }).catch((err) => {
-            res.redirect('/')
+        }).catch(()=>{
+            res.send(error404)
         })
     },
 
     product_to_cart: (req, res) => {
         userService.user_add_to_cart(req.session.userDetails._id, req.params.id).then(() => {
             res.redirect('/cart')
+        }).catch(()=>{
+            res.send(error404)
         })
     },
 
@@ -70,6 +73,8 @@ module.exports = {
                 else {
                     res.redirect('/cart')
                 }
+            }).catch(()=>{
+                res.send(error404)
             })
         })
     },
@@ -81,6 +86,8 @@ module.exports = {
                     res.redirect('/cart')
                 })
             })
+        }).catch(()=>{
+            res.send(error404)
         })
     }
 

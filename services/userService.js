@@ -12,13 +12,12 @@ module.exports = {
             let { name, email, mob_no, password, address, pincode } = userData
             userModel.create({ name, email, mob_no, password, block, address: [{ name, email, mob_no, address, pincode, address_id }] }).then((data) => {
                 resolve(data)
+            }).catch(()=>{
+                reject()
             })
-            // db.get().collection(collections.USER_COLLECTION).insertOne({ name, email, mob_no, password, block, user_cart: [], user_wishList: [], address: [{ name, email, mob_no,address, pincode, address_id }] }).then((data) => {
-            //     resolve(data)
-
-            // })
         })
     },
+
     doLogin: (userData) => {
         let response = {
             status: false
@@ -35,7 +34,9 @@ module.exports = {
                     }
                     else
                         resolve({ status: false })
-                })
+                }).catch(()=>{
+                reject()
+            })
             }
             else {
                 resolve({ status: false })
@@ -43,25 +44,22 @@ module.exports = {
         })
     },
 
-
-
     doValidate: (userData) => {
         return new Promise((resolve, reject) => {
             userModel.findOne({ email: userData.email }).then((result) => {
                 resolve(result)
+            }).catch(()=>{
+                reject()
             })
         })
     },
-
-
 
     user_searchProduct: (productData) => {
         return new Promise(async (resolve, reject) => {
             await productModel.find({ $and: [{ flag: false }, { $or: [{ product_name: new RegExp(productData, 'i') }, { brandName: new RegExp(productData, 'i') }, { category: new RegExp(productData, 'i') }] }] }).lean().then((result) => {
                 resolve(result)
-
             }).catch(()=>{
-                reject()
+                reject(err)
             })
         })
 
@@ -97,6 +95,8 @@ module.exports = {
                             await userModel.updateOne({ _id: user_id, user_cart: { $elemMatch: { id: product_id } } }, { $inc: { 'user_cart.$.quantity': 1 } }).then(async () => {
                                 await productModel.updateOne({ _id: product_id }, { $inc: { stockQuantity: -1 } })
                                 resolve()
+                            }).catch(()=>{
+                                reject()
                             })
                         }
                         else {
@@ -110,6 +110,8 @@ module.exports = {
                         await productModel.updateOne({ _id: product_id }, { $inc: { stockQuantity: -1 } })
     
                         resolve()
+                    }).catch(()=>{
+                        reject()
                     })
                 }
                 
@@ -117,26 +119,21 @@ module.exports = {
             else{
                 resolve()
             }
+        }).catch(()=>{
+            reject()
         })
         })
     },
-
-
-
-
 
     get_userDetails: (id) => {
         return new Promise(async (resolve, reject) => {
             await userModel.findOne({ _id: id }).lean().then((result) => {
                 resolve(result)
+            }).catch(()=>{
+                reject()
             })
-
         })
-
-
     },
-
-
 
     user_addAddress: (user_id, userData) => {
         return new Promise(async (resolve, reject) => {
@@ -153,18 +150,18 @@ module.exports = {
             userData.address_id = Date.now()
             await userModel.updateOne({ _id: user_id }, { $addToSet: { address: userData } }).then(() => {
                 resolve()
+            }).catch(()=>{
+                reject()
             })
-
-
-
         })
     },
 
     user_delete_address: (userId, address_Idd) => {
-
         return new Promise((resolve, reject) => {
             userModel.updateOne({ _id: userId }, { $pull: { address: { address_id: address_Idd } } }, { multi: true }).then((result) => {
                 resolve(result)
+            }).catch(()=>{
+                reject()
             })
         })
     },
@@ -173,8 +170,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let { address } = await userModel.findOne({ _id: id }, { address: 1 })
             let data = address.find(e => e.address_id == addressId)
-            resolve(data)
-
+            resolve(data) 
         })
     },
 
@@ -183,7 +179,8 @@ module.exports = {
         return new Promise((resolve, reject) => {
             userModel.updateOne({ address: { $elemMatch: { address_id: address_Idd } } }, { $set: { 'address.$': data } }).then((result) => {
                 resolve()
-
+            }).catch(()=>{
+                reject()
             })
         })
     },
@@ -192,6 +189,8 @@ module.exports = {
         return new Promise((resolve, reject) => {
             productModel.findOne({ _id: id }).lean().then((result) => {
                 resolve(result)
+            }).catch(()=>{
+                reject()
             })
         })
     }

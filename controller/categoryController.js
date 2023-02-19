@@ -12,10 +12,10 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             await categoryModel.find().lean().then((result) => {
                 res.render('category', { result })
-
+            }).catch(()=>{
+                res.send(error404)
             })
         })
-
     },
 
     admin_addCategoryPage: (req, res) => {
@@ -23,8 +23,6 @@ module.exports = {
         req.session.categoryDetails ? data = req.session.categoryDetails : data = null
         res.render('add_category', { data })
         req.session.categoryDetails = null
-
-        
     },
 
 
@@ -44,14 +42,14 @@ module.exports = {
         brandName = brandName.split(',')
         adminService.addCategory({ category, brandName })
         res.redirect('/admin/category')
-
     },
 
     flagAndUnflag_category: (req, res) => {
         adminService.flag_or_unflagCategory(req.params.id).then(() => {
             res.redirect('/admin/category')
+        }).catch(()=>{
+            res.send(error404)
         })
-
     },
 
     edit_category: (req, res) => {
@@ -59,6 +57,8 @@ module.exports = {
             await categoryModel.findOne({_id:req.params.id}).then((result)=>{
                 req.session.categoryDetails = result
                 res.redirect('/admin/add_categoryPage')
+            }).catch(()=>{
+                res.send(error404)
             })
         })
     },
@@ -66,8 +66,6 @@ module.exports = {
     update_category: (req, res) => {
         adminService.categoryUpdate(req.params.id, req.body)
         res.redirect('/admin/category')
-
-       
     },
 
    

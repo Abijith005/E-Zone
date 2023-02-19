@@ -5,6 +5,7 @@ const userModel = require('../models/userModel');
 const categoryModel = require('../models/categoryModel');
 const productModel = require('../models/productModel');
 const { createId } = require('../middleware/createId');
+const { error404 } = require('../middleware/error');
 let invalidUser;
 let nameMsg, emailMsg, passwordMsg, mobnoMsg;
 let OTP = Math.floor(Math.random() * 1000000);
@@ -55,12 +56,13 @@ module.exports = {
                     invalidUser = true;
                     res.redirect('/user_login')
                 }
+            }).catch(()=>{
+                res.send(error404)
             })
         }
     },
 
     userLogOut: (req, res) => {
-
         req.session.destroy();
         res.redirect('/')
     },
@@ -88,13 +90,12 @@ module.exports = {
                 else {
                     req.session.signUpDetails = req.body
                     req.session.email = req.body.email
-
                     sentOTP(req.session.email, OTP)
                     req.session.checkOtp = OTP;
-
                     res.redirect('/signup_otp')
-
                 }
+            }).catch(()=>{
+                res.send(error404)
             })
         }
 
@@ -103,11 +104,13 @@ module.exports = {
     },
     user_validateSignUpOTP: (req, res) => {
         if (req.body.otp == req.session.checkOtp) {
-            userService.doSignup(req.session.signUpDetails).then((data) => {
+            userService.doSignup(req.session.signUpDetails).then(() => {
                 res.redirect('/')
                 req.session.email = null
                 req.session.checkOtp = null;
                 req.session.signUpDetails = null;
+            }).catch(()=>{
+                res.send(error404)
             })
         }
         else {
@@ -163,6 +166,8 @@ module.exports = {
 
                 res.redirect('/forgot_password')
             }
+        }).catch(()=>{
+            res.send(error404)
         })
     },
 
@@ -183,6 +188,8 @@ module.exports = {
         if (req.body.newPassword == req.body.confirmPassword) {
             userService.user_changePassword(req.body.newPassword).then(() => {
                 res.redirect('/user_login')
+            }).catch(()=>{
+                res.send(error404)
             })
         }
         else {
@@ -199,7 +206,6 @@ module.exports = {
     },
 
     user_profilePage: (req, res) => {
-
         userService.get_userDetails(req.session.userDetails._id).then((data) => {
             data.address.length >= 3 ? maxAddress = true : maxAddress = false
             req.session.editAddress ? edit = req.session.editAddress : edit = null
@@ -209,35 +215,42 @@ module.exports = {
             req.session.editAddress = null
             edit = null
             addAddress = false
+        }).catch(()=>{
+            res.send(error404)
         })
 
 
     },
 
     user_cartPage: (req, res) => {
-        return new Promise(async (resolve, reject) => {
-            let cart = await userModel.findOne({ _id: req.session.userDetails._id }, { user_cart: 1 })
-            cart.user_cart.length > 0 ? checkOut = true : checkOut = false
-            let result = await userModel.findOne({ _id: req.session.userDetails._id })
-            let cartQuantities = {}
-            const cartID = result.user_cart.map(item => {
-                cartQuantities[item.id] = item.quantity
-                return item.id
+        try {
+            return new Promise(async (resolve, reject) => {
+                let cart = await userModel.findOne({ _id: req.session.userDetails._id }, { user_cart: 1 })
+                cart.user_cart.length > 0 ? checkOut = true : checkOut = false
+                let result = await userModel.findOne({ _id: req.session.userDetails._id })
+                let cartQuantities = {}
+                const cartID = result.user_cart.map(item => {
+                    cartQuantities[item.id] = item.quantity
+                    return item.id
+                })
+                let cartData = await productModel.find({ _id: { $in: cartID } }).lean()
+                let cartDatas = cartData.map((item, index) => {
+                    return { ...item, quantity: cartQuantities[item._id] }
+                })
+                let sum = 0;
+                cartDatas.forEach(item => {
+                    sum = sum + parseInt(item.price) * item.quantity
+                })
+                cartDatas.totalAmount = sum
+                req.session.orderDatas = cartDatas
+                req.session.maxQuantityReached ? message = 'Reached limit,cant add more ' : message = false
+                res.render('user_cart', { cartDatas, message, checkOut })
+                req.session.maxQuantityReached = false
             })
-            let cartData = await productModel.find({ _id: { $in: cartID } }).lean()
-            let cartDatas = cartData.map((item, index) => {
-                return { ...item, quantity: cartQuantities[item._id] }
-            })
-            let sum = 0;
-            cartDatas.forEach(item => {
-                sum = sum + parseInt(item.price) * item.quantity
-            })
-            cartDatas.totalAmount = sum
-            req.session.orderDatas = cartDatas
-            req.session.maxQuantityReached ? message = 'Reached limit,cant add more ' : message = false
-            res.render('user_cart', { cartDatas, message, checkOut })
-            req.session.maxQuantityReached = false
-        })
+            
+        } catch (error) {
+                res.send(error404)
+        }
     },
 
     addAddressPage: (req, res) => {
@@ -248,12 +261,16 @@ module.exports = {
     add_Address: (req, res) => {
         userService.user_addAddress(req.session.userDetails._id, req.body).then(() => {
             res.redirect('/user_profile')
+        }).catch(()=>{
+            res.send(error404)
         })
     },
 
     deleteAddress: (req, res) => {
-        userService.user_delete_address(req.session.userDetails._id, parseInt(req.params.id)).then((result) => {
+        userService.user_delete_address(req.session.userDetails._id, parseInt(req.params.id)).then(() => {
             res.redirect('/user_profile')
+        }).catch(()=>{
+            res.send(error404)
         })
     },
 
@@ -261,19 +278,24 @@ module.exports = {
         userService.getAddress(req.session.userDetails._id, parseInt(req.params.id)).then((result) => {
             req.session.editAddress = result;
             res.redirect('/addAddress')
+        }).catch(()=>{
+            res.send(error404)
         })
     },
 
     address_Update: (req, res) => {
         userService.addressUpdate(parseInt(req.params.id), req.body).then(() => {
             res.redirect('/user_profile')
+        }).catch(()=>{
+            res.send(error404)
         })
     },
 
     singleProductPage: (req, res) => {
         userService.singleProductDetails(req.params.id).then((result) => {
             res.render('singleProductDetails', { result })
-
+        }).catch(()=>{
+            res.send(error404)
         })
     },
 
@@ -296,16 +318,20 @@ module.exports = {
                     })
                 }
                 res.render('orderHistory', { result, products })
+                products = null
+            }).catch(()=>{
+                res.send(error404)
             })
-            products = null
         })
     },
 
     addToWishList: (req, res) => {
         return new Promise((resolve, reject) => {
             id = createId()
-            userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { user_whishList: { _id: id, product_id: req.params.id } } }).then((result) => {
+            userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { user_whishList: { _id: id, product_id: req.params.id } } }).then(() => {
                 res.redirect('back')
+            }).catch(()=>{
+                res.send(error404)
             })
         })
     },
@@ -326,6 +352,8 @@ module.exports = {
                     i.stockQuantity > 0 ? i.stockQuantity = true : i.stockQuantity = false
                 }
                 res.render('whishList', { productDatas })
+            }).catch(()=>{
+                res.send(error404)
             })
         })
     },
@@ -334,6 +362,8 @@ module.exports = {
         return new Promise((resolve, reject) => {
             userModel.updateOne({_id:req.session.userDetails._id},{$pull:{user_whishList:{_id:req.params.id}}}).then(()=>{
                 res.redirect('back')
+            }).catch(()=>{
+                res.send(error404)
             })
         })
     },
@@ -344,6 +374,8 @@ module.exports = {
             userService.user_add_to_cart(req.session.userDetails._id, req.params.id).then(() => {
                 userModel.updateOne({_id:req.session.userDetails._id},{$pull:{user_whishList:{_id:req.params.wishId}}}).then(()=>{
                     res.redirect('/cart')})
+                }).catch(()=>{
+                    res.send(error404)
                 })
 
         })
