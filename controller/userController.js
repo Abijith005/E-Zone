@@ -6,9 +6,11 @@ const categoryModel = require('../models/categoryModel');
 const productModel = require('../models/productModel');
 const { createId } = require('../middleware/createId');
 const { error404 } = require('../middleware/error');
+const bcrypt = require('bcrypt')
+
 let invalidUser;
 let nameMsg, emailMsg, passwordMsg, mobnoMsg;
-let OTP = Math.floor(Math.random() * 1000000);
+let OTP = Math.floor(Math.random() *1000000);
 
 
 
@@ -137,7 +139,6 @@ module.exports = {
         req.session.resetPassword ? message = true : message = false
         req.session.checkOtp ? display = true : display = false
         res.render('forgot_password', { message, display, matchPassword })
-        req.session.checkOtp = false
         req.session.resetPassword = false
 
 
@@ -158,6 +159,7 @@ module.exports = {
     user_submitForgotPasswordMail: (req, res) => {
         userService.doValidate(req.body).then((result) => {
             if (result) {
+                req.session.resetPassword_id=result._id
                 sentOTP(req.body.email, OTP)
                 req.session.checkOtp = OTP;
                 res.redirect('/forgot_password')
@@ -176,6 +178,7 @@ module.exports = {
             req.session.checkOtp = null;
             req.session.resetPassword = true
             res.redirect('/forgot_password')
+        req.session.checkOtp = false
 
         }
         else {
@@ -184,10 +187,14 @@ module.exports = {
         }
     },
 
-    user_resetPassword: (req, res) => {
+    user_resetPassword:async (req, res) => {
         if (req.body.newPassword == req.body.confirmPassword) {
-            userService.user_changePassword(req.body.newPassword).then(() => {
+            console.log(req.session.resetPassword_id);
+            let newPassword = await bcrypt.hash(req.body.newPassword, 10)
+            userModel.updateOne({_id:req.session.resetPassword_id},{$set:{password:newPassword}}).then((result) => {
+               console.log(result);
                 res.redirect('/user_login')
+                req.session.resetPassword_id=null
             }).catch(()=>{
                 res.send(error404)
             })

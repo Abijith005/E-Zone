@@ -1,4 +1,5 @@
 const { resolve } = require('promise');
+const { error404 } = require('../middleware/error');
 const categoryModel = require('../models/categoryModel');
 // const collections = require('../models/collections');
 const productModel = require('../models/productModel');
@@ -101,8 +102,11 @@ module.exports = {
     },
 
     admin_productAdd: (req, res) => {
-            adminService.add_product(req.body, req.files)
-            res.redirect('/admin/admin_products')
+            adminService.add_product(req.body, req.files).then(()=>{
+                res.redirect('/admin/admin_products')
+            }).catch(()=>{
+                res.send(error404)
+            })
     },
     admin_productFlag: (req, res) => {
             adminService.flag_product(req.params.id)

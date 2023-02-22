@@ -91,9 +91,9 @@ router.get('/orderHistory',userSession.ifUser,userController.orderHistory)
 
 router.get('/userOrderUpdate/:id/:product_id/:quantity',ifUser,orderController.userOrderUpdate)
 
-router.get('/addToWhishList/:id',ifUser,userController.addToWishList)
-
 router.get('/getWhishList',ifUser,userController.getWishList)
+
+router.get('/addToWhishList/:id',ifUser,userController.addToWishList)
 
 router.get('/removeFromWishList/:id',ifUser,userController.removeFromWishList)
 

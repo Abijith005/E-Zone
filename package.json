@@ -25,6 +25,7 @@
     "nodemailer": "^6.9.1",
     "nodemon": "^2.0.20",
     "object": "^0.1.1",
-    "promise": "^8.3.0"
+    "promise": "^8.3.0",
+    "sharp": "^0.31.3"
   }
 }

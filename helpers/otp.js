@@ -11,7 +11,6 @@ const sentOTP = (email, otp) => {
         // pass: process.env.SITE_PASSWORD,
         user: "abijithsurendran005@gmail.com",
         pass: 'wmqyzknyoqitfeje',
-
       },
 
     });

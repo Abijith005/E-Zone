@@ -28,7 +28,7 @@ module.exports = {
                     req.session.selectAddress = null
                     edit = null
                     addAddress = false
-                    req.session.orderDatas=null
+                    // req.session.orderDatas=null
                 })
 
             }
