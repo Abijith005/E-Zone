@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/admin/product.css">
+    {{#if addCoupon}}
+    <link rel="stylesheet" href="/css/addCoupon.css">
+    {{/if}}
+    <title>Document</title>
+</head>
+    <body style="margin: 1rem;">
+        {{#unless addCoupon}}
+        <nav class="navbar navbar-expand-lg navbar-light " style="background-color: rgb(217, 217, 217);">
+            <div class="container">
+                <a class="navbar-brand mx-5" href="#">logo</a>
+                <button class="navbar-toggler mx-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+
+                            <a class="nav-link active" aria-current="page" href="/admin/admin_home"><button
+                                    class="btn btn-dark mx-2" style="font-size: larger;">HOME</button></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/admin/admin_products"><button
+                                    class="btn btn-dark mx-2" style="font-size: larger;">PRODUCT</button></a>
+
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/admin/user_Details"><button
+                                    class="btn btn-dark mx-2" style="font-size: larger;">USER DETAILS</button></a>
+
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/admin/order_Details"><button
+                                    class="btn btn-dark mx-2" style="font-size: larger;">ORDER DETAILS</button></a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/admin/category"><button
+                                    class="btn btn-dark mx-2" style="font-size: larger;">CATEGORY</button></a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="ms-auto">
+
+                    <a class="nav-link active" aria-current="page" href="/admin/log_Out"><button class="btn btn-danger "
+                            style="font-size: larger;">Log Out</button></a>
+                </div>
+            </div>
+        </nav>
+        <style>
+            tr,
+            th,
+            td {
+                color: rgb(8, 8, 8);
+            }
+        </style>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light text-center">
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <div class="col d-flex" style="display: flex; justify-content: flex-end">
+                        <a href="addCoupon"><button class="btn btn-success me-5">Add Coupon</button></a>
+                </div>
+            </div>
+        </nav>
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">No.</th>
+                        <th scope="col">Coupon Name</th>
+                        <th scope="col">Coupon Code</th>
+                        <th scope="col">Minimum Purchase Amount</th>
+                        <th scope="col">Discount Amount</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                        <th scope="col">Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each coupon}}
+                    <tr>
+                        <th scope="row">{{@index}}</th>
+                        <td>{{this.couponName}}</td>
+                        <td>{{this.couponCode}}</td>
+                        <td>{{this.minPurchaseAmount}}</td>
+                        <td>{{this.discountAmount}}</td>
+                        <td>{{this.startDate}}</td>
+                        <td>{{this.endDate}}</td>
+
+                        {{#if this.status}}
+                        <td>Active</td>
+                        {{else}}
+                        <td>Ended</td>
+                        {{/if}}
+                        {{!-- {{#if this.block}}
+                        <td><a href="user_Unblock/{{this._id}}"><button
+                                    onclick="return confirm('Do you want to unblock {{this.name}}')"
+                                    class="btn btn-primary btn-rounded">Unblock</button></a> </td>
+                        {{else}}
+                        <td><a href="user_Block/{{this._id}}"><button class="btn btn-danger btn-rounded"
+                                    onclick="return confirm('Do you want to block {{this.name}}')">Block</button></a>
+                        </td>
+                        {{/if}} --}}
+                        <td>
+                            <div id="container">
+                                <div id="menu-wrap">
+                                    <input type="checkbox" class="toggler" />
+                                    <div class="dots">
+                                        <div></div>
+                                    </div>
+                                    <div class="menu">
+                                        <div>
+                                            <ul>
+                                                <li><a href="editCategory/{{this._id}}" class="link">Edit Coupon</a>
+                                                </li>
+                                                {{#if this.status}}
+                                                <li><a href="changeCouponStatus/{{this._id}}"
+                                                        class="link">End</a></li>
+                                                {{/if}}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+
+                    </tr>{{/each}}
+                    <div>
+                    </div>
+                </tbody>
+            </table>
+        </div>
+{{else}}
+<div class="main">
+
+        <section class="signup">
+            <!-- <img src="images/signup-bg.jpg" alt=""> -->
+            <div class="container">
+                <div class="signup-content">
+                    <form action="/admin/addCoupon" method="POST" id="signup-form" class="signup-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="first_name">Coupon Name :</label>
+                                <input type="text" class="form-input" name="couponName" />
+                            </div>
+                            <div class="form-group">
+                                <label for="last_name">Coupon Code :</label>
+                                <input type="text" class="form-input" name="couponCode"  />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group form-icon">
+                                <label for="birth_date">Start Date :</label>
+                                <input type="date" class="form-input" name="startDate"  placeholder="MM-DD-YYYY" />
+                            </div>
+                            <div class="form-group form-icon">
+                                <label for="birth_date">End Date :</label>
+                                <input type="date" class="form-input" name="endDate"  placeholder="MM-DD-YYYY" />
+                            </div> 
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="password">Minimum Purchase Amount :</label>
+                                <input type="text" class="form-input" name="minPurchaseAmount" />
+                            </div>
+                            <div class="form-group">
+                                <label for="re_password">Discount Amount :</label>
+                                <input type="text" class="form-input" name="discountAmount"/>
+                            </div>
+                        </div>
+                        <div class="form-group d-flex justify-content-end">
+                            <button class="btn btn-success" id="submit" class="form-submit">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </div>
+        {{/unless}}
+    </body>
+
+</html>

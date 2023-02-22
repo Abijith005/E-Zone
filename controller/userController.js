@@ -325,7 +325,7 @@ module.exports = {
                     })
                 }
                 res.render('orderHistory', { result, products })
-                products = null
+                // products = null
             }).catch(()=>{
                 res.send(error404)
             })

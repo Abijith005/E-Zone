@@ -7,6 +7,7 @@ const categoryController = require('../controller/categoryController')
 const adminSession=require('../middleware/adminSession')
 const { ifAdmin } = require('../middleware/adminSession')
 const orderController = require('../controller/orderController')
+const couponController = require('../controller/couponController')
 
 router.get('/',adminSession.ifNoAdmin,adminController.admin_loginPage)
 
@@ -37,7 +38,7 @@ router.get('/product_flag/:id',adminSession.ifAdmin,adminController.admin_produc
 router.get('/product_unflag/:id',adminSession.ifAdmin,adminController.admin_productUnflag)
 
 router.post('/user_search',adminSession.ifAdmin,adminController.admin_userSearch)
-
+ 
 router.get('/category',adminSession.ifAdmin,categoryController.admin_categoryPage)
 
 router.get('/add_categoryPage',adminSession.ifAdmin,categoryController.admin_addCategoryPage)
@@ -53,6 +54,12 @@ router.get('/editCategory/:id',adminSession.ifAdmin,categoryController.edit_cate
 router.post('/updateCategory/:id',adminSession.ifAdmin,categoryController.update_category)
 
 router.get('/adminOrderUpdate/:id/:user_id/:product_id/:quantity/:update',adminSession.ifAdmin,orderController.adminOrderUpdate)
+
+router.get('/getCoupon',ifAdmin,couponController.getCoupon)
+
+router.get('/addCoupon',ifAdmin,couponController.getAddCoupon)
+
+router.post('/addCoupon',ifAdmin,couponController.addCoupon)
 
 router.get('/log_Out',adminController.adminLogOut)
 

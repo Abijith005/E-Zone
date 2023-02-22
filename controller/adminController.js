@@ -125,6 +125,9 @@ module.exports = {
             })
     },
 
+    getCoupon:(req,res)=>{
+
+    },
 
     adminLogOut: (req, res) => {
             req.session.destroy()
