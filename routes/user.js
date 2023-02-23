@@ -65,7 +65,7 @@ router.post('/update_address/:id',userSession.ifUser,userController.address_Upda
 
 router.get('/singleProductPage/:id',userController.singleProductPage)
 
-router.get('/changeQuantity/:id/:quantity/:cond',userSession.ifUser,productController.productQuantityIncreaseOrDecrease)
+router.post('/changeQuantity',userSession.ifUser,productController.productQuantityIncreaseOrDecrease)
 
 router.get('/deleteFromCart/:id/:quantity',userSession.ifUser,productController.deleteFromCart)
 

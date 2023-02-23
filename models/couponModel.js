@@ -33,7 +33,7 @@ let couponSchema = new mongoose.Schema({
     },
 
     couponStatus: {
-        type: String,
+        type: Boolean,
         required: true
     }
 

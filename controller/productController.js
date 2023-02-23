@@ -39,29 +39,33 @@ module.exports = {
 
     product_to_cart: (req, res) => {
         userService.user_add_to_cart(req.session.userDetails._id, req.params.id).then(() => {
-            res.redirect('/cart')
+          res.json({success:true})
         }).catch(()=>{
             res.send(error404)
         })
     },
 
     productQuantityIncreaseOrDecrease: (req, res) => {
+        console.log('gggg');
+        console.log(req.body.id);
         return new Promise((resolve, reject) => {
-            productModel.findOne({ _id: req.params.id }, { stockQuantity: 1 }).then((result) => {
+            productModel.findOne({ _id: req.body.id }, { stockQuantity: 1 }).then((result) => {
+                console.log(result);
                 let value;
-                req.params.cond == 1 ? value = 1 : value = -1
+                req.body.cond == 1 ? value = 1 : value = -1
                 if (result.stockQuantity > 0 || value == -1) {
-                    if (value == -1 && req.params.quantity > 1) {
-                        userModel.updateOne({ _id: req.session.userDetails._id, user_cart: { $elemMatch: { id: req.params.id } } }, { $inc: { 'user_cart.$.quantity': value } }).then(() => {
-                            productModel.updateOne({ _id: req.params.id }, { $inc: { stockQuantity: 1 } }).then((result) => {
-                                res.redirect('/cart')
+                    if (value == -1 && req.body.quantity > 1) {
+                        userModel.updateOne({ _id: req.session.userDetails._id, user_cart: { $elemMatch: { id: req.body.id } } }, { $inc: { 'user_cart.$.quantity': value } }).then(() => {
+                            productModel.updateOne({ _id: req.body.id }, { $inc: { stockQuantity: 1 } }).then((result) => {
+                                console.log(result)
+                                res.json({quantity:result.quantity, success:true})
                             })
                         })
                     }
-                    else if (value == 1 && req.params.quantity < 10) {
-                        userModel.updateOne({ _id: req.session.userDetails._id, user_cart: { $elemMatch: { id: req.params.id } } }, { $inc: { 'user_cart.$.quantity': value } }).then(() => {
-                            productModel.updateOne({ _id: req.params.id }, { $inc: { stockQuantity: -1 } }).then((result) => {
-                                res.redirect('/cart')
+                    else if (value == 1 && req.body.quantity < 10) {
+                        userModel.updateOne({ _id: req.session.userDetails._id, user_cart: { $elemMatch: { id: req.body.id } } }, { $inc: { 'user_cart.$.quantity': value } }).then(() => {
+                            productModel.updateOne({ _id: req.body.id }, { $inc: { stockQuantity: -1 } }).then((result) => {
+                                res.json({quantity:result.quantity, success:true})
                             })
                         })
                     }

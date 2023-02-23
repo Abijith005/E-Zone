@@ -34,7 +34,6 @@
 	{{/unless}}
 
 </head>
-
 <body style="background-color: #F5F5F5;">
 
 	{{!-- ****************************************************************************************************** --}}
@@ -139,10 +138,10 @@
 								<td class="align-middle" data-th="Quantity" style="display: flex; vertical-align: middle; text-align: center;">
 									<a href="/changeQuantity/{{this._id}}/{{this.quantity}}/-1"
 											class="btn btn-danger mx-1">-</a>
-									<input type="text" style="width:5rem;" min="1" max="10"
+									<input type="text" style="width:5rem;" min="1" max="10" id="quantityBox{{this._id}}"
 										class="form-control form-control-lg text-center align-middle" value="{{this.quantity}}">
-									<a href="/changeQuantity/{{this._id}}/{{this.quantity}}/1"
-											class="btn btn-success mx-1 align-middle">+</a>
+									<button 
+										onclick="increaseQuantity('{{this._id}}','{{this.quantity}}','1')"	class="btn btn-success mx-1 align-middle">+</button>
 								</td>
 								<td  class="actions align-middle" data-th="">
 									<div class="text-right align-middle">
@@ -204,12 +203,30 @@
 				
 				</div>
 	{{/if}}
+	
 	<script src="/js/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/slick.min.js"></script>
 	<script src="/js/nouislider.min.js"></script>
 	<script src="/js/jquery.zoom.min.js"></script>
 	<script src="/js/main.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script>
+	function increaseQuantity(id,quantity,cond){
+		axios.post('/changeQuantity',{id,quantity,cond}).then((result)=>{
+			if(result.data.success){
+				let quantityBox=document.getElementById("quantityBox"+id);
+				if(cond==1){
+					quantityBox.value=Number(quantityBox.value)+1;
+				}else{
+					quantityBox.value=Number(quantityBox.value)-1
+				}
+			}else{
+				window.location.reload()
+			}
+		})
+	}
+	</script>
 
 </body>
 

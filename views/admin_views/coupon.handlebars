@@ -189,16 +189,11 @@
                         <td>{{this.discountAmount}}</td>
                         <td>{{this.startDate}}</td>
                         <td>{{this.endDate}}</td>
-                        <td>{{this.couponStatus}}</td>
-                        {{!-- {{#if this.block}}
-                        <td><a href="user_Unblock/{{this._id}}"><button
-                                    onclick="return confirm('Do you want to unblock {{this.name}}')"
-                                    class="btn btn-primary btn-rounded">Unblock</button></a> </td>
+                        {{#if this.couponStatus}}
+                        <td>Active</td>
                         {{else}}
-                        <td><a href="user_Block/{{this._id}}"><button class="btn btn-danger btn-rounded"
-                                    onclick="return confirm('Do you want to block {{this.name}}')">Block</button></a>
-                        </td>
-                        {{/if}} --}}
+                        <td>Ended</td>
+                        {{/if}}
                         <td>
                             <div id="container">
                                 <div id="menu-wrap">
@@ -209,19 +204,18 @@
                                     <div class="menu">
                                         <div>
                                             <ul>
-                                                <li><a href="getEditCoupon/{{this._id}}/{{"edit"}}" class="link">Edit Coupon</a>
+                                                <li><a href="getEditCoupon/{{this._id}}/edit" class="link">Edit Coupon</a>
                                                 </li>
-                                                {{#unless this.couponStatus}}
+                                                {{#if this.couponStatus}}
                                                 <li><a href="getEditCoupon/{{this._id}}/{{this.couponStatus}}"
                                                         class="link">End</a></li>
-                                                {{/unless}}
+                                                {{/if}}
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </td>
-
                     </tr>{{/each}}
                     <div>
                     </div>
