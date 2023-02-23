@@ -61,6 +61,10 @@ router.get('/addCoupon',ifAdmin,couponController.getAddCoupon)
 
 router.post('/addCoupon',ifAdmin,couponController.addCoupon)
 
+router.get('/getEditCoupon/:id/:status',ifAdmin,couponController.getEditCoupon)
+
+router.post('/editCoupon/:id',ifAdmin,couponController.editCoupon)
+
 router.get('/log_Out',adminController.adminLogOut)
 
 

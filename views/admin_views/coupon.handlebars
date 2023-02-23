@@ -5,13 +5,108 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles/admin/product.css">
-    {{#if addCoupon}}
+    {{#if addCoupon }}
     <link rel="stylesheet" href="/css/addCoupon.css">
+    {{else if editCoupon}}
+    <link rel="stylesheet" href="/css/addCoupon.css">
+
     {{/if}}
     <title>Document</title>
 </head>
     <body style="margin: 1rem;">
-        {{#unless addCoupon}}
+        {{#if addCoupon}}
+<div class="main">
+        <section class="signup">
+            <!-- <img src="images/signup-bg.jpg" alt=""> -->
+            <div class="container">
+                <div class="signup-content">
+                    <form action="/admin/addCoupon" method="POST" id="signup-form" class="signup-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="first_name">Coupon Name :</label>
+                                <input type="text" class="form-input" name="couponName" />
+                            </div>
+                            <div class="form-group">
+                                <label for="last_name">Coupon Code :</label>
+                                <input type="text" class="form-input" name="couponCode"  />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group form-icon">
+                                <label for="birth_date">Start Date :</label>
+                                <input type="date" class="form-input" name="startDate"  placeholder="MM-DD-YYYY" />
+                            </div>
+                            <div class="form-group form-icon">
+                                <label for="birth_date">End Date :</label>
+                                <input type="date" class="form-input" name="endDate"  placeholder="MM-DD-YYYY" />
+                            </div> 
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="password">Minimum Purchase Amount :</label>
+                                <input type="text" class="form-input" name="minPurchaseAmount" />
+                            </div>
+                            <div class="form-group">
+                                <label for="re_password">Discount Amount :</label>
+                                <input type="text" class="form-input" name="discountAmount"/>
+                            </div>
+                        </div>
+                        <div class="form-group d-flex justify-content-end">
+                            <button class="btn btn-success" id="submit" class="form-submit">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+{{else if editCoupon}}
+<div class="main">
+        <section class="signup">
+            <!-- <img src="images/signup-bg.jpg" alt=""> -->
+            <div class="container">
+                <div class="signup-content">
+                    <form action="/admin/editCoupon" method="POST" id="signup-form" class="signup-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="first_name">Coupon Name :</label>
+                                <input type="text" class="form-input" name="couponName" value="{{editCoupon.couponName}}" />
+                                <input type="text" hidden name="id" value="{{editCoupon._id}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="last_name">Coupon Code :</label>
+                                <input type="text" class="form-input" name="couponCode" value="{{editCoupon.couponCode}}"  />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group form-icon">
+                                <label for="birth_date">Start Date :</label>
+                                <input type="date" class="form-input" name="startDate"  placeholder="MM-DD-YYYY" value="{{editCoupon.startDate}}" />
+                            </div>
+                            <div class="form-group form-icon">
+                                <label for="birth_date">End Date :</label>
+                                <input type="date" class="form-input" name="endDate"  placeholder="MM-DD-YYYY" value="{{editCoupon.endDate}}" />
+                            </div> 
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="password">Minimum Purchase Amount :</label>
+                                <input type="text" class="form-input" name="minPurchaseAmount" value="{{editCoupon.minPurchaseAmount}}"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="re_password">Discount Amount :</label>
+                                <input type="text" class="form-input" name="discountAmount" value="{{editCoupon.discountAmount}}"/>
+                            </div>
+                        </div>
+                        <div class="form-group d-flex justify-content-end">
+                            <button class="btn btn-success" id="submit" class="form-submit">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+{{else}}
+
         <nav class="navbar navbar-expand-lg navbar-light " style="background-color: rgb(217, 217, 217);">
             <div class="container">
                 <a class="navbar-brand mx-5" href="#">logo</a>
@@ -94,12 +189,7 @@
                         <td>{{this.discountAmount}}</td>
                         <td>{{this.startDate}}</td>
                         <td>{{this.endDate}}</td>
-
-                        {{#if this.status}}
-                        <td>Active</td>
-                        {{else}}
-                        <td>Ended</td>
-                        {{/if}}
+                        <td>{{this.couponStatus}}</td>
                         {{!-- {{#if this.block}}
                         <td><a href="user_Unblock/{{this._id}}"><button
                                     onclick="return confirm('Do you want to unblock {{this.name}}')"
@@ -119,12 +209,12 @@
                                     <div class="menu">
                                         <div>
                                             <ul>
-                                                <li><a href="editCategory/{{this._id}}" class="link">Edit Coupon</a>
+                                                <li><a href="getEditCoupon/{{this._id}}/{{"edit"}}" class="link">Edit Coupon</a>
                                                 </li>
-                                                {{#if this.status}}
-                                                <li><a href="changeCouponStatus/{{this._id}}"
+                                                {{#unless this.couponStatus}}
+                                                <li><a href="getEditCoupon/{{this._id}}/{{this.couponStatus}}"
                                                         class="link">End</a></li>
-                                                {{/if}}
+                                                {{/unless}}
                                             </ul>
                                         </div>
                                     </div>
@@ -138,54 +228,7 @@
                 </tbody>
             </table>
         </div>
-{{else}}
-<div class="main">
-
-        <section class="signup">
-            <!-- <img src="images/signup-bg.jpg" alt=""> -->
-            <div class="container">
-                <div class="signup-content">
-                    <form action="/admin/addCoupon" method="POST" id="signup-form" class="signup-form">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="first_name">Coupon Name :</label>
-                                <input type="text" class="form-input" name="couponName" />
-                            </div>
-                            <div class="form-group">
-                                <label for="last_name">Coupon Code :</label>
-                                <input type="text" class="form-input" name="couponCode"  />
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group form-icon">
-                                <label for="birth_date">Start Date :</label>
-                                <input type="date" class="form-input" name="startDate"  placeholder="MM-DD-YYYY" />
-                            </div>
-                            <div class="form-group form-icon">
-                                <label for="birth_date">End Date :</label>
-                                <input type="date" class="form-input" name="endDate"  placeholder="MM-DD-YYYY" />
-                            </div> 
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="password">Minimum Purchase Amount :</label>
-                                <input type="text" class="form-input" name="minPurchaseAmount" />
-                            </div>
-                            <div class="form-group">
-                                <label for="re_password">Discount Amount :</label>
-                                <input type="text" class="form-input" name="discountAmount"/>
-                            </div>
-                        </div>
-                        <div class="form-group d-flex justify-content-end">
-                            <button class="btn btn-success" id="submit" class="form-submit">Add</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>
-
-    </div>
-        {{/unless}}
+        {{/if}}
     </body>
 
 </html>
