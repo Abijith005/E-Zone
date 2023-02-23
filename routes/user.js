@@ -22,7 +22,7 @@ router.post('/user_signUP'
         .matches(/[a-zA-Z0-9_\-\.]+[@][a-z]+[\.][a-z]{2,3}/).withMessage("Enter a Valid Email id"), check('password').matches(/[\w\d!@#$%^&*?]{6,}/)
             .withMessage("Password Must Contain Atleast 6 Characters"),check('mob_no').matches(/[0-9]{10}/).withMessage('Enter a Valid Mobile Number')
     , userController.user_signUp)
-
+ 
 router.get('/user_logOut', userController.userLogOut)
 
 router.get('/forgot_password',userSession.ifNoUser, userController.user_forgotPassword)
@@ -98,6 +98,9 @@ router.get('/addToWhishList/:id',ifUser,userController.addToWishList)
 router.get('/removeFromWishList/:id',ifUser,userController.removeFromWishList)
 
 router.get('/addToCartFromWishList/:id/:wishId',ifUser,userController.addToCartFromWishList)
+
+router.post('/couponApply',ifUser,orderController.couponApply)
+
 
 
 

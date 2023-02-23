@@ -1,20 +1,22 @@
 const session = require("express-session")
 const { default: createId } = require("../middleware/createId")
+const couponModel = require("../models/couponModel")
 const productModel = require("../models/productModel")
 const userModel = require("../models/userModel")
 const userService = require("../services/userService")
 
 
 module.exports = {
-    checkOutPage: (req, res) => {
+    checkOutPage:(req, res) => {
         userModel.findOne({ _id: req.session.userDetails._id }, { user_cart: 1 }).then((cart) => {
             if (cart.user_cart.length > 0) {
-                userService.get_userDetails(req.session.userDetails._id).then((data) => {
-                    orderDatas = req.session.orderDatas
+                userService.get_userDetails(req.session.userDetails._id).then(async(data) => {
+                    orderDatas = await userService.cartProductDatas(req.session.userDetails._id)
                     let sum = 0;
                     orderDatas.forEach(item => {
                         sum = sum + parseInt(item.price) * item.quantity
                     })
+                    req.session.totalAmount=sum
                     orderDatas.totalAmount = sum
                     req.session.selectAddress ? selectAddress = req.session.selectAddress : selectAddress = null
                     req.session.changeAddress ? changeAddress = true : changeAddress = false
@@ -28,14 +30,13 @@ module.exports = {
                     req.session.selectAddress = null
                     edit = null
                     addAddress = false
-                    // req.session.orderDatas=null
                 })
 
             }
             else {
                 res.redirect('/cart')
             }
-        }).catch(()=>{
+        }).catch(() => {
             res.send(error404)
         })
     },
@@ -130,14 +131,14 @@ module.exports = {
                     productModel.updateOne({ _id: req.params.product_id }, { $inc: { stockQuantity: req.params.quantity } }).then((result) => {
                         res.redirect('/admin/order_Details')
                     })
-                }).catch(()=>{
+                }).catch(() => {
                     res.send(error404)
                 })
             }
             else {
-                userModel.updateOne({ _id:  req.params.user_id, orders: { $elemMatch: { order_id: parseInt(req.params.id) } } }, { $set: { 'orders.$.orderStatus': 'Delivered' } }).then((result) => {
+                userModel.updateOne({ _id: req.params.user_id, orders: { $elemMatch: { order_id: parseInt(req.params.id) } } }, { $set: { 'orders.$.orderStatus': 'Delivered' } }).then((result) => {
                     res.redirect('/admin/order_Details')
-                }).catch(()=>{
+                }).catch(() => {
                     res.send(error404)
                 })
             }
@@ -149,10 +150,23 @@ module.exports = {
             productModel.updateOne({ _id: req.params.product_id }, { $inc: { stockQuantity: req.params.quantity } }).then((result) => {
                 res.redirect('/orderHistory')
             })
-        }).catch(()=>{
+        }).catch(() => {
             res.send(error404)
         })
     },
 
-    
+    couponApply: (req, res) => {
+        couponModel.findOne({ couponCode: req.body.couponCode }).then((result) => {
+            if(result.startDate.getTime()<new Date().getTime()&&result.endDate.getTime()>new Date().getTime()&&req.body.totalAmount>=result.minPurchaseAmount){
+                let discountedAmount=req.session.totalAmount-result.discountAmount;
+                res.json({...result,totalAmount:discountedAmount, success: true})
+            }
+            else{
+                res.json()
+
+            }
+        })
+    }
+
+
 }

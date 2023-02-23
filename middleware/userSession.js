@@ -5,7 +5,7 @@ module.exports={
         next();
     }
     else{
-        res.redirect('/')
+        res.redirect('/') 
     }
 },
 

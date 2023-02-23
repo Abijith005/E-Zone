@@ -189,10 +189,8 @@ module.exports = {
 
     user_resetPassword:async (req, res) => {
         if (req.body.newPassword == req.body.confirmPassword) {
-            console.log(req.session.resetPassword_id);
             let newPassword = await bcrypt.hash(req.body.newPassword, 10)
             userModel.updateOne({_id:req.session.resetPassword_id},{$set:{password:newPassword}}).then((result) => {
-               console.log(result);
                 res.redirect('/user_login')
                 req.session.resetPassword_id=null
             }).catch(()=>{
@@ -249,7 +247,6 @@ module.exports = {
                     sum = sum + parseInt(item.price) * item.quantity
                 })
                 cartDatas.totalAmount = sum
-                req.session.orderDatas = cartDatas
                 req.session.maxQuantityReached ? message = 'Reached limit,cant add more ' : message = false
                 res.render('user_cart', { cartDatas, message, checkOut })
                 req.session.maxQuantityReached = false
@@ -377,7 +374,6 @@ module.exports = {
 
     addToCartFromWishList:(req,res)=>{
         return new Promise((resolve, reject) => {
-            console.log(req.params.wishId);
             userService.user_add_to_cart(req.session.userDetails._id, req.params.id).then(() => {
                 userModel.updateOne({_id:req.session.userDetails._id},{$pull:{user_whishList:{_id:req.params.wishId}}}).then(()=>{
                     res.redirect('/cart')})

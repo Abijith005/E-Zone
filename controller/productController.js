@@ -12,7 +12,7 @@ module.exports = {
         userService.user_searchProduct(argument).then((productData) => {
             req.session.productList = productData
             res.redirect('/showProductList')
-        }).catch(()=>{
+        }).catch(() => {
             res.send('hello')
         })
     },
@@ -23,7 +23,7 @@ module.exports = {
             let products = req.session.productList
             res.render('user_productList', { products, category })
             // req.session.productList = null;
-        }).catch(()=>{
+        }).catch(() => {
             res.send(error404)
         })
     },
@@ -32,44 +32,44 @@ module.exports = {
         userService.searchProductWithCategory(req.body.searchInput, req.session.productList[0].category).then((productData) => {
             req.session.productList = productData
             res.redirect('/showProductList')
-        }).catch(()=>{
+        }).catch(() => {
             res.send(error404)
         })
     },
 
     product_to_cart: (req, res) => {
         userService.user_add_to_cart(req.session.userDetails._id, req.params.id).then(() => {
-          res.json({success:true})
-        }).catch(()=>{
+            res.json({ success: true })
+        }).catch(() => {
             res.send(error404)
         })
     },
 
     productQuantityIncreaseOrDecrease: (req, res) => {
-        console.log('gggg');
-        console.log(req.body.id);
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             productModel.findOne({ _id: req.body.id }, { stockQuantity: 1 }).then((result) => {
-                console.log(result);
                 let value;
                 req.body.cond == 1 ? value = 1 : value = -1
                 if (result.stockQuantity > 0 || value == -1) {
                     if (value == -1 && req.body.quantity > 1) {
                         userModel.updateOne({ _id: req.session.userDetails._id, user_cart: { $elemMatch: { id: req.body.id } } }, { $inc: { 'user_cart.$.quantity': value } }).then(() => {
-                            productModel.updateOne({ _id: req.body.id }, { $inc: { stockQuantity: 1 } }).then((result) => {
-                                console.log(result)
-                                res.json({quantity:result.quantity, success:true})
+                            productModel.updateOne({ _id: req.body.id }, { $inc: { stockQuantity: 1 } }).then(() => {
+                                userService.cartProductDatas(req.session.userDetails._id).then((result) => {
+                                    res.json({ totalAmount: result.totalAmount, success: true })
+                                })
                             })
                         })
                     }
                     else if (value == 1 && req.body.quantity < 10) {
                         userModel.updateOne({ _id: req.session.userDetails._id, user_cart: { $elemMatch: { id: req.body.id } } }, { $inc: { 'user_cart.$.quantity': value } }).then(() => {
                             productModel.updateOne({ _id: req.body.id }, { $inc: { stockQuantity: -1 } }).then((result) => {
-                                res.json({quantity:result.quantity, success:true})
+                                userService.cartProductDatas(req.session.userDetails._id).then((result) => {
+                                    res.json({ totalAmount: result.totalAmount, success: true })
+                                })
                             })
                         })
                     }
-                    else {
+                    else { 
 
                         res.redirect('/cart')
                     }
@@ -77,7 +77,7 @@ module.exports = {
                 else {
                     res.redirect('/cart')
                 }
-            }).catch(()=>{
+            }).catch(() => {
                 res.send(error404)
             })
         })
@@ -90,7 +90,7 @@ module.exports = {
                     res.redirect('/cart')
                 })
             })
-        }).catch(()=>{
+        }).catch(() => {
             res.send(error404)
         })
     }

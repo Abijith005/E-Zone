@@ -17,7 +17,7 @@ module.exports = {
             })
         })
     },
-
+ 
     admin_addCategoryPage: (req, res) => {
         let data
         req.session.categoryDetails ? data = req.session.categoryDetails : data = null

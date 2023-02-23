@@ -29,11 +29,8 @@ module.exports = {
     },
 
     addCoupon: (req, res) => {
-        console.log(req.body.startDate);
-        console.log((req.body.startDate).toLocaleString());
         return new Promise((resolve, reject) => {
             couponModel.create({ ...req.body, couponStatus:true }).then((result) => {
-                console.log(result);
                 res.redirect('back')
             }).catch(() => {
                 res.send(error404)

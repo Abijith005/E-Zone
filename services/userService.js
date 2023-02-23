@@ -3,6 +3,7 @@ const userModel = require('../models/userModel')
 const productModel = require('../models/productModel')
 const collections = require('../models/collections')
 const bcrypt = require('bcrypt')
+const { resolve } = require('promise')
 module.exports = {
     doSignup: (userData) => {
         return new Promise(async (resolve, reject) => {
@@ -191,6 +192,28 @@ module.exports = {
             }).catch(()=>{
                 reject()
             })
+        })
+    },
+
+    cartProductDatas:(id)=>{
+        return new Promise(async(resolve, reject) => {
+            let cart = await userModel.findOne({ _id: id}, { user_cart: 1 })
+                let result = await userModel.findOne({ _id: id })
+                let cartQuantities = {}
+                const cartID = result.user_cart.map(item => {
+                    cartQuantities[item.id] = item.quantity
+                    return item.id
+                })
+                let cartData = await productModel.find({ _id: { $in: cartID } }).lean()
+                let cartDatas = cartData.map((item, index) => {
+                    return { ...item, quantity: cartQuantities[item._id] }
+                })
+                let sum = 0;
+                cartDatas.forEach(item => {
+                    sum = sum + parseInt(item.price) * item.quantity
+                })
+                cartDatas.totalAmount = sum
+                resolve(cartDatas)
         })
     }
 
