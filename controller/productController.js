@@ -9,20 +9,20 @@ const userService = require('../services/userService')
 module.exports = {
     user_productList: (req, res) => {
         let argument = req.params.id ? req.params.id : req.body.searchInput
+        // let id=req.session.userDetails?._id??null
         userService.user_searchProduct(argument).then((productData) => {
             req.session.productList = productData
-            res.redirect('/showProductList')
+            res.redirect('/')
         }).catch(() => {
             res.send('hello')
         })
     },
-
+ 
     show_productList: (req, res) => {
         return new Promise(async (resolve, reject) => {
             let category = await categoryModel.find().lean()
             let products = req.session.productList
             res.render('user_productList', { products, category })
-            // req.session.productList = null;
         }).catch(() => {
             res.send(error404)
         })
@@ -93,6 +93,15 @@ module.exports = {
         }).catch(() => {
             res.send(error404)
         })
+    },
+
+    sortProducts:async(req,res)=>{
+let value=req.params.value
+let category=req.session.productList?.[0]?.category??''
+console.log(value);
+let products=await productModel.find({category:category}).sort({price:value}).lean()
+console.log('************',products);
+res.json({success:true}) 
     }
 
 

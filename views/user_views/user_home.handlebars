@@ -113,41 +113,6 @@
 									<div class="qty">3</div>
 								</a>
 							</div>
-
-							{{!-- <div class="cart-dropdown">
-								<div class="cart-list">
-									<div class="product-widget">
-										<div class="product-img">
-											<img src="/img/product01.png" alt="">
-										</div>
-										<div class="product-body">
-											<h3 class="product-name"><a href="#">product name goes here</a></h3>
-											<h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
-										</div>
-										<button class="delete"><i class="fa fa-close"></i></button>
-									</div>
-
-									<div class="product-widget">
-										<div class="product-img">
-											<img src="/img/product02.png" alt="">
-										</div>
-										<div class="product-body">
-											<h3 class="product-name"><a href="#">product name goes here</a></h3>
-											<h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-										</div>
-										<button class="delete"><i class="fa fa-close"></i></button>
-									</div>
-								</div>
-								<div class="cart-summary">
-									<small>3 Item(s) selected</small>
-									<h5>SUBTOTAL: $2940.00</h5>
-								</div>
-								<div class="cart-btns">
-									<a href="#">View Cart</a>
-									<a href="#">Checkout <i class="fa fa-arrow-circle-right"></i></a>
-								</div>
-							</div> --}}
-
 							<!-- /Cart -->
 
 							<!-- Menu Toogle -->
@@ -201,10 +166,11 @@
 		<!-- container -->
 		<div class="container">
 			<!-- responsive-nav -->
+			
 			<div id="responsive-nav">
 				<!-- NAV -->
 				<ul class="main-nav nav navbar-nav flex-row">
-					<li class="active"><a href="#">Home</a></li>
+					<li class="active"><a href="/home">Home</a></li>
 					<li><a href="#">Hot Deals</a></li>
 					{{#each data}}
 					<li><a href="/productList/{{this._id}}">{{this.category}}</a></li>
@@ -224,6 +190,8 @@
 	<!-- /NAVIGATION -->
 
 	<!-- SECTION -->
+{{#unless products}}
+
 	<div class="section">
 		<!-- container -->
 		<div class="container">
@@ -1081,6 +1049,83 @@
 	</div>
 	<!-- /NEWSLETTER -->
 
+
+{{else}}
+
+<div id="store" class="col-md-12">
+		<!-- store top filter -->
+		
+		<div class="store-filter clearfix">
+			<div class="store-sort">
+				<label>
+					Sort By Price:
+					<select class="input-select"  onchange="sort(this.value)">
+						<option value="1">Low To High</option>
+						<option value="-1">High To Low</option>
+					</select>
+				</label>
+
+				<label>
+					Show:
+					<select class="input-select">
+						<option value="0">20</option>
+						<option value="1">50</option>
+					</select>
+				</label>
+			</div>
+			<ul class="store-grid">
+				<li class="active"><i class="fa fa-th"></i></li>
+				<li><a href="#"><i class="fa fa-th-list"></i></a></li>
+			</ul>
+		</div>
+		<!-- /store top filter -->
+	</div>
+	<!-- store products -->
+	<div class="container">
+	<div class="row">
+		<!-- product -->
+		{{#each products}}
+		<div class="col-md-4 col-xs-6">
+			<div class="product">
+				<a href="/singleProductPage/{{this._id}}">
+					<div class="product-img">
+						<img style="height:35rem;" src="/images/{{this.image.[0].filename}}" alt="">
+					</div>
+				</a>
+				<div class="product-body" style="height: 14rem;">
+					<p class="product-category">{{this.category}}</p>
+					<h3 class="product-name"><a href="#">{{this.product_name}}</a></h3>
+					<h3 class="product-name">{{this.brandName}}</h3>
+					<h4 class="product-price">₹{{this.price}}/- <del class="product-old-price">₹{{this.price}}/-</del>
+					</h4>
+					<div class="product-btns">
+						{{#unless wishlist}}
+						<button onclick="window.location.href='/addToWhishList/{{this._id}}'" class="add-to-wishlist"><i
+								class="fa fa-heart-o"></i><span class="tooltipp">add to
+								wishlist</span></button>
+						{{else}}
+						<button class="add-to-wishlist"><i style="color: red;" class="fa fa-heart"
+								aria-hidden="true"></i></i></span></button>
+						{{/unless}}
+						<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick
+								view</span></button>
+					</div>
+				</div>
+				<div class="add-to-cart text-center">
+				
+						<button onclick="addToCart('{{this._id}}')" class="add-to-cart-btn mt-4 mb-2"><i
+								class="fa fa-shopping-cart"></i> add to
+							cart</button>
+				
+				</div>
+			</div>
+		</div>
+		{{/each}}
+
+	</div>
+	</div>
+
+{{/unless}}
 	<!-- FOOTER -->
 	<footer id="footer">
 		<!-- top footer -->
@@ -1182,6 +1227,29 @@
 	<!-- /FOOTER -->
 
 	<!-- jQuery Plugins -->
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+	function addToCart(id){
+		console.log('hai')
+		axios.get('/add_to_cart/'+id).then(()=>{
+		})
+	}
+</script>
+
+<script>
+	function sort(value){
+		console.log(value)
+axios.get('/sortProducts/'+value).then((result)=>{
+		console.log(value)
+	if(result.data.success){
+		console.log(result.data.success)
+	}
+})
+	}
+</script>
+
+
 	<script src="/js/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/slick.min.js"></script>

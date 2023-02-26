@@ -10,7 +10,6 @@ const session = require('express-session');
 const dbConnect = require('./config/connection');
 
 app.use((req,res,next)=>{
-    // if(!req.user)
       res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
       next();
   })

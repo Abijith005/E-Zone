@@ -10,19 +10,25 @@ const bcrypt = require('bcrypt')
 
 let invalidUser;
 let nameMsg, emailMsg, passwordMsg, mobnoMsg;
-let OTP = Math.floor(Math.random() *1000000);
+let OTP = Math.floor(Math.random() * 1000000);
 
 
 
 module.exports = {
 
     user_home: async (req, res) => {
+        let category = await categoryModel.find().lean()
+        let products = req.session.productList
         let data = await categoryModel.find().lean()
         let userName;
         req.session.userDetails ? userName = req.session.userDetails.name : userName = null
-        res.render('user_home', { userName, data })
+        res.render('user_home', { userName, data, products, category })
     },
 
+    home: (req, res) => {
+        req.session.productList = null
+        res.redirect('/')
+    },
 
     user_login: (req, res) => {
         if (nameMsg || passwordMsg) {
@@ -58,7 +64,7 @@ module.exports = {
                     invalidUser = true;
                     res.redirect('/user_login')
                 }
-            }).catch(()=>{
+            }).catch(() => {
                 res.send(error404)
             })
         }
@@ -96,7 +102,7 @@ module.exports = {
                     req.session.checkOtp = OTP;
                     res.redirect('/signup_otp')
                 }
-            }).catch(()=>{
+            }).catch(() => {
                 res.send(error404)
             })
         }
@@ -111,7 +117,7 @@ module.exports = {
                 req.session.email = null
                 req.session.checkOtp = null;
                 req.session.signUpDetails = null;
-            }).catch(()=>{
+            }).catch(() => {
                 res.send(error404)
             })
         }
@@ -159,7 +165,7 @@ module.exports = {
     user_submitForgotPasswordMail: (req, res) => {
         userService.doValidate(req.body).then((result) => {
             if (result) {
-                req.session.resetPassword_id=result._id
+                req.session.resetPassword_id = result._id
                 sentOTP(req.body.email, OTP)
                 req.session.checkOtp = OTP;
                 res.redirect('/forgot_password')
@@ -168,7 +174,7 @@ module.exports = {
 
                 res.redirect('/forgot_password')
             }
-        }).catch(()=>{
+        }).catch(() => {
             res.send(error404)
         })
     },
@@ -178,7 +184,7 @@ module.exports = {
             req.session.checkOtp = null;
             req.session.resetPassword = true
             res.redirect('/forgot_password')
-        req.session.checkOtp = false
+            req.session.checkOtp = false
 
         }
         else {
@@ -187,13 +193,13 @@ module.exports = {
         }
     },
 
-    user_resetPassword:async (req, res) => {
+    user_resetPassword: async (req, res) => {
         if (req.body.newPassword == req.body.confirmPassword) {
             let newPassword = await bcrypt.hash(req.body.newPassword, 10)
-            userModel.updateOne({_id:req.session.resetPassword_id},{$set:{password:newPassword}}).then((result) => {
+            userModel.updateOne({ _id: req.session.resetPassword_id }, { $set: { password: newPassword } }).then((result) => {
                 res.redirect('/user_login')
-                req.session.resetPassword_id=null
-            }).catch(()=>{
+                req.session.resetPassword_id = null
+            }).catch(() => {
                 res.send(error404)
             })
         }
@@ -220,7 +226,7 @@ module.exports = {
             req.session.editAddress = null
             edit = null
             addAddress = false
-        }).catch(()=>{
+        }).catch(() => {
             res.send(error404)
         })
 
@@ -251,9 +257,9 @@ module.exports = {
                 res.render('user_cart', { cartDatas, message, checkOut })
                 req.session.maxQuantityReached = false
             })
-            
+
         } catch (error) {
-                res.send(error404)
+            res.send(error404)
         }
     },
 
@@ -265,7 +271,7 @@ module.exports = {
     add_Address: (req, res) => {
         userService.user_addAddress(req.session.userDetails._id, req.body).then(() => {
             res.redirect('/user_profile')
-        }).catch(()=>{
+        }).catch(() => {
             res.send(error404)
         })
     },
@@ -273,7 +279,7 @@ module.exports = {
     deleteAddress: (req, res) => {
         userService.user_delete_address(req.session.userDetails._id, parseInt(req.params.id)).then(() => {
             res.redirect('/user_profile')
-        }).catch(()=>{
+        }).catch(() => {
             res.send(error404)
         })
     },
@@ -282,7 +288,7 @@ module.exports = {
         userService.getAddress(req.session.userDetails._id, parseInt(req.params.id)).then((result) => {
             req.session.editAddress = result;
             res.redirect('/addAddress')
-        }).catch(()=>{
+        }).catch(() => {
             res.send(error404)
         })
     },
@@ -290,7 +296,7 @@ module.exports = {
     address_Update: (req, res) => {
         userService.addressUpdate(parseInt(req.params.id), req.body).then(() => {
             res.redirect('/user_profile')
-        }).catch(()=>{
+        }).catch(() => {
             res.send(error404)
         })
     },
@@ -298,7 +304,7 @@ module.exports = {
     singleProductPage: (req, res) => {
         userService.singleProductDetails(req.params.id).then((result) => {
             res.render('singleProductDetails', { result })
-        }).catch(()=>{
+        }).catch(() => {
             res.send(error404)
         })
     },
@@ -323,7 +329,7 @@ module.exports = {
                 }
                 res.render('orderHistory', { result, products })
                 // products = null
-            }).catch(()=>{
+            }).catch(() => {
                 res.send(error404)
             })
         })
@@ -334,7 +340,7 @@ module.exports = {
             id = createId()
             userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { user_whishList: { _id: id, product_id: req.params.id } } }).then(() => {
                 res.redirect('back')
-            }).catch(()=>{
+            }).catch(() => {
                 res.send(error404)
             })
         })
@@ -356,30 +362,31 @@ module.exports = {
                     i.stockQuantity > 0 ? i.stockQuantity = true : i.stockQuantity = false
                 }
                 res.render('whishList', { productDatas })
-            }).catch(()=>{
+            }).catch(() => {
                 res.send(error404)
             })
         })
     },
 
-    removeFromWishList:(req,res)=>{
+    removeFromWishList: (req, res) => {
         return new Promise((resolve, reject) => {
-            userModel.updateOne({_id:req.session.userDetails._id},{$pull:{user_whishList:{_id:req.params.id}}}).then(()=>{
+            userModel.updateOne({ _id: req.session.userDetails._id }, { $pull: { user_whishList: { _id: req.params.id } } }).then(() => {
                 res.redirect('back')
-            }).catch(()=>{
+            }).catch(() => {
                 res.send(error404)
             })
         })
     },
 
-    addToCartFromWishList:(req,res)=>{
+    addToCartFromWishList: (req, res) => {
         return new Promise((resolve, reject) => {
             userService.user_add_to_cart(req.session.userDetails._id, req.params.id).then(() => {
-                userModel.updateOne({_id:req.session.userDetails._id},{$pull:{user_whishList:{_id:req.params.wishId}}}).then(()=>{
-                    res.redirect('/cart')})
-                }).catch(()=>{
-                    res.send(error404)
+                userModel.updateOne({ _id: req.session.userDetails._id }, { $pull: { user_whishList: { _id: req.params.wishId } } }).then(() => {
+                    res.redirect('/cart')
                 })
+            }).catch(() => {
+                res.send(error404)
+            })
 
         })
     }

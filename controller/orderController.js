@@ -146,7 +146,7 @@ module.exports = {
     },
 
     userOrderUpdate: (req, res) => {
-        userModel.updateOne({ _id: req.session.userDetails._id, orders: { $elemMatch: { order_id: parseInt(req.params.id) } } }, { $set: { 'orders.$.orderStatus': 'cancelled' } }).then((result) => {
+        userModel.updateOne({ _id: req.session.userDetails._id, orders: { $elemMatch: { order_id: parseInt(req.params.id) } } }, { $set: { 'orders.$.orderStatus': 'cancelled' } }).then(() => {
             productModel.updateOne({ _id: req.params.product_id }, { $inc: { stockQuantity: req.params.quantity } }).then((result) => {
                 res.redirect('/orderHistory')
             })

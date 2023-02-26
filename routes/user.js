@@ -10,6 +10,8 @@ const { ifUser } = require('../middleware/userSession')
 
 router.get('/', userController.user_home)
 
+router.get('/home',userController.home)
+
 router.get('/user_login',userSession.ifNoUser, userController.user_login)
 
 router.post('/user_signIn', check('email')
@@ -100,6 +102,8 @@ router.get('/removeFromWishList/:id',ifUser,userController.removeFromWishList)
 router.get('/addToCartFromWishList/:id/:wishId',ifUser,userController.addToCartFromWishList)
 
 router.post('/couponApply',ifUser,orderController.couponApply)
+
+router.get('/sortProducts/:value',productController.sortProducts)
 
 
 
