@@ -20,9 +20,13 @@ module.exports = {
         let category = await categoryModel.find().lean()
         let products = req.session.productList
         let data = await categoryModel.find().lean()
+        let brands
+        if(products){
+             brands=data.find(e=>e._id==products[0].category)
+        }
         let userName;
         req.session.userDetails ? userName = req.session.userDetails.name : userName = null
-        res.render('user_home', { userName, data, products, category })
+        res.render('user_home', { userName, data, products, category,brands })
     },
 
     home: (req, res) => {
@@ -260,7 +264,7 @@ module.exports = {
 
         } catch (error) {
             res.send(error404)
-        }
+        } 
     },
 
     addAddressPage: (req, res) => {

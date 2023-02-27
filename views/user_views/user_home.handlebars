@@ -1058,18 +1058,19 @@
 		<div class="store-filter clearfix">
 			<div class="store-sort">
 				<label>
-					Sort By Price:
-					<select class="input-select"  onchange="sort(this.value)">
-						<option value="1">Low To High</option>
+					 <select class="input-select" id="sort" {{!--onchange="sort(this.value)" --}} >
+						<option  value="" selected>Sort by price</option>
+						<option  value="1">Low To High</option>
 						<option value="-1">High To Low</option>
 					</select>
 				</label>
 
 				<label>
-					Show:
-					<select class="input-select">
-						<option value="0">20</option>
-						<option value="1">50</option>
+					<select class="input-select" id="filter">
+						<option  value="" selected>Filter by Price</option>
+						{{#each brands.brandName}}
+						<option value="{{this}}">{{this}}</option>
+						{{/each}}
 					</select>
 				</label>
 			</div>
@@ -1089,7 +1090,7 @@
 			<div class="product">
 				<a href="/singleProductPage/{{this._id}}">
 					<div class="product-img">
-						<img style="height:35rem;" src="/images/{{this.image.[0].filename}}" alt="">
+						<img style="height:150px; object-fit:contain" src="/images/{{this.image.[0].filename}}" alt="">
 					</div>
 				</a>
 				<div class="product-body" style="height: 14rem;">
@@ -1218,7 +1219,6 @@
 						</span>
 					</div>
 				</div>
-				<!-- /row -->
 			</div>
 			<!-- /container -->
 		</div>
@@ -1227,35 +1227,32 @@
 	<!-- /FOOTER -->
 
 	<!-- jQuery Plugins -->
+	
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
 <script>
 	function addToCart(id){
 		console.log('hai')
 		axios.get('/add_to_cart/'+id).then(()=>{
 		})
 	}
+	document.getElementById('sort').addEventListener('change',(e)=>{
+		console.log(e.target.value)
+		 window.location.href=`/sortProducts/${e.target.value}`
+	})
+		 document.getElementById('filter').addEventListener('change',(e)=>{
+			console.log(e.target.value)
+			window.location.href=`/filterProducts/${e.target.value}`
+		 })
 </script>
 
-<script>
-	function sort(value){
-		console.log(value)
-axios.get('/sortProducts/'+value).then((result)=>{
-		console.log(value)
-	if(result.data.success){
-		console.log(result.data.success)
-	}
-})
-	}
-</script>
-
-
-	<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/slick.min.js"></script>
 	<script src="/js/nouislider.min.js"></script>
 	<script src="/js/jquery.zoom.min.js"></script>
 	<script src="/js/main.js"></script>
+
+	
 
 </body>
 

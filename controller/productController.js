@@ -17,16 +17,6 @@ module.exports = {
             res.send('hello')
         })
     },
- 
-    show_productList: (req, res) => {
-        return new Promise(async (resolve, reject) => {
-            let category = await categoryModel.find().lean()
-            let products = req.session.productList
-            res.render('user_productList', { products, category })
-        }).catch(() => {
-            res.send(error404)
-        })
-    },
 
     search_product_with_category: (req, res) => {
         userService.searchProductWithCategory(req.body.searchInput, req.session.productList[0].category).then((productData) => {
@@ -69,7 +59,7 @@ module.exports = {
                             })
                         })
                     }
-                    else { 
+                    else {
 
                         res.redirect('/cart')
                     }
@@ -95,14 +85,21 @@ module.exports = {
         })
     },
 
-    sortProducts:async(req,res)=>{
-let value=req.params.value
-let category=req.session.productList?.[0]?.category??''
-console.log(value);
-let products=await productModel.find({category:category}).sort({price:value}).lean()
-console.log('************',products);
-res.json({success:true}) 
+    sortProducts: async (req, res) => {
+        let value = req.params.value
+        let category = req.session.productList?.[0]?.category ?? ''
+        let products = await productModel.find({ category: category }).sort({ price: value }).lean()
+        req.session.productList = products;
+        res.redirect('/')
+    },
+
+    filterProducts: async (req, res) => {
+        let products = await productModel.find({brandName:req.params.brand}).lean()
+        req.session.productList = products
+        res.redirect('/')
     }
+
+
 
 
 }

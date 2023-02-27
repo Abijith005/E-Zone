@@ -45,8 +45,6 @@ router.post('/productList',productController.user_productList)
 
 router.post('/search_product_with_category',productController.search_product_with_category)
 
-router.get('/showProductList',productController.show_productList)
-
 router.get('/resendOTP',userSession.ifNoUser,userController.resendOTP)
 
 router.get('/user_profile',userSession.ifUser, userController.user_profilePage)
@@ -104,6 +102,8 @@ router.get('/addToCartFromWishList/:id/:wishId',ifUser,userController.addToCartF
 router.post('/couponApply',ifUser,orderController.couponApply)
 
 router.get('/sortProducts/:value',productController.sortProducts)
+
+router.get('/filterProducts/:brand',productController.filterProducts)
 
 
 

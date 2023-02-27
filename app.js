@@ -47,9 +47,9 @@ app.set('view engine','handlebars')
 app.set('views',[path.join(__dirname,'views/user_views'),path.join(__dirname,'views/admin_views')])
 app.use(express.static(path.join(__dirname,'public')))
 
-// app.all('*',(req,res)=>{
-// res.status(404).send("<h1 style='color:red;display:flex;justify-content: space-around;margin-top:5rem;height:100vh;'>404! Page Not Found</h1>")
-// }) 
+app.all('*',(req,res)=>{
+res.render('404')
+}) 
 //setting port
 app.listen(5000,console.log('server running http://localhost:5000'))
 

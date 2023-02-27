@@ -50,21 +50,19 @@ module.exports = {
         return new Promise((resolve, reject) => {
             categoryModel.findOne({ category: productData.category }).then((result) => {
                 productData.category = result._id
-                // sharp(imag.image[0].filename)
-
-                //     .resize(300, 300, {
-                //         kernel: sharp.kernel.nearest,
-                //         fit: 'contain',
-                //         position: 'center',
-                //         background: { r: 255, g: 255, b: 255, alpha: 0 }
-                //     })
-                //     .toFile('output5.png')
-                //     .then(() => {
-                //         // output.png is a 200 pixels wide and 300 pixels high image
-                //         // containing a nearest-neighbour scaled version
-                //         // contained within the north-east corner of a semi-transparent white canvas
-                //         console.log("success")
-                //     })
+                sharp(imag.image[0].path)
+                    .png()
+                    .resize(300, 300, {
+                        kernel: sharp.kernel.nearest,
+                        fit: 'contain',
+                        position: 'center',
+                        background: { r: 255, g: 255, b: 255, alpha: 0 }
+                    })
+                    .toFile(imag.image[0].path+".png")
+                    .then(() => {
+                        imag.image[0].filename=imag.image[0].filename+".png"
+                        imag.image[0].path=imag.image[0].path+".png"
+                    })
                 productModel.create({ ...productData, ...imag }).then(() => {
                     resolve()
                 })
