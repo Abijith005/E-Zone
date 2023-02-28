@@ -77,19 +77,19 @@
                                         {{else}}
                                         <div
                                             class="col-md-1 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0 small"><span style="color: rgb(201, 8, 8);">Out Stock</span>
+                                            <p class="text-muted mb-0 small"><span style="color: rgb(201, 8, 8);">Out Of Stock</span>
                                             </p>
                                         </div>
                                         {{/if}}
                                         <div
                                             class="col-md-1 text-center d-flex justify-content-center align-items-center">
-                                            <a href="/removeFromWishList/{{this.whish_id}}"
+                                            <a href="/removeFromWishList/{{this._id}}"
                                                 class="btn btn-info rounded-pill text-white">Remove</a>
                                         </div>
 
                                         <div
                                             class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <a href="addToCartFromWishList/{{this._id}}/{{this.whish_id}}" 
+                                            <a href="addToCartFromWishList/{{this._id}}" 
                                                 class="btn rounded-pill text-white" style="background-color: green;">Add To Cart</a>
                                         </div>
                                     </div>

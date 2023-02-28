@@ -341,8 +341,7 @@ module.exports = {
 
     addToWishList: (req, res) => {
         return new Promise((resolve, reject) => {
-            id = createId()
-            userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { user_whishList: { _id: id, product_id: req.params.id } } }).then(() => {
+            userModel.updateOne({ _id: req.session.userDetails._id }, { $addToSet: { user_whishList: {product_id: req.params.id } } }).then(() => {
                 res.redirect('back')
             }).catch(() => {
                 res.send(error404)
@@ -353,15 +352,10 @@ module.exports = {
     getWishList: (req, res) => {
         return new Promise((resolve, reject) => {
             userModel.findOne({ _id: req.session.userDetails._id }, { user_whishList: 1 }).then(async (result) => {
-                let whishId = {}
                 const productId = result.user_whishList.map(item => {
-                    whishId[item.product_id] = item._id
                     return item.product_id
                 })
-                let productData = await productModel.find({ _id: { $in: productId } }).lean()
-                let productDatas = productData.map((item, index) => {
-                    return { ...item, whish_id: whishId[item._id] }
-                })
+                let productDatas = await productModel.find({ _id: { $in: productId } }).lean()
                 for (const i of productDatas) {
                     i.stockQuantity > 0 ? i.stockQuantity = true : i.stockQuantity = false
                 }
@@ -374,7 +368,7 @@ module.exports = {
 
     removeFromWishList: (req, res) => {
         return new Promise((resolve, reject) => {
-            userModel.updateOne({ _id: req.session.userDetails._id }, { $pull: { user_whishList: { _id: req.params.id } } }).then(() => {
+            userModel.updateOne({ _id: req.session.userDetails._id }, { $pull: { user_whishList: { product_id: req.params.id } } }).then(() => {
                 res.redirect('back')
             }).catch(() => {
                 res.send(error404)
@@ -385,7 +379,7 @@ module.exports = {
     addToCartFromWishList: (req, res) => {
         return new Promise((resolve, reject) => {
             userService.user_add_to_cart(req.session.userDetails._id, req.params.id).then(() => {
-                userModel.updateOne({ _id: req.session.userDetails._id }, { $pull: { user_whishList: { _id: req.params.wishId } } }).then(() => {
+                userModel.updateOne({ _id: req.session.userDetails._id }, { $pull: { user_whishList: { product_id: req.params.id } } }).then(() => {
                     res.redirect('/cart')
                 })
             }).catch(() => {

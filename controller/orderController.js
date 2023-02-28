@@ -1,5 +1,5 @@
 const session = require("express-session")
-const { default: createId } = require("../middleware/createId")
+const { createId } = require("../middleware/createId")
 const couponModel = require("../models/couponModel")
 const productModel = require("../models/productModel")
 const userModel = require("../models/userModel")
@@ -7,16 +7,16 @@ const userService = require("../services/userService")
 
 
 module.exports = {
-    checkOutPage:(req, res) => {
+    checkOutPage: (req, res) => {
         userModel.findOne({ _id: req.session.userDetails._id }, { user_cart: 1 }).then((cart) => {
             if (cart.user_cart.length > 0) {
-                userService.get_userDetails(req.session.userDetails._id).then(async(data) => {
+                userService.get_userDetails(req.session.userDetails._id).then(async (data) => {
                     orderDatas = await userService.cartProductDatas(req.session.userDetails._id)
                     let sum = 0;
                     orderDatas.forEach(item => {
                         sum = sum + parseInt(item.price) * item.quantity
                     })
-                    req.session.totalAmount=sum
+                    req.session.totalAmount = sum
                     orderDatas.totalAmount = sum
                     req.session.selectAddress ? selectAddress = req.session.selectAddress : selectAddress = null
                     req.session.changeAddress ? changeAddress = true : changeAddress = false
@@ -101,26 +101,40 @@ module.exports = {
     placeOrder: (req, res) => {
         return new Promise((resolve, reject) => {
             let data = req.body
-            if (Array.isArray(data.products_id)) {
-                for (let i = 0; i < data.products_id.length; i++) {
-                    let amount = data.price[i] * data.quantity[i]
-                    orderId = Date.now()
-                    userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod: data.paymentMethod, product_id: data.products_id[i], productName: data.productsName[i], category: data.category[i], quantity: data.quantity[i], couponStatus: data.couponStatus, totalAmount: amount, orderDate: Date(), orderStatus: 'Not Delivered' } } }).then(() => {
+            console.log('entered to function')
+            if (req.body.paymentMethod == "Cash On Delivery") {
+                if (Array.isArray(data.products_id)) {
+                    for (let i = 0; i < data.products_id.length; i++) {
+                        let amount = data.price[i] * data.quantity[i]
+                        orderId = createId()
+                        userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod: data.paymentMethod, product_id: data.products_id[i], productName: data.productsName[i], category: data.category[i], quantity: data.quantity[i], couponStatus: data.couponStatus, totalAmount: amount, orderDate: Date(), orderStatus: 'Not Delivered' } } }).then(() => {
+                            resolve()
+                        })
+                    }
+                }
+                else {
+                    let amount = data.price * data.quantity
+                   let orderId =createId()
+                    userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod: data.paymentMethod, product_id: data.products_id, productName: data.productsName, category: data.category, quantity: data.quantity, couponStatus: data.couponStatus, totalAmount: amount, orderDate: Date(), orderStatus: 'Not Delivered' } } }).then((result) => {
                         resolve()
                     })
                 }
-            }
-            else {
-                let amount = data.price * data.quantity
-                orderId = Date.now()
-                userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod: data.paymentMethod, product_id: data.products_id, productName: data.productsName, category: data.category, quantity: data.quantity, couponStatus: data.couponStatus, totalAmount: amount, orderDate: Date(), orderStatus: 'Not Delivered' } } }).then((result) => {
+                userModel.updateOne({ _id: req.session.userDetails._id }, { $unset: { user_cart: {} } }).then((result) => {
+
+                    res.json({result})
                     resolve()
                 })
             }
-            userModel.updateOne({ _id: req.session.userDetails._id }, { $unset: { user_cart: {} } }).then(() => {
-                res.render('orderConfirm')
-                resolve()
-            })
+            else {
+              let orderId=createId()
+              total=10000;
+              console.log('upi');
+                userService.generateRazorPay(orderId,total).then((result)=>{
+                    console.log('start')
+                    result.status='success'
+                    res.json({result})
+                    })
+            }
         })
     },
 
@@ -157,11 +171,11 @@ module.exports = {
 
     couponApply: (req, res) => {
         couponModel.findOne({ couponCode: req.body.couponCode }).then((result) => {
-            if(result.startDate.getTime()<new Date().getTime()&&result.endDate.getTime()>new Date().getTime()&&req.body.totalAmount>=result.minPurchaseAmount){
-                let discountedAmount=req.session.totalAmount-result.discountAmount;
-                res.json({...result,totalAmount:discountedAmount, success: true})
+            if (result.startDate.getTime() < new Date().getTime() && result.endDate.getTime() > new Date().getTime() && req.body.totalAmount >= result.minPurchaseAmount) {
+                let discountedAmount = req.session.totalAmount - result.discountAmount;
+                res.json({ ...result, totalAmount: discountedAmount, success: true })
             }
-            else{
+            else {
                 res.json()
 
             }

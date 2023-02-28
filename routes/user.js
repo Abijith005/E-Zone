@@ -97,7 +97,7 @@ router.get('/addToWhishList/:id',ifUser,userController.addToWishList)
 
 router.get('/removeFromWishList/:id',ifUser,userController.removeFromWishList)
 
-router.get('/addToCartFromWishList/:id/:wishId',ifUser,userController.addToCartFromWishList)
+router.get('/addToCartFromWishList/:id',ifUser,userController.addToCartFromWishList)
 
 router.post('/couponApply',ifUser,orderController.couponApply)
 

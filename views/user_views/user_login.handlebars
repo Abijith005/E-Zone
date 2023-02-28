@@ -1,154 +1,125 @@
-{{!-- <!DOCTYPE html>
-<html lang="en">
-    <style></style>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-</head>
-    <title>E-Zone</title>
-</head>
-<body style="background-color:#000; overflow-y: hidden;overflow-x: hidden;">
-    <div class="container" style=" height: 100vh;">
-        <div class="text-center mt-3"><p style="color:rgb(225,171,43); font-size:3.5rem;font-weight: 600; font-family:it"><span style="color: #ffff;">E-</span> Zone</p></div>
-        <div class="row" style="padding-top:1rem;display: flex; justify-content: center;">
-            <div class="col" style="border-style: solid; height:33rem ; max-width:45%;display: flex; border-radius: 2rem; background-color: rgba(129, 129, 129);">
-                <div style="width:100%;">
-               <div style="margin-top:1rem;text-align: center;">
-               <h3 style="margin-top:2rem; font-weight: 700;">Sign In</h3></div> 
-               <form action="/user_signIn" method="post">
-<div class="my-5" style="text-align: center;">
-    {{#if invalidUser}}
-               <label for="" style="color:rgb(195, 249, 17); margin-bottom: 1rem;">Invalid Username Or Password</label>
-               {{/if}}
-            {{#if nameMsg}}   
-    <p style="color: rgb(201, 4, 4) ;">{{nameMsg}}</p>
-    {{/if}}
-    <input style="width:70%;" class="form-control-lg" type="" name="email" placeholder="Email-id" value="abijithsurendran005@gmail.com" >
-</div>
-<div style="text-align: center;">
-    {{#if passwordMsg}}
-        <p style="color: rgb(201, 4, 4) ;">{{passwordMsg}}</p>
-{{/if}}
-    <input style="width:70%;" class="form-control-lg" type="password" name="password" placeholder="Password" value="123458" >
-    
-</div>
-<div class="text-end pe-5 me-5 pt-1"> <a href="/forgot_password">Forgot Password</a></div>
-<div class="text-center">
-<button type="submit" class="btn  rounded-pill mt-2 text-white" style="background-color: rgb(4, 107, 4);">Sign In</button></form>
-<p class="my-4"> <span style="font-weight: 700;">Note: </span>By creating an account or logging in, you agree to E-Zone's Condition of use and privacy policy.</p>
-<a href="/user_signUp"><div class="btn rounded-pill text-white" style="background-color: rgb(4, 107, 4);">Create New Account</div></a>
-</div>
-            </div>
-        </div>
-        </div>
-        
-    </div>   
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-</body>
-</html> --}}
+
 
 
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<title>Login V1</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-<!--===============================================================================================-->
-	{{!-- <link rel="stylesheet" type="text/css" href="css/util.css"> --}}
-	<link rel="stylesheet" type="text/css" href="/css/userLogin.css">
-<!--===============================================================================================-->
+    <title>Login V1</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    {{!--
+    <link rel="stylesheet" type="text/css" href="css/util.css"> --}}
+    <link rel="stylesheet" type="text/css" href="/css/userLogin.css">
+    <!--===============================================================================================-->
 </head>
+
 <body>
-	
-	<div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100">
-				<div class="login100-pic js-tilt" data-tilt>
-					<img src="images/img-01.png" alt="IMG">
-				</div>
 
-				<form class="login100-form validate-form">
-					<span class="login100-form-title">
-						Member Login
-					</span>
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <div class="login100-pic js-tilt" data-tilt>
+                    <img src="images/img-01.png" alt="IMG">
+                </div>
 
-					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						<input class="input100" type="text" name="email" placeholder="Email">
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-envelope" aria-hidden="true"></i>
-						</span>
-					</div>
+                <form class="login100-form validate-form" action="/user_signIn" method="post">
+                    <span class="login100-form-title">
+                        Member Login
+                    </span>
+                    {{#if invalidUser}}
 
-					<div class="wrap-input100 validate-input" data-validate = "Password is required">
-						<input class="input100" type="password" name="pass" placeholder="Password">
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-lock" aria-hidden="true"></i>
-						</span>
-					</div>
-					
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
-							Login
-						</button>
-					</div>
+                    <div  class="text-center">
+                    <label style="color:rgb(195, 249, 17); margin-bottom: 1rem;">Invalid Username Or
+                        Password</label>
+                    </div>
+                    {{/if}}
+                    <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                        {{#if nameMsg}}
+                        <div  class="text-center">
+                        <p style="color: rgb(201, 4, 4) ;">{{nameMsg}}</p>
+                        </div>
+                        {{/if}}
+                        <input class="input100" type="text" value="abijithsurendran005@gmail.com" name="email" placeholder="Email">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                        </span>
+                    </div>
 
-					<div class="text-center p-t-12">
-						<span class="txt1">
-							Forgot
-						</span>
-						<a class="txt2" href="#">
-							Username / Password?
-						</a>
-					</div>
+                    <div class="wrap-input100 validate-input" data-validate="Password is required">
+                        {{#if passwordMsg}}
+                        <div  class="text-center">
+                        <p style="color: rgb(201, 4, 4) ;">{{passwordMsg}}</p>
+                        </div>
+                        {{/if}}
+                        <input class="input100" type="password" value="123458" name="password" placeholder="Password">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
+                    </div>
 
-					<div class="text-center p-t-136">
-						<a class="txt2" href="#">
-							Create your Account
-							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-						</a>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-	
-	
+                    <div class="container-login100-form-btn">
+                        <button class="login100-form-btn">
+                            Login
+                        </button>
+                    </div>
 
-	
-<!--===============================================================================================-->	
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/bootstrap/js/popper.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/select2/select2.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/tilt/tilt.jquery.min.js"></script>
-	<script >
-		$('.js-tilt').tilt({
-			scale: 1.1
-		})
-	</script>
-<!--===============================================================================================-->
-	<script src="js/main.js"></script>
+                    <div class="text-center p-t-12">
+                        <span class="txt1">
+                            Forgot
+                        </span>
+                        <a class="txt2" href="/forgot_password">
+                            Username / Password?
+                        </a>
+                    </div>
+
+                    <div class="text-center p-t-136">
+                        <a class="txt2" href="/user_signUp">
+                            Create your Account
+                            <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!--===============================================================================================-->
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/tilt/tilt.jquery.min.js"></script>
+    <script>
+        $('.js-tilt').tilt({
+            scale: 1.1
+        })
+    </script>
+    <!--===============================================================================================-->
+    <script src="js/main.js"></script>
 
 </body>
+
 </html>

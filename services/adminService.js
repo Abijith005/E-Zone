@@ -95,7 +95,6 @@ module.exports = {
     update_product: (id, productData, files) => {
         return new Promise((resolve, reject) => {
             productModel.updateOne({ _id: id }, { $set: { product_name: productData.product_name, category: productData.category, company: productData.company, price: productData.price, stockQuantity: productData.stockQuantity, product_Details: productData.product_Details, image: files.image } }).then((result) => {
-                console.log(result);
                 resolve()
             }).catch(() => {
                 reject()

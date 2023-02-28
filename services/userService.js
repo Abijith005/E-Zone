@@ -5,6 +5,11 @@ const collections = require('../models/collections')
 const bcrypt = require('bcrypt')
 const { resolve } = require('promise')
 const categoryModel = require('../models/categoryModel')
+const Razorpay = require('razorpay');
+const instance = new Razorpay({
+    key_id:"rzp_test_OyYcdgZL72bzUl",
+    key_secret:"mpif2nSNnpA4zv05FD6rXoIp"
+  });
 module.exports = {
     doSignup: (userData) => {
         return new Promise(async (resolve, reject) => {
@@ -226,6 +231,22 @@ module.exports = {
             cartDatas.totalAmount = sum
             resolve(cartDatas)
         })
+    },
+
+    generateRazorPay:(orderId,total)=>{
+        return new Promise((resolve, reject) => {
+            const options={
+                amount: total*100,
+                currency: "INR",
+                receipt: orderId 
+            };
+            console.log('here');
+              instance.orders.create(options,(err,order)=>{
+                console.log('instance');
+                resolve(order)
+               });
+        })
+
     }
 
 
