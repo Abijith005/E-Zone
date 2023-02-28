@@ -46,7 +46,7 @@
 
 
   {{#unless changeAddress}}
-  <form action="/placeOrder" method="post" id="placeOrder">
+  <form action="/placeOrder" onsubmit="event.preventDefault(); validateMyForm();" method="post" id='order'>
     <section style="height: 480px;" class="gradient-custom">
       <div class="container py-5" style="height: 405px;">
         <div class="row d-flex justify-content-center my-4">
@@ -275,7 +275,7 @@
                             <strong>Total Amount</strong>
 
                           </div>
-                          <input type="hidden" id="totalAmount" name="total-Amount" value="{{orderDatas.totalAmount}}">
+                          <input type="hidden" id="totalAmount" name="totalPrice" value="{{orderDatas.totalAmount}}">
                           <span><strong id="discountedAmount">₹ :{{orderDatas.totalAmount}} /-</strong></span>
                         </li>
                       </ul>
@@ -305,6 +305,7 @@
     {{!-- {{#if invalidCoupon}} <h6 style="color: red; text-align: center;">Invalid coupon code </h6>{{/if}} --}}
   </div>
   {{/unless}}
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script>
     function applyCoupon() {
@@ -329,24 +330,58 @@
       }
 
     } 
-  $("#placeOrder").submit((e)=>{
-    e.preventDefault()
-   })
+  
+
    function submitCheckOut(){
- axios.post('/placeOrder', document.querySelector('#placeOrder'), {
+ axios.post('/placeOrder', document.querySelector('#order'), {
   headers: {
     'Content-Type': 'application/json'
   }
-}).then((resp)=>{
-  console.log('hai')
-  console.log(resp)
-if(resp.data.status){
+}).then((result)=>{
+if(result.data.COD){
   window.location.href='/orderSuccess'
 }else{
-  console.log(resp)
- razorpayPayment(resp.data)
+ razorpayPayment(result.data)
 }
 })
+   }
+   function razorpayPayment(order){
+    var options = {
+    "key": "rzp_test_OyYcdgZL72bzUl", // Enter the Key ID generated from the Dashboard
+    "amount": order.result.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "E-Zone", //your business name
+    "description": "Online Transaction",
+    "image": "https://i.ibb.co/zSMfgvM/Logo.png",
+    "order_id": order.result.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response){
+      
+        verifyPayment(response,order)
+    },
+    "prefill": {
+        "name": order.name, //your customer's name
+        "email":  order.email,
+        "contact": order.phone
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+var rzp1 = new Razorpay(options);
+ rzp1.open();
+   }
+ function verifyPayment(payment,order){
+  console.log('verify')
+    axios.post('/verifyPayment',{payment,order}).then((resp)=>{
+      if(resp.data.success){
+         window.location.href='/orderSuccess'
+      }else{
+        console.log("Payment failed")
+      }
+    })
    }
 
 

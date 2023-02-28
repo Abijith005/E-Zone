@@ -101,7 +101,7 @@ module.exports = {
     placeOrder: (req, res) => {
         return new Promise((resolve, reject) => {
             let data = req.body
-            console.log('entered to function')
+            console.log(data);
             if (req.body.paymentMethod == "Cash On Delivery") {
                 if (Array.isArray(data.products_id)) {
                     for (let i = 0; i < data.products_id.length; i++) {
@@ -114,28 +114,30 @@ module.exports = {
                 }
                 else {
                     let amount = data.price * data.quantity
-                   let orderId =createId()
+                    let orderId = createId()
                     userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod: data.paymentMethod, product_id: data.products_id, productName: data.productsName, category: data.category, quantity: data.quantity, couponStatus: data.couponStatus, totalAmount: amount, orderDate: Date(), orderStatus: 'Not Delivered' } } }).then((result) => {
                         resolve()
                     })
                 }
                 userModel.updateOne({ _id: req.session.userDetails._id }, { $unset: { user_cart: {} } }).then((result) => {
-
-                    res.json({result})
+                    
+                    res.json({ COD:true})
                     resolve()
                 })
             }
             else {
-              let orderId=createId()
-              total=10000;
-              console.log('upi');
-                userService.generateRazorPay(orderId,total).then((result)=>{
-                    console.log('start')
-                    result.status='success'
-                    res.json({result})
-                    })
+                let orderId = createId()
+                userService.generateRazorPay(orderId, data.totalPrice).then((result) => {
+                    console.log(result);
+                    result.UPI = true
+                    res.json({ result })
+                })
             }
         })
+    },
+
+    orderSuccess: (req, res) => {
+        res.render('orderConfirmPage')
     },
 
     adminOrderUpdate: (req, res) => {

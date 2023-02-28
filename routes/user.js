@@ -87,6 +87,8 @@ router.get('/selectAddress/:id',userSession.ifUser,orderController.selectAddress
 
 router.post('/placeOrder',userSession.ifUser,orderController.placeOrder)
 
+router.get('/orderSuccess',ifUser,orderController.orderSuccess)
+
 router.get('/orderHistory',userSession.ifUser,userController.orderHistory)
 
 router.get('/userOrderUpdate/:id/:product_id/:quantity',ifUser,orderController.userOrderUpdate)
