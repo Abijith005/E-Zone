@@ -51,14 +51,18 @@ module.exports = {
 
     admin_orderDetails: (req, res) => {
         return new Promise((resolve, reject) => {
-            userModel.find({orders:{$ne:null}},{name:1,orders:1}).lean().then((result)=>{
+            userModel.find({orders:{$ne:[]}},{name:1,orders:1}).lean().then((result)=>{
+                console.log(result);
                 for (const i of result) {
                     for (const j of i.orders) {
-                        categoryModel.findOne({_id:j.category},{category:1}).then((result)=>{
-                            j.category=result.category
+                        categoryModel.findOne({_id:j.category},{category:1}).then((data)=>{
+                            j.category=data.category
+                            j.orderStatus=='shipped'||j.orderStatus=='delivered'?j.shipped=true:j.shipped=false
+                            j.orderStatus=='delivered'?j.delivered=true:j.delivered=false
                         })
                     }
                 }
+                console.log(result[0].orders[0]);
                 res.render('order_Details',{result}) 
             }).catch(()=>{
                 res.send(error404)

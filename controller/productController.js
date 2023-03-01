@@ -5,7 +5,6 @@ const userModel = require('../models/userModel');
 const userService = require('../services/userService')
 
 
-
 module.exports = {
     user_productList: (req, res) => {
         let argument = req.params.id ? req.params.id : req.body.searchInput
@@ -60,12 +59,15 @@ module.exports = {
                         })
                     }
                     else {
-
-                        res.redirect('/cart')
+                        if (value==1) {
+                            res.json({message:'Reached limit,cant add more'})
+                        } else {
+                            res.json({message:'Reached limit,cant remove more'})
+                        }
                     }
                 }
                 else {
-                    res.redirect('/cart')
+                    res.json({message:'cant add more Stock Out' })
                 }
             }).catch(() => {
                 res.send(error404)
@@ -94,7 +96,7 @@ module.exports = {
     },
 
     filterProducts: async (req, res) => {
-        let products = await productModel.find({brandName:req.params.brand}).lean()
+        let products = await productModel.find({ brandName: req.params.brand }).lean()
         req.session.productList = products
         res.redirect('/')
     }

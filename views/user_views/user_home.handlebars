@@ -98,7 +98,9 @@
 								<a href="/getWhishList">
 									<i class="fa fa-heart-o"></i>
 									<span>Your Wishlist</span>
-									<div class="qty">2</div>
+									{{#if quantities.user_whishList}}
+									<div class="qty">{{quantities.user_whishList}}</div>
+									{{/if}}
 								</a>
 							</div>
 							<!-- /Wishlist -->
@@ -110,7 +112,9 @@
 								<a href="/cart" aria-expanded="true">
 									<i class="fa fa-shopping-cart"></i>
 									<span>Your Cart</span>
-									<div class="qty">3</div>
+									{{#if quantities.user_cart}}
+									<div class="qty">{{quantities.user_cart}}</div>
+									{{/if}}
 								</a>
 							</div>
 							<!-- /Cart -->
@@ -172,7 +176,7 @@
 				<ul class="main-nav nav navbar-nav flex-row">
 					<li class="active"><a href="/home">Home</a></li>
 					<li><a href="#">Hot Deals</a></li>
-					{{#each data}}
+					{{#each category}}
 					<li><a href="/productList/{{this._id}}">{{this.category}}</a></li>
 					{{/each}}
 					{{!-- <li><a href="/productList/Laptop">Laptops</a></li>

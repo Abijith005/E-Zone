@@ -13,7 +13,7 @@
   <!-- Latest compiled and minified CSS & JS -->
   <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="/styles/admin/product.css">
+  <link rel="stylesheet" href="/styles/admin/product.css">
 </head>
 
 <body style="margin: 1rem;">
@@ -98,37 +98,55 @@
           <td>{{this.orderDate}}</td>
           <td>{{this.quantity}}</td>
           <td>₹: {{this.totalAmount}} /-</td>
+          {{#if this.cancelStatus}}
+          <td class="text-danger">Cancelled</td>
+          {{else}}
           <td>{{this.orderStatus}}</td>
+          {{/if}}
           <td>
             <div id="container">
-                  <div id="menu-wrap">
-                    <input type="checkbox" class="toggler" />
-                    <div class="dots">
-                                            <div></div>
+              <div id="menu-wrap">
+                <input type="checkbox" class="toggler" />
+                <div class="dots">
+                  <div></div>
 
-                    </div>
-                    <div class="menu">
-                      <div>
-                        <ul>
-                          <li><a href="adminOrderUpdate/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}/delivered" class="link">Delivered</a></li>
-                          {{!-- {{#if this.flag}} --}}
-                          <li><a href="adminOrderUpdate/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}/cancel" class="link">Cancel Order</a></li>
-                          {{!-- {{/if}} --}}
-                        </ul>
-                      </div>
-                    </div>
+                </div>
+                <div class="menu">
+                  <div>
+                    <ul>
+                  <li>{{this.shipped}}</li>
+                      {{#unless this.shipped}}
+                      <li><a
+                          href="adminOrderUpdate/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}/shipped"
+                          class="link">Shipped</a></li>
+                      {{/unless}}
+                      {{#unless this.delivered}}
+                      <li><a
+                          href="adminOrderUpdate/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}/delivered"
+                          class="link">Delivered</a></li>
+                      {{else}}
+                      {{#unless this.cancelStatus}}
+                      <li><a
+                          href="adminOrderUpdate/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}/cancelled"
+                          class="link">cancel</a></li>
+                          {{/unless}}
+                          {{/unless}}
+                    </ul>
                   </div>
                 </div>
-            
-            
-            {{!-- <a href="adminCancelOrder/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}"><button class="btn btn-danger rounded-pill">cancel</button></a> --}}
-            </td>
+              </div>
+            </div>
+
+
+            {{!-- <a href="adminCancelOrder/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}"><button
+                class="btn btn-danger rounded-pill">cancel</button></a> --}}
+          </td>
           {{/each}}
         </tr>{{/each}}
       </tbody>
     </table>
   </div>
-  
+
 </body>
 
 </html>

@@ -19,14 +19,18 @@ module.exports = {
     user_home: async (req, res) => {
         let category = await categoryModel.find().lean()
         let products = req.session.productList
-        let data = await categoryModel.find().lean()
         let brands
-        if(products){
-             brands=data.find(e=>e._id==products[0].category)
+        let quantities = await userModel.findOne({ _id: req.session.userDetails?._id ?? null }, { user_cart: 1, user_whishList: 1, _id: 0 }).lean()
+        if (products) {
+            brands = category.find(e => e._id == products[0].category)
+        }
+        if(quantities){
+            quantities.user_whishList=quantities.user_whishList?.length??null
+            quantities.user_cart=quantities.user_cart?.length??null
         }
         let userName;
         req.session.userDetails ? userName = req.session.userDetails.name : userName = null
-        res.render('user_home', { userName, data, products, category,brands })
+        res.render('user_home', { userName, products, category, brands,quantities })
     },
 
     home: (req, res) => {
@@ -259,12 +263,11 @@ module.exports = {
                 cartDatas.totalAmount = sum
                 req.session.maxQuantityReached ? message = 'Reached limit,cant add more ' : message = false
                 res.render('user_cart', { cartDatas, message, checkOut })
-                req.session.maxQuantityReached = false
             })
 
         } catch (error) {
             res.send(error404)
-        } 
+        }
     },
 
     addAddressPage: (req, res) => {
@@ -341,7 +344,7 @@ module.exports = {
 
     addToWishList: (req, res) => {
         return new Promise((resolve, reject) => {
-            userModel.updateOne({ _id: req.session.userDetails._id }, { $addToSet: { user_whishList: {product_id: req.params.id } } }).then(() => {
+            userModel.updateOne({ _id: req.session.userDetails._id }, { $addToSet: { user_whishList: { product_id: req.params.id } } }).then(() => {
                 res.redirect('back')
             }).catch(() => {
                 res.send(error404)
