@@ -176,7 +176,9 @@ module.exports = {
             }
             else {
                 userModel.updateOne({ _id: req.params.user_id, orders: { $elemMatch: { order_id: req.params.id } } }, { $set: { 'orders.$.cancelStatus': true } }).then((result) => {
+                    userModel.updateOne({ _id: req.params.user_id, orders: { $elemMatch: { order_id: req.params.id } } }, { $set: { 'orders.$.orderStatus': 'cancelled' } }).then((result) => {
                     res.redirect('/admin/order_Details')
+                })
                 }).catch(() => {
                     res.send(error404)
                 })
