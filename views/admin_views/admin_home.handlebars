@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -27,7 +27,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/admin/admin_products"><button
-                class="btn btn-dark mx-2" style="font-size: larger;">PRODUCT</button></a>
+                class="btn btn-dark mx-2" style="font-size: larger;">PRODUCT DETAILS</button></a>
 
           </li>
           <li class="nav-item">
@@ -63,4 +63,210 @@
     crossorigin="anonymous"></script>
 </body>
 
+</html> --}}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg  bg-light" style=" background: linear-gradient(to bottom right, #ff3300 3%, #ffccff 100%);">
+  <div class="container">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <a class="navbar-brand" href="#">kk foods</a>
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0 mx-auto">
+        <li class="nav-item active ">
+        <a class="nav-link " href="/admin/admin_home" style="font-weight: bold;">Dash bord</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/admin/admin_products">PRODUCT DETAILS</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/user_Details">USER DETAILS</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="/admin/order_Details">ORDER DETAILS</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/category">CATEGORY DETAILS</a>
+      </li>
+       <li class="nav-item">
+          <a class="nav-link"  href="/admin/getCoupon">COUPON DETAILS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/offer_create">Offer Manage</a>
+        </li>
+    </ul>
+
+    <a href="/admin/log_Out" class="btn btn-outline-success btn-lg  ms-auto" >log out</a>
+  </div>
+  </div>
+</nav>
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 pt-4">
+        <div style="padding: 10px; box-shadow:0px 0px 10px 0px rgb(123, 123, 123);width:max-content  ">
+          <h4 style="font-family: cursive; font-weight: bold;">
+            <img style="width: 80px; height: 80px;" class="img-fluid" src="https://www.shutterstock.com/image-illustration/graph-sales-arrow-3d-illustration-260nw-274638584.jpg" alt=""> 
+            Total sales</h4>
+          <h2><i style="font-size: 25px; position: relative; top: -3px;"class="bi bi-currency-rupee" ></i>{{totalOrder}}</h2>
+        </div>
+      </div>
+      <div class="col-md-4 pt-4">
+        <div style="padding: 10px; box-shadow:0px 0px 10px 0px rgb(123, 123, 123);width:max-content  ">
+          <h4 style="font-family: cursive; font-weight: bold;">
+            <img style="width: 80px; height: 80px;" class="img-fluid" src="https://woocommerce.com/wp-content/uploads/2020/03/woocommerce-reports-1.png?w=950" alt=""> 
+            Total Orders</h4>
+          <h2><i style="font-size: 25px; position: relative; top: -3px;"class="bi bi-currency-rupee" ></i>{{orederCount}}</h2>
+        </div>
+      </div>
+       <div class="col-md-4 pt-4">
+        <div style="padding: 10px; box-shadow:0px 0px 10px 0px rgb(123, 123, 123);width:max-content  ">
+          <h4 style="font-family: cursive; font-weight: bold;">
+            <img style="width: 80px; height: 80px;" class="img-fluid" src="https://st2.depositphotos.com/1775462/9174/i/600/depositphotos_91743086-stock-photo-fast-food-plate-with-burger.jpg" alt=""> 
+            Total Products</h4>
+          <h2><i style="font-size: 25px; position: relative; top: -3px;"class="bi bi-currency-rupee" ></i>{{totalpro}}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+{{!-- #################################### --}}
+
+<div class="row mt-5">
+  <div class="container mt-5">
+  
+  </div>
+</div>
+<div class="container">
+<div id="chart"></div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+let revanue=[]
+  fetch('http://localhost:3000/admin/monthlyRevanue',{
+    method:"get",
+    headers:{
+      "Content-Type":"application/json"
+      }
+   }).then((data)=>data.json()).then((datass)=>{
+   
+   datass.forEach((val)=>{
+        revanue.push(val)
+   })
+   
+  
+   var options = {
+          series: [{
+          name: 'Total Revannue',
+          data:[revanue[0],revanue[1],revanue[2],revanue[3],revanue[4],revanue[5],revanue[6],revanue[7],revanue[8],revanue[9],revanue[10],revanue[11]]
+        }],
+          chart: {
+          height: 350,
+          type: 'bar',
+        },
+        plotOptions: {
+          bar: {
+            borderRadius: 10,
+            dataLabels: {
+              position: 'top', // top, center, bottom
+            },
+          }
+        },
+        dataLabels: {
+          enabled: true,
+          formatter: function (val) {
+            return "₹" + val;
+          },
+          offsetY: -20,
+          style: {
+            fontSize: '12px',
+            colors: ["#304758"]
+          }
+        },
+        
+        xaxis: {
+          categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+          position: 'top',
+          axisBorder: {
+            show: false
+          },
+          axisTicks: {
+            show: false
+          },
+          crosshairs: {
+            fill: {
+              type: 'gradient',
+              gradient: {
+                colorFrom: '#D8E3F0',
+                colorTo: '#BED1E6',
+                stops: [0, 100],
+                opacityFrom: 0.4,
+                opacityTo: 0.5,
+              }
+            }
+          },
+          tooltip: {
+            enabled: true,
+          }
+        },
+        yaxis: {
+          axisBorder: {
+            show: false
+          },
+          axisTicks: {
+            show: false,
+          },
+          labels: {
+            show: false,
+            formatter: function (val) {
+              
+              return "₹" + val;
+            }
+          }
+        
+        },
+        title: {
+          text: 'Monthly revenue of kk foods',
+          floating: true,
+          offsetY: 330,
+          align: 'center',
+          style: {
+            color: '#444'
+          }
+        }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+        })
+</script>
+
+<div class="container">
+  <a href="/admin/salesReport" class="btn btn-primary">get sales report</a>
+</div>
+<!-- continues the page content ... -->
+ 
+ 
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
 </html>
