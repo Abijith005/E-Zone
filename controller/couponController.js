@@ -6,8 +6,9 @@ module.exports = {
         return new Promise((resolve, reject) => {
             couponModel.find().lean().then((coupon) => {
                 for (const i of coupon) {
-                    i.startDate=(i.startDate).toLocaleString()
+                    i.startDate=(i.startDate).toDateString()
                     i.endDate=(i.endDate).toLocaleString()
+                    
                 }
                 let addCoupon;
                 let editCoupon;

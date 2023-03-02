@@ -170,6 +170,7 @@ module.exports = {
 
 
     },
+    
     user_submitForgotPasswordMail: (req, res) => {
         userService.doValidate(req.body).then((result) => {
             if (result) {

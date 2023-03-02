@@ -252,11 +252,11 @@
                         </li>
 
                         {{#each orderDatas}}
-                        <input type="hidden" name="products_id" value="{{this._id}}">
+                        {{!-- <input type="hidden" name="products_id" value="{{this._id}}">
                         <input type="hidden" name="productsName" value="{{this.product_name}}">
                         <input type="hidden" name="category" value="{{this.category}}">
                         <input type="hidden" name="price" value="{{this.price}}">
-                        <input type="hidden" name="quantity" value="{{this.quantity}}">
+                        <input type="hidden" name="quantity" value="{{this.quantity}}"> --}}
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                           {{this.product_name}}
                           <span>
@@ -333,11 +333,13 @@
   
 
    function submitCheckOut(){
+    console.log(new FormData())
  axios.post('/placeOrder',document.querySelector('#order'), {
   headers: {
     'Content-Type': 'application/json'
   }
-}).then((result)=>{
+})
+.then((result)=>{
 if(result.data.COD){
   window.location.href='/orderSuccess'
 }else{

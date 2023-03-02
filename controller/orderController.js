@@ -99,40 +99,56 @@ module.exports = {
     },
 
     placeOrder: (req, res) => {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             let data = req.body
-            console.log(data.products_id);
+            let { user_cart } = await userModel.findOne({ _id: req.session.userDetails._id }, { user_cart: 1, _id: 0 })
             if (req.body.paymentMethod == "Cash On Delivery") {
-                if (Array.isArray(data.products_id)) {
-                    for (let i = 0; i < data.products_id.length; i++) {
-                        console.log('added to data base');
-                        let amount = data.price[i] * data.quantity[i]
-                        orderId = createId()
-                        userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod: data.paymentMethod, product_id: data.products_id[i], productName: data.productsName[i], category: data.category[i], quantity: data.quantity[i], couponStatus: data.couponStatus, totalAmount: amount, orderDate: Date(), orderStatus: 'pending',cancelStatus:false } } }).then(() => {
-                            resolve()
-                        })
-                    }
-                }
-                else {
-                    let amount = data.price * data.quantity
-                    let orderId = createId()
-                    userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod: data.paymentMethod, product_id: data.products_id, productName: data.productsName, category: data.category, quantity: data.quantity, couponStatus: data.couponStatus, totalAmount: amount, orderDate: Date(), orderStatus: 'pending',cancelStatus:false  } } }).then((result) => {
-                        resolve()
-                    })
-                }
-                userModel.updateOne({ _id: req.session.userDetails._id }, { $unset: { user_cart: {} } }).then((result) => {
-                    
-                    res.json({ COD:true})
+            for (const i of user_cart) {
+                orderId = createId()
+                let product = await productModel.findOne({ _id: i.id })
+                console.log(product);
+                let amount = product.price * i.quantity
+                userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod: data.paymentMethod, product_id: product._id, productName: product.product_name, category: product.category, quantity: i.quantity, couponStatus: data.couponStatus, totalAmount: amount, orderDate: Date(), orderStatus: 'pending', cancelStatus: false } } }).then(() => {
                     resolve()
                 })
             }
-            else {
-                let orderId = createId()
-                userService.generateRazorPay(orderId, data.totalPrice).then((result) => {
-                    result.UPI = true
-                    res.json({ result })
-                })
-            }
+            userModel.updateOne({ _id: req.session.userDetails._id }, { $unset: { user_cart: {} } }).then((result) => {
+                res.json({ COD:true})
+                resolve()
+            })
+        }
+        else {
+            let orderId = createId()
+            userService.generateRazorPay(orderId, data.totalPrice).then((result) => {
+                result.UPI = true
+                res.json({ result })
+            })
+        }
+         // if (req.body.paymentMethod == "Cash On Delivery") {
+            //     if (Array.isArray(data.products_id)) {
+            //         for (let i = 0; i < data.products_id.length; i++) {
+            //             console.log('added to data base');
+            //             let amount = data.price[i] * data.quantity[i]
+            //             orderId = createId()
+            //             userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod: data.paymentMethod, product_id: data.products_id[i], productName: data.productsName[i], category: data.category[i], quantity: data.quantity[i], couponStatus: data.couponStatus, totalAmount: amount, orderDate: Date(), orderStatus: 'pending',cancelStatus:false } } }).then(() => {
+            //                 resolve()
+            //             })
+            //         }
+            //     }
+            //     else {
+            //         let amount = data.price * data.quantity
+            //         let orderId = createId()
+            //         userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod: data.paymentMethod, product_id: data.products_id, productName: data.productsName, category: data.category, quantity: data.quantity, couponStatus: data.couponStatus, totalAmount: amount, orderDate: Date(), orderStatus: 'pending',cancelStatus:false  } } }).then((result) => {
+            //             resolve()
+            //         })
+            //     }
+            //     userModel.updateOne({ _id: req.session.userDetails._id }, { $unset: { user_cart: {} } }).then((result) => {
+
+            //         res.json({ COD:true})
+            //         resolve()
+            //     })
+            // }
+            
         })
     },
 
@@ -143,7 +159,7 @@ module.exports = {
     adminOrderUpdate: (req, res) => {
         return new Promise((resolve, reject) => {
             if (req.params.update == 'shipped') {
-                userModel.updateOne({ _id: req.params.user_id, orders: { $elemMatch: { order_id:req.params.id } } }, { $set: { 'orders.$.orderStatus': 'shipped' } }).then(() => {
+                userModel.updateOne({ _id: req.params.user_id, orders: { $elemMatch: { order_id: req.params.id } } }, { $set: { 'orders.$.orderStatus': 'shipped' } }).then(() => {
                     productModel.updateOne({ _id: req.params.product_id }, { $inc: { stockQuantity: req.params.quantity } }).then((result) => {
                         res.redirect('/admin/order_Details')
                     })
@@ -151,14 +167,14 @@ module.exports = {
                     res.send(error404)
                 })
             }
-            else if(req.params.update == 'delivered') {
+            else if (req.params.update == 'delivered') {
                 userModel.updateOne({ _id: req.params.user_id, orders: { $elemMatch: { order_id: req.params.id } } }, { $set: { 'orders.$.orderStatus': 'delivered' } }).then((result) => {
                     res.redirect('/admin/order_Details')
                 }).catch(() => {
                     res.send(error404)
                 })
             }
-            else{
+            else {
                 userModel.updateOne({ _id: req.params.user_id, orders: { $elemMatch: { order_id: req.params.id } } }, { $set: { 'orders.$.cancelStatus': true } }).then((result) => {
                     res.redirect('/admin/order_Details')
                 }).catch(() => {

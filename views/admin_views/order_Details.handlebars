@@ -101,9 +101,11 @@
           {{#if this.cancelStatus}}
           <td class="text-danger">Cancelled</td>
           {{else}}
-          <td>{{this.orderStatus}}</td>
+          <td class="text-success">{{this.orderStatus}}</td>
           {{/if}}
           <td>
+
+            {{#unless this.cancelStatus}}
             <div id="container">
               <div id="menu-wrap">
                 <input type="checkbox" class="toggler" />
@@ -114,7 +116,6 @@
                 <div class="menu">
                   <div>
                     <ul>
-                  <li>{{this.shipped}}</li>
                       {{#unless this.shipped}}
                       <li><a
                           href="adminOrderUpdate/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}/shipped"
@@ -124,18 +125,18 @@
                       <li><a
                           href="adminOrderUpdate/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}/delivered"
                           class="link">Delivered</a></li>
-                      {{else}}
                       {{#unless this.cancelStatus}}
                       <li><a
                           href="adminOrderUpdate/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}/cancelled"
                           class="link">cancel</a></li>
-                          {{/unless}}
-                          {{/unless}}
+                      {{/unless}}
+                      {{/unless}}
                     </ul>
                   </div>
                 </div>
               </div>
             </div>
+            {{/unless}}
 
 
             {{!-- <a href="adminCancelOrder/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}"><button
