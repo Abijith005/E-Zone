@@ -6,14 +6,22 @@ module.exports = {
         return new Promise((resolve, reject) => {
             couponModel.find().lean().then((coupon) => {
                 for (const i of coupon) {
-                    i.startDate=(i.startDate).toDateString()
+                    i.startDate=(i.startDate).toLocaleString()
                     i.endDate=(i.endDate).toLocaleString()
-                    
+                    req.session.date=i.startDate
                 }
                 let addCoupon;
                 let editCoupon;
                 let couponExpire
-                req.session.editCoupon?editCoupon=req.session.editCoupon:editCoupon=null
+                if (req.session.editCoupon) {
+                    editCoupon=req.session.editCoupon
+                    editCoupon.startDate=new Date(editCoupon.startDate).toLocaleDateString()
+                    editCoupon.endDate=new Date(editCoupon.endDate).toDateString()
+                }
+                else{
+                    editCoupon=null
+                }
+                console.log(editCoupon);
                 req.session.couponAdd == true ? addCoupon = true : addCoupon = false
                 // req.session.couponExpire==true?couponExpire=true:couponExpire=false
                 res.render('coupon', { coupon,addCoupon,editCoupon})
@@ -63,9 +71,10 @@ module.exports = {
     },
 
     editCoupon:(req,res)=>{
-        
         return new Promise((resolve, reject) => {
-            couponModel.findByIdAndUpdate(req.params.id,{...req.body})
+            couponModel.findByIdAndUpdate(req.params.id,{...req.body}).then(()=>{
+                res.redirect('back')
+            })
         })
     }
 

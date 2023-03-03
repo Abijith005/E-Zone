@@ -9,14 +9,14 @@
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <title>Document</title>
   <link rel="stylesheet" href="/styles/admin/product.css">
-{{#if singleOrderDetails }}
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <link rel="stylesheet" href="/css/singleProduct.css">
-{{/if}}
+  {{#if singleOrderDetails }}
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <link rel="stylesheet" href="/css/singleProduct.css">
+  {{/if}}
 
 </head>
 
@@ -125,9 +125,10 @@
 
   </div>
   </td>
-  <td><button onclick="window.location.href='viewOrder/{{this.order_id}}'" class="btn btn-info text-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              View
-            </button></td>
+  <td><button onclick="window.location.href='viewOrder/{{this.order_id}}'" class="btn btn-info text-white" type="button"
+      data-bs-toggle="dropdown" aria-expanded="false">
+      View
+    </button></td>
   {{/each}}
   </tr>{{/each}}
   </tbody>
@@ -135,62 +136,50 @@
   </div>
 
   {{!--view Order start--}}
-{{else}}
-    <div class="container">
-        <div class="card" style="height: 90vh;">
-            <div class="container-fliud">
-                <div class="wrapper row">
-                    <div class="preview col-md-6">
-                        <div class="wrap-pic-w pos-relative" id="picZoom"
-                            style="z-index: 100; margin-bottom: 10rem; width: 80%;">
-                            <img id="firstImage" src="/images/{{result.image.[0].filename}}" />
-                        </div>
-                        <div class="preview-pic tab-content">
-
-                            <div class="tab-pane"><img src="http://placekitten.com/400/252" /></div>
-                            <div class="tab-pane" id="pic-3"><img src="http://placekitten.com/400/252" /></div>
-                            <div class="tab-pane" id="pic-4"><img src="http://placekitten.com/400/252" /></div>
-                            <div class="tab-pane" id="pic-5"><img src="http://placekitten.com/400/252" /></div>
-                        </div>
-                        <ul class="preview-thumbnail nav nav-tabs">
-                            <li class="active"><a data-target="#pic-1" data-toggle="tab"><img
-                                        onclick="changeImage(this.id)" id="pic-2"
-                                        src="http://placekitten.com/200/126" /></a></li>
-                            <li><a data-target="#pic-2" data-toggle="tab"><img
-                                        src="http://placekitten.com/200/126" /></a></li>
-                            <li><a data-target="#pic-3" data-toggle="tab"><img
-                                        src="http://placekitten.com/200/126" /></a></li>
-                            <li><a data-target="#pic-4" data-toggle="tab"><img
-                                        src="http://placekitten.com/200/126" /></a></li>
-                        </ul>
-
-                    </div>
-                    <div class="details col-md-6" style="z-index: 0;">
-                        <h3 class="product-title">{{result.product_name}}</h3>
-                        <div class="rating">
-                            <div class="stars">
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                            </div>
-                            <span class="review-no">41 reviews</span>
-                        </div>
-                        <p class="product-description">{{result.product_Details}}</p>
-                        <h4 class="price">current price: <span>₹ {{result.price}}</span></h4>
-                        <div class="action">
-                            <a href="/add_to_cart/{{result._id}}" class="add-to-cart btn btn-default">add to cart</a>
-                            <button class="like btn btn-default" type="button"><span
-                                    class="fa fa-heart"></span></button>
-                        </div>
-                    </div>
-                </div>
+  {{else}}
+  <div class="text-center">
+    <h1 class="product-title"><u>Order Details</u></h1>
+  </div>
+  <div class="container">
+    <div class="card" style="height: 90vh;">
+      <div class="container-fliud">
+        <div class="wrapper row">
+          <div class="preview col-md-6">
+            <div class="wrap-pic-w pos-relative" id="picZoom" style="z-index: 100; margin-bottom: 10rem; width: 80%;">
+              <img id="firstImage" src="/images/{{singleOrderDetails.image.[0].filename}}" />
             </div>
+            <div class="preview-pic tab-content">
+            </div>
+          </div>
+          <div class="details col-md-6" style="z-index: 0;">
+            <p class="product-description"><b>Product Name&nbsp;&nbsp;&nbsp;:
+                {{singleOrderDetails.productName}}</b></p>
+                 <p class="product-description"><b>Brand Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                {{singleOrderDetails.brandName}}</b></p>
+            <p class="price">current price&nbsp;: <span>₹ {{singleOrderDetails.price}} /-</span></p>
+            <p class="product-description">
+              <b>Quantity&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                {{singleOrderDetails.quantity}}</b>
+            </p>
+            <div class="d-flex">
+              <p class="product-description"><b>DeliveryAddress: </b> </p>
+              <p><b>&nbsp;&nbsp; {{singleOrderDetails.deliveryAddress}}</b></p>
+            </div>
+            <p class="product-description"><b>Total Amount&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: ₹
+                {{singleOrderDetails.totalAmount}} /-</b></p>
+            <p class="product-description"><b>Order Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                {{singleOrderDetails.orderDate}}</b></p>
+            <p class="product-description"><b>Order Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                {{singleOrderDetails.orderStatus}}</b></p>
+           
+          </div>
+    <div class="text-end"><a href="order_Details" class="btn btn-warning ">back</a></div>
         </div>
+      </div>
     </div>
-    {{/unless}}
-{{!-- view order end--}}
+  </div>
+  {{/unless}}
+  {{!-- view order end--}}
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
     crossorigin="anonymous"></script>

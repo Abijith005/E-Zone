@@ -80,11 +80,11 @@
                         <div class="form-row">
                             <div class="form-group form-icon">
                                 <label for="birth_date">Start Date :</label>
-                                <input type="date" class="form-input" name="startDate"  placeholder="MM-DD-YYYY" value="{{editCoupon.startDate}}" />
+                                <input type="date" class="form-input" name="startDate"  placeholder="MM/DD/YYYY" value="{{editCoupon.startDate}}" />
                             </div>
                             <div class="form-group form-icon">
                                 <label for="birth_date">End Date :</label>
-                                <input type="date" class="form-input" name="endDate"  placeholder="MM-DD-YYYY" value="{{editCoupon.endDate}}" />
+                                <input type="date" class="form-input" name="endDate"  placeholder="MM/DD/YYYY" value="{{editCoupon.endDate}}" />
                             </div> 
                         </div>
                         <div class="form-row">
@@ -199,7 +199,7 @@
                                                 </li>
                                                 {{#if this.couponStatus}}
                                                 <li><a href="getEditCoupon/{{this._id}}/{{this.couponStatus}}"
-                                                        class="link">End</a></li>
+                                                        class="link">Expire</a></li>
                                                 {{/if}}
                                             </ul>
                                         </div>

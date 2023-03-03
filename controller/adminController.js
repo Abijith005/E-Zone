@@ -51,7 +51,7 @@ module.exports = {
 
     admin_orderDetails: (req, res) => {
         return new Promise((resolve, reject) => {
-            userModel.find({orders:{$ne:[]}},{name:1,orders:1}).lean().then((result)=>{
+            userModel.find({orders:{$ne:[]}},{name:1,orders:1}).lean().then(async(result)=>{
                 let date=result[0].orders[0].orderDate
                 for (const i of result) {
                     for (const j of i.orders) {
@@ -63,11 +63,22 @@ module.exports = {
                         })
                     }
                 }
-               let singleOrderDetails=req.session.singleOrderDetails??null
-                res.render('order_Details',{result,singleOrderDetails}) 
-            }).catch(()=>{
-                res.send(error404)
+                let singleOrderDetails=null
+                if (req.session.singleOrderDetails) {
+                    singleOrderDetails=req.session.singleOrderDetails
+                    let product=await productModel.findOne({_id:singleOrderDetails.product_id})
+                    singleOrderDetails.brandName=product.brandName;
+                    singleOrderDetails.productDetails=product.product_Details;
+                    singleOrderDetails.price=product.price;
+                    singleOrderDetails.image=product.image;
+                }
+               console.log(singleOrderDetails);
+               res.render('order_Details',{result,singleOrderDetails}) 
+                req.session.singleOrderDetails=null
             })
+            // .catch(()=>{
+            //     res.send(error404)
+            // }) 
         })
     },
 
