@@ -52,20 +52,30 @@ module.exports = {
     admin_orderDetails: (req, res) => {
         return new Promise((resolve, reject) => {
             userModel.find({orders:{$ne:[]}},{name:1,orders:1}).lean().then((result)=>{
+                let date=result[0].orders[0].orderDate
                 for (const i of result) {
                     for (const j of i.orders) {
                         categoryModel.findOne({_id:j.category},{category:1}).then((data)=>{
+                            j.orderDate=j.orderDate.toLocaleString()
                             j.category=data.category
                             j.orderStatus=='shipped'||j.orderStatus=='delivered'?j.shipped=true:j.shipped=false
                             j.orderStatus=='delivered'?j.delivered=true:j.delivered=false
                         })
                     }
                 }
-                res.render('order_Details',{result}) 
+               let singleOrderDetails=req.session.singleOrderDetails??null
+                res.render('order_Details',{result,singleOrderDetails}) 
             }).catch(()=>{
                 res.send(error404)
             })
         })
+    },
+
+    viewOrder:async(req,res)=>{
+let user=await userModel.findOne({orders:{$elemMatch:{order_id:req.params.id}}})
+let singleOrderDetails= await user.orders.find(e=>e.order_id==req.params.id)
+req.session.singleOrderDetails=singleOrderDetails
+res.redirect('/admin/order_Details')
     },
 
     admin_userBlock: (req, res) => {

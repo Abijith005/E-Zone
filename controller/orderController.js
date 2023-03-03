@@ -106,9 +106,8 @@ module.exports = {
             for (const i of user_cart) {
                 orderId = createId()
                 let product = await productModel.findOne({ _id: i.id })
-                console.log(product);
                 let amount = product.price * i.quantity
-                userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod: data.paymentMethod, product_id: product._id, productName: product.product_name, category: product.category, quantity: i.quantity, couponStatus: data.couponStatus, totalAmount: amount, orderDate: Date(), orderStatus: 'pending', cancelStatus: false } } }).then(() => {
+                userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod: data.paymentMethod, product_id: product._id, productName: product.product_name, category: product.category, quantity: i.quantity, couponStatus: data.couponStatus, totalAmount: amount, orderDate:new Date(), orderStatus: 'pending', cancelStatus: false } } }).then(() => {
                     resolve()
                 })
             }

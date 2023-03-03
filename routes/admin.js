@@ -21,6 +21,8 @@ router.get('/user_Details',adminSession.ifAdmin,adminController.admin_userDetail
  
 router.get('/order_Details',adminSession.ifAdmin,adminController.admin_orderDetails)
 
+router.get('/viewOrder/:id',ifAdmin,adminController.viewOrder)
+
 router.get('/user_Block/:id',adminSession.ifAdmin,adminController.admin_userBlock)
 
 router.get('/user_Unblock/:id',adminSession.ifAdmin,adminController.admin_userUnblock)

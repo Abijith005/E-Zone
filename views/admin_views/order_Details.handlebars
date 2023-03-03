@@ -9,6 +9,15 @@
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <title>Document</title>
   <link rel="stylesheet" href="/styles/admin/product.css">
+{{#if singleOrderDetails }}
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="/css/singleProduct.css">
+{{/if}}
+
 </head>
 
 <body>
@@ -50,13 +59,7 @@
       </div>
     </div>
   </nav>
-  <style>
-    tr,
-    th,
-    td {
-      color: rgb(8, 8, 8);
-    }
-  </style>
+  {{#unless singleOrderDetails}}
   <div class="container">
     <table class="table">
       <thead>
@@ -68,8 +71,8 @@
           <th scope="col">Order Date</th>
           <th scope="col">Quantity</th>
           <th scope="col">Total Amount</th>
-          <th scope="col">Order Status</th>
-          <th scope="col">Options</th>
+          <th scope="col">Order Status/Change Status</th>
+          <th scope="col">View Order</th>
         </tr>
       </thead>
       <tbody>
@@ -83,13 +86,7 @@
           <td>{{this.orderDate}}</td>
           <td>{{this.quantity}}</td>
           <td>₹: {{this.totalAmount}} /-</td>
-          {{#if this.cancelStatus}}
-          <td class="text-danger">Cancelled</td>
-          {{else}}
-          <td class="text-success">{{this.orderStatus}}</td>
-          {{/if}}
           <td>
-            
             {{#if this.cancelStatus }}
             <button class="btn btn-danger" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               Cancelled
@@ -127,17 +124,73 @@
             {{/if}}
 
   </div>
-
-
-
   </td>
-
+  <td><button onclick="window.location.href='viewOrder/{{this.order_id}}'" class="btn btn-info text-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              View
+            </button></td>
   {{/each}}
   </tr>{{/each}}
   </tbody>
   </table>
   </div>
 
+  {{!--view Order start--}}
+{{else}}
+    <div class="container">
+        <div class="card" style="height: 90vh;">
+            <div class="container-fliud">
+                <div class="wrapper row">
+                    <div class="preview col-md-6">
+                        <div class="wrap-pic-w pos-relative" id="picZoom"
+                            style="z-index: 100; margin-bottom: 10rem; width: 80%;">
+                            <img id="firstImage" src="/images/{{result.image.[0].filename}}" />
+                        </div>
+                        <div class="preview-pic tab-content">
+
+                            <div class="tab-pane"><img src="http://placekitten.com/400/252" /></div>
+                            <div class="tab-pane" id="pic-3"><img src="http://placekitten.com/400/252" /></div>
+                            <div class="tab-pane" id="pic-4"><img src="http://placekitten.com/400/252" /></div>
+                            <div class="tab-pane" id="pic-5"><img src="http://placekitten.com/400/252" /></div>
+                        </div>
+                        <ul class="preview-thumbnail nav nav-tabs">
+                            <li class="active"><a data-target="#pic-1" data-toggle="tab"><img
+                                        onclick="changeImage(this.id)" id="pic-2"
+                                        src="http://placekitten.com/200/126" /></a></li>
+                            <li><a data-target="#pic-2" data-toggle="tab"><img
+                                        src="http://placekitten.com/200/126" /></a></li>
+                            <li><a data-target="#pic-3" data-toggle="tab"><img
+                                        src="http://placekitten.com/200/126" /></a></li>
+                            <li><a data-target="#pic-4" data-toggle="tab"><img
+                                        src="http://placekitten.com/200/126" /></a></li>
+                        </ul>
+
+                    </div>
+                    <div class="details col-md-6" style="z-index: 0;">
+                        <h3 class="product-title">{{result.product_name}}</h3>
+                        <div class="rating">
+                            <div class="stars">
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                            </div>
+                            <span class="review-no">41 reviews</span>
+                        </div>
+                        <p class="product-description">{{result.product_Details}}</p>
+                        <h4 class="price">current price: <span>₹ {{result.price}}</span></h4>
+                        <div class="action">
+                            <a href="/add_to_cart/{{result._id}}" class="add-to-cart btn btn-default">add to cart</a>
+                            <button class="like btn btn-default" type="button"><span
+                                    class="fa fa-heart"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/unless}}
+{{!-- view order end--}}
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
     crossorigin="anonymous"></script>
