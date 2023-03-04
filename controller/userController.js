@@ -24,13 +24,13 @@ module.exports = {
         if (products) {
             brands = category.find(e => e._id == products[0].category)
         }
-        if(quantities){
-            quantities.user_whishList=quantities.user_whishList?.length??null
-            quantities.user_cart=quantities.user_cart?.length??null
+        if (quantities) {
+            quantities.user_whishList = quantities.user_whishList?.length ?? null
+            quantities.user_cart = quantities.user_cart?.length ?? null
         }
         let userName;
         req.session.userDetails ? userName = req.session.userDetails.name : userName = null
-        res.render('user_home', { userName, products, category, brands,quantities })
+        res.render('user_home', { userName, products, category, brands, quantities })
     },
 
     home: (req, res) => {
@@ -170,7 +170,7 @@ module.exports = {
 
 
     },
-    
+
     user_submitForgotPasswordMail: (req, res) => {
         userService.doValidate(req.body).then((result) => {
             if (result) {
@@ -346,8 +346,8 @@ module.exports = {
     addToWishList: (req, res) => {
         return new Promise((resolve, reject) => {
             userModel.updateOne({ _id: req.session.userDetails._id }, { $addToSet: { user_whishList: { product_id: req.params.id } } }).then((result) => {
-                result.modifiedCount?success=true:success=false;
-                res.json({success})
+                result.modifiedCount ? success = true : success = false;
+                res.json({ success })
             }).catch(() => {
                 res.send(error404)
             })
@@ -374,7 +374,7 @@ module.exports = {
     removeFromWishList: (req, res) => {
         return new Promise((resolve, reject) => {
             userModel.updateOne({ _id: req.session.userDetails._id }, { $pull: { user_whishList: { product_id: req.params.id } } }).then(() => {
-                res.redirect('back')
+                res.json({ success: true })
             }).catch(() => {
                 res.send(error404)
             })

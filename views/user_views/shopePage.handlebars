@@ -376,7 +376,7 @@
 				if (result.data.success) {
 					let whishListButtonDiv = document.getElementById('whishListButtonDiv'+id)
 					whishListButtonDiv.innerHTML=''
-					whishListButtonDiv.innerHTML = `<button onclick="removeFromWhishList('${id}')" class="add-to-wishlist"><i style="color: red;" class="fa fa-heart" aria-hidden="true"></i></i></span></button> <button onclick="window.location.href='/singleProductPage/${id}'"class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quickview</span></button>`
+					whishListButtonDiv.innerHTML = `<button onclick="removeFromWhishList('${id}')" class="add-to-wishlist"><i style="color: red;" class="fa fa-heart" aria-hidden="true"></i></span></button> <button onclick="window.location.href='/singleProductPage/${id}'"class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quickview</span></button>`
 					let whishListQuantity = document.getElementById('whishListQuantity')
 					whishListQuantity.textContent = Number(whishListQuantity.textContent) + 1
 
@@ -385,12 +385,11 @@
 		}
 
 		function removeFromWhishList(id){
-			console.log('haiiiiiiiiiii')
 			axios.get('/removeFromWishList/'+id).then((result) => {
 				if (result.data.success) {
 					let whishListButtonDiv = document.getElementById('whishListButtonDiv'+id)
 					whishListButtonDiv.innerHTML=''
-				whishListButtonDiv.innerHTML=`<button onclick="addToWhishList('${id}')" class="add-to-wishlist"><iclass="fa fa-heart-o"></iclass=><span class="tooltipp">add towishlist</span></button> <button onclick="window.location.href='/singleProductPage/${id}'"class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quickview</span></button>`
+				whishListButtonDiv.innerHTML=`<button onclick="addToWhishList('${id}')" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add towishlist</span></button> <button onclick="window.location.href='/singleProductPage/${id}'"class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quickview</span></button>`
 					let whishListQuantity = document.getElementById('whishListQuantity')
 					whishListQuantity.textContent = Number(whishListQuantity.textContent)-1
 
@@ -398,12 +397,13 @@
 			})
 		}
 
-
 		document.getElementById('sort').addEventListener('change', (e) => {
-			window.location.href = `/sortProducts/${e.target.value}`
+			console.log('haiiiiiiiiiii')
+			/*window.location.href = `/sortProducts/${e.target.value}`*/
 		})
 		document.getElementById('filter').addEventListener('change', (e) => {
-			window.location.href = `/filterProducts/${e.target.value}`
+			console.log('hooiiiiiiiiiiiiiiiiiiiiiii')
+		/*	window.location.href = `/filterProducts/${e.target.value}`*/
 		})
 		function changeCategory(id) {
 			axios.get('/productList/' + id).then((response) => {

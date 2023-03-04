@@ -7,10 +7,10 @@ const userService = require('../services/userService')
 
 module.exports = {
     user_productList: (req, res) => {
-        let argument = req.params.id ? req.params.id : req.body.searchInput
-        // let id=req.session.userDetails?._id??null
+         let argument = req.params.id ? req.params.id : req.body.searchInput
+         req.session.category=req.params.id
+         req.session.searchInput=req.body.searchInput
         userService.user_searchProduct(argument).then((productData) => {
-            req.session.productList = productData
             res.json(productData)
         }).catch(() => {
             res.send('hello')
@@ -19,8 +19,9 @@ module.exports = {
 
     getShopPage: async (req, res) => {
         try {
+            req.session.argument=null
             let category = await categoryModel.find().lean()
-            let products = req.session.productList??null
+            let products 
             let brands
             let quantities = await userModel.findOne({ _id: req.session.userDetails?._id ?? null }, { user_cart: 1, user_whishList: 1, _id: 0 }).lean()
             if (products) {
