@@ -72,7 +72,6 @@ module.exports = {
                     singleOrderDetails.price=product.price;
                     singleOrderDetails.image=product.image;
                 }
-               console.log(singleOrderDetails);
                res.render('order_Details',{result,singleOrderDetails}) 
                 req.session.singleOrderDetails=null
             })

@@ -11,7 +11,7 @@ module.exports = {
         // let id=req.session.userDetails?._id??null
         userService.user_searchProduct(argument).then((productData) => {
             req.session.productList = productData
-            res.redirect('/getShopPage')
+            res.json(productData)
         }).catch(() => {
             res.send('hello')
         })
@@ -34,8 +34,19 @@ module.exports = {
             req.session.userDetails ? userName = req.session.userDetails.name : userName = null
             if(products==null){
                products=await productModel.find().lean()
-            }            
-            res.render('shopePage', { products, category, brands, quantities })
+            }          
+            if(req.session.userDetails){
+                let whishList= await userModel.findOne({_id:req.session.userDetails._id},{user_whishList:1,_id:0}).lean()
+               let productId=whishList.user_whishList.map(item=>{
+                return item.product_id
+               })
+               for (const i of products) {
+                   if(productId.includes(i._id.toString())){
+                       i.whishList=true
+                   }
+                }
+            }  
+            res.render('shopePage', {userName, products, category, brands, quantities })
         } catch (error) {
 
         }
@@ -51,8 +62,8 @@ module.exports = {
     },
 
     product_to_cart: (req, res) => {
-        userService.user_add_to_cart(req.session.userDetails._id, req.params.id).then(() => {
-            res.json({ success: true })
+        userService.user_add_to_cart(req.session.userDetails._id, req.params.id).then((result) => {
+            res.json(result)
         }).catch(() => {
             res.send(error404)
         })

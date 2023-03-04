@@ -345,8 +345,9 @@ module.exports = {
 
     addToWishList: (req, res) => {
         return new Promise((resolve, reject) => {
-            userModel.updateOne({ _id: req.session.userDetails._id }, { $addToSet: { user_whishList: { product_id: req.params.id } } }).then(() => {
-                res.redirect('back')
+            userModel.updateOne({ _id: req.session.userDetails._id }, { $addToSet: { user_whishList: { product_id: req.params.id } } }).then((result) => {
+                result.modifiedCount?success=true:success=false;
+                res.json({success})
             }).catch(() => {
                 res.send(error404)
             })

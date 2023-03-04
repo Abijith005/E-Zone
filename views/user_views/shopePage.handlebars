@@ -98,9 +98,8 @@
 								<a href="/getWhishList">
 									<i class="fa fa-heart-o"></i>
 									<span>Your Wishlist</span>
-									{{#if quantities.user_whishList}}
-									<div class="qty">{{quantities.user_whishList}}</div>
-									{{/if}}
+									<div id="whishListQuantity" class="qty">{{quantities.user_whishList}}</div>
+
 								</a>
 							</div>
 							<!-- /Wishlist -->
@@ -112,9 +111,7 @@
 								<a href="/cart" aria-expanded="true">
 									<i class="fa fa-shopping-cart"></i>
 									<span>Your Cart</span>
-									{{#if quantities.user_cart}}
-									<div class="qty">{{quantities.user_cart}}</div>
-									{{/if}}
+									<div id="cartQuantity" class="qty">{{quantities.user_cart}}</div>
 								</a>
 							</div>
 							<!-- /Cart -->
@@ -170,14 +167,14 @@
 		<!-- container -->
 		<div class="container">
 			<!-- responsive-nav -->
-			
+
 			<div id="responsive-nav">
 				<!-- NAV -->
 				<ul class="main-nav nav navbar-nav flex-row">
 					<li class="active"><a href="/home">Home</a></li>
 					<li><a href="/getShopPage">All Products</a></li>
 					{{#each category}}
-					<li><a href="/productList/{{this._id}}">{{this.category}}</a></li>
+					<li><a onclick="changeCategory('{{this._id}}')">{{this.category}}</a></li>
 					{{/each}}
 				</ul>
 				<!-- /NAV -->
@@ -186,29 +183,22 @@
 		</div>
 		<!-- /container -->
 	</nav>
-	<!-- /NAVIGATION -->
-
-	<!-- SECTION -->
-{{#unless products}}	
-	<!-- SECTION -->
-	
-{{else}}
-<div id="store" class="col-md-12">
+	<div id="store" class="col-md-12">
 		<!-- store top filter -->
-		
+
 		<div class="store-filter clearfix">
 			<div class="store-sort">
 				<label>
-					 <select class="input-select" id="sort" >
-						<option  value="" selected>Sort by price</option>
-						<option  value="1">Low To High</option>
+					<select class="input-select" id="sort">
+						<option value="" selected>Sort by price</option>
+						<option value="1">Low To High</option>
 						<option value="-1">High To Low</option>
 					</select>
 				</label>
 
 				<label>
 					<select class="input-select" id="filter">
-						<option  value="" selected>Filter by Price</option>
+						<option value="" selected>Filter by Price</option>
 						{{#each brands.brandName}}
 						<option value="{{this}}">{{this}}</option>
 						{{/each}}
@@ -224,50 +214,48 @@
 	</div>
 	<!-- store products -->
 	<div class="container">
-	<div class="row">
-		<!-- product -->
-		{{#each products}}
-		<div class="col-md-4 col-xs-6">
-			<div class="product">
-				<a href="/singleProductPage/{{this._id}}">
-					<div class="product-img">
-						<img style="height:150px; object-fit:contain" src="/images/{{this.image.[0].filename}}" alt="">
+		<div id="newProducts" class="row">
+			{{#each products}}
+			<div class="col-md-4 col-xs-6">
+				<div class="product">
+					<a href="/singleProductPage/{{this._id}}">
+						<div class="product-img">
+							<img style="height:150px; object-fit:contain" src="/images/{{this.image.[0].filename}}"
+								alt="">
+						</div>
+					</a>
+					<div class="product-body" style="height: 14rem;">
+						<p class="product-category">{{this.category}}</p>
+						<h3 class="product-name"><a href="#">{{this.product_name}}</a></h3>
+						<h3 class="product-name">{{this.brandName}}</h3>
+						<h4 class="product-price">₹{{this.price}}/- <del
+								class="product-old-price">₹{{this.price}}/-</del>
+						</h4>
+						<div  class="product-btns" id="whishListButtonDiv{{this._id}}">
+							{{#unless this.whishList}}
+								<button onclick="addToWhishList('{{this._id}}')" class="add-to-wishlist"><i
+										class="fa fa-heart-o"></i><span class="tooltipp">add to
+										wishlist</span></button>
+							{{else}}
+							<button onclick="removeFromWhishList('{{this._id}}')" class="add-to-wishlist"><i
+									style="color: red;" class="fa fa-heart" aria-hidden="true"></i></i></span></button>
+							{{/unless}}
+							<button onclick="window.location.href='/singleProductPage/{{this._id}}'"
+								class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick
+									view</span></button>
+						</div>
 					</div>
-				</a>
-				<div class="product-body" style="height: 14rem;">
-					<p class="product-category">{{this.category}}</p>
-					<h3 class="product-name"><a href="#">{{this.product_name}}</a></h3>
-					<h3 class="product-name">{{this.brandName}}</h3>
-					<h4 class="product-price">₹{{this.price}}/- <del class="product-old-price">₹{{this.price}}/-</del>
-					</h4>
-					<div class="product-btns">
-						{{#unless wishlist}}
-						<button onclick="window.location.href='/addToWhishList/{{this._id}}'" class="add-to-wishlist"><i
-								class="fa fa-heart-o"></i><span class="tooltipp">add to
-								wishlist</span></button>
-						{{else}}
-						<button class="add-to-wishlist"><i style="color: red;" class="fa fa-heart"
-								aria-hidden="true"></i></i></span></button>
-						{{/unless}}
-						<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick
-								view</span></button>
-					</div>
-				</div>
-				<div class="add-to-cart text-center">
-				
+					<div class="add-to-cart text-center">
+
 						<button onclick="addToCart('{{this._id}}')" class="add-to-cart-btn mt-4 mb-2"><i
 								class="fa fa-shopping-cart"></i> add to
 							cart</button>
-				
+					</div>
 				</div>
 			</div>
+			{{/each}}
 		</div>
-		{{/each}}
-
 	</div>
-	</div>
-
-{{/unless}}
 	<!-- FOOTER -->
 	<footer id="footer">
 		<!-- top footer -->
@@ -368,22 +356,105 @@
 	<!-- /FOOTER -->
 
 	<!-- jQuery Plugins -->
-	
-	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script>
-	function addToCart(id){
-		axios.get('/add_to_cart/'+id).then(()=>{
-		})
-	}
-	document.getElementById('sort').addEventListener('change',(e)=>{
-		 window.location.href=`/sortProducts/${e.target.value}`
-	})
-		 document.getElementById('filter').addEventListener('',(e)=>{
-			window.location.href=`/filterProducts/${e.target.value}`
-		 })
-</script>
 
-<script src="/js/jquery.min.js"></script>
+
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script>
+		function addToCart(id) {
+			axios.get('/add_to_cart/' + id).then((result) => {
+				if (result.data.success) {
+					let cartQuantiy = document.getElementById('cartQuantity')
+					cartQuantiy.textContent = Number(cartQuantiy.textContent) + 1
+				}
+				else {
+
+				}
+			})
+		}
+		function addToWhishList(id) {
+			axios.get('/addToWhishList/' + id).then((result) => {
+				if (result.data.success) {
+					let whishListButtonDiv = document.getElementById('whishListButtonDiv'+id)
+					whishListButtonDiv.innerHTML=''
+					whishListButtonDiv.innerHTML = `<button onclick="removeFromWhishList('${id}')" class="add-to-wishlist"><i style="color: red;" class="fa fa-heart" aria-hidden="true"></i></i></span></button> <button onclick="window.location.href='/singleProductPage/${id}'"class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quickview</span></button>`
+					let whishListQuantity = document.getElementById('whishListQuantity')
+					whishListQuantity.textContent = Number(whishListQuantity.textContent) + 1
+
+				}
+			})
+		}
+
+		function removeFromWhishList(id){
+			console.log('haiiiiiiiiiii')
+			axios.get('/removeFromWishList/'+id).then((result) => {
+				if (result.data.success) {
+					let whishListButtonDiv = document.getElementById('whishListButtonDiv'+id)
+					whishListButtonDiv.innerHTML=''
+				whishListButtonDiv.innerHTML=`<button onclick="addToWhishList('${id}')" class="add-to-wishlist"><iclass="fa fa-heart-o"></iclass=><span class="tooltipp">add towishlist</span></button> <button onclick="window.location.href='/singleProductPage/${id}'"class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quickview</span></button>`
+					let whishListQuantity = document.getElementById('whishListQuantity')
+					whishListQuantity.textContent = Number(whishListQuantity.textContent)-1
+
+				}
+			})
+		}
+
+
+		document.getElementById('sort').addEventListener('change', (e) => {
+			window.location.href = `/sortProducts/${e.target.value}`
+		})
+		document.getElementById('filter').addEventListener('change', (e) => {
+			window.location.href = `/filterProducts/${e.target.value}`
+		})
+		function changeCategory(id) {
+			axios.get('/productList/' + id).then((response) => {
+				let productsDiv = document.getElementById('newProducts')
+				productsDiv.innerHTML = ""
+				response.data.forEach(item => {
+					let div = document.createElement('div')
+					div.setAttribute('class', "col-md-4 col-xs-6")
+					div.innerHTML = `<div class="product">
+					<a href="/singleProductPage/${item._id}">
+						<div class="product-img">
+							<img style="height:150px; object-fit:contain" src="/images/${item.image[0].filename}"
+								alt="">
+						</div>
+					</a>
+					<div class="product-body" style="height: 14rem;">
+						<p class="product-category">${item.category}</p>
+						<h3 class="product-name"><a href="#">{{this.product_name}}</a></h3>
+						<h3 class="product-name">${item.brandName}</h3>
+						<h4 class="product-price">₹${item.price}/- <del
+								class="product-old-price">₹${item.price}/-</del>
+						</h4>
+						
+						<div class="product-btns">
+							<button  onclick="addToWhishList(${item._id})"
+								class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to
+									wishlist</span></button>
+							<button class="quick-view" onclick="window.location.href='/singleProductPage/${item._id}'" ><i class="fa fa-eye"></i><span class="tooltipp">quick
+									view</span></button>
+						</div>
+					</div>
+					<div class="add-to-cart text-center">
+
+						<button onclick="addToCart('${item._id}')" class="add-to-cart-btn mt-4 mb-2"><i
+								class="fa fa-shopping-cart"></i> add to
+							cart</button>
+					</div>
+
+				</div>`
+					productsDiv.appendChild(div)
+
+				})
+
+			})
+		}
+
+
+
+	</script>
+
+	<script src="/js/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/slick.min.js"></script>
 	<script src="/js/nouislider.min.js"></script>

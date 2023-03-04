@@ -16,9 +16,6 @@ module.exports = {
                 let couponExpire
                 if (req.session.editCoupon) {
                     editCoupon = req.session.editCoupon
-                    // editCoupon.startDate=new Date(editCoupon.startDate).toLocaleDateString()
-                    // editCoupon.endDate=new Date(editCoupon.endDate).toDateString()
-                    console.log(editCoupon.startDate);
                     editCoupon.startDate = moment(editCoupon.startDate).utc().format("YYYY-MM-DD");
                     editCoupon.endDate = moment(editCoupon.endDate).utc().format("YYYY-MM-DD")
                 }

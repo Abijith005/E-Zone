@@ -109,22 +109,21 @@ module.exports = {
                             if (element.quantity < 10) {
                                 await userModel.updateOne({ _id: user_id, user_cart: { $elemMatch: { id: product_id } } }, { $inc: { 'user_cart.$.quantity': 1 } }).then(async () => {
                                     await productModel.updateOne({ _id: product_id }, { $inc: { stockQuantity: -1 } })
-                                    resolve()
+                                    resolve({success:false})
                                 }).catch(() => {
                                     reject()
                                 })
                             }
                             else {
-                                resolve()
+                                resolve({success:false})
                             }
                         }
                     })
                     if (!duplicate) {
-                        let quantity = 1
                         await userModel.updateOne({ _id: user_id }, { $addToSet: { user_cart: { id: product_id, quantity: 1 } } }, { upsert: true }).then(async () => {
                             await productModel.updateOne({ _id: product_id }, { $inc: { stockQuantity: -1 } })
 
-                            resolve()
+                            resolve({success:true})
                         }).catch(() => {
                             reject()
                         })
@@ -132,7 +131,7 @@ module.exports = {
 
                 }
                 else {
-                    resolve()
+                    resolve({success:false})
                 }
             }).catch(() => {
                 reject()
