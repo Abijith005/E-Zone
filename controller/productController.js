@@ -11,16 +11,40 @@ module.exports = {
         // let id=req.session.userDetails?._id??null
         userService.user_searchProduct(argument).then((productData) => {
             req.session.productList = productData
-            res.redirect('/')
+            res.redirect('/getShopPage')
         }).catch(() => {
             res.send('hello')
         })
     },
 
+    getShopPage: async (req, res) => {
+        try {
+            let category = await categoryModel.find().lean()
+            let products = req.session.productList??null
+            let brands
+            let quantities = await userModel.findOne({ _id: req.session.userDetails?._id ?? null }, { user_cart: 1, user_whishList: 1, _id: 0 }).lean()
+            if (products) {
+                brands = category.find(e => e._id == products[0].category)
+            }
+            if (quantities) {
+                quantities.user_whishList = quantities.user_whishList?.length ?? null
+                quantities.user_cart = quantities.user_cart?.length ?? null
+            }
+            let userName;
+            req.session.userDetails ? userName = req.session.userDetails.name : userName = null
+            if(products==null){
+               products=await productModel.find().lean()
+            }            
+            res.render('shopePage', { products, category, brands, quantities })
+        } catch (error) {
+
+        }
+    },
+
     search_product_with_category: (req, res) => {
         userService.searchProductWithCategory(req.body.searchInput, req.session.productList[0].category).then((productData) => {
             req.session.productList = productData
-            res.redirect('/showProductList')
+            res.redirect('/getShopPage')
         }).catch(() => {
             res.send(error404)
         })
@@ -59,15 +83,15 @@ module.exports = {
                         })
                     }
                     else {
-                        if (value==1) {
-                            res.json({message:'Reached limit,cant add more'})
+                        if (value == 1) {
+                            res.json({ message: 'Reached limit,cant add more' })
                         } else {
-                            res.json({message:'Reached limit,cant remove more'})
+                            res.json({ message: 'Reached limit,cant remove more' })
                         }
                     }
                 }
                 else {
-                    res.json({message:'cant add more Stock Out' })
+                    res.json({ message: 'cant add more Stock Out' })
                 }
             }).catch(() => {
                 res.send(error404)

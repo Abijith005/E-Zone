@@ -30,7 +30,7 @@ module.exports = {
         }
         let userName;
         req.session.userDetails ? userName = req.session.userDetails.name : userName = null
-        res.render('shopePage', { userName, products, category, brands,quantities })
+        res.render('user_home', { userName, products, category, brands,quantities })
     },
 
     home: (req, res) => {
