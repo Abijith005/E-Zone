@@ -1058,7 +1058,7 @@
 		<div class="store-filter clearfix">
 			<div class="store-sort">
 				<label>
-					 <select class="input-select" id="sort" {{!--onchange="sort(this.value)" --}} >
+					 <select class="input-select" id="sort" >
 						<option  value="" selected>Sort by price</option>
 						<option  value="1">Low To High</option>
 						<option value="-1">High To Low</option>
@@ -1235,11 +1235,9 @@
 		})
 	}
 	document.getElementById('sort').addEventListener('change',(e)=>{
-		console.log(e.target.value)
 		 window.location.href=`/sortProducts/${e.target.value}`
 	})
-		 document.getElementById('filter').addEventListener('change',(e)=>{
-			console.log(e.target.value)
+		 document.getElementById('filter').addEventListener('',(e)=>{
 			window.location.href=`/filterProducts/${e.target.value}`
 		 })
 </script>

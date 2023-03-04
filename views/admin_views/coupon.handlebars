@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,9 +14,10 @@
     {{/if}}
     <title>Document</title>
 </head>
-    <body>
-        {{#if addCoupon}}
-<div class="main">
+
+<body>
+    {{#if addCoupon}}
+    <div class="main">
         <section class="signup">
             <!-- <img src="images/signup-bg.jpg" alt=""> -->
             <div class="container">
@@ -28,18 +30,18 @@
                             </div>
                             <div class="form-group">
                                 <label for="last_name">Coupon Code :</label>
-                                <input type="text" class="form-input" name="couponCode"  />
+                                <input type="text" class="form-input" name="couponCode" />
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group form-icon">
                                 <label for="birth_date">Start Date :</label>
-                                <input type="date" class="form-input" name="startDate"  placeholder="MM-DD-YYYY" />
+                                <input type="date" class="form-input" name="startDate" placeholder="MM-DD-YYYY" />
                             </div>
                             <div class="form-group form-icon">
                                 <label for="birth_date">End Date :</label>
-                                <input type="date" class="form-input" name="endDate"  placeholder="MM-DD-YYYY" />
-                            </div> 
+                                <input type="date" class="form-input" name="endDate" placeholder="MM-DD-YYYY" />
+                            </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
@@ -48,7 +50,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="re_password">Discount Amount :</label>
-                                <input type="text" class="form-input" name="discountAmount"/>
+                                <input type="text" class="form-input" name="discountAmount" />
                             </div>
                         </div>
                         <div class="form-group d-flex justify-content-end">
@@ -59,8 +61,8 @@
             </div>
         </section>
     </div>
-{{else if editCoupon}}
-<div class="main">
+    {{else if editCoupon}}
+    <div class="main">
         <section class="signup">
             <!-- <img src="images/signup-bg.jpg" alt=""> -->
             <div class="container">
@@ -69,32 +71,55 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="first_name">Coupon Name :</label>
-                                <input type="text" class="form-input" name="couponName" value="{{editCoupon.couponName}}" />
+                                <input type="text" class="form-input" name="couponName"
+                                    value="{{editCoupon.couponName}}" />
                                 <input type="text" hidden name="id" value="{{editCoupon._id}}">
                             </div>
                             <div class="form-group">
                                 <label for="last_name">Coupon Code :</label>
-                                <input type="text" class="form-input" name="couponCode" value="{{editCoupon.couponCode}}"  />
+                                <input type="text" class="form-input" name="couponCode"
+                                    value="{{editCoupon.couponCode}}" />
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group form-icon">
                                 <label for="birth_date">Start Date :</label>
-                                <input type="date" class="form-input" name="startDate"  placeholder="MM/DD/YYYY" value="{{editCoupon.startDate}}" />
+                                <input type="date" class="form-input" id="startDate" name="startDate" placeholder="MM/DD/YYYY"
+                                    value="{{editCoupon.startDate}}" />
                             </div>
                             <div class="form-group form-icon">
-                                <label for="birth_date">End Date :</label>
-                                <input type="date" class="form-input" name="endDate"  placeholder="MM/DD/YYYY" value="{{editCoupon.endDate}}" />
-                            </div> 
+                                <label id="endDateLabel" for="birth_date">End Date :</label>
+                                <input type="date" class="form-input" id="endDate" name="endDate" placeholder="MM/DD/YYYY"
+                                    value="{{editCoupon.endDate}}" />
+                            </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="password">Minimum Purchase Amount :</label>
-                                <input type="text" class="form-input" name="minPurchaseAmount" value="{{editCoupon.minPurchaseAmount}}"/>
+                                <input type="text" class="form-input" name="minPurchaseAmount"
+                                    value="{{editCoupon.minPurchaseAmount}}" />
                             </div>
                             <div class="form-group">
                                 <label for="re_password">Discount Amount :</label>
-                                <input type="text" class="form-input" name="discountAmount" value="{{editCoupon.discountAmount}}"/>
+                                <input type="text" class="form-input" name="discountAmount"
+                                    value="{{editCoupon.discountAmount}}" />
+                            </div>
+
+                        </div>
+                        <div class="form-row">
+
+                            <div class="form-group">
+                                <label for="re_password">Coupon Status:</label>
+                                <select class="form-input" name="couponStatus" id="">
+                                    {{#if editCoupon.couponStatus}}
+                                    <option class="form-input" value="Active">Active</option>
+                                    <option class="form-input" value="Expired">Expired</option>
+                                    {{else}}
+                                    <option class="form-input" value="Expired">Expired</option>
+                                    <option class="form-input" value="Active">Active</option>
+                                    {{/if}}
+                                </select>
+                                {{!-- <input type="text" class="form-input" name="couponStatus" value="Active" /> --}}
                             </div>
                         </div>
                         <div class="form-group d-flex justify-content-end">
@@ -105,115 +130,129 @@
             </div>
         </section>
     </div>
-{{else}}
-  <nav class="navbar navbar-expand-lg  bg-light" style=" background: linear-gradient(to bottom right, #ff3300 3%, #ffccff 100%);">
-  <div class="container">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <a class="navbar-brand" href="#">kk foods</a>
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0 mx-auto">
-        <li class="nav-item active ">
-        <a class="nav-link " href="/admin/admin_home" style="font-weight: bold;">Dash bord</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="/admin/admin_products">PRODUCT DETAILS</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/admin/user_Details">USER DETAILS</a>
-      </li>
-       <li class="nav-item">
-        <a class="nav-link" href="/admin/order_Details">ORDER DETAILS</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/admin/category">CATEGORY DETAILS</a>
-      </li>
-       <li class="nav-item">
-          <a class="nav-link"  href="/admin/getCoupon">COUPON DETAILS</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/admin/offer_create">Offer Manage</a>
-        </li>
-    </ul>
-
-    <a href="/admin/log_Out" class="btn btn-outline-success btn-lg  ms-auto" >log out</a>
-  </div>
-  </div>
-</nav>
-        <style>
-            tr,
-            th,
-            td {
-                color: rgb(8, 8, 8);
-            }
-        </style>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light text-center">
-
-            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                    <div class="col d-flex" style="display: flex; justify-content: flex-end">
-                        <a href="addCoupon"><button class="btn btn-success me-5">Add Coupon</button></a>
-                </div>
-            </div>
-        </nav>
+    {{else}}
+    <nav class="navbar navbar-expand-lg  bg-light"
+        style=" background: linear-gradient(to bottom right, #ff3300 3%, #ffccff 100%);">
         <div class="container">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">No.</th>
-                        <th scope="col">Coupon Name</th>
-                        <th scope="col">Coupon Code</th>
-                        <th scope="col">Minimum Purchase Amount</th>
-                        <th scope="col">Discount Amount</th>
-                        <th scope="col">Start Date</th>
-                        <th scope="col">End Date</th>
-                        <th scope="col">Options</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#each coupon}}
-                    <tr>
-                        <th scope="row">{{@index}}</th>
-                        <td>{{this.couponName}}</td>
-                        <td>{{this.couponCode}}</td>
-                        <td>{{this.minPurchaseAmount}}</td>
-                        <td>{{this.discountAmount}}</td>
-                        <td>{{this.startDate}}</td>
-                        <td>{{this.endDate}}</td>
-                        {{#if this.couponStatus}}
-                        <td>Active</td>
-                        {{else}}
-                        <td>Ended</td>
-                        {{/if}}
-                        <td>
-                            <div id="container">
-                                <div id="menu-wrap">
-                                    <input type="checkbox" class="toggler" />
-                                    <div class="dots">
-                                        <div></div>
-                                    </div>
-                                    <div class="menu">
-                                        <div>
-                                            <ul>
-                                                <li><a href="getEditCoupon/{{this._id}}/edit" class="link">Edit Coupon</a>
-                                                </li>
-                                                {{#if this.couponStatus}}
-                                                <li><a href="getEditCoupon/{{this._id}}/{{this.couponStatus}}"
-                                                        class="link">Expire</a></li>
-                                                {{/if}}
-                                            </ul>
-                                        </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+                aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <a class="navbar-brand" href="#">kk foods</a>
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0 mx-auto">
+                    <li class="nav-item active ">
+                        <a class="nav-link " href="/admin/admin_home" style="font-weight: bold;">Dash bord</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/admin/admin_products">PRODUCT DETAILS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/user_Details">USER DETAILS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/order_Details">ORDER DETAILS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/category">CATEGORY DETAILS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/getCoupon">COUPON DETAILS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/offer_create">Offer Manage</a>
+                    </li>
+                </ul>
+
+                <a href="/admin/log_Out" class="btn btn-outline-success btn-lg  ms-auto">log out</a>
+            </div>
+        </div>
+    </nav>
+    <style>
+        tr,
+        th,
+        td {
+            color: rgb(8, 8, 8);
+        }
+    </style>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light text-center">
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            <div class="col d-flex" style="display: flex; justify-content: flex-end">
+                <a href="addCoupon"><button class="btn btn-success me-5">Add Coupon</button></a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Coupon Name</th>
+                    <th scope="col">Coupon Code</th>
+                    <th scope="col">Minimum Purchase Amount</th>
+                    <th scope="col">Discount Amount</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each coupon}}
+                <tr>
+                    <th scope="row">{{@index}}</th>
+                    <td>{{this.couponName}}</td>
+                    <td>{{this.couponCode}}</td>
+                    <td>{{this.minPurchaseAmount}}</td>
+                    <td>{{this.discountAmount}}</td>
+                    <td>{{this.startDate}}</td>
+                    <td>{{this.endDate}}</td>
+                    {{#if this.couponStatus}}
+                    <td>Active</td>
+                    {{else}}
+                    <td>Expired</td>
+                    {{/if}}
+                    <td>
+                        <div id="container">
+                            <div id="menu-wrap">
+                                <input type="checkbox" class="toggler" />
+                                <div class="dots">
+                                    <div></div>
+                                </div>
+                                <div class="menu">
+                                    <div>
+                                        <ul>
+                                            <li><a href="getEditCoupon/{{this._id}}/edit" class="link">Edit Coupon</a>
+                                            </li>
+                                            {{#if this.couponStatus}}
+                                            <li><a href="getEditCoupon/{{this._id}}/{{this.couponStatus}}"
+                                                    class="link">Expire</a></li>
+                                            {{/if}}
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
-                        </td>
-                    </tr>{{/each}}
-                    <div>
-                    </div>
-                </tbody>
-            </table>
-        </div>
-        {{/if}}
-    </body>
+                        </div>
+                    </td>
+                </tr>{{/each}}
+            </tbody>
+        </table>
+    </div>
+    {{/if}}
+
+    <script>
+        document.getElementById('endDate').addEventListener('change',(e)=>{
+            let startDate=document.getElementById('startDate').value
+            let endDate=e.target.value
+console.log(e.target.value)
+if(endDate<startDate){
+    document.getElementById('endDateLabel').innerHTML='<p style="font-size: smaller;text-transform: capitalize;" class="text-danger">End Date Should Be Greater Than Start Date</p>'
+}
+else{
+    document.getElementById('endDateLabel').innerHTML=''
+}
+        })
+    </script>
+</body>
 
 </html>

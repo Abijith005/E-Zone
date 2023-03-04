@@ -199,7 +199,7 @@ display-flex, .form-flex, .form-row, .add-info-link {
     -ms-border-radius: 5px;
     background-color: #ebebeb; }
   
-  label, input {
+  label, input,select,option {
     display: block;
     width: 100%; }
   
@@ -208,7 +208,7 @@ display-flex, .form-flex, .form-row, .add-info-link {
     font-weight: 800;
     margin-bottom: 3px; }
   
-  input {
+  input,select,option {
     border: 1px solid #ebebeb;
     border-radius: 5px;
     -moz-border-radius: 5px;
