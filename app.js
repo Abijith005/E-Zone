@@ -18,18 +18,21 @@ app.use((req,res,next)=>{
 
 dbConnect()
 
-// db.connect((err)=>{
-//     if(err){
-//     console.log('data base not connected'+err);
-//     }
 
-// })
 //setting session
 app.use(session({
     secret:'secret',
     saveUninitialized:false,
     resave:true
 }))
+
+// hbs helper
+let hbs = require('handlebars');
+
+hbs.registerHelper("inc", function(value, options)
+{
+    return parseInt(value) + 1;
+});
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))

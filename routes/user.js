@@ -41,6 +41,8 @@ router.post('/submit_mailForgotPassword',userSession.ifNoUser, userController.us
 
 router.get('/getShopPage',productController.getShopPage)
 
+router.get('/getAllProducts',productController.getAllProducts)
+
 router.get('/productList/:id',productController.user_productList)
 
 router.post('/productList',productController.user_productList)
