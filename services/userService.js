@@ -64,13 +64,6 @@ module.exports = {
             let category= await categoryModel.findOne({category:new RegExp(productData,'i')},{_id:1})
             let id=category?._id??''
             await productModel.find({ $and: [{ flag: false }, { $or: [{ product_name: new RegExp(productData, 'i') }, { brandName: new RegExp(productData, 'i') }, { category:{$in:[productData,id]} }] }] }).lean().then((result) => {
-                // userModel.findOne({ _id: id }, { user_whishList: 1 }).lean().then((data) => {
-                //     console.log(data);
-                //     let whishList = data.user_whishList.map(i => {
-                //         return i.product_id
-                //     })
-                //     console.log(whishList);
-                // })
                 resolve(result)
             })
             // .catch(() => {

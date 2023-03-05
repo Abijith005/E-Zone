@@ -11,6 +11,7 @@ module.exports = {
          req.session.category=req.params.id
          req.session.searchInput=req.body.searchInput
         userService.user_searchProduct(argument).then((productData) => {
+            req.session.productList=productData
             res.json(productData)
         }).catch(() => {
             res.send('hello')
@@ -56,7 +57,7 @@ module.exports = {
     search_product_with_category: (req, res) => {
         userService.searchProductWithCategory(req.body.searchInput, req.session.productList[0].category).then((productData) => {
             req.session.productList = productData
-            res.redirect('/getShopPage')
+            res.json(productData)
         }).catch(() => {
             res.send(error404)
         })

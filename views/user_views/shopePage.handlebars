@@ -78,11 +78,11 @@
 					<!-- SEARCH BAR -->
 					<div class="col-md-6">
 						<div class="header-search">
-							<form action="/productList" method="post">
+							<form action="/productList" onsubmit="event.preventDefault()" method="post" >
 								<input class="input"
 									style="border-top-left-radius:2rem;border-bottom-left-radius:2rem; width: 80%;"
-									type="text" name="searchInput" placeholder="Search here">
-								<button class="search-btn">Search</button>
+									type="text" id="searchInput" name="searchInput" placeholder="Search here">
+								<button onclick="searchProduct()" class="search-btn">Search</button>
 							</form>
 						</div>
 					</div>
@@ -394,6 +394,51 @@
 					whishListQuantity.textContent = Number(whishListQuantity.textContent)-1
 
 				}
+			})
+		}
+
+		function searchProduct(){
+			let searchInput=document.getElementById('searchInput').value
+			axios.post('/search_product_with_category',{searchInput}).then((response)=>{
+		let productsDiv = document.getElementById('newProducts')
+				productsDiv.innerHTML = ""
+				response.data.forEach(item => {
+					let div = document.createElement('div')
+					div.setAttribute('class', "col-md-4 col-xs-6")
+					div.innerHTML = `<div class="product">
+					<a href="/singleProductPage/${item._id}">
+						<div class="product-img">
+							<img style="height:150px; object-fit:contain" src="/images/${item.image[0].filename}"
+								alt="">
+						</div>
+					</a>
+					<div class="product-body" style="height: 14rem;">
+						<p class="product-category">${item.category}</p>
+						<h3 class="product-name"><a href="#">{{this.product_name}}</a></h3>
+						<h3 class="product-name">${item.brandName}</h3>
+						<h4 class="product-price">₹${item.price}/- <del
+								class="product-old-price">₹${item.price}/-</del>
+						</h4>
+						
+						<div class="product-btns">
+							<button  onclick="addToWhishList(${item._id})"
+								class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to
+									wishlist</span></button>
+							<button class="quick-view" onclick="window.location.href='/singleProductPage/${item._id}'" ><i class="fa fa-eye"></i><span class="tooltipp">quick
+									view</span></button>
+						</div>
+					</div>
+					<div class="add-to-cart text-center">
+
+						<button onclick="addToCart('${item._id}')" class="add-to-cart-btn mt-4 mb-2"><i
+								class="fa fa-shopping-cart"></i> add to
+							cart</button>
+					</div>
+
+				</div>`
+					productsDiv.appendChild(div)
+
+				})
 			})
 		}
 
