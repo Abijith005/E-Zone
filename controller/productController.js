@@ -6,20 +6,40 @@ const userService = require('../services/userService')
 
 
 module.exports = {
-    user_productList:(req, res) => {
-        console.log('user_productList');
+    user_productList: async (req, res) => {
+        let argument
+        let brands
         req.session.allproducts = false
         if (req.params.id) {
-            argument=req.params.id
+            argument = req.params.id
+            console.log(argument);
+            let { brandName } = await categoryModel.findOne({ _id: argument }, { _id: 0, brandName: 1 })
+            brands = brandName
         } else {
-            argument=req.body.searchInput
+            argument = req.body.searchInput
         }
         // let argument = req.params.id ? req.params.id : req.body.searchInput
         req.session.category = req.params.id
         req.session.searchInput = req.body.searchInput
         userService.user_searchProduct(argument).then(async (productData) => {
             req.session.productList = productData
-            res.json(productData)
+            if (req.session.userDetails) {
+                let whishList = await userModel.findOne({ _id: req.session.userDetails._id }, { user_whishList: 1, _id: 0 }).lean()
+                let productId = whishList.user_whishList.map(item => {
+                    return item.product_id
+                })
+                for (const i of productData) {
+                    if (productId.includes(i._id.toString())) {
+                        i.whishList = true
+                    }
+                }
+            }
+            if(brands){
+                res.json({productData,brands})
+            }
+            else{
+                res.json(productData)
+            }
         }).catch(() => {
             res.send('hello')
         })
@@ -54,10 +74,10 @@ module.exports = {
             }
             brands = products.map(item => {
                 return item.brandName
-            })  
+            })
             for (const i of products) {
-              let data=category.find(e=>i.category==e._id)
-               i.category=data.category
+                let data = category.find(e => i.category == e._id)
+                i.category = data.category
             }
             res.render('shopePage', { userName, products, category, brands, quantities })
         } catch (error) {
@@ -90,14 +110,37 @@ module.exports = {
         console.log('search_product_with_category');
         if (req.session.allproducts) {
             let input = req.body.searchInput
-            productModel.find({ $and: [{ flag: false }, { $or: [{ product_name: new RegExp(input, 'i') }, { brandName: new RegExp(input, 'i') }] }] }).then((productData) => {
+            productModel.find({ $and: [{ flag: false }, { $or: [{ product_name: new RegExp(input, 'i') }, { brandName: new RegExp(input, 'i') }] }] }).then(async (productData) => {
                 req.session.productList = productData
+
+                if (req.session.userDetails) {
+                    let whishList = await userModel.findOne({ _id: req.session.userDetails._id }, { user_whishList: 1, _id: 0 }).lean()
+                    let productId = whishList.user_whishList.map(item => {
+                        return item.product_id
+                    })
+                    for (const i of productData) {
+                        if (productId.includes(i._id.toString())) {
+                            i.whishList = true
+                        }
+                    }
+                }
                 res.json(productData)
             }).catch(() => {
                 res.send(error404)
             })
         } else {
-            userService.searchProductWithCategory(req.body.searchInput, req.session.productList[0].category).then((productData) => {
+            userService.searchProductWithCategory(req.body.searchInput, req.session.productList[0].category).then(async (productData) => {
+                if (req.session.userDetails) {
+                    let whishList = await userModel.findOne({ _id: req.session.userDetails._id }, { user_whishList: 1, _id: 0 }).lean()
+                    let productId = whishList.user_whishList.map(item => {
+                        return item.product_id
+                    })
+                    for (const i of productData) {
+                        if (productId.includes(i._id.toString())) {
+                            i.whishList = true
+                        }
+                    }
+                }
                 req.session.productList = productData
                 res.json(productData)
             }).catch(() => {
