@@ -9,7 +9,8 @@ module.exports = {
     user_productList: async (req, res) => {
         let argument
         let brands
-        req.session.sortValue=null
+        req.session.filterProducts-null
+        req.session.sortValue = null
         req.session.allproducts = false
         if (req.params.id) {
             argument = req.params.id
@@ -48,7 +49,8 @@ module.exports = {
     getShopPage: async (req, res) => {
         console.log('getShopPage');
         try {
-            req.session.sortValue=null
+            req.session.filterProducts=null
+            req.session.sortValue = null
             req.session.category = null
             req.session.allproducts = true
             let category = await categoryModel.find().lean()
@@ -87,7 +89,8 @@ module.exports = {
     getAllProducts: async (req, res) => {
         console.log('getAllProducts');
         try {
-            req.session.sortValue=null
+            req.session.filterProducts=null
+            req.session.sortValue = null
             req.session.category = null
             req.session.allproducts = true
             let products = await productModel.find().lean()
@@ -214,25 +217,41 @@ module.exports = {
 
     sortProducts: async (req, res) => {
         req.session.sortValue = req.params.value
+        console.log(req.session.sortValue);
         let value = req.params.value
         let category = req.session.category ?? ''
-        let products
+        let productData
+        let brands
         if (category) {
-            products = await productModel.find({ category: category }).sort({ price: value }).lean()
+            if (req.session.filterProducts) {
+                productData = await productModel.find({$and:[{category: category },{brandName:req.session.filterProducts}]}).sort({ price: value }).lean()
+            } else {
+                productData = await productModel.find({ category: category }).sort({ price: value }).lean()
+            }
+            let { brandName } = await categoryModel.findOne({ _id: category }, { _id: 0, brandName: 1 })
+            brands = brandName
+            res.json({productData, brands})
         } else {
-            products = await productModel.find().sort({ price: value }).lean()
+            productData = await productModel.find().sort({ price: value }).lean()
+            res.json({productData})
         }
-        res.redirect('/')
-    },
 
+        // res.redirect('/')
+    },
+ 
     filterProducts: async (req, res) => {
-        let value=req.session.sortValue ?value=req.session.sortValue :value=0
+        req.session.filterProducts=req.params.value
+        console.log('sort value',req.session.sortValue);
+        let value = req.session.sortValue ??0 
+        console.log(value,'valueeeeeeeee');
         let category = req.session.category
         console.log(category, 'filterrrrrrrrrrrrrrr');
-        let products = await productModel.find({ $and: [{ category: category }, { brandName: req.params.brand }] }).sort({price:value}).lean()
-        console.log(products);
-        req.session.productList = products
-        res.redirect('/')
+        let productData = await productModel.find({ $and: [{ category: category }, { brandName: req.params.brand }] }).sort({ price: value }).lean()
+        console.log(productData);
+        let { brandName } = await categoryModel.findOne({ _id: category }, { _id: 0, brandName: 1 })
+        let brands = brandName
+        res.json({productData,brands})
+        // res.redirect('/')
     }
 
 

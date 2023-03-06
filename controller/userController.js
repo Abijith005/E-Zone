@@ -26,7 +26,7 @@ module.exports = {
         }
         if (quantities) {
             quantities.user_whishList = quantities.user_whishList?.length ?? null
-            quantities.user_cart = quantities.user_cart?.length ?? null
+            quantities.user_cart = quantities.user_cart?.length ?? null 
         }
         let userName;
         req.session.userDetails ? userName = req.session.userDetails.name : userName = null
