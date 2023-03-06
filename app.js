@@ -51,11 +51,10 @@ app.set('view engine','handlebars')
 app.set('views',[path.join(__dirname,'views/user_views'),path.join(__dirname,'views/admin_views')])
 app.use(express.static(path.join(__dirname,'public')))
 
-// app.all('*',(req,res)=>{
-// res.render('404')
-// }) 
+app.all('*',(req,res)=>{
+res.render('404')
+}) 
 //setting port
 app.listen(5000,console.log('server running http://localhost:5000'))
 
 module.exports=app;
-

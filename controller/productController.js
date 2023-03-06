@@ -9,17 +9,17 @@ module.exports = {
     user_productList: async (req, res) => {
         let argument
         let brands
+        req.session.sortValue=null
         req.session.allproducts = false
         if (req.params.id) {
             argument = req.params.id
+            req.session.category = argument
             console.log(argument);
             let { brandName } = await categoryModel.findOne({ _id: argument }, { _id: 0, brandName: 1 })
             brands = brandName
         } else {
             argument = req.body.searchInput
         }
-        // let argument = req.params.id ? req.params.id : req.body.searchInput
-        req.session.category = req.params.id
         req.session.searchInput = req.body.searchInput
         userService.user_searchProduct(argument).then(async (productData) => {
             req.session.productList = productData
@@ -34,10 +34,10 @@ module.exports = {
                     }
                 }
             }
-            if(brands){
-                res.json({productData,brands})
+            if (brands) {
+                res.json({ productData, brands })
             }
-            else{
+            else {
                 res.json(productData)
             }
         }).catch(() => {
@@ -48,18 +48,18 @@ module.exports = {
     getShopPage: async (req, res) => {
         console.log('getShopPage');
         try {
+            req.session.sortValue=null
+            req.session.category = null
             req.session.allproducts = true
             let category = await categoryModel.find().lean()
             let brands
             let quantities = await userModel.findOne({ _id: req.session.userDetails?._id ?? null }, { user_cart: 1, user_whishList: 1, _id: 0 }).lean()
-
             if (quantities) {
                 quantities.user_whishList = quantities.user_whishList?.length ?? null
                 quantities.user_cart = quantities.user_cart?.length ?? null
             }
             let userName;
             req.session.userDetails ? userName = req.session.userDetails.name : userName = null
-
             let products = await productModel.find().lean()
             if (req.session.userDetails) {
                 let whishList = await userModel.findOne({ _id: req.session.userDetails._id }, { user_whishList: 1, _id: 0 }).lean()
@@ -87,6 +87,8 @@ module.exports = {
     getAllProducts: async (req, res) => {
         console.log('getAllProducts');
         try {
+            req.session.sortValue=null
+            req.session.category = null
             req.session.allproducts = true
             let products = await productModel.find().lean()
             if (req.session.userDetails) {
@@ -129,7 +131,7 @@ module.exports = {
                 res.send(error404)
             })
         } else {
-            userService.searchProductWithCategory(req.body.searchInput, req.session.productList[0].category).then(async (productData) => {
+            userService.searchProductWithCategory(req.body.searchInput, req.session.category).then(async (productData) => {
                 if (req.session.userDetails) {
                     let whishList = await userModel.findOne({ _id: req.session.userDetails._id }, { user_whishList: 1, _id: 0 }).lean()
                     let productId = whishList.user_whishList.map(item => {
@@ -211,15 +213,24 @@ module.exports = {
     },
 
     sortProducts: async (req, res) => {
+        req.session.sortValue = req.params.value
         let value = req.params.value
-        let category = req.session.productList?.[0]?.category ?? ''
-        let products = await productModel.find({ category: category }).sort({ price: value }).lean()
-        req.session.productList = products;
+        let category = req.session.category ?? ''
+        let products
+        if (category) {
+            products = await productModel.find({ category: category }).sort({ price: value }).lean()
+        } else {
+            products = await productModel.find().sort({ price: value }).lean()
+        }
         res.redirect('/')
     },
 
     filterProducts: async (req, res) => {
-        let products = await productModel.find({ brandName: req.params.brand }).lean()
+        let value=req.session.sortValue ?value=req.session.sortValue :value=0
+        let category = req.session.category
+        console.log(category, 'filterrrrrrrrrrrrrrr');
+        let products = await productModel.find({ $and: [{ category: category }, { brandName: req.params.brand }] }).sort({price:value}).lean()
+        console.log(products);
         req.session.productList = products
         res.redirect('/')
     }

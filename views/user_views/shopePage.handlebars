@@ -198,7 +198,9 @@
 
 				<label>
 					<div id="filterDiv">
+						{{!-- <select class="input-select" id="filterrr">
 
+						</select> --}}
 					</div>
 				</label>
 			</div>
@@ -410,6 +412,7 @@
 		function allProducts() {
 			axios.get('/getAllProducts').then((response) => {
 				let productsDiv = document.getElementById('newProducts')
+				document.getElementById('filterDiv').innerHTML = ''
 				productsDiv.innerHTML = ""
 				response.data.forEach(item => {
 					let a;
@@ -524,7 +527,7 @@ ${a}
 		}
 
 		function changeCategory(id) {
-			axios.get('/productList/' + id).then((response) => {
+			axios.get('/productList/'+ id).then((response) => {
 				let productsDiv = document.getElementById('newProducts')
 				productsDiv.innerHTML = ""
 				response.data.productData.forEach(item => {
@@ -578,41 +581,42 @@ ${a}
 				})
 
 				let filterDiv = document.getElementById('filterDiv')
-				filterDiv.innerHTML=''
-				let select=document.createElement('select')
-				select.setAttribute('class',"input-select")
-				select.setAttribute('value',"null")
-				select.setAttribute('id',"filter")
-				/*select.id='filter'*/
-				let first=document.createElement('option')
-				first.text='Filter By Brand'
+				filterDiv.innerHTML = ''
+				let select = document.createElement('select')
+				select.setAttribute('class', "input-select")
+				select.id = 'filter'
+				let first = document.createElement('option')
+				first.text = 'Filter By Brand'
 				select.appendChild(first)
-				filterDiv.appendChild(select)
 				response.data.brands.forEach(item => {
 					let option = document.createElement('option')
 					option.text = `${item}`
-					option.value=`${item}`
+					option.value = `${item}`
 					select.appendChild(option)
 				})
+				select.addEventListener('change', function () { productFilter(select.value) })
+				filterDiv.appendChild(select)
 			})
 		}
-		
+
 		document.getElementById('sort').addEventListener('change', (e) => {
+			console.log('iam sortttttttttttttttttttttttttttttttttttttttttttttttt')
 			window.location.href = `/sortProducts/${e.target.value}`
 		})
-		document.getElementById('filter').addEventListener('change', (e) => {
-			console.log('iam filter')
-		window.location.href = `/filterProducts/${e.target.value}`
-		})
-	</script>
 
+		function productFilter(brand) {
+			axios.get('/filterProducts/'+brand).then(()=>{
+
+			})
+			console.log(brand)
+		}
+	</script>
 	<script src="/js/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/slick.min.js"></script>
 	<script src="/js/nouislider.min.js"></script>
 	<script src="/js/jquery.zoom.min.js"></script>
 	<script src="/js/main.js"></script>
-
 
 </body>
 
