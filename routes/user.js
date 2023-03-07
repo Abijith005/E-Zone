@@ -113,6 +113,8 @@ router.get('/sortProducts/:value',productController.sortProducts)
 
 router.get('/filterProducts/:brand',productController.filterProducts)
 
+router.get('/pagination/:pageNum',productController.pagination)
+
 
 
 

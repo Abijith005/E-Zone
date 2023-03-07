@@ -60,7 +60,6 @@ module.exports = {
     },
 
     user_searchProduct: (productData,sortValue) => {
-        console.log('searchhhhhhhhhhhh');
         return new Promise(async (resolve, reject) => {
             let category= await categoryModel.findOne({category:new RegExp(productData,'i')},{_id:1})
             let id=category?._id??''
@@ -71,7 +70,6 @@ module.exports = {
                 .catch(() => {
                     reject()
                 })
-                
             }
             else{
                 await productModel.find({ $and: [{ flag: false }, { $or: [{ product_name: new RegExp(productData, 'i') }, { brandName: new RegExp(productData, 'i') }, { category:{$in:[productData,id]} }] }] }).lean().then((result) => {

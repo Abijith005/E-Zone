@@ -84,3 +84,47 @@ else {
                     //         </div>
                     //     </div>
                     // </div>  
+
+
+
+
+                    userHome: (req, res) => {
+                        try {
+                          req.session.pageNum=parseInt(req.query.page??1) 
+                          req.session.perpage=4;
+                          userServices.getpdt(req.session.pageNum,req.session.perpage).then((products) => {
+                            if (req.session.user) {
+                              username = req.session.user;
+                              let pageCount=Math.ceil(products.docCount/req.session.perpage)
+                                            let pagination=[]
+                                            for(i=1;i<=pageCount;i++){
+                                                pagination.push(i)
+                                            }
+                              res.render("home", { products:products.result, username,pagination });
+                            } else {
+                              username = null;
+                              let pageCount=Math.ceil(products.docCount/req.session.perpage)
+                                            let pagination=[]
+                                            for(i=1;i<=pageCount;i++){
+                                                pagination.push(i)
+                                            }
+                              res.render("home", { products:products.result,pagination });
+                            }
+                          });
+                        } catch (error) {
+                          console.error(error);
+                          res.status(500).send("Internal Server Error");
+                        }
+                      },
+
+                      getpdt:(pageNum,perpage)=>{
+                        return new Promise(async (resolve, _reject) => {
+                              let result = await productModel.find().countDocuments().then(documentCount=>{
+                                docCount=documentCount
+                                return productModel.find({productStatus:false}).skip((pageNum-1)*perpage).limit(perpage).lean()
+                              })
+                             
+                              resolve({result,docCount})
+                            });
+                          
+                      },

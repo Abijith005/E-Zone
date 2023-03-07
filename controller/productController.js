@@ -34,9 +34,11 @@ module.exports = {
                 }
             }
             if (brands) {
+                req.session.productList = productData
                 res.json({ productData, brands })
             }
             else {
+                req.session.productList = productData
                 res.json(productData)
             }
         }).catch(() => {
@@ -46,6 +48,8 @@ module.exports = {
 
     getShopPage: async (req, res) => {
         try {
+            console.log('hjhsjhsj')
+            req.session.productPerPage = 4;
             req.session.searchInput = null
             req.session.filterProducts = null
             req.session.sortValue = null
@@ -79,8 +83,18 @@ module.exports = {
                 let data = category.find(e => i.category == e._id)
                 i.category = data.category
             }
-            res.render('shopePage', { userName, products, category, brands, quantities })
-            // res.redirect('/getAllProducts')
+            req.session.productList = products
+            let pageNum = 1;
+            let productCount = products.length
+            products = products.slice((pageNum - 1) * req.session.productPerPage, pageNum * req.session.productPerPage)
+            let pageCount = Math.ceil(productCount / req.session.productPerPage)
+            console.log(pageCount);
+            let pagination = []
+            for (i = 1; i <= pageCount; i++) {
+                pagination.push(i)
+            }
+            console.log(pagination);
+            res.render('shopePage', { userName, products, category, brands, quantities, pagination })
         } catch (error) {
         }
     },
@@ -106,24 +120,18 @@ module.exports = {
                         i.whishList = true
                     }
                 }
-            }
+            } req.session.productList = products
             res.json(products)
         } catch (error) {
-
         }
     },
 
     search_product_with_category: (req, res) => {
-        req.session.searchInput=req.body.searchInput
+        req.session.searchInput = req.body.searchInput
         if (req.session.allproducts) {
             let input = req.body.searchInput
             let value = req.session.sortValue ? req.session.sortValue : 0
-            // if (req.session.sortValue) {
-                
-            // } else {
-                
-            // }
-            productModel.find({ $and: [{ flag: false }, { $or: [{ product_name: new RegExp(input, 'i') }, { brandName: new RegExp(input, 'i') }] }] }).sort({price:value}).then(async (productData) => {
+            productModel.find({ $and: [{ flag: false }, { $or: [{ product_name: new RegExp(input, 'i') }, { brandName: new RegExp(input, 'i') }] }] }).sort({ price: value }).then(async (productData) => {
                 if (req.session.userDetails) {
                     let whishList = await userModel.findOne({ _id: req.session.userDetails._id }, { user_whishList: 1, _id: 0 }).lean()
                     let productId = whishList.user_whishList.map(item => {
@@ -135,6 +143,7 @@ module.exports = {
                         }
                     }
                 }
+                req.session.productList = productData
                 res.json(productData)
             }).catch(() => {
                 res.send(error404)
@@ -232,8 +241,9 @@ module.exports = {
                 productData = await productModel.find({ $and: [{ category: category }, { brandName: req.session.filterProducts }] }).sort({ price: value }).lean()
             } else {
                 if (req.session.searchInput) {
-                    let input=req.session.searchInput
-                    productData = await productModel.find({$and:[{flag:false},{ category: category },{ $or: [{ product_name: new RegExp(input, 'i') }, { brandName: new RegExp(input, 'i') }] }]}).sort({ price: value }).lean()
+                    let input = req.session.searchInput
+                    productData = await productModel.find({ $and: [{ flag: false }, { category: category }, { $or: [{ product_name: new RegExp(input, 'i') }, { brandName: new RegExp(input, 'i') }] }] }).sort({ price: value }).lean()
+                    req.session.productList = productData
                     res.json({ productData })
                 } else {
                     productData = await productModel.find({ category: category }).sort({ price: value }).lean()
@@ -242,14 +252,17 @@ module.exports = {
             }
             let { brandName } = await categoryModel.findOne({ _id: category }, { _id: 0, brandName: 1 })
             brands = brandName
+            req.session.productList = productData
             res.json({ productData, brands })
         } else {
             if (req.session.searchInput) {
-                let input=req.session.searchInput
-                productData = await productModel.find({$and:[{ flag: false },{ $or: [{ product_name: new RegExp(input, 'i') }, { brandName: new RegExp(input, 'i') }] }]}).sort({ price: value }).lean()
+                let input = req.session.searchInput
+                productData = await productModel.find({ $and: [{ flag: false }, { $or: [{ product_name: new RegExp(input, 'i') }, { brandName: new RegExp(input, 'i') }] }] }).sort({ price: value }).lean()
+                req.session.productList = productData
                 res.json({ productData })
             } else {
                 productData = await productModel.find().sort({ price: value }).lean()
+                req.session.productList = productData
                 res.json({ productData })
 
             }
@@ -262,8 +275,25 @@ module.exports = {
         let value = req.session.sortValue ?? 0
         let category = req.session.category
         let productData = await productModel.find({ $and: [{ category: category }, { brandName: req.params.brand }] }).sort({ price: value }).lean()
+        req.session.productList = productData
         res.json({ productData })
         // res.redirect('/')
+    },
+
+    pagination: (req, res) => {
+        console.log('pagination');
+        let productData = req.session.productList
+        let pageNum = req.params.pageNum;
+        let productCount = productData.length
+        productData = productData.slice((pageNum - 1) * req.session.productPerPage, pageNum * req.session.productPerPage)
+        let pageCount = Math.ceil(productCount / req.session.productPerPage)
+        let pagination = []
+        for (i = 1; i <= pageCount; i++) {
+            pagination.push(i)
+        }
+        console.log(productData);
+        res.json({ productData, pagination })
+
     }
 
 
