@@ -7,23 +7,23 @@ const userService = require('../services/userService')
 
 module.exports = {
     user_productList: async (req, res) => {
+        console.log('productList');
         let argument
         let brands
-        req.session.filterProducts-null
-        req.session.sortValue = null
+        req.session.filterProducts=null
         req.session.allproducts = false
         if (req.params.id) {
             argument = req.params.id
             req.session.category = argument
-            console.log(argument);
             let { brandName } = await categoryModel.findOne({ _id: argument }, { _id: 0, brandName: 1 })
             brands = brandName
         } else {
             argument = req.body.searchInput
         }
         req.session.searchInput = req.body.searchInput
-        userService.user_searchProduct(argument).then(async (productData) => {
-            req.session.productList = productData
+    let sortValue=req.session.sortValue?req.session.sortValue:null
+    console.log('valueeeeeeeeeee',sortValue);
+        userService.user_searchProduct(argument,sortValue).then(async (productData) => {
             if (req.session.userDetails) {
                 let whishList = await userModel.findOne({ _id: req.session.userDetails._id }, { user_whishList: 1, _id: 0 }).lean()
                 let productId = whishList.user_whishList.map(item => {
@@ -47,8 +47,8 @@ module.exports = {
     },
 
     getShopPage: async (req, res) => {
-        console.log('getShopPage');
         try {
+            console.log('getshoppage');
             req.session.filterProducts=null
             req.session.sortValue = null
             req.session.category = null
@@ -87,13 +87,17 @@ module.exports = {
     },
 
     getAllProducts: async (req, res) => {
-        console.log('getAllProducts');
         try {
+            console.log('getAllProducts');
             req.session.filterProducts=null
-            req.session.sortValue = null
             req.session.category = null
-            req.session.allproducts = true
-            let products = await productModel.find().lean()
+            req.session.allproducts = true 
+            let products 
+            if (req.session.sortValue) {
+                products = await productModel.find().sort({price:req.session.sortValue}).lean()
+            } else {
+                products = await productModel.find().sort().lean()
+            }
             if (req.session.userDetails) {
                 let whishList = await userModel.findOne({ _id: req.session.userDetails._id }, { user_whishList: 1, _id: 0 }).lean()
                 let productId = whishList.user_whishList.map(item => {
@@ -112,12 +116,10 @@ module.exports = {
     },
 
     search_product_with_category: (req, res) => {
-        console.log('search_product_with_category');
         if (req.session.allproducts) {
             let input = req.body.searchInput
             productModel.find({ $and: [{ flag: false }, { $or: [{ product_name: new RegExp(input, 'i') }, { brandName: new RegExp(input, 'i') }] }] }).then(async (productData) => {
                 req.session.productList = productData
-
                 if (req.session.userDetails) {
                     let whishList = await userModel.findOne({ _id: req.session.userDetails._id }, { user_whishList: 1, _id: 0 }).lean()
                     let productId = whishList.user_whishList.map(item => {
@@ -160,7 +162,7 @@ module.exports = {
         }).catch(() => {
             res.send(error404)
         })
-    },
+    },  
 
     productQuantityIncreaseOrDecrease: (req, res) => {
         return new Promise(async (resolve, reject) => {
@@ -217,7 +219,6 @@ module.exports = {
 
     sortProducts: async (req, res) => {
         req.session.sortValue = req.params.value
-        console.log(req.session.sortValue);
         let value = req.params.value
         let category = req.session.category ?? ''
         let productData
@@ -232,25 +233,17 @@ module.exports = {
             brands = brandName
             res.json({productData, brands})
         } else {
-            productData = await productModel.find().sort({ price: value }).lean()
+            productData = await productModel.find().sort({ price:value}).lean()
             res.json({productData})
         }
-
-        // res.redirect('/')
     },
  
     filterProducts: async (req, res) => {
-        req.session.filterProducts=req.params.value
-        console.log('sort value',req.session.sortValue);
+        req.session.filterProducts=req.params.brand
         let value = req.session.sortValue ??0 
-        console.log(value,'valueeeeeeeee');
         let category = req.session.category
-        console.log(category, 'filterrrrrrrrrrrrrrr');
         let productData = await productModel.find({ $and: [{ category: category }, { brandName: req.params.brand }] }).sort({ price: value }).lean()
-        console.log(productData);
-        let { brandName } = await categoryModel.findOne({ _id: category }, { _id: 0, brandName: 1 })
-        let brands = brandName
-        res.json({productData,brands})
+        res.json({productData})
         // res.redirect('/')
     }
 

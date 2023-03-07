@@ -59,16 +59,27 @@ module.exports = {
         })
     },
 
-    user_searchProduct: (productData, id) => {
+    user_searchProduct: (productData,sortValue) => {
         return new Promise(async (resolve, reject) => {
             let category= await categoryModel.findOne({category:new RegExp(productData,'i')},{_id:1})
             let id=category?._id??''
-            await productModel.find({ $and: [{ flag: false }, { $or: [{ product_name: new RegExp(productData, 'i') }, { brandName: new RegExp(productData, 'i') }, { category:{$in:[productData,id]} }] }] }).lean().then((result) => {
-                resolve(result)
-            })
-            .catch(() => {
-                reject()
-            })
+            if(sortValue) {
+                await productModel.find({ $and: [{ flag: false }, { $or: [{ product_name: new RegExp(productData, 'i') }, { brandName: new RegExp(productData, 'i') }, { category:{$in:[productData,id]} }] }] }).sort({price:sortValue}).lean().then((result) => {
+                    resolve(result)
+                })
+                .catch(() => {
+                    reject()
+                })
+                
+            }
+            else{
+                await productModel.find({ $and: [{ flag: false }, { $or: [{ product_name: new RegExp(productData, 'i') }, { brandName: new RegExp(productData, 'i') }, { category:{$in:[productData,id]} }] }] }).lean().then((result) => {
+                    resolve(result)
+                })
+                .catch(() => {
+                    reject()
+                })
+            }
         })
 
 
