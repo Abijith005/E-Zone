@@ -60,6 +60,7 @@ module.exports = {
     },
 
     user_searchProduct: (productData,sortValue) => {
+        console.log('searchhhhhhhhhhhh');
         return new Promise(async (resolve, reject) => {
             let category= await categoryModel.findOne({category:new RegExp(productData,'i')},{_id:1})
             let id=category?._id??''

@@ -18,19 +18,18 @@ module.exports = {
 
     user_home: async (req, res) => {
         let category = await categoryModel.find().lean()
-        let products = req.session.productList
         let brands
         let quantities = await userModel.findOne({ _id: req.session.userDetails?._id ?? null }, { user_cart: 1, user_whishList: 1, _id: 0 }).lean()
-        if (products) {
-            brands = category.find(e => e._id == products[0].category)
-        }
+        // if (products) {
+        //     brands = category.find(e => e._id == products[0].category)
+        // }
         if (quantities) {
             quantities.user_whishList = quantities.user_whishList?.length ?? null
             quantities.user_cart = quantities.user_cart?.length ?? null 
         }
         let userName;
         req.session.userDetails ? userName = req.session.userDetails.name : userName = null
-        res.render('user_home', { userName, products, category, brands, quantities })
+        res.render('user_home', { userName,quantities })
     },
 
     home: (req, res) => {

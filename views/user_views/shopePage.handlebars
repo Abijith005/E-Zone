@@ -411,6 +411,7 @@
 
 		function allProducts() {
 			axios.get('/getAllProducts').then((response) => {
+				console.log('hlooooooooo',response)
 				let productsDiv = document.getElementById('newProducts')
 				document.getElementById('filterDiv').innerHTML = ''
 				productsDiv.innerHTML = ""
@@ -471,7 +472,6 @@ ${a}
 			axios.post('/search_product_with_category', { searchInput }).then((response) => {
 				let productsDiv = document.getElementById('newProducts')
 				productsDiv.innerHTML = ""
-				console.log(response)
 				response.data.forEach(item => {
 					let a;
 					if (item.whishList) {
@@ -598,10 +598,7 @@ ${a}
 		}
 
 		document.getElementById('sort').addEventListener('change', (e) => {
-			console.log('iam sortttttttttttttttttttttttttttttttttttttttttttttttt')
 			axios.get('/sortProducts/' + e.target.value).then((response) => {
-				console.log(response)
-
 				let productsDiv = document.getElementById('newProducts')
 				productsDiv.innerHTML = ""
 				response.data.productData.forEach(item => {
