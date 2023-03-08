@@ -55,7 +55,7 @@ router.get('/user_profile',userSession.ifUser, userController.user_profilePage)
 
 router.get('/cart',userSession.ifUser,userController.user_cartPage)
 
-router.get('/add_to_cart/:id',userSession.ifUser,productController.product_to_cart)
+router.get('/add_to_cart/:id',productController.product_to_cart)
 
 router.get('/addAddress',userSession.ifUser,userController.addAddressPage)
 
@@ -101,7 +101,7 @@ router.get('/userOrderUpdate/:id/:product_id/:quantity',ifUser,orderController.u
 
 router.get('/getWhishList',ifUser,userController.getWishList)
 
-router.get('/addToWhishList/:id',ifUser,userController.addToWishList)
+router.get('/addToWhishList/:id',userController.addToWishList)
 
 router.get('/removeFromWishList/:id',ifUser,userController.removeFromWishList)
 

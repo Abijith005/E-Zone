@@ -259,10 +259,8 @@
 			<nav aria-label="Page navigation example" class="text-center">
 				<ul id="pageDiv" class="pagination" style="justify-content: center;">
 					{{#each pagination}}
-					<li class="page-item"><a class="page-link" onclick="paginate('{{inc @index}}')">{{inc
-							@index}}</a></li>
+					<li class="page-item"><a class="page-link" onclick="paginate('{{inc @index}}')">{{inc @index}}</a></li>
 					{{/each}}
-
 				</ul>
 			</nav>
 		</div>
@@ -372,9 +370,7 @@
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script>
 		function paginate(pageNum) {
-			console.log('console pagination')
 			axios.get('/pagination/' + pageNum).then((response) => {
-				console.log(response)
 				let productsDiv = document.getElementById('newProducts')
 				document.getElementById('filterDiv').innerHTML = ''
 				productsDiv.innerHTML = ""
@@ -426,15 +422,13 @@ ${a}
 					productsDiv.appendChild(div)
 
 				})
-				let pageDivv = document.getElementById('pageDIv')
-				console.log(pageDivv.innerHTML)
-				pageDivv.innerHTML = ''
+				let pageDiv = document.getElementById('pageDiv')
+				pageDiv.innerHTML =''
 				response.data.pagination.forEach(item => {
-					console.log('hai')
-					/*liTag = document.createElement('li')
+					let liTag = document.createElement('li')
 					liTag.setAttribute('class', "page-item")
-					liTag.innerHTML = `<a class="page-link" onclick="paginate('${inc @index}')">${inc @index}</a > `
-					pageDiv.appendChild(liTag)*/
+					liTag.innerHTML = `<a class="page-link" onclick="paginate('${item}')">${item}</a > `
+					pageDiv.appendChild(liTag)
 				})
 			})
 
@@ -443,7 +437,7 @@ ${a}
 
 
 		function addToCart(id) {
-			axios.get('/add_to_cart/' + id).then((result) => {
+			axios.get('/add_to_cart/'+id).then((result) => {
 				if (result.data.success) {
 					let cartQuantiy = document.getElementById('cartQuantity')
 					cartQuantiy.textContent = Number(cartQuantiy.textContent) + 1
@@ -454,14 +448,16 @@ ${a}
 			})
 		}
 		function addToWhishList(id) {
-			axios.get('/addToWhishList/' + id).then((result) => {
+			axios.get('/addToWhishList/'+id).then((result) => {
 				if (result.data.success) {
 					let whishListButtonDiv = document.getElementById('whishListButtonDiv' + id)
 					whishListButtonDiv.innerHTML = ''
 					whishListButtonDiv.innerHTML = `<button onclick = "removeFromWhishList('${id}')" class= "add-to-wishlist"> <i style="color: red;" class="fa fa-heart" aria-hidden="true"></i></span ></button> <button onclick="window.location.href='/singleProductPage/${id}'" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quickview</span></button>`
 					let whishListQuantity = document.getElementById('whishListQuantity')
 					whishListQuantity.textContent = Number(whishListQuantity.textContent) + 1
-
+				}
+				else{
+					window.location.href('/user_login')
 				}
 			})
 		}
@@ -481,11 +477,10 @@ ${a}
 
 		function allProducts() {
 			axios.get('/getAllProducts').then((response) => {
-				console.log('hlooooooooo', response)
 				let productsDiv = document.getElementById('newProducts')
 				document.getElementById('filterDiv').innerHTML = ''
 				productsDiv.innerHTML = ""
-				response.data.forEach(item => {
+				response.data.products.forEach(item => {
 					let a;
 					if (item.whishList) {
 						a = `<button onclick = "removeFromWhishList('${item._id}')" class= "add-to-wishlist"><i
@@ -532,6 +527,15 @@ ${a}
 					productsDiv.appendChild(div)
 
 				})
+
+				let pageDiv = document.getElementById('pageDiv')
+				pageDiv.innerHTML =''
+				response.data.pagination.forEach(item => {
+					let liTag = document.createElement('li')
+					liTag.setAttribute('class', "page-item")
+					liTag.innerHTML = `<a class="page-link" onclick="paginate('${item}')">${item}</a > `
+					pageDiv.appendChild(liTag)
+				})
 			})
 		}
 
@@ -541,7 +545,7 @@ ${a}
 			axios.post('/search_product_with_category', { searchInput }).then((response) => {
 				let productsDiv = document.getElementById('newProducts')
 				productsDiv.innerHTML = ""
-				response.data.forEach(item => {
+				response.data.productData.forEach(item => {
 					let a;
 					if (item.whishList) {
 						a = `<button onclick = "removeFromWhishList('${item._id}')" class= "add-to-wishlist" > <i
@@ -589,6 +593,14 @@ ${a}
 				</div > `
 					productsDiv.appendChild(div)
 
+				})
+				let pageDiv = document.getElementById('pageDiv')
+				pageDiv.innerHTML =''
+				response.data.pagination.forEach(item => {
+					let liTag = document.createElement('li')
+					liTag.setAttribute('class', "page-item")
+					liTag.innerHTML = `<a class="page-link" onclick="paginate('${item}')">${item}</a > `
+					pageDiv.appendChild(liTag)
 				})
 			})
 		}
@@ -663,11 +675,21 @@ ${a}
 				})
 				select.addEventListener('change', function () { productFilter(select.value) })
 				filterDiv.appendChild(select)
+
+				let pageDiv = document.getElementById('pageDiv')
+				pageDiv.innerHTML =''
+				response.data.pagination.forEach(item => {
+					let liTag = document.createElement('li')
+					liTag.setAttribute('class', "page-item")
+					liTag.innerHTML = `<a class="page-link" onclick="paginate('${item}')">${item}</a > `
+					pageDiv.appendChild(liTag)
+				})
 			})
 		}
 
 		document.getElementById('sort').addEventListener('change', (e) => {
 			axios.get('/sortProducts/' + e.target.value).then((response) => {
+				console.log(response)
 				let productsDiv = document.getElementById('newProducts')
 				productsDiv.innerHTML = ""
 				response.data.productData.forEach(item => {
@@ -718,6 +740,14 @@ ${a}
 				</div> `
 					productsDiv.appendChild(div)
 
+				})
+				let pageDiv = document.getElementById('pageDiv')
+				pageDiv.innerHTML =''
+				response.data.pagination.forEach(item => {
+					let liTag = document.createElement('li')
+					liTag.setAttribute('class', "page-item")
+					liTag.innerHTML = `<a class="page-link" onclick="paginate('${item}')">${item}</a > `
+					pageDiv.appendChild(liTag)
 				})
 			})
 		})

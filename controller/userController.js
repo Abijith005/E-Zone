@@ -318,24 +318,27 @@ module.exports = {
 
     orderHistory: (req, res) => {
         return new Promise((resolve, reject) => {
-            userModel.findOne({ _id: req.session.userDetails._id }, { orders: 1 }).then((result) => {
+            userModel.findOne({ _id: req.session.userDetails._id }, { orders: 1 }).then(async(result) => {
                 let products = [];
+                let p=[];
                 for (const i of result.orders) {
-                    productModel.findOne({ _id: i.product_id }, { product_name: 1, brandName: 1, price: 1, image: 1 }).lean().then((product) => {
-                        product.quantity = i.quantity
+                  await  productModel.findOne({ _id: i.product_id },{ product_name: 1, brandName: 1, price: 1, image: 1 }).lean().then((product) => {
+                      product.quantity = i.quantity
                         product.totalAmount = product.price * i.quantity
                         product.order_id = i.order_id
-                        if (i.orderStatus == 'cancelled') {
-                            product.orderStatus = false
+                        product.orderDate=new Date(i.orderDate).toLocaleDateString()
+                        product.orderStatus=i.orderStatus
+                        product.cancelStatus=i.cancelStatus
+                        if (i.orderStatus == 'delivered') {
+                            product.deliveryStatus= true
                         }
                         else {
-                            product.orderStatus = true
+                            product.deliveryStatus=false
                         }
                         products.push(product)
                     })
-                }
-                res.render('orderHistory', { result, products })
-                // products = null
+                }                 
+                res.render('orderHistory', { products })
             }).catch(() => {
                 res.send(error404)
             })
@@ -344,12 +347,16 @@ module.exports = {
 
     addToWishList: (req, res) => {
         return new Promise((resolve, reject) => {
-            userModel.updateOne({ _id: req.session.userDetails._id }, { $addToSet: { user_whishList: { product_id: req.params.id } } }).then((result) => {
-                result.modifiedCount ? success = true : success = false;
-                res.json({ success })
-            }).catch(() => {
-                res.send(error404)
-            })
+            if (req.session.userDetails) {
+                userModel.updateOne({ _id: req.session.userDetails._id }, { $addToSet: { user_whishList: { product_id: req.params.id } } }).then((result) => {
+                    result.modifiedCount ? success = true : success = false;
+                    res.json({ success })
+                }).catch(() => {
+                    res.send(error404)
+                })
+            } else {
+                res.json({success:false})
+            }
         })
     },
 

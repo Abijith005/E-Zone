@@ -187,7 +187,8 @@ module.exports = {
     },
 
     userOrderUpdate: (req, res) => {
-        userModel.updateOne({ _id: req.session.userDetails._id, orders: { $elemMatch: { order_id: req.params.id } } }, { $set: { 'orders.$.orderStatus': 'cancelled' } }).then(() => {
+        console.log('hai11111111111111111111111111111111111111111111111111111111111111');
+        userModel.updateOne({ _id: req.session.userDetails._id, orders: { $elemMatch: { order_id: req.params.id } } }, { $set: { 'orders.$.cancelStatus': true,'orders.$.orderStatus':'Cancelled' } }).then(() => {
             productModel.updateOne({ _id: req.params.product_id }, { $inc: { stockQuantity: req.params.quantity } }).then((result) => {
                 res.redirect('/orderHistory')
             })
