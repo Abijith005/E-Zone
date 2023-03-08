@@ -1,0 +1,497 @@
+[33mcommit 0ae2f5f5ddcefb60971e0814870806862ff72039[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Wed Mar 8 01:53:01 2023 +0530
+
+    pagination started
+
+[33mcommit c8dc19aca5fa9add77cfe972545a2c8e1ede2732[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Tue Mar 7 19:59:14 2023 +0530
+
+    sort filter and search are inter connected
+
+[33mcommit 146e63083846086b2e59a599affeb2dc4c3a2395[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Tue Mar 7 16:45:08 2023 +0530
+
+    sort and filter completed
+
+[33mcommit 5969982520ccecd0c7be7e17dea4d0c2145ca948[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Tue Mar 7 01:30:23 2023 +0530
+
+    sort by category finished
+
+[33mcommit bff14aaa20b7f00e5e9acc09beb15efc00ebb337[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Tue Mar 7 00:21:33 2023 +0530
+
+    sort and filter done using axios
+
+[33mcommit 17983abe6111f390b20054c63789c105fb88b812[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Mon Mar 6 00:56:20 2023 +0530
+
+    filter sort progressing on axios
+
+[33mcommit c4cf90f1763ca42db0c6402fe22f4646d3f472b2[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sun Mar 5 19:09:48 2023 +0530
+
+    filter starting
+
+[33mcommit e677b1449fb0b7dcc4d478db04c6c18f3b162360[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sun Mar 5 12:50:55 2023 +0530
+
+    search updation are progressinfg
+
+[33mcommit c7272453cd1caaec01e9b541ea4bbaaaf5cc2034[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sun Mar 5 02:11:36 2023 +0530
+
+    search sort and filters are debugging
+
+[33mcommit f5d198e4dcbc9e03affb436ef0ed7ef2ed661c48[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sun Mar 5 01:26:49 2023 +0530
+
+    shop page updation progressing
+
+[33mcommit 9363d24b795b6a53e0701c2f7b13d28f7f7f9e53[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sat Mar 4 09:23:24 2023 +0530
+
+    sort update progressing
+
+[33mcommit 00def9f4d7c9e89766bd14a3709d83ca26ad2f4f[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sat Mar 4 07:16:00 2023 +0530
+
+    seperate shop page is added
+
+[33mcommit 777c616c90e6ff9ddef227af76637ebabab2959f[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Fri Mar 3 20:07:50 2023 +0530
+
+    coupon edited
+
+[33mcommit 5508c05d5a6043605d84b6a0a0515c6d79faec04[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Fri Mar 3 07:50:58 2023 +0530
+
+    order view in admin side is progressing
+
+[33mcommit c68c9276341c5c3cdaadab81df7ea179c63bf5c6[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Fri Mar 3 00:32:03 2023 +0530
+
+    order status updated
+
+[33mcommit 8a791cdd8d944e019107dd2a0a9a4038d29502e4[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Thu Mar 2 22:57:12 2023 +0530
+
+    banner management starts
+
+[33mcommit e4de2055298997efdb9598ec90168a6b6680c3d0[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Thu Mar 2 18:44:04 2023 +0530
+
+    partials added to admin side
+
+[33mcommit 2803d013c1fa1df65c977eace9d8f9a61f319d71[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Thu Mar 2 17:16:16 2023 +0530
+
+    order history done
+
+[33mcommit 8e5c75cc2c9d5cb4b16f9807ba56f5c3af4f7def[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Wed Mar 1 21:57:49 2023 +0530
+
+    order details updation progressing
+
+[33mcommit 62fa8df25caf4f0a06c20ce170634478fc4e1991[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Tue Feb 28 22:04:09 2023 +0530
+
+    upi payment completed
+
+[33mcommit be07674008e85f28ed970939558ce27be7a2ebfd[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Tue Feb 28 19:13:12 2023 +0530
+
+    some changes changed
+
+[33mcommit f141fa36d166c7a83743725fa9f598c17daadc79[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Tue Feb 28 00:36:25 2023 +0530
+
+    sort filter completed
+
+[33mcommit 284199879bcee0f77490741144ffde1dd5d44cb9[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sun Feb 26 21:42:47 2023 +0530
+
+    sort progressing
+
+[33mcommit df63f165f996dc35a571231380c77715a59fd56d[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Fri Feb 24 00:49:17 2023 +0530
+
+    checkout complted
+
+[33mcommit 197b7535c58f88153b846d8736fe0eae5ab5732f[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Thu Feb 23 14:40:03 2023 +0530
+
+    axios done
+
+[33mcommit 88f86ed4e23fbd7a1e0bff8c484dccf28d96bff6[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Thu Feb 23 09:32:39 2023 +0530
+
+    coupon ended
+
+[33mcommit b152d54f675bff5f5bbdf2eb4858ffce44a647ca[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Thu Feb 23 00:04:38 2023 +0530
+
+    coupon added
+
+[33mcommit 750c88573a6766b47828b04f2402707029326ea5[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Wed Feb 22 14:56:05 2023 +0530
+
+    cart empty page added
+
+[33mcommit c48b91b78d1957773de021a987930c91a151298d[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sun Feb 19 17:39:23 2023 +0530
+
+    edit product completed
+
+[33mcommit d5418faab40f0e4e6dd0f16716779cfd00eb7616[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sun Feb 19 10:13:41 2023 +0530
+
+    404 page done
+
+[33mcommit cdf2cab147d9066c197a366cb3b25d63516680cc[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sun Feb 19 00:27:53 2023 +0530
+
+    wish list completed
+
+[33mcommit bed9f3b9ca42d984f4804fb04975c44e89959084[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sat Feb 18 08:32:29 2023 +0530
+
+    starting whish list
+
+[33mcommit 1d823363e9d30524c85104bc284502da8cbbb2a8[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sat Feb 18 01:20:25 2023 +0530
+
+    order deliver and cancel done
+
+[33mcommit 34255c230178e0ec0102a8cc8dd4616b4b783301[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Fri Feb 17 21:13:15 2023 +0530
+
+    order cancell completed
+
+[33mcommit 9d31fc02ef4b00b52ec7df491c92c9183cd45bf7[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Fri Feb 17 19:57:11 2023 +0530
+
+    order history completed 90%
+
+[33mcommit 1fe1c34a258e0886d61a95c6cc29340397d7ecc6[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Thu Feb 16 21:55:25 2023 +0530
+
+    order cancel done
+
+[33mcommit 864c7678c7f86aac61718b68b17d057d21a33ac3[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Thu Feb 16 19:45:44 2023 +0530
+
+    order cancel admin side completed
+
+[33mcommit 2bb16de1d8c1208dca0cad562d8321b4063647d7[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Thu Feb 16 00:08:29 2023 +0530
+
+    cod completed
+
+[33mcommit ffc9268895f666d527642fd303c057be4986bb92[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Wed Feb 15 10:07:08 2023 +0530
+
+    checkout and order page is on going
+
+[33mcommit 98fb5732796ca8477d4c8d4c83288fd54bb0eae9[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Tue Feb 14 09:25:04 2023 +0530
+
+    cart completed
+
+[33mcommit 319425fc7ec1328ed125c2d6cd22d9bf45abc41f[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sun Feb 12 22:36:34 2023 +0530
+
+    dsfd
+
+[33mcommit f915876d4e08c6a227521b38be8623b13fc22291[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sun Feb 12 06:06:20 2023 +0530
+
+    product adding
+
+[33mcommit 5a529f8a01936129482fb760ec528d17c0206838[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sat Feb 11 20:43:05 2023 +0530
+
+    cart price calculation done
+
+[33mcommit dd5a848ed1f249908cea22e55c65e235021d3829[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sat Feb 11 00:40:32 2023 +0530
+
+    quantity increase and decrease completed
+
+[33mcommit e6c0944b120f816d8333ae7175e999bcdacb5b4a[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Fri Feb 10 20:20:46 2023 +0530
+
+    cart added
+
+[33mcommit 910c243108df04b956c5e3196128641af49f92bf[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Fri Feb 10 09:20:24 2023 +0530
+
+    mongoose completed
+
+[33mcommit 7d79c2aa1c972c805be87ced494df72a7fbac27b[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Thu Feb 9 12:47:49 2023 +0530
+
+    image zoom completed changing to mongoose
+
+[33mcommit 5a24a6416e04472fb8a5d9a89f0f81e2a11e92be[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Wed Feb 8 19:51:06 2023 +0530
+
+    address added edited
+
+[33mcommit 466938454fa1b007235a6b1e3e244762b4e6f1ba[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Wed Feb 8 07:43:47 2023 +0530
+
+    working on address deletion
+
+[33mcommit 74ab7d13406c34a38df0f18d712f9f8ce9e33e07[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Tue Feb 7 22:55:01 2023 +0530
+
+    profile added
+
+[33mcommit 7eb83fa545db59591e7439425c33e6fa3be8ceef[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Tue Feb 7 17:58:25 2023 +0530
+
+    session middleware setted
+
+[33mcommit 6ff86a95eab91608e8d1276a4630b75dd7127f6c[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Tue Feb 7 10:42:35 2023 +0530
+
+    starting admin profile
+
+[33mcommit 669fb9db3881d842807d51ee93fc08f620870218[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Mon Feb 6 16:32:02 2023 +0530
+
+    added pattern matching
+
+[33mcommit 7706091f8635956a3b839971b6098afec8a0de7f[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Mon Feb 6 11:41:18 2023 +0530
+
+    session and category updated
+
+[33mcommit 2da35b1a080b5cfe89b0d26e0f149244ae61711c[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sun Feb 5 23:59:26 2023 +0530
+
+    log out completed
+
+[33mcommit d57e14b7e7a386667442bb1470baf5fbd085f84e[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sun Feb 5 23:48:54 2023 +0530
+
+    category edit completed
+
+[33mcommit 668fe6d29ab2700df4d7ce38174be8ba2dc73f7a[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sun Feb 5 19:25:36 2023 +0530
+
+    session completed in admin side
+
+[33mcommit 11f6acee54653aaa200edea268772637cee5bb7c[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sun Feb 5 18:46:25 2023 +0530
+
+    sessiom started
+
+[33mcommit b63d335ca37c825c03cf084cb289a93e5e25abfb[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sun Feb 5 09:59:01 2023 +0530
+
+    done searching with and operator
+
+[33mcommit 01934d7fe5e37301bf58965692362a3993ad5f69[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sun Feb 5 09:23:45 2023 +0530
+
+    product searching with category and search input progressing
+
+[33mcommit 17fa2b17cd799a1df65a7d0fd545d1f815ce90c4[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sun Feb 5 07:44:59 2023 +0530
+
+    search product edited
+
+[33mcommit 5d326c60659293b7458089e10d46b540b095e98d[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sun Feb 5 01:23:53 2023 +0530
+
+    added to cart
+
+[33mcommit 9d905fe3020e9bb26f707118f0bfcd3a6c26f388[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sat Feb 4 22:33:47 2023 +0530
+
+    added to cart
+
+[33mcommit 15c279d5a3951e2ff3b02d84d657440220c34d84[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sat Feb 4 20:20:01 2023 +0530
+
+    ui edited product added and displayed
+
+[33mcommit eaf1786741bbe2812c7d7a68686651ec0f7df4d4[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Sat Feb 4 11:06:26 2023 +0530
+
+    user profile done
+
+[33mcommit 2330090908c042cf703dddd17712c73493879bd5[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Fri Feb 3 16:06:00 2023 +0530
+
+    added profile page
+
+[33mcommit f99698a5fb86a7f0310679455c2353d11cf9184e[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Fri Feb 3 14:09:47 2023 +0530
+
+    user name displayed
+
+[33mcommit 10329fc779c8267de65b7cf355788c6bcc50339a[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Fri Feb 3 09:22:20 2023 +0530
+
+    otp resend done
+
+[33mcommit c05ce3273f893bcad5d42fa881f3c35fde8774cc[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Fri Feb 3 07:55:01 2023 +0530
+
+    category management added
+
+[33mcommit d2b0d52691fc5b77d053aa34d99dd6522fa00e38[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Thu Feb 2 06:26:49 2023 +0530
+
+    category management added
+
+[33mcommit ae71247eca768913fa53e57b2c09ca1cbef72471[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Wed Feb 1 20:54:01 2023 +0530
+
+    otp resend with countdown
+
+[33mcommit e9e404d87717002047475b04c5286415764c8c16[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Wed Feb 1 19:38:18 2023 +0530
+
+    completed otp
+
+[33mcommit ba1b20b972fefe04a1e5f1e349884e88c6373f80[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Wed Feb 1 18:27:22 2023 +0530
+
+    product listed
+
+[33mcommit 0e5c20fce159477ca0e030fff01cf45702eb3c24[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Wed Feb 1 08:16:14 2023 +0530
+
+    forgot password hbs edited
+
+[33mcommit 31cfe09e29615361fe0a2600e175f815e6dbe778[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Wed Feb 1 06:47:24 2023 +0530
+
+    forgot password otp send
+
+[33mcommit b0c144c46f6ab32a2094a0f5602ec22859c1ff64[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Wed Feb 1 00:17:15 2023 +0530
+
+    image added successfully
+
+[33mcommit dcea04970fbc093f631e8c71d28ec5804ab54552[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Tue Jan 31 20:28:27 2023 +0530
+
+    image multer added
+
+[33mcommit 8ec8f4bdf5c341cdd3b616c2eec4949439dbd7c8[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Tue Jan 31 17:58:47 2023 +0530
+
+    otp added with invalid  message
+
+[33mcommit 628bd106fab515510f4397068959de9a294f5be6[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Tue Jan 31 10:00:12 2023 +0530
+
+    otp added
+
+[33mcommit a24fc66039578ba140a6ae372d5e0fee97f78144[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Tue Jan 31 07:20:11 2023 +0530
+
+    category
+
+[33mcommit 3a57f89046168e86fe0b6268ff6939149b45398d[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Mon Jan 30 20:47:18 2023 +0530
+
+    updated services
+
+[33mcommit 752d2f5d5f2881d0a95c53282f523220e889bdc0[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Mon Jan 30 18:14:47 2023 +0530
+
+    mvc completed
+
+[33mcommit d34f6d5958c8bc4c00c8c373a87b32b07ff75107[m
+Author: Abijith005 <abijithsurendran005@gmail.com>
+Date:   Mon Jan 30 16:48:02 2023 +0530
+
+    initial commit

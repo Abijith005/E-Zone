@@ -128,3 +128,77 @@ else {
                             });
                           
                       },
+
+
+
+
+
+                      function paginate(pageNum) {
+                        console.log('console pagination')
+                        axios.get('/pagination/' + pageNum).then((response) => {
+                          console.log(response)
+                          let productsDiv = document.getElementById('newProducts')
+                          document.getElementById('filterDiv').innerHTML = ''
+                          productsDiv.innerHTML = ""
+                          response.data.productData.forEach(item => {
+                            let a;
+                            if (item.whishList) {
+                              a = `<button onclick="removeFromWhishList('${item._id}')" class="add-to-wishlist"><i
+                                  style="color: red;" class="fa fa-heart" aria-hidden="true"></i></i></span></button>
+                          <button onclick="window.location.href='/singleProductPage/{{this._id}}'"
+                                  class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick
+                                    view</span></button>`
+                            }
+                            else {
+                              a = `<button  onclick="addToWhishList('${item._id}')"
+                              class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to
+                                  wishlist</span></button> 
+                          <button onclick="window.location.href='/singleProductPage/{{this._id}}'"
+                                  class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick
+                                    view</span></button>`
+                            }
+                            let div = document.createElement('div')
+                            div.setAttribute('class', "col-md-4 col-xs-6")
+                            div.innerHTML = `<div class="product">
+                            <a href="/singleProductPage/${item._id}">
+                              <div class="product-img">
+                                <img style="height:150px; object-fit:contain" src="/images/${item.image[0].filename}"
+                                  alt="">
+                              </div>
+                            </a>
+                            <div class="product-body" style="height: 14rem;">
+                              <p class="product-category">${item.category}</p>
+                              <h3 class="product-name"><a href="#">{{this.product_name}}</a></h3>
+                              <h3 class="product-name">${item.brandName}</h3>
+                              <h4 class="product-price">₹${item.price}/- <del
+                                  class="product-old-price">₹${item.price}/-</del>
+                              </h4>
+                              <div class="product-btns" id="whishListButtonDiv${item._id}">
+                  ${a}
+                            </div>
+                            </div>
+                            <div class="add-to-cart text-center">
+                  
+                              <button onclick="addToCart('${item._id}')" class="add-to-cart-btn mt-4 mb-2"><i
+                                  class="fa fa-shopping-cart"></i> add to
+                                cart</button>
+                            </div>
+                  
+                          </div >`
+                            productsDiv.appendChild(div)
+                  
+                          })
+                          /*let pageDivv = document.getElementById('pageDIv')
+                          console.log(pageDivv.innerHTML)
+                          pageDivv.innerHTML = ''
+                          response.data.pagination.forEach(item => {
+                            console.log('hai')
+                            liTag = document.createElement('li')
+                            liTag.setAttribute('class', "page-item")
+                            liTag.innerHTML = `<a class="page-link" onclick="paginate('${inc @index}')">${inc @index}</a > `
+                            pageDiv.appendChild(liTag)
+                          })*/
+                        })
+                  
+                  
+                      }

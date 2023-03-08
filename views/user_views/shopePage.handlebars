@@ -458,7 +458,7 @@ ${a}
 				if (result.data.success) {
 					let whishListButtonDiv = document.getElementById('whishListButtonDiv' + id)
 					whishListButtonDiv.innerHTML = ''
-					whishListButtonDiv.innerHTML = `< button onclick = "removeFromWhishList('${id}')" class= "add-to-wishlist" > <i style="color: red;" class="fa fa-heart" aria-hidden="true"></i></span ></button > <button onclick="window.location.href='/singleProductPage/${id}'" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quickview</span></button>`
+					whishListButtonDiv.innerHTML = `<button onclick = "removeFromWhishList('${id}')" class= "add-to-wishlist"> <i style="color: red;" class="fa fa-heart" aria-hidden="true"></i></span ></button> <button onclick="window.location.href='/singleProductPage/${id}'" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quickview</span></button>`
 					let whishListQuantity = document.getElementById('whishListQuantity')
 					whishListQuantity.textContent = Number(whishListQuantity.textContent) + 1
 
@@ -471,7 +471,7 @@ ${a}
 				if (result.data.success) {
 					let whishListButtonDiv = document.getElementById('whishListButtonDiv' + id)
 					whishListButtonDiv.innerHTML = ''
-					whishListButtonDiv.innerHTML = `< button onclick = "addToWhishList('${id}')" class= "add-to-wishlist" ><i class="fa fa-heart-o"></i><span class="tooltipp">add towishlist</span></button > <button onclick="window.location.href='/singleProductPage/${id}'" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quickview</span></button>`
+					whishListButtonDiv.innerHTML = `<button onclick = "addToWhishList('${id}')" class= "add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add towishlist</span></button> <button onclick="window.location.href='/singleProductPage/${id}'" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quickview</span></button>`
 					let whishListQuantity = document.getElementById('whishListQuantity')
 					whishListQuantity.textContent = Number(whishListQuantity.textContent) - 1
 
@@ -488,23 +488,23 @@ ${a}
 				response.data.forEach(item => {
 					let a;
 					if (item.whishList) {
-						a = `< button onclick = "removeFromWhishList('${item._id}')" class= "add-to-wishlist" > <i
-				style="color: red;" class="fa fa-heart" aria-hidden="true"></i></i ></span ></button >
+						a = `<button onclick = "removeFromWhishList('${item._id}')" class= "add-to-wishlist"><i
+				style="color: red;" class="fa fa-heart" aria-hidden="true"></i></i ></span ></button>
 			<button onclick="window.location.href='/singleProductPage/{{this._id}}'"
 				class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick
 					view</span></button>`
 					}
 					else {
-						a = `< button  onclick = "addToWhishList('${item._id}')"
+						a = `<button  onclick = "addToWhishList('${item._id}')"
             class= "add-to-wishlist" ><i class="fa fa-heart-o"></i><span class="tooltipp">add to
-                wishlist</span></button >
+                wishlist</span></button>
 			<button onclick="window.location.href='/singleProductPage/{{this._id}}'"
 				class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick
 					view</span></button>`
 					}
 					let div = document.createElement('div')
 					div.setAttribute('class', "col-md-4 col-xs-6")
-					div.innerHTML = `< div class= "product" >
+					div.innerHTML = `<div class= "product" >
 					<a href="/singleProductPage/${item._id}">
 						<div class="product-img">
 							<img style="height:150px; object-fit:contain" src="/images/${item.image[0].filename}"
@@ -528,8 +528,7 @@ ${a}
 								class="fa fa-shopping-cart"></i> add to
 							cart</button>
 					</div>
-
-				</div > `
+				</div> `
 					productsDiv.appendChild(div)
 
 				})
@@ -545,23 +544,23 @@ ${a}
 				response.data.forEach(item => {
 					let a;
 					if (item.whishList) {
-						a = `< button onclick = "removeFromWhishList('${item._id}')" class= "add-to-wishlist" > <i
-				style="color: red;" class="fa fa-heart" aria-hidden="true"></i></i ></span ></button >
+						a = `<button onclick = "removeFromWhishList('${item._id}')" class= "add-to-wishlist" > <i
+				style="color: red;" class="fa fa-heart" aria-hidden="true"></i></i ></span ></button>
 			<button onclick="window.location.href='/singleProductPage/{{this._id}}'"
 				class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick
 					view</span></button>`
 					}
 					else {
-						a = `< button  onclick = "addToWhishList('${item._id}')"
+						a = `<button  onclick = "addToWhishList('${item._id}')"
             class= "add-to-wishlist" ><i class="fa fa-heart-o"></i><span class="tooltipp">add to
-                wishlist</span></button >
+                wishlist</span></button>
 			<button onclick="window.location.href='/singleProductPage/{{this._id}}'"
 				class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick
 					view</span></button>`
 					}
 					let div = document.createElement('div')
 					div.setAttribute('class', "col-md-4 col-xs-6")
-					div.innerHTML = `< div class= "product" >
+					div.innerHTML = `<div class= "product" >
 					<a href="/singleProductPage/${item._id}">
 						<div class="product-img">
 							<img style="height:150px; object-fit:contain" src="/images/${item.image[0].filename}"
@@ -601,23 +600,23 @@ ${a}
 				response.data.productData.forEach(item => {
 					let a;
 					if (item.whishList) {
-						a = `< button onclick = "removeFromWhishList('${item._id}')" class= "add-to-wishlist" > <i
-				style="color: red;" class="fa fa-heart" aria-hidden="true"></i></i ></span ></button >
+						a = `<button onclick = "removeFromWhishList('${item._id}')" class= "add-to-wishlist" > <i
+				style="color: red;" class="fa fa-heart" aria-hidden="true"></i></i ></span ></button>
 			<button onclick="window.location.href='/singleProductPage/{{this._id}}'"
 				class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick
 					view</span></button>`
 					}
 					else {
-						a = `< button  onclick = "addToWhishList('${item._id}')"
+						a = `<button  onclick = "addToWhishList('${item._id}')"
             class= "add-to-wishlist" ><i class="fa fa-heart-o"></i><span class="tooltipp">add to
-                wishlist</span></button >
+                wishlist</span></button>
 			<button onclick="window.location.href='/singleProductPage/{{this._id}}'"
 				class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick
 					view</span></button>`
 					}
 					let div = document.createElement('div')
 					div.setAttribute('class', "col-md-4 col-xs-6")
-					div.innerHTML = `< div class= "product" >
+					div.innerHTML = `<div class= "product" >
 					<a href="/singleProductPage/${item._id}">
 						<div class="product-img">
 							<img style="height:150px; object-fit:contain" src="/images/${item.image[0].filename}"
@@ -674,23 +673,23 @@ ${a}
 				response.data.productData.forEach(item => {
 					let a;
 					if (item.whishList) {
-						a = `< button onclick = "removeFromWhishList('${item._id}')" class= "add-to-wishlist" > <i
-				style="color: red;" class="fa fa-heart" aria-hidden="true"></i></i ></span ></button >
+						a = `<button onclick = "removeFromWhishList('${item._id}')" class= "add-to-wishlist" > <i
+				style="color: red;" class="fa fa-heart" aria-hidden="true"></i></i ></span ></button>
 			<button onclick="window.location.href='/singleProductPage/{{this._id}}'"
 				class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick
 					view</span></button>`
 					}
 					else {
-						a = `< button  onclick = "addToWhishList('${item._id}')"
-            class= "add-to-wishlist" ><i class="fa fa-heart-o"></i><span class="tooltipp">add to
-                wishlist</span></button >
+						a = `<button  onclick = "addToWhishList('${item._id}')"
+            class= "add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to
+                wishlist</span></button>
 			<button onclick="window.location.href='/singleProductPage/{{this._id}}'"
 				class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick
 					view</span></button>`
 					}
 					let div = document.createElement('div')
 					div.setAttribute('class', "col-md-4 col-xs-6")
-					div.innerHTML = `< div class= "product" >
+					div.innerHTML = `<div class= "product">
 					<a href="/singleProductPage/${item._id}">
 						<div class="product-img">
 							<img style="height:150px; object-fit:contain" src="/images/${item.image[0].filename}"
@@ -716,7 +715,7 @@ ${a}
 							cart</button>
 					</div>
 
-				</div > `
+				</div> `
 					productsDiv.appendChild(div)
 
 				})
@@ -730,23 +729,23 @@ ${a}
 				response.data.productData.forEach(item => {
 					let a;
 					if (item.whishList) {
-						a = `< button onclick = "removeFromWhishList('${item._id}')" class= "add-to-wishlist" > <i
-				style="color: red;" class="fa fa-heart" aria-hidden="true"></i></i ></span ></button >
+						a = `<button onclick = "removeFromWhishList('${item._id}')" class= "add-to-wishlist"> <i
+				style="color: red;" class="fa fa-heart" aria-hidden="true"></i></i ></span ></button>
 			<button onclick="window.location.href='/singleProductPage/{{this._id}}'"
 				class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick
 					view</span></button>`
 					}
 					else {
-						a = `< button  onclick = "addToWhishList('${item._id}')"
+						a = `<button  onclick = "addToWhishList('${item._id}')"
             class= "add-to-wishlist" ><i class="fa fa-heart-o"></i><span class="tooltipp">add to
-                wishlist</span></button >
+                wishlist</span></button>
 			<button onclick="window.location.href='/singleProductPage/{{this._id}}'"
 				class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick
 					view</span></button>`
 					}
 					let div = document.createElement('div')
 					div.setAttribute('class', "col-md-4 col-xs-6")
-					div.innerHTML = `< div class= "product" >
+					div.innerHTML = `<div class= "product">
 					<a href="/singleProductPage/${item._id}">
 						<div class="product-img">
 							<img style="height:150px; object-fit:contain" src="/images/${item.image[0].filename}"
@@ -772,7 +771,7 @@ ${a}
 							cart</button>
 					</div>
 
-				</div >`
+				</div>`
 					productsDiv.appendChild(div)
 
 				})
