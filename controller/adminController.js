@@ -55,11 +55,12 @@ module.exports = {
                 let date=result[0].orders[0].orderDate
                 for (const i of result) {
                     for (const j of i.orders) {
-                        categoryModel.findOne({_id:j.category},{category:1}).then((data)=>{
+                       await categoryModel.findOne({_id:j.category},{category:1}).then((data)=>{
                             j.orderDate=j.orderDate.toLocaleString()
                             j.category=data.category
                             j.orderStatus=='shipped'||j.orderStatus=='delivered'?j.shipped=true:j.shipped=false
                             j.orderStatus=='delivered'?j.delivered=true:j.delivered=false
+                            j.orderStatus=='returned'?j.returnStatus=true:j.returnStatus=false
                         })
                     }
                 }

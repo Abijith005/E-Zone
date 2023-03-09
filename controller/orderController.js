@@ -103,27 +103,28 @@ module.exports = {
             let data = req.body
             let { user_cart } = await userModel.findOne({ _id: req.session.userDetails._id }, { user_cart: 1, _id: 0 })
             if (req.body.paymentMethod == "Cash On Delivery") {
-            for (const i of user_cart) {
-                orderId = createId()
-                let product = await productModel.findOne({ _id: i.id })
-                let amount = product.price * i.quantity
-                userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod: data.paymentMethod, product_id: product._id, productName: product.product_name, category: product.category, quantity: i.quantity, couponStatus: data.couponStatus, totalAmount: amount, orderDate:new Date(), orderStatus: 'pending', cancelStatus: false } } }).then(() => {
+let compountOrder_id=createId()
+                for (const i of user_cart) {
+                    let orderId = createId()
+                    let product = await productModel.findOne({ _id: i.id })
+                    let amount = product.price * i.quantity
+                    userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod: data.paymentMethod, product_id: product._id, productName: product.product_name, category: product.category, quantity: i.quantity, couponStatus: data.couponStatus, totalAmount: amount, orderDate: new Date(), orderStatus: 'pending', cancelStatus: false } } }).then(() => {
+                        resolve()
+                    })
+                }
+                userModel.updateOne({ _id: req.session.userDetails._id }, { $unset: { user_cart: {} } }).then((result) => {
+                    res.json({ COD: true })
                     resolve()
                 })
             }
-            userModel.updateOne({ _id: req.session.userDetails._id }, { $unset: { user_cart: {} } }).then((result) => {
-                res.json({ COD:true})
-                resolve()
-            })
-        }
-        else {
-            let orderId = createId()
-            userService.generateRazorPay(orderId, data.totalPrice).then((result) => {
-                result.UPI = true
-                res.json({ result })
-            })
-        }
-         // if (req.body.paymentMethod == "Cash On Delivery") {
+            else {
+                let orderId = createId()
+                userService.generateRazorPay(orderId, data.totalPrice).then((result) => {
+                    result.UPI = true
+                    res.json({ result })
+                })
+            }
+            // if (req.body.paymentMethod == "Cash On Delivery") {
             //     if (Array.isArray(data.products_id)) {
             //         for (let i = 0; i < data.products_id.length; i++) {
             //             console.log('added to data base');
@@ -147,8 +148,24 @@ module.exports = {
             //         resolve()
             //     })
             // }
-            
+
         })
+    },
+
+    verifyOrder: (req, res) => {
+        // verifyPayment:(details)=>{
+        return new Promise((resolve, reject) => {
+            let crypto = require('crypto')
+            let hamc = crypto.createHmac('sha256', process.env.KEY_SECRET)
+            hamc.update(details.payment.razorpay_order_id + '|' + details.payment.razorpay_payment_id)
+            hamc = hamc.digest('hex')
+            if (hamc == details.payment.razorpay_signature) {
+                resolve()
+            } else {
+                reject()
+            }
+        });
+        //    },
     },
 
     orderSuccess: (req, res) => {
@@ -176,8 +193,8 @@ module.exports = {
             else {
                 userModel.updateOne({ _id: req.params.user_id, orders: { $elemMatch: { order_id: req.params.id } } }, { $set: { 'orders.$.cancelStatus': true } }).then((result) => {
                     userModel.updateOne({ _id: req.params.user_id, orders: { $elemMatch: { order_id: req.params.id } } }, { $set: { 'orders.$.orderStatus': 'cancelled' } }).then((result) => {
-                    res.redirect('/admin/order_Details')
-                })
+                        res.redirect('/admin/order_Details')
+                    })
                 }).catch(() => {
                     res.send(error404)
                 })
@@ -187,25 +204,41 @@ module.exports = {
     },
 
     userOrderUpdate: (req, res) => {
-        console.log('hai11111111111111111111111111111111111111111111111111111111111111');
-        userModel.updateOne({ _id: req.session.userDetails._id, orders: { $elemMatch: { order_id: req.params.id } } }, { $set: { 'orders.$.cancelStatus': true,'orders.$.orderStatus':'Cancelled' } }).then(() => {
-            productModel.updateOne({ _id: req.params.product_id }, { $inc: { stockQuantity: req.params.quantity } }).then((result) => {
+        console.log(req.params.cond);
+        if (req.params.cond == 'return') {
+            userModel.updateOne({ _id: req.session.userDetails._id, orders: { $elemMatch: { order_id: req.params.id } } }, { $set: { 'orders.$.cancelStatus': true, 'orders.$.orderStatus': 'returned', returnDate: new Date() } }).then(() => {
                 res.redirect('/orderHistory')
             })
-        }).catch(() => {
-            res.send(error404)
-        })
+        } else {
+            userModel.updateOne({ _id: req.session.userDetails._id, orders: { $elemMatch: { order_id: req.params.id } } }, { $set: { 'orders.$.cancelStatus': true, 'orders.$.orderStatus': 'cancelled' } }).then(() => {
+                productModel.updateOne({ _id: req.params.product_id }, { $inc: { stockQuantity: req.params.cond } }).then(() => {
+                    res.redirect('/orderHistory')
+                })
+            }).catch(() => {
+                res.send(error404)
+            })
+        }
     },
 
     couponApply: (req, res) => {
         couponModel.findOne({ couponCode: req.body.couponCode }).then((result) => {
-            if (result.startDate.getTime() < new Date().getTime() && result.endDate.getTime() > new Date().getTime() && req.body.totalAmount >= result.minPurchaseAmount) {
-                let discountedAmount = req.session.totalAmount - result.discountAmount;
-                res.json({ ...result, totalAmount: discountedAmount, success: true })
-            }
-            else {
-                res.json()
-
+            if (result) {
+                if (result.startDate.getTime() < new Date().getTime() && result.endDate.getTime() > new Date().getTime() && req.body.totalAmount >= result.minPurchaseAmount) {
+                    let discountedAmount = req.session.totalAmount - result.discountAmount;
+                    res.json({ ...result, totalAmount: discountedAmount, success: true })
+                }
+                else {
+                    if (req.body.totalAmount < result.minPurchaseAmount) {
+                        res.json({ coupon: 'min Amount Reqired' })
+                    } else if (result.endDate.getTime() < new Date().getTime()) {
+                        res.json({ coupon: 'expired' })
+                    }
+                    else {
+                        res.json({ coupon: 'not found' })
+                    }
+                }
+            } else {
+                res.json({ coupon: 'not found' })
             }
         })
     }

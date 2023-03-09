@@ -266,7 +266,7 @@
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script>
 		function changeQuantity(id, cond) {
-			let quantity = parseInt(document.getElementById('quantityBox' + id).value)
+			let quantity = parseInt(document.getElementById('quantityBox'+ id).value)
 			axios.post('/changeQuantity', { id, quantity, cond, }).then((result) => {
 				if (result.data.success) {
 					let quantityBox = document.getElementById("quantityBox" + id);
@@ -280,7 +280,7 @@
 						document.getElementById('total').innerHTML = `₹:${result.data.totalAmount}/-`
 					}
 				} else {
-					document.getElementById('message' + id).innerHTML = result.data.message					/*window.location.reload()*/
+					document.getElementById('message' + id).innerHTML = result.data.message				
 				}
 			})
 		}

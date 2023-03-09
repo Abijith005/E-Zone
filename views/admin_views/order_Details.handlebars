@@ -87,6 +87,9 @@
           <td>{{this.quantity}}</td>
           <td>₹: {{this.totalAmount}} /-</td>
           <td>
+            {{#if this.returnStatus}}
+            <button class="btn btn-info" type="button" data-bs-toggle="dropdown" aria-expanded="false">Returned</button>
+            {{else}}
             {{#if this.cancelStatus }}
             <button class="btn btn-danger" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               Cancelled
@@ -107,7 +110,6 @@
               {{this.orderStatus}}
             </button>
             {{/unless}}
-
             <ul class="dropdown-menu">
               {{#unless this.shipped}}
               <li><a class="dropdown-item"
@@ -118,9 +120,10 @@
                   href="adminOrderUpdate/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}/delivered">Delivered</a>
               </li>
               <li> <a class="dropdown-item"
-                  href="adminOrderUpdate/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}/cancelled">Cancelled</a>
+                  href="adminOrderUpdate/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}/cancelled">Cancel</a>
               </li>
             </ul>
+            {{/if}}
             {{/if}}
 
   </div>

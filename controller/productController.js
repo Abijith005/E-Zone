@@ -64,7 +64,7 @@ module.exports = {
 
     getShopPage: async (req, res) => {
         try {
-            req.session.productPerPage = 3;
+            req.session.productPerPage = 6;
             req.session.searchInput = null
             req.session.filterProducts = null
             req.session.sortValue = null

@@ -331,6 +331,9 @@ module.exports = {
                         product.cancelStatus=i.cancelStatus
                         if (i.orderStatus == 'delivered') {
                             product.deliveryStatus= true
+                        }else if(i.orderStatus=='returned'){
+                            
+                             product.returnStatus=true
                         }
                         else {
                             product.deliveryStatus=false
@@ -398,6 +401,10 @@ module.exports = {
             })
 
         })
+    },
+
+    returnProduct:(req,res)=>{
+userModel.updateOne({_id:req.session.userDetails._id},{})
     }
 
 }

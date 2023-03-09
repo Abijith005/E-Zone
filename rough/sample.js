@@ -88,7 +88,7 @@ else {
 
 
 
-                    userHome: (req, res) => {
+                 /*   userHome: (req, res) => {
                         try {
                           req.session.pageNum=parseInt(req.query.page??1) 
                           req.session.perpage=4;
@@ -188,7 +188,7 @@ else {
                             productsDiv.appendChild(div)
                   
                           })
-                          /*let pageDivv = document.getElementById('pageDIv')
+                          let pageDivv = document.getElementById('pageDIv')
                           console.log(pageDivv.innerHTML)
                           pageDivv.innerHTML = ''
                           response.data.pagination.forEach(item => {
@@ -197,8 +197,8 @@ else {
                             liTag.setAttribute('class', "page-item")
                             liTag.innerHTML = `<a class="page-link" onclick="paginate('${inc @index}')">${inc @index}</a > `
                             pageDiv.appendChild(liTag)
-                          })*/
+                          })
                         })
                   
                   
-                      }
+                      }*/
