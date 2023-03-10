@@ -211,12 +211,13 @@ module.exports = {
     product_to_cart: (req, res) => {
         if (req.session.userDetails) {
             userService.user_add_to_cart(req.session.userDetails._id, req.params.id).then((result) => {
+                result.login=true
                 res.json(result)
             }).catch(() => {
                 res.send(error404)
             })
         } else {
-            res.redirect('/user_login')
+            res.json({login:false})
         }
 
     },

@@ -9,7 +9,7 @@ var datas;
 module.exports = {
 
     admin_loginPage: (req, res) => {
-            res.render('admin_login')
+        res.render('admin_login')
     },
 
     admin_login: (req, res) => {
@@ -20,61 +20,64 @@ module.exports = {
             }
             else
                 res.redirect('/admin')
-        }).catch(()=>{
+        }).catch(() => {
             res.send(error404)
         })
     },
 
-    admin_home: (req, res) => {
-            res.render('admin_home')
+    admin_home: async (req, res) => {
+        let product = await userModel.aggregate([{ $unwind: '$orders' }, { $match: { 'orders.orderStatus': 'delivered' } }, { $group: { _id: { year: { $year: '$orders.orderDate' }, month: { $month: '$orders.orderDate' } }, revenue: { $sum: "$orders.totalOrderAmount" } } }])
+        console.log(product);
+        product.map
+        res.render('admin_home')
     },
 
     admin_product: (req, res) => {
-            adminService.list_product().then((result) => {
-                res.render('product', { result })
-            }).catch(()=>{
-                res.send(error404)
-            })
+        adminService.list_product().then((result) => {
+            res.render('product', { result })
+        }).catch(() => {
+            res.send(error404)
+        })
     },
 
     admin_userDetails: (req, res) => {
-            adminService.user_details().then((result) => {
-                if (datas) {
-                    result = datas
-                }
-                res.render('user_Details', { result })
-                datas = null;
-            }).catch(()=>{
-                res.send(error404)
-            })
+        adminService.user_details().then((result) => {
+            if (datas) {
+                result = datas
+            }
+            res.render('user_Details', { result })
+            datas = null;
+        }).catch(() => {
+            res.send(error404)
+        })
     },
 
     admin_orderDetails: (req, res) => {
         return new Promise((resolve, reject) => {
-            userModel.find({orders:{$ne:[]}},{name:1,orders:1}).lean().then(async(result)=>{
-                let date=result[0].orders[0].orderDate
+            userModel.find({ orders: { $ne: [] } }, { name: 1, orders: 1 }).lean().then(async (result) => {
+                let date = result[0].orders[0].orderDate
                 for (const i of result) {
                     for (const j of i.orders) {
-                       await categoryModel.findOne({_id:j.category},{category:1}).then((data)=>{
-                            j.orderDate=j.orderDate.toLocaleString()
-                            j.category=data.category
-                            j.orderStatus=='shipped'||j.orderStatus=='delivered'?j.shipped=true:j.shipped=false
-                            j.orderStatus=='delivered'?j.delivered=true:j.delivered=false
-                            j.orderStatus=='returned'?j.returnStatus=true:j.returnStatus=false
+                        await categoryModel.findOne({ _id: j.category }, { category: 1 }).then((data) => {
+                            j.orderDate = j.orderDate.toLocaleString()
+                            j.category = data.category
+                            j.orderStatus == 'shipped' || j.orderStatus == 'delivered' ? j.shipped = true : j.shipped = false
+                            j.orderStatus == 'delivered' ? j.delivered = true : j.delivered = false
+                            j.orderStatus == 'returned' ? j.returnStatus = true : j.returnStatus = false
                         })
                     }
                 }
-                let singleOrderDetails=null
+                let singleOrderDetails = null
                 if (req.session.singleOrderDetails) {
-                    singleOrderDetails=req.session.singleOrderDetails
-                    let product=await productModel.findOne({_id:singleOrderDetails.product_id})
-                    singleOrderDetails.brandName=product.brandName;
-                    singleOrderDetails.productDetails=product.product_Details;
-                    singleOrderDetails.price=product.price;
-                    singleOrderDetails.image=product.image;
+                    singleOrderDetails = req.session.singleOrderDetails
+                    let product = await productModel.findOne({ _id: singleOrderDetails.product_id })
+                    singleOrderDetails.brandName = product.brandName;
+                    singleOrderDetails.productDetails = product.product_Details;
+                    singleOrderDetails.price = product.price;
+                    singleOrderDetails.image = product.image;
                 }
-               res.render('order_Details',{result,singleOrderDetails}) 
-                req.session.singleOrderDetails=null
+                res.render('order_Details', { result, singleOrderDetails })
+                req.session.singleOrderDetails = null
             })
             // .catch(()=>{
             //     res.send(error404)
@@ -82,79 +85,112 @@ module.exports = {
         })
     },
 
-    viewOrder:async(req,res)=>{
-let user=await userModel.findOne({orders:{$elemMatch:{order_id:req.params.id}}})
-let singleOrderDetails= await user.orders.find(e=>e.order_id==req.params.id)
-req.session.singleOrderDetails=singleOrderDetails
-res.redirect('/admin/order_Details')
+    viewOrder: async (req, res) => {
+        let user = await userModel.findOne({ orders: { $elemMatch: { order_id: req.params.id } } })
+        let singleOrderDetails = await user.orders.find(e => e.order_id == req.params.id)
+        req.session.singleOrderDetails = singleOrderDetails
+        res.redirect('/admin/order_Details')
     },
 
     admin_userBlock: (req, res) => {
-            adminService.block_user(req.params.id)
-            res.redirect('/admin/user_Details')
+        adminService.block_user(req.params.id)
+        res.redirect('/admin/user_Details')
     },
 
     admin_userUnblock: (req, res) => {
-            adminService.unblock_user(req.params.id)
-            res.redirect('/admin/user_Details')
+        adminService.unblock_user(req.params.id)
+        res.redirect('/admin/user_Details')
     },
 
 
     admin_productEditPage: async (req, res) => {
-            let data = await adminService.findToUpdate(req.params.id, productModel)
-            // let result=await adminService.list_productOrCategory(categoryModel)
-            let result = await categoryModel.find().sort({ name: 1 }).lean()
-                    res.render('edit_product', { data,result})
+        let data = await adminService.findToUpdate(req.params.id, productModel)
+        // let result=await adminService.list_productOrCategory(categoryModel)
+        let result = await categoryModel.find().sort({ name: 1 }).lean()
+        res.render('edit_product', { data, result })
     },
 
     admin_productEdit: async (req, res) => {
-            adminService.update_product(req.params.id, req.body, req.files)
-            res.redirect('/admin/admin_products')
+        adminService.update_product(req.params.id, req.body, req.files)
+        res.redirect('/admin/admin_products')
     },
 
-    admin_productAddPage:(req, res) => {
-        return new Promise(async(resolve, reject) => {
-            let result=await categoryModel.find({}).lean()
+    admin_productAddPage: (req, res) => {
+        return new Promise(async (resolve, reject) => {
+            let result = await categoryModel.find({}).lean()
             // let result=await categoryModel.find({},{brandName:0}).lean()
             // let brandName=req.session.brandForProduct
-                // res.render('add_product', { result,brandName })
-                // brandName=null
-                res.render('add_product', { result})
-        
+            // res.render('add_product', { result,brandName })
+            // brandName=null
+            res.render('add_product', { result })
+
         })
     },
 
     admin_productAdd: (req, res) => {
-            adminService.add_product(req.body, req.files).then(()=>{
-                res.redirect('/admin/admin_products')
-            }).catch(()=>{
-                res.send(error404)
-            })
+        adminService.add_product(req.body, req.files).then(() => {
+            res.redirect('/admin/admin_products')
+        }).catch(() => {
+            res.send(error404)
+        })
     },
     admin_productFlag: (req, res) => {
-            adminService.flag_product(req.params.id)
-            res.redirect('/admin/admin_products')
+        adminService.flag_product(req.params.id)
+        res.redirect('/admin/admin_products')
     },
 
     admin_productUnflag: (req, res) => {
-            adminService.unflag_product(req.params.id)
-            res.redirect('/admin/admin_products')
+        adminService.unflag_product(req.params.id)
+        res.redirect('/admin/admin_products')
     },
 
     admin_userSearch: (req, res) => {
-            adminService.user_search(req.body).then((result) => {
-                datas = result;
-                res.redirect('/admin/user_Details')
-            })
+        adminService.user_search(req.body).then((result) => {
+            datas = result;
+            res.redirect('/admin/user_Details')
+        })
     },
 
-    getCoupon:(req,res)=>{
+    getCoupon: (req, res) => {
 
     },
 
     adminLogOut: (req, res) => {
-            req.session.destroy()
-            res.redirect('/admin')
-    }
+        req.session.destroy()
+        res.redirect('/admin')
+    },
 
+    getSalesReport: (req, res) => {
+        res.render('salesReport')
+    },
+
+    salesReport: async (req, res) => {
+        let startDate = new Date(req.body.startDate).getTime()
+        let endDate = new Date(req.body.endDate).getTime()
+        let user = await userModel.find({ orders: { $ne: [] } }, { name: 1, orders: 1 }).lean()
+        let products = []
+        let a = {}
+        let orders = []
+        for (const i of user) {
+            a.name = i.name;
+            a.user_id = i._id;
+            for (const j of i.orders) {
+                if (j.orderStatus == 'delivered' && j.orderDate >= startDate && j.orderDate.getTime() <= endDate) {
+                    orders.push(j)
+                }
+            }
+            a.orders = orders;
+            products.push(a)
+            a = {}
+            orders = []
+        }
+        let totalRevenue = 0;
+        for (const i of products) {
+            for (const j of i.orders) {
+                totalRevenue = Number(totalRevenue) + Number(j.totalOrderAmount);
+            }
+        }
+        products.totalRevenue = totalRevenue
+        res.render('salesReport', { products })
+    }
 }

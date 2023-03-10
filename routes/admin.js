@@ -69,6 +69,10 @@ router.post('/editCoupon',ifAdmin,couponController.editCoupon)
 
 router.get('/log_Out',adminController.adminLogOut)
 
+router.get('/getSalesReport',ifAdmin,adminController.getSalesReport)
+
+router.post('/salesReport',ifAdmin,adminController.salesReport)
+
 
 
 module.exports= router;

@@ -5,11 +5,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-    crossorigin="anonymous"></script>
   <title>Document</title>
 </head>
 
@@ -43,7 +41,7 @@
             <a class="nav-link" href="/admin/getCoupon">COUPON DETAILS</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/admin/offer_create">Offer Manage</a>
+            <a class="nav-link" href="/admin/getSalesReport">SALES REPORT</a>
           </li>
         </ul>
 
@@ -52,153 +50,113 @@
     </div>
   </nav>
 
-<section style="margin-top: 4rem;">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4 pt-4">
-        <div style="padding: 10px; box-shadow:0px 0px 10px 0px rgb(123, 123, 123);width:max-content  ">
-          <h4 style="font-family: cursive; font-weight: bold;">
-            <img style="width: 80px; height: 80px;" class="img-fluid"
-              src="https://www.shutterstock.com/image-illustration/graph-sales-arrow-3d-illustration-260nw-274638584.jpg"
-              alt="">
-            Total Revannue
-          </h4>
-          <h2><i style="font-size: 25px; position: relative; top: -3px;" class="bi bi-currency-rupee"></i>{{totalOrder}}
-          </h2>
+  <section style="margin-top: 4rem;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 pt-4">
+          <div style="padding: 10px; box-shadow:0px 0px 10px 0px rgb(123, 123, 123);width:max-content  ">
+            <h4 style="font-family: cursive; font-weight: bold;">
+              <img style="width: 80px; height: 80px;" class="img-fluid"
+                src="https://www.shutterstock.com/image-illustration/graph-sales-arrow-3d-illustration-260nw-274638584.jpg"
+                alt="">
+              Total Revenue
+            </h4>
+            <h2><i style="font-size: 25px; position: relative; top: -3px;"
+                class="bi bi-currency-rupee"></i>{{totalOrder}}
+            </h2>
+          </div>
         </div>
-      </div>
-      <div class="col-md-4 pt-4">
-        <div style="padding: 10px; box-shadow:0px 0px 10px 0px rgb(123, 123, 123);width:max-content  ">
-          <h4 style="font-family: cursive; font-weight: bold;">
-            <img style="width: 80px; height: 80px;" class="img-fluid"
-              src="https://woocommerce.com/wp-content/uploads/2020/03/woocommerce-reports-1.png?w=950" alt="">
-            Total Orders
-          </h4>
-          <h2><i style="font-size: 25px; position: relative; top: -3px;"
-              class="bi bi-currency-rupee"></i>{{orederCount}}</h2>
+        <div class="col-md-4 pt-4">
+          <div style="padding: 10px; box-shadow:0px 0px 10px 0px rgb(123, 123, 123);width:max-content  ">
+            <h4 style="font-family: cursive; font-weight: bold;">
+              <img style="width: 80px; height: 80px;" class="img-fluid"
+                src="https://woocommerce.com/wp-content/uploads/2020/03/woocommerce-reports-1.png?w=950" alt="">
+              Total Orders
+            </h4>
+            <h2><i style="font-size: 25px; position: relative; top: -3px;"
+                class="bi bi-currency-rupee"></i>{{orederCount}}</h2>
+          </div>
         </div>
-      </div>
-      <div class="col-md-4 pt-4">
-        <div style="padding: 10px; box-shadow:0px 0px 10px 0px rgb(123, 123, 123);width:max-content  ">
-          <h4 style="font-family: cursive; font-weight: bold;">
-            <img style="width: 80px; height: 80px;" class="img-fluid"
-              src="https://st2.depositphotos.com/1775462/9174/i/600/depositphotos_91743086-stock-photo-fast-food-plate-with-burger.jpg"
-              alt="">
-            Total Products
-          </h4>
-          <h2><i style="font-size: 25px; position: relative; top: -3px;" class="bi bi-currency-rupee"></i>{{totalpro}}
-          </h2>
+        <div class="col-md-4 pt-4">
+          <div style="padding: 10px; box-shadow:0px 0px 10px 0px rgb(123, 123, 123);width:max-content  ">
+            <h4 style="font-family: cursive; font-weight: bold;">
+              <img style="width: 80px; height: 80px;" class="img-fluid"
+                src="https://st2.depositphotos.com/1775462/9174/i/600/depositphotos_91743086-stock-photo-fast-food-plate-with-burger.jpg"
+                alt="">
+              Total Products
+            </h4>
+            <h2><i style="font-size: 25px; position: relative; top: -3px;" class="bi bi-currency-rupee"></i>{{totalpro}}
+            </h2>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
+<div class="row">
 
-  <section style="background-color: #eee; margin-top: 50px; ">
-      <div class="container vh-100   py-5">
-        <div class="row">
-          <div class="col">
-            <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
-              <ol
-                class="breadcrumb mb-0"
-                style="display: flex;  justify-content: space-between;"
-              >
-                {{! <li class="breadcrumb-item"><a href="/checkOut">Back</a></li> }}
-                <li class="breadcrumb-item"><h4>Sales Report</h4></li>
-              <div>
-                <form action="/admin/salesReport" method="post">
-                    <label for="">From</label>
-                    <input type="date" name="date1" required>&nbsp;&nbsp;
-                      <label for="">To</label> 
-                    <input type="date" name="date2" required>&nbsp;
-                    <input type="submit" style="background-color: rgb(16, 14, 14); color: white; font-family: cursive; " value="Filter">
-                </form>
-              </div>
-              </ol>
-            </nav>
-          </div>
-        </div>
-    {{#if status}}
-    <h4 style="text-align: center; font-weight: bold; font-family: cursive;">No Data Available</h4>
-    {{else}}
-       
-        <table class="table align-middle mb-0 bg-white container">
+<div id="chart" style="margin-right:150px;">
+ <h3 style="padding: 12px;font-weight: bold; color: darkblue;">Total Revenue</h3>
+  
+</div>
 
-          <thead class="bg-light">
-            <tr>
-              <th>Order ID</th>
-              <th>Username</th>
-              <th>Product</th>
-              <th>price </th>
-              <th>Qty</th>
-              <th>Sub Total</th>
-               
-              
+<div class="charts-section mt-3">
+{{!-- <div id="piechart" class="col-4 d-flex flex-column mt-1" >
 
-            </tr>
-          </thead>
-         {{#each result}}
-            <tbody>
+   <h3  style="padding: 7px;font-weight: bold; color: darkblue;">Payment Method </h3>
+</div> --}}
+</div>
+  <script>
+    var options = {
+          series: [
+        {
+          name: 'Revenue',
+          data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+        },
+         
+        ],
+          chart: {
+          type: 'bar',
+          height: 350
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '55%',
+            endingShape: 'rounded'
+          },
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent']
+        },
+        xaxis: {
+          categories: ['Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct','Nov','Dec'],
+        },
+        yaxis: {
+          title: {
+            text: '$ (thousands)'
+          }
+        },
+        fill: {
+          opacity: 1
+        },
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return "$ " + val + " thousands"
+            }
+          }
+        }
+        };
 
-              <tr>
-
-                <td>
-
-                  <p class="fw-normal mb-1">{{this.orderID}}</p>
-                </td>
-                <td>
-                  <p class="fw-normal mb-1">{{this.address.fname}} {{this.address.lname}}</p>
-                </td>
-                <td>
-                  <p class="fw-normal mb-1">{{this.products.[0].productname}}</p>
-                </td>
-                 <td>
-                  <p class="fw-normal mb-1">{{this.products.[0].price}}</p>
-                </td>
-                 <td>
-                  <p class="fw-normal mb-1">{{this.products.[0].cartQuantity}}</p>
-                </td>
-                 <td>
-                  <p class="fw-normal mb-1">{{this.subTotal}}</p>
-                </td>
-               
-                
-              </tr>
-              {{/each}}
-            </tbody>
-        
-        </table>
-      
-        <div style="background-color: white;
-        height: 60px;
-    display: flex;
-    justify-content: flex-start;
-    margin-top: 2px;
-    align-content: stretch;
-     
-    flex-direction: column;">
-          <div style=" margin-top: 14px; ">
-             <h4 style="text-align: right; margin-right: 90px; font-weight: bold; font-family: cursive; ">Total Revenue: <i style="font-size: 25px;  "class="bi bi-currency-rupee" ></i>{{total}}</h4></div> 
-            </div>
-              {{/if}}
-      </div>
-    </section>
-    {{!-- {{/if}} --}}
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
-      crossorigin="anonymous"
-    ></script>
-
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+  </script>
 </body>
 
 </html>

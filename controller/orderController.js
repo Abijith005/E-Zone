@@ -4,6 +4,7 @@ const couponModel = require("../models/couponModel")
 const productModel = require("../models/productModel")
 const userModel = require("../models/userModel")
 const userService = require("../services/userService")
+const uniqueid = require('uniqid')
 
 
 module.exports = {
@@ -103,12 +104,12 @@ module.exports = {
             let data = req.body
             let { user_cart } = await userModel.findOne({ _id: req.session.userDetails._id }, { user_cart: 1, _id: 0 })
             if (req.body.paymentMethod == "Cash On Delivery") {
-let compountOrder_id=createId()
+                let compOrder_id = uniqueid()
                 for (const i of user_cart) {
-                    let orderId = createId()
+                    let orderId = uniqueid()
                     let product = await productModel.findOne({ _id: i.id })
                     let amount = product.price * i.quantity
-                    userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod: data.paymentMethod, product_id: product._id, productName: product.product_name, category: product.category, quantity: i.quantity, couponStatus: data.couponStatus, totalAmount: amount, orderDate: new Date(), orderStatus: 'pending', cancelStatus: false } } }).then(() => {
+                    userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { compoundOrder_id: compOrder_id, order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod: data.paymentMethod, product_id: product._id, productName: product.product_name, category: product.category, quantity: i.quantity, couponStatus: data.couponStatus, totalOrderAmount: amount, orderDate: new Date(), orderStatus: 'pending', cancelStatus: false,price:product.price} } }).then(() => {
                         resolve()
                     })
                 }
@@ -153,10 +154,9 @@ let compountOrder_id=createId()
     },
 
     verifyOrder: (req, res) => {
-        // verifyPayment:(details)=>{
         return new Promise((resolve, reject) => {
             let crypto = require('crypto')
-            let hamc = crypto.createHmac('sha256', process.env.KEY_SECRET)
+            let hamc = crypto.createHmac('sha256','mpif2nSNnpA4zv05FD6rXoIp')
             hamc.update(details.payment.razorpay_order_id + '|' + details.payment.razorpay_payment_id)
             hamc = hamc.digest('hex')
             if (hamc == details.payment.razorpay_signature) {
@@ -164,8 +164,11 @@ let compountOrder_id=createId()
             } else {
                 reject()
             }
-        });
-        //    },
+        }).then(()=>{
+console.log('success');
+        }).catch(()=>{
+
+        })
     },
 
     orderSuccess: (req, res) => {

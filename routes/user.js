@@ -122,5 +122,6 @@ router.get('/pagination/:pageNum',productController.pagination)
 
 
 
+
 module.exports = router;
 

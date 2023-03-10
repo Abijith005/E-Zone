@@ -1,0 +1,99 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ </head>
+ <body>
+    <section style="background-color: #eee; margin-top: 50px; ">
+    <div class="container vh-100   py-5">
+      <div class="row">
+        <div class="col">
+          <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+            <ol class="breadcrumb mb-0" style="display: flex;  justify-content: space-between;">
+              <li class="breadcrumb-item">
+                <h4>Sales Report</h4>
+              </li>
+              <div>
+                <form action="/admin/salesReport" method="post">
+                  <label for="">Start Date</label>
+                  <input type="date" name="startDate" required>&nbsp;&nbsp;
+                  <label for="">End Date</label>
+                  <input type="date" name="endDate" required>&nbsp;
+                  <input type="submit" style="background-color: rgb(16, 14, 14); color: white; font-family: cursive; "
+                    value="Filter">
+                </form>
+              </div>
+            </ol>
+          </nav>
+        </div>
+      </div>
+      {{#if status}}
+      <h4 style="text-align: center; font-weight: bold; font-family: cursive;">No Data Available</h4>
+      {{else}}
+      <table class="table align-middle mb-0 bg-white container">
+
+        <thead class="bg-light">
+          <tr>
+            <th class="text-center">Sl No.</th>
+            <th class="text-center">Order ID</th>
+            <th class="text-center">Username</th>
+            <th class="text-center">Product</th>
+            <th class="text-center">price </th>
+            <th class="text-center">Qty</th>
+            <th class="text-center">Sub Total</th>
+          </tr>
+        </thead>
+        {{#each products}}
+        {{#each this.orders}}
+        <tbody>
+          <tr>
+            <td class="text-center">
+              <p>{{inc @index}}</p>
+            </td>
+            <td class="text-center">
+              <p class="fw-normal mb-1">{{this.compoundOrder_id}}</p>
+            </td>
+            <td class="text-center">
+              <p class="fw-normal mb-1">{{../this.name}}</p>
+            </td>
+            <td class="text-center">
+              <p class="fw-normal mb-1">{{this.productName}}</p>
+            </td>
+            <td class="text-center">
+              <p class="fw-normal mb-1">₹: {{this.price}}</p>
+            </td>
+            <td class="text-center">
+              <p class="fw-normal mb-1">{{this.quantity}}</p>
+            </td>
+            <td class="text-center">
+              <p class="fw-normal mb-1">₹: {{this.totalOrderAmount}}/-</p>
+            </td>
+          </tr>
+          {{/each}}
+          {{/each}}
+        </tbody>
+
+      </table>
+
+      <div style="background-color: white;
+        height: 60px;
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 2px;
+    align-content: stretch;
+    flex-direction: column;">
+        <div style=" margin-top: 14px; ">
+          <h4 style="text-align: right; margin-right: 90px; font-weight: bold; font-family: cursive; ">Total Revenue ₹:
+            <i style="font-size: 25px;  " class="bi bi-currency-rupee"></i>{{products.totalRevenue}}/-
+          </h4>
+        </div>
+      </div>
+      {{/if}}
+    </div>
+  </section>
+ </body>
+ </html>
+ 

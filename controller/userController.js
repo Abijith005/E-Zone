@@ -6,7 +6,8 @@ const categoryModel = require('../models/categoryModel');
 const productModel = require('../models/productModel');
 const { createId } = require('../middleware/createId');
 const { error404 } = require('../middleware/error');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const uniqueId = require('uniqid');
 
 let invalidUser;
 let nameMsg, emailMsg, passwordMsg, mobnoMsg;

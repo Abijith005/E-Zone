@@ -438,6 +438,8 @@ ${a}
 
 		function addToCart(id) {
 			axios.get('/add_to_cart/'+id).then((result) => {
+				console.log(result)
+				if(result.data.login){
 				if (result.data.success) {
 					let cartQuantiy = document.getElementById('cartQuantity')
 					cartQuantiy.textContent = Number(cartQuantiy.textContent) + 1
@@ -445,6 +447,11 @@ ${a}
 				else {
 
 				}
+				}else{
+window.location.href='/user_login'
+				}
+
+
 			})
 		}
 		function addToWhishList(id) {
@@ -457,7 +464,7 @@ ${a}
 					whishListQuantity.textContent = Number(whishListQuantity.textContent) + 1
 				}
 				else{
-					window.location.href('/user_login')
+					window.location.href='/user_login'
 				}
 			})
 		}
@@ -688,6 +695,7 @@ ${a}
 		}
 
 		document.getElementById('sort').addEventListener('change', (e) => {
+			console.log('haiiiiiiiiiiiiiii')
 			axios.get('/sortProducts/' + e.target.value).then((response) => {
 				console.log(response)
 				let productsDiv = document.getElementById('newProducts')
