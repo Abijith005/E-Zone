@@ -1,5 +1,4 @@
-const mongoose = require('mongoose')
-
+const mongoose = require('mongoose');
 let productSchema = new mongoose.Schema({
 
     product_name: {
@@ -45,8 +44,12 @@ let productSchema = new mongoose.Schema({
     sub_image: {
         type: Array,
         required: true
-    }
+    },
 
+    productReview: {
+        type: Object,
+        default:{}
+    }
 
 })
 

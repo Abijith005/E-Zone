@@ -26,7 +26,7 @@ module.exports = {
         //     brands = category.find(e => e._id == products[0].category)
         // }
         let banners=await bannerModel.find().lean()
-        console.log(banners);
+        // let products=await productModel.aggregate()
         if (quantities) {
             quantities.user_whishList = quantities.user_whishList?.length ?? null
             quantities.user_cart = quantities.user_cart?.length ?? null 

@@ -356,6 +356,16 @@ module.exports = {
         }
         res.json({ productData, pagination })
 
+    },
+
+    productReview: async (req, res) => {
+        console.log(req.query);
+        let id = req.query.product_id
+        let product = await productModel.findOne({ id }).lean()
+        product={...product,
+        order_id:req.query.order_id}
+        console.log(product);
+        res.render('',{product})
     }
 
 
