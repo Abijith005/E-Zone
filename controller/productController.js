@@ -98,8 +98,8 @@ module.exports = {
             for (const i of products) {
                 let data = category.find(e => i.category == e._id)
                 i.category = data.category
-                if (i.stockQuantity<=0) {
-                    i.stock=true
+                if (i.stockQuantity <= 0) {
+                    i.stock = true
                 }
             }
             req.session.productList = products
@@ -169,7 +169,6 @@ module.exports = {
                     }
                 }
                 req.session.productList = productData
-
                 let pageNum = 1;
                 let productCount = productData.length
                 productData = productData.slice((pageNum - 1) * req.session.productPerPage, pageNum * req.session.productPerPage)
@@ -214,13 +213,13 @@ module.exports = {
     product_to_cart: (req, res) => {
         if (req.session.userDetails) {
             userService.user_add_to_cart(req.session.userDetails._id, req.params.id).then((result) => {
-                result.login=true
+                result.login = true
                 res.json(result)
             }).catch(() => {
                 res.send(error404)
             })
         } else {
-            res.json({login:false})
+            res.json({ login: false })
         }
 
     },
@@ -311,14 +310,14 @@ module.exports = {
             brands = brandName
             req.session.productList = productData
             let pageNum = 1;
-                let productCount = productData.length
-                productData = productData.slice((pageNum - 1) * req.session.productPerPage, pageNum * req.session.productPerPage)
-                let pageCount = Math.ceil(productCount / req.session.productPerPage)
-                let pagination = []
-                for (i = 1; i <= pageCount; i++) {
-                    pagination.push(i)
-                }
-            res.json({ productData, brands,pagination })
+            let productCount = productData.length
+            productData = productData.slice((pageNum - 1) * req.session.productPerPage, pageNum * req.session.productPerPage)
+            let pageCount = Math.ceil(productCount / req.session.productPerPage)
+            let pagination = []
+            for (i = 1; i <= pageCount; i++) {
+                pagination.push(i)
+            }
+            res.json({ productData, brands, pagination })
         } else {
             if (req.session.searchInput) {
                 let input = req.session.searchInput

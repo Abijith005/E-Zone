@@ -8,6 +8,7 @@ const adminSession=require('../middleware/adminSession')
 const { ifAdmin } = require('../middleware/adminSession')
 const orderController = require('../controller/orderController')
 const couponController = require('../controller/couponController')
+const bannerController = require('../controller/bannerController')
 
 router.get('/',adminSession.ifNoAdmin,adminController.admin_loginPage)
 
@@ -66,6 +67,18 @@ router.get('/getCoupon',ifAdmin,couponController.getCoupon)
 router.get('/addCoupon',ifAdmin,couponController.getAddCoupon)
 
 router.post('/addCoupon',ifAdmin,couponController.addCoupon)
+
+router.get('/getBanner',ifAdmin,bannerController.getBanner)
+
+router.get('/addBanner',ifAdmin,bannerController.addBanner)
+
+router.post('/postAddBanner',ifAdmin,multiUpload,bannerController.postAddBanner)
+
+router.get('/bannerUpdate',ifAdmin,bannerController.getBannerUpdate)
+
+router.get('/bannerFlagandUnFlag/:id/:cond',ifAdmin,bannerController.flagUnFlag)
+
+router.post('/postBannerUpdate',ifAdmin,multiUpload,bannerController.postBannerUpdate)
 
 router.get('/getEditCoupon/:id/:status',ifAdmin,couponController.getEditCoupon)
 

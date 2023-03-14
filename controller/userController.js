@@ -8,6 +8,7 @@ const { createId } = require('../middleware/createId');
 const { error404 } = require('../middleware/error');
 const bcrypt = require('bcrypt');
 const uniqueId = require('uniqid');
+const bannerModel = require('../models/bannerModel');
 
 let invalidUser;
 let nameMsg, emailMsg, passwordMsg, mobnoMsg;
@@ -24,13 +25,15 @@ module.exports = {
         // if (products) {
         //     brands = category.find(e => e._id == products[0].category)
         // }
+        let banners=await bannerModel.find().lean()
+        console.log(banners);
         if (quantities) {
             quantities.user_whishList = quantities.user_whishList?.length ?? null
             quantities.user_cart = quantities.user_cart?.length ?? null 
         }
         let userName;
         req.session.userDetails ? userName = req.session.userDetails.name : userName = null
-        res.render('user_home', { userName,quantities })
+        res.render('user_home', { userName,quantities,banners })
     },
 
     home: (req, res) => {

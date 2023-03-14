@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,16 +21,16 @@
         <div class="wrapper wrapper--w790">
             <div class="card card-5">
                 <div class="card-heading">
-                    <h2 class="title">Add Product</h2>
+                    <h2 class="title">Add Banner</h2>
                 </div>
                 <div class="card-body">
-                    <form form action="/admin/product_add" method="post" id="formData" enctype="multipart/form-data">
+                    <form form action="/admin/postAddBanner" method="post" id="formData" enctype="multipart/form-data">
                         <div class="form-row m-b-55">
                             <div class="name"></div>
                             <div class="value">
                                 <div class="input-group-desc">
-                                    <label class="label--desc mb-2">Product Name :</label>
-                                    <input class="input--style-5" type="text" name="product_name">
+                                    <label class="label--desc mb-2">Banner Name :</label>
+                                    <input class="input--style-5" type="text" name="bannerName">
                                 </div>
                             </div>
                         </div>
@@ -42,52 +41,19 @@
                                 <div class="row row-space">
                                     <div class="col-2">
                                         <div class="input-group-desc">
-                                            <label class="label--desc mb-2">Category :</label>
-                                            <select class="input--style-5" name="category" id="category" required>
+                                            <label class="label--desc mb-2">Target Category :</label>
+                                            <select class="input--style-5" name="target" id="category" required>
                                                 <option value="">Select Category</option>
-                                                {{#each result}}
+                                                {{#each category}}
                                                 <option value="{{this.category}}">{{this.category}}</option>
                                                 {{/each}}
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-2" >
-                                        <label class="label--desc mb-2">Brand :</label>
-                                        <div class="input-group-desc" id="brandName">
+                                </div>
+                            </div>
+                        </div>
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="name"></div>
-                            <div class="value">
-                                <div class="input-group-desc">
-                                    <label class="label--desc mb-2">Description :</label>
-                                    <input name="product_Details" class="input--style-5" style="height: 5rem;">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="name"></div>
-                            <div class="value">
-                                <div class="row row-space">
-                                    <div class="col-2">
-                                        <div class="input-group-desc">
-                                            <label class="label--desc mb-2">Price :</label>
-                                            <input class="input--style-5" type="number" min="0" name="price">
-                                        </div>
-                                    </div>
-                                    <div class="col-2">
-                                        <div class="input-group-desc">
-                                            <label class="label--desc mb-2">Stock Quantity</label>
-                                            <input class="input--style-5" type="number" name="stockQuantity" min="1">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="form-row m-b-55">
                             <div class="name"></div>
                             <div class="value">
@@ -96,29 +62,13 @@
                                         <div class="input-group-desc">
                                             <label class="label--desc mb-2">Image :</label>
                                             <input class="input--style-5" style="font-size:smaller;" name="image"
-                                                type="file">
+                                                type="file" accept="image/png, image/jpeg, image/jpg, image/webp">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="form-row m-b-55">
-                            <div class="name"></div>
-                            <div class="value">
-                                <div class="row row-refine">
-                                    <div class="col-6">
-                                        <div class="input-group-desc">
-                                            <label class="label--desc mb-2">Sub Image :</label>
-                                            <input class="input--style-5" style="font-size:smaller;" name="sub_image"
-                                                type="file" multiple
-                                                accept="image/png, image/jpeg, image/jpg, image/webp">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    
                         <div class="text-center">
                             <button onclick="get()" class="btn btn--radius-2 btn--red" type="submit">Submit</button>
                         </div>
@@ -142,15 +92,15 @@
                 brandDiv.innerHTML = ''
                 let select = document.createElement('select')
                 select.setAttribute('class', "input--style-5")
-                select.name=`brandName`
+                select.name = `brandName`
                 brandDiv.appendChild(select)
                 let first = document.createElement('option')
                 first.text = `Select Category`
                 select.appendChild(first)
                 response.data.brands.forEach(item => {
                     let option = document.createElement('option')
-                    option.value=`${item}`
-                    option.text=`${item}`
+                    option.value = `${item}`
+                    option.text = `${item}`
                     select.appendChild(option)
                 })
             })

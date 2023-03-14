@@ -1,17 +1,28 @@
-const mongoose=require('mongoose')
+const mongoose = require('mongoose')
 
-let bannerSchema=new mongoose.Schema({
-    image:{
-        type:Array,
-        required:true
+let bannerSchema = new mongoose.Schema({
+
+    bannerName: {
+        type: String,
+        required: true
     },
 
-    subIMage:{
-        type:Array,
-        required:true
+    image: {
+        type: Array,
+        required: true
+    },
+
+    target: {
+        type: String,
+        required: true
+    },
+
+    flag:{
+        type:Boolean,
+        default:false
     }
 
 })
 
-let bannerModel=mongoose.model('banner',bannerSchema)
-module.exports=bannerModel
+let bannerModel = mongoose.model('banner', bannerSchema)
+module.exports = bannerModel
