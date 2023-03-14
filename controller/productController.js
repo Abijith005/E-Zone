@@ -361,10 +361,16 @@ module.exports = {
     productReview: async (req, res) => {
         console.log(req.query);
         let id = req.query.product_id
-        let product = await productModel.findOne({ id }).lean()
+        let product = await productModel.findOne({_id:id}).lean()
         product={...product,
         order_id:req.query.order_id}
         console.log(product);
+        let rating=Math.floor(Number(product.productReview.totalStars+10)/Number(product.productReview.totalCustomers+2))
+        console.log(rating);
+        productModel.updateOne({_id:id},{$set:{productReview:{totalStars:8,totalCustomers:2,rating:rating}}}).then(async(result)=>{
+            console.log(result);
+            console.log(await productModel.findOne({_id:id}))
+        })
         res.render('',{product})
     }
 
