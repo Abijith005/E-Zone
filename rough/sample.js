@@ -202,10 +202,3 @@
                   
                   
                       }*/
-
-
-
-
-                      let a=[1,2,3,5,8,6]
-                     let b= a.splice(2,1)
-                     console.log(b);

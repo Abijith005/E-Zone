@@ -2,7 +2,6 @@ const { now } = require('mongoose');
 const { resolve } = require('promise');
 const { error404 } = require('../middleware/error');
 const categoryModel = require('../models/categoryModel');
-// const collections = require('../models/collections');
 const productModel = require('../models/productModel');
 const userModel = require('../models/userModel');
 const adminService = require('../services/adminService')
@@ -28,17 +27,37 @@ module.exports = {
 
     admin_home: async (req, res) => {
         let product = await userModel.aggregate([{ $unwind: '$orders' }, { $match: { 'orders.orderStatus': 'delivered' } }, { $group: { _id: { year: { $year: '$orders.orderDate' }, month: { $month: '$orders.orderDate' } }, revenue: { $sum: "$orders.totalOrderAmount" } } }, { $sort: { '_id.month': 1 } }])
-        console.log(product);
+        let totalOrder = await userModel.aggregate([{ $match: { orders: { $ne: [] } } }, { $group: { _id: null, count: { $sum: { $size: '$orders' } } } }])
+        let paymentMethod = await userModel.aggregate([{ $unwind: '$orders' }, { $match: { 'orders.orderStatus': 'delivered' } }, {
+            $group: {
+                _id: null, cashOnDeliveryCount: { $sum: { $cond: { if: { $eq: ["$orders.paymentMethod", "Cash On Delivery"] }, then: 1, else: 0 } } }, onlinePaymentCount: {
+                    $sum: {
+                        $cond: { if: { $eq: ["$orders.paymentMethod", "UPI Payment"] }, then: 1, else: 0 }
+                    }
+                }
+            }
+        }])
+        let totalProduct = await productModel.countDocuments()
         let totalRevenue = 0
         let monthlyRevenue = product.map(item => {
-            totalRevenue =Number(totalRevenue)+Number(item.revenue)
+            totalRevenue = Number(totalRevenue) + Number(item.revenue, totalOrder)
             return item.revenue
         })
-        
+        let total = 0
+        monthlyRevenue.forEach(item => {
+            total = Number(total) + Number(item)
+        })
         for (let i = monthlyRevenue.length; i <= 12; i++) {
             monthlyRevenue.push(0)
         }
-        res.render('admin_home', { monthlyRevenue })
+
+        let totalStatus = {
+            totalRevenue: total,
+            totalOrder: totalOrder[0].count,
+            totalProduct: totalProduct,
+            paymentMethod: [paymentMethod[0].cashOnDeliveryCount, paymentMethod[0].onlinePaymentCount]
+        }
+        res.render('admin_home', { monthlyRevenue, totalStatus })
     },
 
     admin_product: (req, res) => {
@@ -124,6 +143,12 @@ module.exports = {
         res.redirect('/admin/admin_products')
     },
 
+    deleteImage: (req, res) => {
+        productModel.updateOne({ _id: req.params.id }, { $pull: { sub_image: { filename: req.params.fileName } } }).then((result) => {
+            res.json({ success: true })
+        })
+    },
+
     admin_productAddPage: (req, res) => {
         return new Promise(async (resolve, reject) => {
             let result = await categoryModel.find({}).lean()
@@ -136,7 +161,14 @@ module.exports = {
         })
     },
 
+    getBrands: async (req, res) => {
+        let brand= await categoryModel.find({ category: req.params.category }, { brandName: 1, _id: 0 })
+        let brands=brand[0].brandName
+        res.json({ brands })
+    },
+
     admin_productAdd: (req, res) => {
+        console.log(req.body,req.files);
         adminService.add_product(req.body, req.files).then(() => {
             res.redirect('/admin/admin_products')
         }).catch(() => {
@@ -171,7 +203,6 @@ module.exports = {
 
     getSalesReport: async (req, res) => {
         if (req.session.salesReport) {
-            console.log(req.session.salesReport.startDate, '126478');
             let products = req.session.salesReport.products
             products.startDate = new Date(req.session.salesReport.startDate).toLocaleDateString()
             products.endDate = new Date(req.session.salesReport.endDate).toLocaleDateString()
@@ -229,7 +260,6 @@ module.exports = {
         req.session.salesReport = { products, startDate, endDate }
         // req.session.salesReport.startDate=req.body.startDate
         // req.session.salesReport.endDate=req.body.endDate
-        console.log(req.session.salesReport, '************************8/');
         res.redirect('/admin/getSalesReport')
     }
 }

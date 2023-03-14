@@ -51,6 +51,11 @@ let userSchema=new mongoose.Schema({
     orders:{
         type:Array,
         default:[]
+    },
+
+    wallet:{
+        type:Number,
+        required:true
     }
 
 })

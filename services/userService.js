@@ -15,7 +15,7 @@ module.exports = {
             userData.password = await bcrypt.hash(userData.password, 10)
             let block = false, address_id = Date.now()
             let { name, email, mob_no, password, address, pincode } = userData
-            userModel.create({ name, email, mob_no, password, block, address: [{ name, email, mob_no, address, pincode, address_id }] }).then((data) => {
+            userModel.create({ name, email, mob_no, password, block, address: [{ name, email, mob_no, address, pincode, address_id }],wallet:0 }).then((data) => {
                 resolve(data)
             }).catch(() => {
                 reject()

@@ -97,7 +97,7 @@ router.get('/orderSuccess',ifUser,orderController.orderSuccess)
 
 router.get('/orderHistory',userSession.ifUser,userController.orderHistory)
 
-router.get('/userOrderUpdate/:id/:product_id/:cond',ifUser,orderController.userOrderUpdate)
+router.get('/userOrderUpdate',ifUser,orderController.userOrderUpdate)
 
 router.get('/getWhishList',ifUser,userController.getWishList)
 

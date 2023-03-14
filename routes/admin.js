@@ -31,7 +31,11 @@ router.get('/product_edit/:id',adminSession.ifAdmin,adminController.admin_produc
 
 router.post('/product_edit/:id',adminSession.ifAdmin,multiUpload,adminController.admin_productEdit)
 
+router.get('/product_edit/deleteImages/:fileName/:id',ifAdmin,adminController.deleteImage)
+
 router.get('/product_add',adminSession.ifAdmin,adminController.admin_productAddPage)
+
+router.get('/getBrands/:category',ifAdmin,adminController.getBrands)
 
 router.post('/product_add',multiUpload,adminController.admin_productAdd)
 

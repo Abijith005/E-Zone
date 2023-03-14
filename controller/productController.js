@@ -64,6 +64,7 @@ module.exports = {
 
     getShopPage: async (req, res) => {
         try {
+            console.log('shop page');
             req.session.productPerPage = 6;
             req.session.searchInput = null
             req.session.filterProducts = null
@@ -97,6 +98,9 @@ module.exports = {
             for (const i of products) {
                 let data = category.find(e => i.category == e._id)
                 i.category = data.category
+                if (i.stockQuantity<=0) {
+                    i.stock=true
+                }
             }
             req.session.productList = products
             let pageNum = 1;
@@ -191,7 +195,6 @@ module.exports = {
                         }
                     }
                 }
-
                 req.session.productList = productData
                 let pageNum = 1;
                 let productCount = productData.length
@@ -298,7 +301,7 @@ module.exports = {
                     for (i = 1; i <= pageCount; i++) {
                         pagination.push(i)
                     }
-                    res.json({ productData,pagination })
+                    // res.json({ productData,pagination })
                 } else {
                     productData = await productModel.find({ category: category }).sort({ price: value }).lean()
                 }
@@ -307,7 +310,6 @@ module.exports = {
             let { brandName } = await categoryModel.findOne({ _id: category }, { _id: 0, brandName: 1 })
             brands = brandName
             req.session.productList = productData
-
             let pageNum = 1;
                 let productCount = productData.length
                 productData = productData.slice((pageNum - 1) * req.session.productPerPage, pageNum * req.session.productPerPage)

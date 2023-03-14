@@ -20,7 +20,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-        <a class="navbar-brand" href="#">kk foods</a>
+        <a class="navbar-brand" href="#"></a>
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0 mx-auto">
           <li class="nav-item active ">
             <a class="nav-link " href="/admin/admin_home" style="font-weight: bold;">Dash bord</a>
@@ -43,6 +43,9 @@
           <li class="nav-item">
             <a class="nav-link" href="/admin/getSalesReport">SALES REPORT</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/getSalesReport">Banner Management</a>
+          </li>
         </ul>
 
         <a href="/admin/log_Out" class="btn btn-outline-success btn-lg  ms-auto">log out</a>
@@ -62,7 +65,7 @@
               Total Revenue
             </h4>
             <h2><i style="font-size: 25px; position: relative; top: -3px;"
-                class="bi bi-currency-rupee"></i>{{totalOrder}}
+                class="bi bi-currency-rupee"></i>{{totalStatus.totalRevenue}}
             </h2>
           </div>
         </div>
@@ -74,18 +77,19 @@
               Total Orders
             </h4>
             <h2><i style="font-size: 25px; position: relative; top: -3px;"
-                class="bi bi-currency-rupee"></i>{{orderCount}}</h2>
+                class="bi bi-currency-rupee"></i>{{totalStatus.totalOrder}}</h2>
           </div>
         </div>
         <div class="col-md-4 pt-4">
           <div style="padding: 10px; box-shadow:0px 0px 10px 0px rgb(123, 123, 123);width:max-content  ">
             <h4 style="font-family: cursive; font-weight: bold;">
               <img style="width: 80px; height: 80px;" class="img-fluid"
-                src="https://st2.depositphotos.com/1775462/9174/i/600/depositphotos_91743086-stock-photo-fast-food-plate-with-burger.jpg"
+                {{!-- src="https://st2.depositphotos.com/1775462/9174/i/600/depositphotos_91743086-stock-photo-fast-food-plate-with-burger.jpg" --}}
+                src="https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1609081219090-a6d81d3085bf%3Fixlib%3Drb-4.0.3%26ixid%3DMnwxMjA3fDB8MHxzZWFyY2h8MXx8Z2FkZ2V0c3xlbnwwfHwwfHw%253D%26w%3D1000%26q%3D80&imgrefurl=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fgadgets&tbnid=NLFqQDzIgaHimM&vet=12ahUKEwjFxrKwjNj9AhXDL7cAHcadCDwQMygMegUIARD4AQ..i&docid=waTTUN6vRQ-IVM&w=1000&h=566&q=gadget%20photos&ved=2ahUKEwjFxrKwjNj9AhXDL7cAHcadCDwQMygMegUIARD4AQ"
                 alt="">
               Total Products
             </h4>
-            <h2><i style="font-size: 25px; position: relative; top: -3px;" class="bi bi-currency-rupee"></i>{{totalpro}}
+            <h2><i style="font-size: 25px; position: relative; top: -3px;" class="bi bi-currency-rupee"></i>{{totalStatus.totalProduct}}
             </h2>
           </div>
         </div>
@@ -167,12 +171,12 @@
         chart.render();
 
         var options = {
-          series: [44, 55, 13, 43, 22],
+          series: [{{totalStatus.paymentMethod}}],
           chart: {
           width: 380,
           type: 'pie',
         },
-        labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+        labels: ['Cash On Delivery', 'Online Payment'],
         responsive: [{
           breakpoint: 480,
           options: {

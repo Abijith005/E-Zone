@@ -95,16 +95,15 @@
                                         </div>
                                         <div class="col-md-10">
                                             <div class="d-flex justify-content-around mb-1">
-                                                <p class="text-muted mt-1 mb-0 small ms-xl-5">Out for delivary</p>
+                                                <p class="text-muted mt-1 mb-0 small ms-xl-5"></p>
                                                 {{#unless this.cancelStatus}}
                                                 {{#unless this.deliveryStatus}}
-                                                <p class="text-muted mt-1 mb-0 small ms-xl-5"><a href="/userOrderUpdate/{{this.order_id}}/{{this._id}}/{{this.quantity}}"
+                                                <p class="text-muted mt-1 mb-0 small ms-xl-5"><a href="/userOrderUpdate?order_id={{this.order_id}}&product_id={{this._id}}&quantity={{this.quantity}}"
                                                 class="btn btn-danger rounded-pill my-auto">Cancel Order</a></p>
                                                 {{else}}
-                                                <p class="text-muted mt-1 mb-0 small ms-xl-5"><a href="/userOrderUpdate/{{this.order_id}}/{{this._id}}/return"
-                                                class="btn btn-info rounded-pill my-auto">Return Order</a></p>
-
-                                                <p class="text-muted mt-1 mb-0 small ms-xl-5"><a href="/productReview/{{this.order_id}}/{{this._id}}"
+                                                <a href="/userOrderUpdate?order_id={{this.order_id}}&returnAmount={{this.totalAmount}}&cond=return"
+                                                class="btn btn-info rounded-pill my-auto">Return Product</a>
+                                                <p class="text-muted mt-1 mb-0 small ms-xl-5"><a href="/productReview?order_id={{this.order_id}}&product_id={{this._id}}"
                                                 class="btn btn-success rounded-pill my-auto">Rate Product</a></p>
                                                 {{/unless}}
                                                 {{/unless}}
@@ -141,4 +140,4 @@
     </section>
     {{/each}}
 </body>
-</html>
+</html>//

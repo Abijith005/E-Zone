@@ -109,7 +109,7 @@ module.exports = {
                     let orderId = uniqueid()
                     let product = await productModel.findOne({ _id: i.id })
                     let amount = product.price * i.quantity
-                    userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { compoundOrder_id: compOrder_id, order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod: data.paymentMethod, product_id: product._id, productName: product.product_name, category: product.category, quantity: i.quantity, couponStatus: data.couponStatus, totalOrderAmount: amount, orderDate: new Date(), orderStatus: 'pending', cancelStatus: false,price:product.price} } }).then(() => {
+                    userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { compoundOrder_id: compOrder_id, order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod:'UPI Payment', product_id: product._id, productName: product.product_name, category: product.category, quantity: i.quantity, couponStatus: data.couponStatus, totalOrderAmount: amount, orderDate: new Date(), orderStatus: 'pending', cancelStatus: false,price:product.price} } }).then(() => {
                         resolve()
                     })
                 }
@@ -155,6 +155,7 @@ module.exports = {
 
     verifyOrder: (req, res) => {
         return new Promise((resolve, reject) => {
+            console.log('haiiiiiiiiiiiiiiii');
             let crypto = require('crypto')
             let hamc = crypto.createHmac('sha256','mpif2nSNnpA4zv05FD6rXoIp')
             hamc.update(details.payment.razorpay_order_id + '|' + details.payment.razorpay_payment_id)
@@ -165,7 +166,6 @@ module.exports = {
                 reject()
             }
         }).then(()=>{
-console.log('success');
         }).catch(()=>{
 
         })
@@ -207,14 +207,13 @@ console.log('success');
     },
 
     userOrderUpdate: (req, res) => {
-        console.log(req.params.cond);
-        if (req.params.cond == 'return') {
-            userModel.updateOne({ _id: req.session.userDetails._id, orders: { $elemMatch: { order_id: req.params.id } } }, { $set: { 'orders.$.cancelStatus': true, 'orders.$.orderStatus': 'returned', returnDate: new Date() } }).then(() => {
+        if (req.query.cond == 'return') {
+            userModel.updateOne({ _id: req.session.userDetails._id, orders: { $elemMatch: { order_id: req.query.order_id } } }, { $set: { 'orders.$.cancelStatus': true, 'orders.$.orderStatus': 'returned', returnDate: new Date()},$inc:{wallet:req.query.returnAmount}}).then(() => {
                 res.redirect('/orderHistory')
             })
         } else {
-            userModel.updateOne({ _id: req.session.userDetails._id, orders: { $elemMatch: { order_id: req.params.id } } }, { $set: { 'orders.$.cancelStatus': true, 'orders.$.orderStatus': 'cancelled' } }).then(() => {
-                productModel.updateOne({ _id: req.params.product_id }, { $inc: { stockQuantity: req.params.cond } }).then(() => {
+            userModel.updateOne({ _id: req.session.userDetails._id, orders: { $elemMatch: { order_id: req.query.order_id } } }, { $set: { 'orders.$.cancelStatus': true, 'orders.$.orderStatus': 'cancelled' } }).then(() => {
+                productModel.updateOne({ _id: req.params.product_id }, { $inc: { stockQuantity: req.query.quantity } }).then(() => {
                     res.redirect('/orderHistory')
                 })
             }).catch(() => {

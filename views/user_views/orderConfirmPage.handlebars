@@ -1,78 +1,130 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Zone</title>
-    <link rel="stylesheet" href="/css/orderConfirm.css">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <style>
+        .order-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30pc;
+	background-color: #fefefe;
+    box-shadow: inset -5px -5px 12px #ffffff,5px 5px 12px rgba(0,0,0,.16);
+    border: none;
+    border-radius: 5%; 
+    font-size: 16px;
+    cursor: pointer;
+	padding: 15px;
+    margin-top: 50px;
+}
+
+.order-box{
+    padding: 20px;
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+}
+
+.order-box h2{
+    font-family: 'Passion One', cursive;
+    font-size: 25px;
+}
+.order-box ion-icon{
+    color: rgb(55, 175, 117);
+    font-size: 5pc;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.order-box h4{
+    text-transform: capitalize;
+    font-size: 15px;
+}
+.order-box p{
+    font-size: 11px;
+    font-weight: 200;
+}
+.order-box .order-button{
+    background-color:rgb(250, 245, 245);
+    box-shadow: inset -5px -5px 12px #ffffff,inset 5px 5px 12px rgba(0,0,0,.16);
+    border: none;
+    border-radius: 30px;
+    color: rgb(70, 70, 70);
+    padding: 10px;
+    cursor: pointer;
+}
+
+.custom-btn {
+    padding: 5px;
+    color: #09f0f4;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+     box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+     7px 7px 20px 0px rgba(0,0,0,.1),
+     4px 4px 5px 0px rgba(0,0,0,.1);
+    outline: none;
+  }
+
+  .btn-16 {
+    border: none;
+    color: rgb(107, 107, 107);
+  }
+  .btn-16:after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 100%;
+    top: 0;
+    left: 0;
+    direction: rtl;
+    z-index: -1;
+    box-shadow:
+     -7px -7px 20px 0px #fff9,
+     -4px -4px 5px 0px #fff9,
+     7px 7px 20px 0px #0002,
+     4px 4px 5px 0px #0001;
+    transition: all 0.3s ease;
+  }
+  .btn-16:hover {
+    color: #000;
+  }
+  .btn-16:hover:after {
+    left: auto;
+    right: 0;
+    width: 100%;
+  }
+  .btn-16:active {
+    top: 2px;
+  }
+    </style>
+    <title>Document</title>
 </head>
 <body>
-    <div class="container mt-4 mb-4">
-    <div class="row d-flex cart align-items-center justify-content-center">
-        <div class="col-md-10">
-            <div class="card">
-                <div class="d-flex justify-content-center border-bottom">
-                    <div class="p-3">
-                        <div class="progresses">
-                            <div class="steps"> <span><i class="fa fa-check"></i></span> </div> <span class="line"></span>
-                            <div class="steps"> <span><i class="fa fa-check"></i></span> </div> <span class="line"></span>
-                            <div class="steps"> <span class="font-weight-bold">3</span> </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row g-0">
-                    <div class="col-md-6 border-right p-5">
-                        <div class="text-center order-details">
-                            <div class="d-flex justify-content-center mb-5 flex-column align-items-center"> <span class="check1"><i class="fa fa-check"></i></span> <span class="font-weight-bold">Order Confirmed</span> <small class="mt-2">Your illustraion will go to you soon</small> <a href="#" class="text-decoration-none invoice-link">View Invoice</a> </div> <button class="btn btn-danger btn-block order-button">Go to your Order</button>
-                        </div>
-                    </div>
-                    <div class="col-md-6 background-muted">
-                        <div class="p-3 border-bottom">
-                            <div class="d-flex justify-content-between align-items-center"> <span><i class="fa fa-clock-o text-muted"></i> 3 days delivery</span> <span><i class="fa fa-refresh text-muted"></i> 2 Max Revisions</span> </div>
-                            <div class="mt-3">
-                                <h6 class="mb-0">Illustraion in Sketch or AI</h6> <span class="d-block mb-0">Includes: Sketch, PSD, PNG, SVG, AI </span> <small>Min: 1 illustraion</small>
-                                <div class="d-flex flex-column mt-3"> <small><i class="fa fa-check text-muted"></i> Vector file</small> <small><i class="fa fa-check text-muted"></i> Sources files</small> </div>
-                            </div>
-                        </div>
-                        <div class="row g-0 border-bottom">
-                            <div class="col-md-6 border-right">
-                                <div class="p-3 d-flex justify-content-center align-items-center"> <span>x3</span> </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="p-3 d-flex justify-content-center align-items-center"> <span>$20 per unit</span> </div>
-                            </div>
-                        </div>
-                        <div class="row g-0 border-bottom">
-                            <div class="col-md-6">
-                                <div class="p-3 d-flex justify-content-center align-items-center"> <span>Subtotal</span> </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="p-3 d-flex justify-content-center align-items-center"> <span>$60</span> </div>
-                            </div>
-                        </div>
-                        <div class="row g-0 border-bottom">
-                            <div class="col-md-6">
-                                <div class="p-3 d-flex justify-content-center align-items-center"> <span>Processing fees</span> </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="p-3 d-flex justify-content-center align-items-center"> <span>$1.80</span> </div>
-                            </div>
-                        </div>
-                        <div class="row g-0">
-                            <div class="col-md-6">
-                                <div class="p-3 d-flex justify-content-center align-items-center"> <span class="font-weight-bold">Total</span> </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="p-3 d-flex justify-content-center align-items-center"> <span class="font-weight-bold">$61.80</span> </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div> </div>
-            </div>
-        </div>
+    <div class="container order-container d-none d-md-block">
+
+          <div class="order-box" >
+            <h2>your order has been recieved</h2>
+            <ion-icon name="bag-check"></ion-icon>
+            <h4>thank you for your order </h4>
+
+            <p>you will recieve an order confirmation email with details of your order</p>
+
+           <a  href='/orderHistory'> <button class="custom-btn btn-16">Go to Order History</button>
+           </a>
+          </div>
+        
     </div>
-</div>
 </body>
 </html>

@@ -11,16 +11,13 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.0.2/css/boxicons.min.css">
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
 	<!-- Bootstrap -->
 	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
-
 	<!-- Slick -->
 	<link type="text/css" rel="stylesheet" href="/css/slick.css" />
 	<link type="text/css" rel="stylesheet" href="/css/slick-theme.css" />
-
 	<!-- nouislider -->
 	<link type="text/css" rel="stylesheet" href="/css/nouislider.min.css" />
 
@@ -29,11 +26,6 @@
 
 	<!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="/css/style.css" />
-
-	{{!--
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-	--}}
 	{{#unless cartDatas}}
 	<link rel="stylesheet" href="/css/emptyCart.css">
 	{{/unless}}
@@ -89,7 +81,7 @@
 						<div class="dropdown">
 							<button class="btn btn-secondary text-white dropdown-toggle" type="button"
 								id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false">{{userName}}Abijith Surendran</button>
+								aria-expanded="false">{{userName}}</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 								<a class="dropdown-item" href="/user_profile">Profile</a>
 								<a class="dropdown-item" href="/user_logout">Log Out</a>
@@ -169,12 +161,12 @@
 								<td class="text-center align-middle">
 									<!-- Button trigger modal -->
 									<button type="button" class="btn btn-danger btn-md mb-2" data-toggle="modal"
-										data-target="#exampleModal">
+										data-target="#exampleModal{{this._id}}">
 										<i class="fas fa-trash"></i>
 									</button>
 
 									<!-- Modal -->
-									<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+									<div class="modal fade" id="exampleModal{{this._id}}" tabindex="-1" role="dialog"
 										aria-labelledby="exampleModalLabel" aria-hidden="true">
 										<div class="modal-dialog" role="document">
 											<div class="modal-content">

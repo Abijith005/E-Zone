@@ -46,6 +46,7 @@ module.exports = {
     },
 
     add_product: (productData, imag) => {
+        console.log(imag, 'asdfghjkasdfghjk');
         productData.flag = false;
         return new Promise((resolve, reject) => {
             categoryModel.findOne({ category: productData.category }).then((result) => {
@@ -58,10 +59,10 @@ module.exports = {
                         position: 'center',
                         background: { r: 255, g: 255, b: 255, alpha: 0 }
                     })
-                    .toFile(imag.image[0].path+".png")
+                    .toFile(imag.image[0].path + ".png")
                     .then(() => {
-                        imag.image[0].filename=imag.image[0].filename+".png"
-                        imag.image[0].path=imag.image[0].path+".png"
+                        imag.image[0].filename = imag.image[0].filename + ".png"
+                        imag.image[0].path = imag.image[0].path + ".png"
                     })
                 productModel.create({ ...productData, ...imag }).then(() => {
                     resolve()
@@ -93,14 +94,22 @@ module.exports = {
     },
 
     update_product: (id, productData, files) => {
-        return new Promise((resolve, reject) => {
-            productModel.updateOne({ _id: id }, { $set: { product_name: productData.product_name, category: productData.category, company: productData.company, price: productData.price, stockQuantity: productData.stockQuantity, product_Details: productData.product_Details, image: files.image } }).then((result) => {
+        return new Promise(async (resolve, reject) => {
+            let product = await productModel.findOne({ _id: id })
+            let length = 3 - product.sub_image.length
+            if (files.sub_image != null) {
+                for (let i = 0; i < length; i++) {
+                    product.sub_image.push(files.sub_image[i])
+                }
+            }
+            productModel.updateOne({ _id: id }, { $set: { product_name: productData.product_name, category: productData.category, company: productData.company, price: productData.price, stockQuantity: productData.stockQuantity, product_Details: productData.product_Details, image: files.image, sub_image: product.sub_image } }).then((result) => {
                 resolve()
             }).catch(() => {
                 reject()
             })
         })
     },
+
 
     flag_product: (id) => {
         return new Promise((resolve, reject) => {

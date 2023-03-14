@@ -141,7 +141,7 @@
                   --}}
                   <div class="container">
                     <div class="row mx-0 justify-content-center">
-                      <div class="col-md-12 col-lg-5 px-lg-2 col-xl-4 px-xl-0 px-xxl-3 " style="width: 100%;">
+                      <div class="col-md-12 col-lg-8 px-lg-2 col-xl-8 px-xl-0 px-xxl-3 " style="width: 100%;">
                         {{#unless edit}}
                         <form method="POST" class=" rounded-1 p-4 border bg-secondary" style="width: 100%;"
                           action="checkOutAddAddress">
@@ -294,6 +294,7 @@
   </form>
   {{#unless changeAddress}}
   <div class="card" style="height: 90px; width: 35%; margin-left: 215px; margin-top: 10px;">
+        <label for="" id="message"></label>
     <div class="card-body p-4 d-flex flex-row align-items-center" style="margin-top: -12px;">
       <h6> Coupon&nbsp;&nbsp;</h6>
       <div class="form-outline flex-fill ">
@@ -310,10 +311,12 @@
   <script>
     function applyCoupon() {
       let couponCode = document.getElementById('couponCode').value
+      document.getElementById('couponCode').value=''
       if (couponCode) {
         let totalAmount = document.getElementById('totalAmount').value
         axios.post('/couponApply', { couponCode, totalAmount }).then((result) => {
-          if (result.data) {
+          console.log(result)
+          if (result.data.success) {
             console.log(result.data.success)
             document.getElementById('discountedAmount').innerHTML = `₹ :${result.data.totalAmount} /-`
             document.getElementById('totalAmount').value = result.data.totalAmount
@@ -321,7 +324,9 @@
             document.getElementById('discountPrice').value=result.data._doc.discountAmount
           }
           else {
-            window.location.reload()
+            console.log(result.data)
+            document.getElementById('message').textContent=`Coupon ${result.data.coupon}`
+           /* window.location.reload()*/
           }
         })
       }
@@ -379,7 +384,7 @@ var rzp1 = new Razorpay(options);
   console.log('verify')
     axios.post('/verifyPayment',{payment,order}).then((resp)=>{
       if(resp.data.success){
-         window.location.href='/orderSuccess'
+         window.location.href='orderSuccess'
       }else{
         console.log("Payment failed")
       }

@@ -239,7 +239,6 @@ module.exports = {
             res.send(error404)
         })
 
-
     },
 
     user_cartPage: (req, res) => {
