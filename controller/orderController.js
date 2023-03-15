@@ -208,7 +208,7 @@ module.exports = {
 
     userOrderUpdate: (req, res) => {
         if (req.query.cond == 'return') {
-            userModel.updateOne({ _id: req.session.userDetails._id, orders: { $elemMatch: { order_id: req.query.order_id } } }, { $set: { 'orders.$.cancelStatus': true, 'orders.$.orderStatus': 'returned', returnDate: new Date()},$inc:{wallet:req.query.returnAmount}}).then(() => {
+            userModel.updateOne({ _id: req.session.userDetails._id, orders: { $elemMatch: { order_id: req.query.order_id } } }, { $set: { 'orders.$.cancelStatus': true, 'orders.$.orderStatus': 'returned', returnDate: new Date()},$inc:{wallet:req.query.returnAmount},$push:{walletHistory:{refundAmount:req.query.returnAmount,refundDate:new Date(),order_id:req.query.order_id}}}).then(() => {
                 res.redirect('/orderHistory')
             })
         } else {

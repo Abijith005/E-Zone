@@ -27,7 +27,6 @@ module.exports = {
         // }
         let banners=await bannerModel.find().lean()
         let topBrands=await productModel.find().sort({price:-1}).lean().limit(6)
-        console.log(topBrands);
         if (quantities) {
             quantities.user_whishList = quantities.user_whishList?.length ?? null
             quantities.user_cart = quantities.user_cart?.length ?? null 
@@ -231,6 +230,9 @@ module.exports = {
 
     user_profilePage: (req, res) => {
         userService.get_userDetails(req.session.userDetails._id).then((data) => {
+            for (const i of data.walletHistory) {
+                i.refundDate=new Date(i.refundDate).toLocaleDateString()
+            }
             data.address.length >= 3 ? maxAddress = true : maxAddress = false
             req.session.editAddress ? edit = req.session.editAddress : edit = null
             req.session.addAddress ? addAddress = true : addAddress = false
@@ -330,6 +332,7 @@ module.exports = {
                       product.quantity = i.quantity
                         product.totalAmount = product.price * i.quantity
                         product.order_id = i.order_id
+                        product.rating=i.productRating?i.productRating:null
                         product.orderDate=new Date(i.orderDate).toLocaleDateString()
                         product.orderStatus=i.orderStatus
                         product.cancelStatus=i.cancelStatus
@@ -344,7 +347,8 @@ module.exports = {
                         }
                         products.push(product)
                     })
-                }                 
+                }                       
+                console.log(products,'45678912');
                 res.render('orderHistory', { products })
             }).catch(() => {
                 res.send(error404)

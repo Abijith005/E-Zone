@@ -13,7 +13,11 @@
     <link type="text/css" rel="stylesheet" href="/css/slick.css" />
     <link type="text/css" rel="stylesheet" href="/css/slick-theme.css" />
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet"> --}}
-
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="/js/productReview.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
 
 
 
@@ -46,98 +50,148 @@
                             <h5 class="text-muted mb-0 text-center"></h5>
                         </div> --}}
                         <div class="card-body p-4 ">
-                        <div class="card-body p-4 ">
-                            <div class="card shadow-0 border mb-4"  style=" background-color: #E4E7ED ;">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <img src="/images/{{this.image.[0].filename}}" class="img-fluid"
-                                                alt="Phone">
+                            <div class="card-body p-4 ">
+                                <div class="card shadow-0 border mb-4" style=" background-color: #E4E7ED ;">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <img src="/images/{{this.image.[0].filename}}" class="img-fluid"
+                                                    alt="Phone">
+                                            </div>
+                                            <div
+                                                class="col-md-1 text-center d-flex justify-content-center align-items-center">
+                                                <p class="text-muted mb-0">{{this.product_name}}</p>
+                                            </div>
+                                            <div
+                                                class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                <p class="text-muted mb-0 small">Brand: {{this.brandName}}</p>
+                                            </div>
+                                            <div
+                                                class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                <p class="text-muted mb-0 small">Price ₹: {{this.price}} /-</p>
+                                            </div>
+                                            <div
+                                                class="col-md-1 text-center d-flex justify-content-center align-items-center">
+                                                <p class="text-muted mb-0 small">Quantity: {{this.quantity}}</p>
+                                            </div>
+                                            <div
+                                                class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                <p class="text-muted mb-0 small">Total Amount ₹: {{this.totalAmount}} /-
+                                                </p>
+                                            </div>
+                                            {{#unless this.cancelStatus}}
+                                            <div
+                                                class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                <p class="text-muted my-auto">Order Status :</p>
+                                                <p class="text-primary my-auto"> {{this.orderStatus}}</p>
+                                            </div>
+                                            {{else}}
+                                            <div
+                                                class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                <p class="text-muted my-auto">Order Status :</p>
+                                                <p class="text-danger my-auto">Cancelled</p>
+                                            </div>
+                                            {{/unless}}
                                         </div>
-                                        <div
-                                            class="col-md-1 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0">{{this.product_name}}</p>
-                                        </div>
-                                        <div
-                                            class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0 small">Brand: {{this.brandName}}</p>
-                                        </div>
-                                        <div
-                                            class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0 small">Price ₹: {{this.price}} /-</p>
-                                        </div>
-                                        <div
-                                            class="col-md-1 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0 small">Quantity: {{this.quantity}}</p>
-                                        </div>
-                                        <div
-                                            class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0 small">Total Amount ₹: {{this.totalAmount}} /-</p>
-                                        </div>
-                                        {{#unless this.cancelStatus}}
-                                        <div
-                                            class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted my-auto">Order Status :</p> 
-                                            <p class="text-primary my-auto"> {{this.orderStatus}}</p>
-                                        </div>
-                                        {{else}}
-                                        <div
-                                            class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted my-auto">Order Status :</p> 
-                                            <p class="text-danger my-auto">Cancelled</p>
-                                        </div>
-                                        {{/unless}}
-                                    </div>
-                                    <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
-                                    <div class="row d-flex align-items-center">
-                                        <div class="col-md-2"> 
-                                            <p class="text-muted mb-0 small">Order Date: {{this.orderDate}}</p>
-                                        </div>
-                                        <div class="col-md-10">
-                                            <div class="d-flex justify-content-around mb-1">
-                                                <p class="text-muted mt-1 mb-0 small ms-xl-5"></p>
-                                                {{#unless this.cancelStatus}}
-                                                {{#unless this.deliveryStatus}}
-                                                <p class="text-muted mt-1 mb-0 small ms-xl-5"><a href="/userOrderUpdate?order_id={{this.order_id}}&product_id={{this._id}}&quantity={{this.quantity}}"
-                                                class="btn btn-danger rounded-pill my-auto">Cancel Order</a></p>
-                                                {{else}}
-                                                <a href="/userOrderUpdate?order_id={{this.order_id}}&returnAmount={{this.totalAmount}}&cond=return"
-                                                class="btn btn-info rounded-pill my-auto">Return Product</a>
-                                                <p class="text-muted mt-1 mb-0 small ms-xl-5"><a href="/productReview?order_id={{this.order_id}}&product_id={{this._id}}"
-                                                class="btn btn-success rounded-pill my-auto">{{this._id}}Rate Product</a></p>
-                                                {{/unless}}
-                                                {{/unless}}
+                                        <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
+                                        <div class="row d-flex align-items-center">
+                                            <div class="col-md-2">
+                                                <p class="text-muted mb-0 small">Order Date: {{this.orderDate}}</p>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <div class="d-flex justify-content-around mb-1">
+                                                    <p class="text-muted mt-1 mb-0 small ms-xl-5"></p>
+                                                    {{#unless this.cancelStatus}}
+                                                    {{#unless this.deliveryStatus}}
+                                                    <p class="text-muted mt-1 mb-0 small ms-xl-5"><a
+                                                            href="/userOrderUpdate?order_id={{this.order_id}}&product_id={{this._id}}&quantity={{this.quantity}}"
+                                                            class="btn btn-danger rounded-pill my-auto">Cancel Order</a>
+                                                    </p>
+                                                    {{else}}
+                                                    <a href="/userOrderUpdate?order_id={{this.order_id}}&returnAmount={{this.totalAmount}}&cond=return"
+                                                        class="btn btn-info rounded-pill my-auto">Return Product</a>
+                                                    {{#unless this.rating}}
+                                                    <div class="container">
+                                                        <div class="row" style="margin-top:40px;">
+                                                            <div class="col-md-6">
+                                                                <div class="well well-sm">
+                                                                    <div class="text-right">
+                                                                        <a class="btn btn-success btn-green"
+                                                                            href="#reviews-anchor"
+                                                                            id="open-review-box">Leave a Review</a>
+                                                                    </div>
+
+                                                                    <div class="row" id="post-review-box"
+                                                                        style="display:none;">
+                                                                        <div class="col-md-12">
+                                                                            <form accept-charset="UTF-8"
+                                                                                action="/productReview" method="post">
+                                                                                <input type="hidden" name="order_id"
+                                                                                    value="{{this.order_id}}">
+                                                                                <input type="hidden" name="product_id"
+                                                                                    value="{{this._id}}">
+                                                                                <input id="ratings-hidden" name="rating"
+                                                                                    type="hidden">
+                                                                                {{!-- <textarea
+                                                                                    class="form-control animated"
+                                                                                    cols="50" id="new-review"
+                                                                                    name="comment"
+                                                                                    placeholder="Enter your review here..."
+                                                                                    rows="5"></textarea> --}}
+                                                                                <div class="stars starrr"
+                                                                                    data-rating="0"></div>
+                                                                                <a class="btn btn-danger btn-sm"
+                                                                                    href="#" id="close-review-box"
+                                                                                    style="display:none; margin-right: 10px;">
+                                                                                    <span
+                                                                                        class="glyphicon glyphicon-remove"></span>Cancel</a>
+                                                                                <button class="btn btn-success btn-lg"
+                                                                                    type="submit">Save</button>
+
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {{/unless}}
+                                                    {{/unless}}
+                                                    {{/unless}}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            {{!-- <div class="d-flex justify-content-between pt-2">
-                                <p class="fw-bold mb-0">Order Details</p>
-                                <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> $898.00</p>
-                            </div>
+                                {{!-- <div class="d-flex justify-content-between pt-2">
+                                    <p class="fw-bold mb-0">Order Details</p>
+                                    <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> $898.00</p>
+                                </div>
 
-                            <div class="d-flex justify-content-between pt-2">
-                                <p class="text-muted mb-0">Invoice Number : 788152</p>
-                                <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> $19.00</p>
+                                <div class="d-flex justify-content-between pt-2">
+                                    <p class="text-muted mb-0">Invoice Number : 788152</p>
+                                    <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> $19.00</p>
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+                                    <p class="text-muted mb-0">Invoice Date : 22 Dec,2019</p>
+                                    <p class="text-muted mb-0"><span class="fw-bold me-4">GST 18%</span> 123</p>
+                                </div> --}}
+
+                                {{!-- <div class="d-flex justify-content-between mb-5">
+                                    <p class="text-muted mb-0">Recepits Voucher : 18KU-62IIK</p>
+                                    <p class="text-muted mb-0"><span class="fw-bold me-4">Delivery Charges</span> Free
+                                    </p>
+                                </div> --}}
+
                             </div>
-
-                            <div class="d-flex justify-content-between">
-                                <p class="text-muted mb-0">Invoice Date : 22 Dec,2019</p>
-                                <p class="text-muted mb-0"><span class="fw-bold me-4">GST 18%</span> 123</p>
-                            </div> --}}
-
-                            {{!-- <div class="d-flex justify-content-between mb-5">
-                                <p class="text-muted mb-0">Recepits Voucher : 18KU-62IIK</p>
-                                <p class="text-muted mb-0"><span class="fw-bold me-4">Delivery Charges</span> Free</p>
-                            </div> --}}
-                        
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
     {{/each}}
 </body>
+
 </html>//

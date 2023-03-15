@@ -184,7 +184,7 @@
 
           <!-- Button trigger modal -->
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-           Wallet
+            Wallet
           </button>
 
           <!-- Modal -->
@@ -198,6 +198,29 @@
                 </div>
                 <div class="modal-body">
                   Wallet Amount ₹:{{data.wallet}}
+                </div>
+                <div class="modal-body d-flex">
+                  <table>
+                    <thead>
+                      <tr style="justify-content: space-around;">
+                        <th scope="col">Sl No.</th>
+                        <th scope="col">Refund Amount</th>
+                        <th scope="col">Refund Date</th>
+                        <th scope="col">Order Id</th>
+                      </tr>
+                         </thead>
+                      <tbody>
+                      {{#each data.walletHistory}}
+                      <tr>
+                        <td>{{inc @index}}</td>
+                        <td>{{this.refundAmount}}</td>
+                        <td>{{this.refundDate}}</td>
+                        <td>{{this.order_id}}</td>
+                      </tr>
+                      {{/each}}
+                      </tbody>
+                 
+                  </table>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

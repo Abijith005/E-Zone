@@ -56,6 +56,11 @@ let userSchema=new mongoose.Schema({
     wallet:{
         type:Number,
         required:true
+    },
+
+    walletHistory:{
+        type:Array,
+        default:[]
     }
 
 })

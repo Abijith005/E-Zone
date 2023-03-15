@@ -168,7 +168,6 @@ module.exports = {
     },
 
     admin_productAdd: (req, res) => {
-        console.log(req.body,req.files);
         adminService.add_product(req.body, req.files).then(() => {
             res.redirect('/admin/admin_products')
         }).catch(() => {

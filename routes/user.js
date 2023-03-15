@@ -115,12 +115,12 @@ router.get('/filterProducts/:brand',productController.filterProducts)
 
 router.get('/pagination/:pageNum',productController.pagination)
 
-router.get('/productReview',ifUser,productController.productReview)
+router.post('/productReview',ifUser,productController.productReview)
 
 
 
 
-
+  
 
 
 

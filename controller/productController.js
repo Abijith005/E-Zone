@@ -64,7 +64,6 @@ module.exports = {
 
     getShopPage: async (req, res) => {
         try {
-            console.log('shop page');
             req.session.productPerPage = 6;
             req.session.searchInput = null
             req.session.filterProducts = null
@@ -359,18 +358,19 @@ module.exports = {
     },
 
     productReview: async (req, res) => {
-        console.log(req.query);
-        let id = req.query.product_id
+        let id = req.body.product_id
         let product = await productModel.findOne({_id:id}).lean()
         product={...product,
-        order_id:req.query.order_id}
-        console.log(product);
-        let rating=Math.floor(Number(product.productReview.totalStars+10)/Number(product.productReview.totalCustomers+2))
-        console.log(rating);
-        productModel.updateOne({_id:id},{$set:{productReview:{totalStars:8,totalCustomers:2,rating:rating}}}).then(async(result)=>{
-            console.log(result);
-            console.log(await productModel.findOne({_id:id}))
-        })
+        order_id:req.body.order_id}
+        let stars=Number(product.productReview?.totalStars??0)+Number(req.body.rating)
+        let customers=Number(product.productReview?.totalCustomers??0)+1;
+        let rating=stars/customers
+       await productModel.updateOne({_id:id},{$set:{productReview:{totalStars:stars,totalCustomers:customers,rating:rating}}})
+
+    //    error
+    let orderId=String(req.body.order_id)
+       await userModel.updateOne({_id:req.session.userDetails._id,orders: { $elemMatch: { order_id: orderId} } },{$set:{'orders.$.productRating':rating}}).then(async(result)=>{
+       })
         res.render('',{product})
     }
 

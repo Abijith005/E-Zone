@@ -6,7 +6,6 @@ module.exports = {
 
     getBanner: async (req, res) => {
         let banners = await bannerModel.find().lean()
-        console.log(banners);
         res.render('banner', { banners })
     },
 
