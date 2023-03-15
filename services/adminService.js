@@ -64,7 +64,7 @@ module.exports = {
                         imag.image[0].filename = imag.image[0].filename + ".png"
                         imag.image[0].path = imag.image[0].path + ".png"
                     })
-                productModel.create({ ...productData, ...imag }).then(() => {
+                productModel.create({ ...productData,...imag }).then(() => {
                     resolve()
                 })
                 // }).catch(()=>{
@@ -102,7 +102,7 @@ module.exports = {
                     product.sub_image.push(files.sub_image[i])
                 }
             }
-            productModel.updateOne({ _id: id }, { $set: { product_name: productData.product_name, category: productData.category, company: productData.company, price: productData.price, stockQuantity: productData.stockQuantity, product_Details: productData.product_Details, image: files.image, sub_image: product.sub_image } }).then((result) => {
+            productModel.updateOne({ _id: id }, { $set: { product_name: productData.product_name, category: productData.category, company: productData.company, price: productData.price, stockQuantity: productData.stockQuantity, product_Details: productData.product_Details,image: files.image, sub_image: product.sub_image } }).then((result) => {
                 resolve()
             }).catch(() => {
                 reject()

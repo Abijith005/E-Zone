@@ -23,12 +23,12 @@
                 {{/if}}
               </li>
               <div>
-                <form action="/admin/salesReport" method="post">
+                <form  method="post" id="form">
                   <label for="">Start Date</label>
-                  <input type="date" name="startDate" required>&nbsp;&nbsp;
+                  <input type="date" id="startDate" name="startDate" required>&nbsp;&nbsp;
                   <label for="">End Date</label>
-                  <input type="date" name="endDate" required>&nbsp;
-                  <input type="submit" style="background-color: rgb(16, 14, 14); color: white; font-family: cursive; "
+                  <input type="date" id="endDate" name="endDate" required>&nbsp;
+                  <input type="button" onclick="getReport()" style="background-color: rgb(16, 14, 14); color: white; font-family: cursive; "
                     value="Filter">
                 </form>
               </div>
@@ -98,6 +98,16 @@
       {{/if}}
     </div>
   </section>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    function getReport(){
+    let startDate=document.getElementById('startDate').value
+    let endDate=document.getElementById('endDate').value
+    console.log(startDate,endDate)
+  axios.post('/admin/salesReport',{startDate,endDate}).then((result)=>{
+    console.log(result)
+  })
+}  </script>
  </body>
  </html>
  

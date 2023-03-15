@@ -53,9 +53,9 @@ module.exports = {
 
         let totalStatus = {
             totalRevenue: total,
-            totalOrder: totalOrder[0].count,
+            totalOrder: totalOrder[0]?.count??0,
             totalProduct: totalProduct,
-            paymentMethod: [paymentMethod[0].cashOnDeliveryCount, paymentMethod[0].onlinePaymentCount]
+            paymentMethod: [paymentMethod[0]?.cashOnDeliveryCount??0, paymentMethod[0]?.onlinePaymentCount??0]
         }
         res.render('admin_home', { monthlyRevenue, totalStatus })
     },
@@ -228,6 +228,7 @@ module.exports = {
     },
 
     salesReport: async (req, res) => {
+        console.log(req.body);
         let startDate = new Date(req.body.startDate).toISOString()
         let endDate = new Date(req.body.endDate).toISOString()
         let products = await userModel.aggregate([{ $unwind: '$orders' }, { $match: { $and: [{ 'orders.orderStatus': 'delivered' }, { 'orders.orderDate': { $gte: new Date(startDate), $lte: new Date(endDate) } }] } }])
@@ -256,9 +257,14 @@ module.exports = {
         //         totalRevenue = Number(totalRevenue) + Number(j.totalOrderAmount);
         //     }
         // }
-        req.session.salesReport = { products, startDate, endDate }
-        // req.session.salesReport.startDate=req.body.startDate
-        // req.session.salesReport.endDate=req.body.endDate
-        res.redirect('/admin/getSalesReport')
+        startDate = new Date(req.session.salesReport.startDate).toLocaleDateString()
+        endDate = new Date(req.session.salesReport.endDate).toLocaleDateString()
+        let totalRevenue = 0;
+        for (const i of products) {
+            totalRevenue = Number(totalRevenue) + Number(i.orders.totalOrderAmount);
+        }
+        products = { products, startDate, endDate,totalRevenue}
+        // res.render('salesReport', { products })
+        res.json({products})
     }
 }

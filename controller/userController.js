@@ -25,15 +25,27 @@ module.exports = {
         // if (products) {
         //     brands = category.find(e => e._id == products[0].category)
         // }
-        let banners=await bannerModel.find().lean()
-        let topBrands=await productModel.find().sort({price:-1}).lean().limit(6)
+        let banners = await bannerModel.find().lean()
+        let topBrands = await productModel.find().sort({ price: -1 }).lean().limit(6)
+        let topSelling = await productModel.find().sort({ 'productReview.rating': -1 }).lean().limit(6)
+        for (const i of topSelling) {
+            let array = []
+            if (i.productReview?.rating) {
+                let limit=Math.floor(i.productReview?.rating??0)
+                for (let i = 0; i < limit; i++) {
+                    array.push(i)
+                }
+                i.rating = array
+            }
+        }
+
         if (quantities) {
             quantities.user_whishList = quantities.user_whishList?.length ?? null
-            quantities.user_cart = quantities.user_cart?.length ?? null 
+            quantities.user_cart = quantities.user_cart?.length ?? null
         }
         let userName;
         req.session.userDetails ? userName = req.session.userDetails.name : userName = null
-        res.render('user_home', { userName,quantities,banners,topBrands })
+        res.render('user_home', { userName, quantities, banners, topBrands, topSelling })
     },
 
     home: (req, res) => {
@@ -93,7 +105,7 @@ module.exports = {
 
         const errors = validationResult(req)
         let error1 = errors.errors.find(item => item.param === 'name') || '';
-        let error2 = errors.errors.find(item => item.param === 'email') || ''; 
+        let error2 = errors.errors.find(item => item.param === 'email') || '';
         let error3 = errors.errors.find(item => item.param === 'password') || '';
         let error4 = errors.errors.find(item => item.param === 'mob_no') || '';
 
@@ -231,7 +243,7 @@ module.exports = {
     user_profilePage: (req, res) => {
         userService.get_userDetails(req.session.userDetails._id).then((data) => {
             for (const i of data.walletHistory) {
-                i.refundDate=new Date(i.refundDate).toLocaleDateString()
+                i.refundDate = new Date(i.refundDate).toLocaleDateString()
             }
             data.address.length >= 3 ? maxAddress = true : maxAddress = false
             req.session.editAddress ? edit = req.session.editAddress : edit = null
@@ -324,31 +336,30 @@ module.exports = {
 
     orderHistory: (req, res) => {
         return new Promise((resolve, reject) => {
-            userModel.findOne({ _id: req.session.userDetails._id }, { orders: 1 }).then(async(result) => {
+            userModel.findOne({ _id: req.session.userDetails._id }, { orders: 1 }).then(async (result) => {
                 let products = [];
-                let p=[];
+                let p = [];
                 for (const i of result.orders) {
-                  await  productModel.findOne({ _id: i.product_id },{ product_name: 1, brandName: 1, price: 1, image: 1 }).lean().then((product) => {
-                      product.quantity = i.quantity
+                    await productModel.findOne({ _id: i.product_id }, { product_name: 1, brandName: 1, price: 1, image: 1 }).lean().then((product) => {
+                        product.quantity = i.quantity
                         product.totalAmount = product.price * i.quantity
                         product.order_id = i.order_id
-                        product.rating=i.productRating?i.productRating:null
-                        product.orderDate=new Date(i.orderDate).toLocaleDateString()
-                        product.orderStatus=i.orderStatus
-                        product.cancelStatus=i.cancelStatus
+                        product.rating = i.productRating ? i.productRating : null
+                        product.orderDate = new Date(i.orderDate).toLocaleDateString()
+                        product.orderStatus = i.orderStatus
+                        product.cancelStatus = i.cancelStatus
                         if (i.orderStatus == 'delivered') {
-                            product.deliveryStatus= true
-                        }else if(i.orderStatus=='returned'){
-                            
-                             product.returnStatus=true
+                            product.deliveryStatus = true
+                        } else if (i.orderStatus == 'returned') {
+
+                            product.returnStatus = true
                         }
                         else {
-                            product.deliveryStatus=false
+                            product.deliveryStatus = false
                         }
                         products.push(product)
                     })
-                }                       
-                console.log(products,'45678912');
+                }
                 res.render('orderHistory', { products })
             }).catch(() => {
                 res.send(error404)
@@ -366,7 +377,7 @@ module.exports = {
                     res.send(error404)
                 })
             } else {
-                res.json({success:false})
+                res.json({ success: false })
             }
         })
     },
@@ -411,8 +422,8 @@ module.exports = {
         })
     },
 
-    returnProduct:(req,res)=>{
-userModel.updateOne({_id:req.session.userDetails._id},{})
+    returnProduct: (req, res) => {
+        userModel.updateOne({ _id: req.session.userDetails._id }, {})
     }
 
 }

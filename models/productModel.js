@@ -48,7 +48,7 @@ let productSchema = new mongoose.Schema({
 
     productReview: {
         type: Object,
-        default:{}
+        required:true
     }
 
 })
