@@ -26,14 +26,14 @@ module.exports = {
         let id = req.query.id
         if (req.query.cond == 'Edit') {
             let category = await categoryModel.find({}, { category: 1, _id: 0 }).lean()
-            let banner = await bannerModel.findOne({ id }).lean()
+            let banner = await bannerModel.findOne({ _id:id }).lean()
             banner = {
                 ...banner,
                 category: category
             }
             res.render('editBanner', { banner })
         } else {
-            bannerModel.deleteOne({ id }).then((Result) => {
+            bannerModel.deleteOne({ _id:id }).then((Result) => {
                 res.redirect('/admin/getBanner')
             })
         }
@@ -41,14 +41,11 @@ module.exports = {
 
     flagUnFlag: (req, res) => {
         let id=req.params.id
-        console.log(id);
         if (req.params.cond=='flag') {
-            console.log('hlooo');
-            bannerModel.updateOne({ id }, { $set: { flag: true } }).then((result)=>{
+            bannerModel.updateOne({_id:id }, { $set: { flag: true } }).then((result)=>{
                 res.redirect('/admin/getBanner')})
         } else {
-            console.log('haiiiiiiiiii');
-            bannerModel.updateOne({ id }, { $set: { flag: false } }).then((result)=>{
+            bannerModel.updateOne({ _id:id }, { $set: { flag: false } }).then((result)=>{
                 res.redirect('/admin/getBanner')})
         }
     },
@@ -58,8 +55,7 @@ module.exports = {
         let data = req.body
         let file = req.files
         delete data.id;
-        console.log();
-        bannerModel.updateOne({ id }, { $set: { ...data, ...file } }).then((result) => {
+        bannerModel.updateOne({ _id:id }, { $set: { ...data, ...file } }).then((result) => {
             res.redirect('/admin/getBanner')
         })
     }

@@ -167,18 +167,29 @@
 		<!-- container -->
 		<div class="container">
 			<!-- responsive-nav -->
-
+{{!-- 
 			<div id="responsive-nav">
 				<!-- NAV -->
 				<ul class="main-nav nav navbar-nav flex-row">
-					<li class="active"><a href="/home">Home</a></li>
+					<li class="active"><a data-toggle="tab" href="/home">Home</a></li>
 					<li><a onclick="allProducts()">All Products</a></li>
 					{{#each category}}
 					<li><a onclick="changeCategory('{{this._id}}')">{{this.category}}</a></li>
 					{{/each}}
 				</ul>
 				<!-- /NAV -->
-			</div>
+			</div> --}}
+
+
+			<div class="section-nav">
+							<ul class="section-tab-nav tab-nav">
+								<li ><a class="text-dark"  href="/home">Home</a></li>
+								<li class="active"><a data-toggle="tab" onclick="allProducts()">All Products</a></li>
+								{{#each category}}
+								<li><a data-toggle="tab" onclick="changeCategory('{{this._id}}')" >{{this.category}}</a></li>
+								{{/each}}
+							</ul>
+						</div>
 			<!-- /responsive-nav -->
 		</div>
 		<!-- /container -->

@@ -26,14 +26,15 @@ module.exports = {
         //     brands = category.find(e => e._id == products[0].category)
         // }
         let banners=await bannerModel.find().lean()
-        // let products=await productModel.aggregate()
+        let topBrands=await productModel.find().sort({price:-1}).lean().limit(6)
+        console.log(topBrands);
         if (quantities) {
             quantities.user_whishList = quantities.user_whishList?.length ?? null
             quantities.user_cart = quantities.user_cart?.length ?? null 
         }
         let userName;
         req.session.userDetails ? userName = req.session.userDetails.name : userName = null
-        res.render('user_home', { userName,quantities,banners })
+        res.render('user_home', { userName,quantities,banners,topBrands })
     },
 
     home: (req, res) => {
@@ -93,7 +94,7 @@ module.exports = {
 
         const errors = validationResult(req)
         let error1 = errors.errors.find(item => item.param === 'name') || '';
-        let error2 = errors.errors.find(item => item.param === 'email') || '';
+        let error2 = errors.errors.find(item => item.param === 'email') || ''; 
         let error3 = errors.errors.find(item => item.param === 'password') || '';
         let error4 = errors.errors.find(item => item.param === 'mob_no') || '';
 
