@@ -341,7 +341,8 @@ module.exports = {
                 let p = [];
                 for (const i of result.orders) {
                     await productModel.findOne({ _id: i.product_id }, { product_name: 1, brandName: 1, price: 1, image: 1 }).lean().then((product) => {
-                        product.quantity = i.quantity
+                        console.log(product);
+                        product.quantity =i.quantity
                         product.totalAmount = product.price * i.quantity
                         product.order_id = i.order_id
                         product.rating = i.productRating ? i.productRating : null
@@ -361,9 +362,10 @@ module.exports = {
                     })
                 }
                 res.render('orderHistory', { products })
-            }).catch(() => {
-                res.send(error404)
             })
+            // .catch(() => {
+            //     res.send(error404)
+            // })
         })
     },
 

@@ -91,7 +91,7 @@ router.get('/selectAddress/:id',userSession.ifUser,orderController.selectAddress
 
 router.post('/placeOrder',userSession.ifUser,orderController.placeOrder)
 
-router.get('/verifyUPIOrder',ifUser,orderController.verifyOrder)
+router.post('/verifyUPIOrder',ifUser,orderController.verifyOrder)
 
 router.get('/orderSuccess',ifUser,orderController.orderSuccess)
 
@@ -108,6 +108,8 @@ router.get('/removeFromWishList/:id',ifUser,userController.removeFromWishList)
 router.get('/addToCartFromWishList/:id',ifUser,userController.addToCartFromWishList)
 
 router.post('/couponApply',ifUser,orderController.couponApply)
+
+router.get('/applyWallet/:wallet',ifUser,orderController.applyWallet)
 
 router.get('/sortProducts/:value',productController.sortProducts)
 

@@ -1,14 +1,16 @@
- <!DOCTYPE html>
- <html lang="en">
- <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-zone</title>
- </head>
- <body>
-    <section style="background-color: #eee; margin-top: 50px; ">
-     
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-zone</title>
+</head>
+
+<body>
+  <section style="background-color: #eee; margin-top: 50px; ">
+
     <div class="container vh-100   py-5">
       <div class="row">
         <div class="col">
@@ -16,20 +18,20 @@
             <ol class="breadcrumb mb-0" style="display: flex;  justify-content: space-between;">
               <li class="breadcrumb-item">
                 <h4>Sales Report</h4>
-                {{#if products.thirtyDays}} 
+                {{#if products.thirtyDays}}
                 <h4>Of Last 30 Days</h4>
-                {{else}} 
+                {{else}}
                 <h4>from {{products.startDate}} To {{products.endDate}}</h4>
                 {{/if}}
               </li>
               <div>
-                <form  method="post" id="form">
+                <form method="post" id="form">
                   <label for="">Start Date</label>
                   <input type="date" id="startDate" name="startDate" required>&nbsp;&nbsp;
                   <label for="">End Date</label>
                   <input type="date" id="endDate" name="endDate" required>&nbsp;
-                  <input type="button" onclick="getReport()" style="background-color: rgb(16, 14, 14); color: white; font-family: cursive; "
-                    value="Filter">
+                  <input type="button" onclick="getReport()"
+                    style="background-color: rgb(16, 14, 14); color: white; font-family: cursive; " value="Filter">
                 </form>
               </div>
             </ol>
@@ -40,7 +42,6 @@
       <h4 style="text-align: center; font-weight: bold; font-family: cursive;">No Data Available</h4>
       {{else}}
       <table class="table align-middle mb-0 bg-white container">
-
         <thead class="bg-light">
           <tr>
             <th class="text-center">Sl No.</th>
@@ -52,8 +53,8 @@
             <th class="text-center">Sub Total</th>
           </tr>
         </thead>
-        {{#each products}}
-        <tbody>
+        <tbody id="tableBody">
+          {{#each products}}
           <tr>
             <td class="text-center">
               <p>{{inc @index}}</p>
@@ -98,16 +99,45 @@
       {{/if}}
     </div>
   </section>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script>
-    function getReport(){
-    let startDate=document.getElementById('startDate').value
-    let endDate=document.getElementById('endDate').value
-    console.log(startDate,endDate)
-  axios.post('/admin/salesReport',{startDate,endDate}).then((result)=>{
-    console.log(result)
-  })
-}  </script>
- </body>
- </html>
- 
+    function getReport() {
+      let startDate = document.getElementById('startDate').value
+      let endDate = document.getElementById('endDate').value
+      console.log(startDate, endDate)
+      axios.post('/admin/salesReport', { startDate, endDate }).then((result) => {
+          console.log(result.data.products.products)
+        let table = document.getElementById('tableBody')
+        table.innerHTML = ''
+        result.data.products.products.forEach((item,index)=> {
+          let tableRow = document.createElement('tr')
+          tableRow.innerHTML = `
+            <td class="text-center">
+              <p>${index+1}</p>
+            </td>
+            <td class="text-center">
+              <p class="fw-normal mb-1">${item.orders.compoundOrder_id}</p>
+            </td>
+            <td class="text-center">
+              <p class="fw-normal mb-1">${item.name}</p>
+            </td>
+            <td class="text-center">
+              <p class="fw-normal mb-1">${item.orders.productName}</p>
+            </td>
+            <td class="text-center">
+              <p class="fw-normal mb-1">₹:${item.orders.price}</p>
+            </td>
+            <td class="text-center">
+              <p class="fw-normal mb-1">${item.orders.quantity}</p>
+            </td>
+            <td class="text-center">
+              <p class="fw-normal mb-1">₹:${item.orders.totalOrderAmount}/-</p>
+            </td>`
+          table.appendChild(tableRow)
+        })
+      })
+    }  
+    </script>
+</body>
+
+</html>

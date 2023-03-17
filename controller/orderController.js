@@ -102,6 +102,7 @@ module.exports = {
     placeOrder: (req, res) => {
         return new Promise(async (resolve, reject) => {
             let data = req.body
+            req.session.orderData=data
             let { user_cart } = await userModel.findOne({ _id: req.session.userDetails._id }, { user_cart: 1, _id: 0 })
             if (req.body.paymentMethod == "Cash On Delivery") {
                 let compOrder_id = uniqueid()
@@ -109,7 +110,7 @@ module.exports = {
                     let orderId = uniqueid()
                     let product = await productModel.findOne({ _id: i.id })
                     let amount = product.price * i.quantity
-                    userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { compoundOrder_id: compOrder_id, order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod:'UPI Payment', product_id: product._id, productName: product.product_name, category: product.category, quantity: i.quantity, couponStatus: data.couponStatus, totalOrderAmount: amount, orderDate: new Date(), orderStatus: 'pending', cancelStatus: false,price:product.price} } }).then(() => {
+                    userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { compoundOrder_id: compOrder_id, order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod: 'Cash On Delivery', product_id: product._id, productName: product.product_name, category: product.category, quantity: i.quantity, couponStatus: data.couponStatus, totalOrderAmount: amount, orderDate: new Date(), orderStatus: 'pending', cancelStatus: false, price: product.price } } }).then(() => {
                         resolve()
                     })
                 }
@@ -153,21 +154,28 @@ module.exports = {
         })
     },
 
-    verifyOrder: (req, res) => {
-        return new Promise((resolve, reject) => {
-            console.log('haiiiiiiiiiiiiiiii');
+    verifyOrder:(req, res) => {
+        return new Promise(async(resolve, reject) => {
+            let data=req.session.orderData
+            let details=req.body
             let crypto = require('crypto')
-            let hamc = crypto.createHmac('sha256','mpif2nSNnpA4zv05FD6rXoIp')
+            let hamc = crypto.createHmac('sha256', 'mpif2nSNnpA4zv05FD6rXoIp')
             hamc.update(details.payment.razorpay_order_id + '|' + details.payment.razorpay_payment_id)
             hamc = hamc.digest('hex')
             if (hamc == details.payment.razorpay_signature) {
-                resolve()
+                let { user_cart } = await userModel.findOne({ _id: req.session.userDetails._id }, { user_cart: 1, _id: 0 })
+                let compOrder_id = uniqueid()
+                for (const i of user_cart) {
+                    let orderId = uniqueid()
+                    let product = await productModel.findOne({ _id: i.id })
+                    let amount = product.price * i.quantity
+                    userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { compoundOrder_id: compOrder_id, order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod: 'UPI Payment', product_id: product._id, productName: product.product_name, category: product.category, quantity: i.quantity, couponStatus: data.couponStatus, totalOrderAmount: amount, orderDate: new Date(), orderStatus: 'pending', cancelStatus: false, price: product.price } } }).then(() => {
+                        resolve()
+                    })
+                }
             } else {
-                reject()
+                reject()        
             }
-        }).then(()=>{
-        }).catch(()=>{
-
         })
     },
 
@@ -208,7 +216,7 @@ module.exports = {
 
     userOrderUpdate: (req, res) => {
         if (req.query.cond == 'return') {
-            userModel.updateOne({ _id: req.session.userDetails._id, orders: { $elemMatch: { order_id: req.query.order_id } } }, { $set: { 'orders.$.cancelStatus': true, 'orders.$.orderStatus': 'returned', returnDate: new Date()},$inc:{wallet:req.query.returnAmount},$push:{walletHistory:{refundAmount:req.query.returnAmount,refundDate:new Date(),order_id:req.query.order_id}}}).then(() => {
+            userModel.updateOne({ _id: req.session.userDetails._id, orders: { $elemMatch: { order_id: req.query.order_id } } }, { $set: { 'orders.$.cancelStatus': true, 'orders.$.orderStatus': 'returned', returnDate: new Date() }, $inc: { wallet: req.query.returnAmount }, $push: { walletHistory: { refundAmount: req.query.returnAmount, refundDate: new Date(), order_id: req.query.order_id } } }).then(() => {
                 res.redirect('/orderHistory')
             })
         } else {
@@ -243,6 +251,15 @@ module.exports = {
                 res.json({ coupon: 'not found' })
             }
         })
+    },
+
+    applyWallet: async (req, res) => {
+        let wallet = await userModel.findOne({ _id: req.session.userDetails._id }, { wallet: 1, _id: 0 })
+        if (req.params.wallet <= wallet) {
+            res.json({ success: true,})
+        } else {
+            res.json({ success: false })
+        }
     }
 
 

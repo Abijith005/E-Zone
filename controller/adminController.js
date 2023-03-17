@@ -201,19 +201,19 @@ module.exports = {
     },
 
     getSalesReport: async (req, res) => {
-        if (req.session.salesReport) {
-            let products = req.session.salesReport.products
-            products.startDate = new Date(req.session.salesReport.startDate).toLocaleDateString()
-            products.endDate = new Date(req.session.salesReport.endDate).toLocaleDateString()
-            let totalRevenue = 0;
-            for (const i of products) {
-                totalRevenue = Number(totalRevenue) + Number(i.orders.totalOrderAmount);
-            }
-            products.totalRevenue = totalRevenue
-            res.render('salesReport', { products })
-            req.session.salesReport = null
-        }
-        else {
+        // if (req.session.salesReport) {
+        //     let products = req.session.salesReport.products
+        //     products.startDate = new Date(req.session.salesReport.startDate).toLocaleDateString()
+        //     products.endDate = new Date(req.session.salesReport.endDate).toLocaleDateString()
+        //     let totalRevenue = 0;
+        //     for (const i of products) {
+        //         totalRevenue = Number(totalRevenue) + Number(i.orders.totalOrderAmount);
+        //     }
+        //     products.totalRevenue = totalRevenue
+        //     res.render('salesReport', { products })
+        //     req.session.salesReport = null
+        // }
+        // else {
             let thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
             thirtyDaysAgo = thirtyDaysAgo.toISOString()
             let products = await userModel.aggregate([{ $unwind: '$orders' }, { $match: { $and: [{ 'orders.orderStatus': 'delivered' }, { 'orders.orderDate': { $gte: new Date(thirtyDaysAgo), $lte: new Date() } }] } }])
@@ -224,7 +224,7 @@ module.exports = {
             products.thirtyDays = true
             products.totalRevenue = totalRevenue
             res.render('salesReport', { products })
-        }
+        // }
     },
 
     salesReport: async (req, res) => {
@@ -257,8 +257,8 @@ module.exports = {
         //         totalRevenue = Number(totalRevenue) + Number(j.totalOrderAmount);
         //     }
         // }
-        startDate = new Date(req.session.salesReport.startDate).toLocaleDateString()
-        endDate = new Date(req.session.salesReport.endDate).toLocaleDateString()
+        startDate = new Date(startDate).toLocaleDateString()
+        endDate = new Date(endDate).toLocaleDateString()
         let totalRevenue = 0;
         for (const i of products) {
             totalRevenue = Number(totalRevenue) + Number(i.orders.totalOrderAmount);
