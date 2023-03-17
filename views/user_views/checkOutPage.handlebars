@@ -279,6 +279,7 @@
                             <strong>Total Amount</strong>
                           </div>
                           <input type="hidden" id="totalAmount" name="totalPrice" value="{{orderDatas.totalAmount}}">
+                          <input type="hidden" id="walletDebit" name="walletDebit" value="">
                           <span><strong id="discountedAmount">₹ :{{orderDatas.totalAmount}} /-</strong></span>
                         </li>
                       </ul>
@@ -296,7 +297,7 @@
           </section>
   </form>
   {{#unless changeAddress}}
-  <div class="card" style="height: 90px; width: 35%; margin-left: 215px; margin-top: 10px;">
+  <div class="card" style="height: 90px; width: 35%; margin-left: 215px; margin-top: 10px;" id="couponDiv">
     <label for="" id="message"></label>
     <div class="card-body p-4 d-flex flex-row align-items-center" style="margin-top: -12px;">
       <h6>Apply Coupon&nbsp;&nbsp;</h6>
@@ -309,7 +310,7 @@
     {{!-- {{#if invalidCoupon}} <h6 style="color: red; text-align: center;">Invalid coupon code </h6>{{/if}} --}}
   </div>
   <div class="card" style="height: 90px; width: 35%; margin-left: 215px; margin-top: 10px;">
-    <label for="" id="message"></label>
+    <label for="" id="walletmessage"></label>
     <div class="card-body p-4 d-flex flex-row align-items-center" style="margin-top: -12px;">
       <h6>Apply Wallet&nbsp;&nbsp;</h6>
       <div class="form-outline flex-fill ">
@@ -323,23 +324,30 @@
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script>
     function applyWallet() {
-      let totalAmount=document.getElementById('totalAmount')
-        let wallet = document.getElementById('wallet').value
+      document.getElementById('walletmessage').textContent =''
+      let totalAmount = document.getElementById('totalAmount')
+      let wallet = document.getElementById('wallet').value
       console.log(wallet)
       axios.get('/applyWallet/' + wallet).then((result) => {
         if (result.data.success) {
-          console.log(wallet)
+          console.log(result)
           document.getElementById('walletAmount').textContent = wallet
-         let totalAmount=document.getElementById('totalAmount').value
-          document.getElementById('discountedAmount').textContent=Number(totalAmount)-Number(wallet)
-         totalAmount=Number(totalAmount)-Number(wallet)
+          let totalAmount = document.getElementById('totalAmount').value
+          document.getElementById('discountedAmount').textContent = `₹ :${Number(totalAmount) - Number(wallet)} /-`
+          totalAmount = Number(totalAmount) - Number(wallet)
+          document.getElementById('totalAmount').value = result.data.totalAmount
+          document.getElementById('walletDebit').value = result.data.walletAmount
+          document.getElementById('couponDiv').innerHTML = ''
         } else {
-
+          console.log(result.data.message)
+         document.getElementById('walletmessage').textContent=result.data.message
+         
         }
 
       })
     }
     function applyCoupon() {
+      document.getElementById('message').textContent=''
       let couponCode = document.getElementById('couponCode').value
       document.getElementById('couponCode').value = ''
       if (couponCode) {
@@ -356,7 +364,6 @@
           else {
             console.log(result.data)
             document.getElementById('message').textContent = `Coupon ${result.data.coupon}`
-            /* window.location.reload()*/
           }
         })
       }
@@ -411,7 +418,7 @@
       rzp1.open();
     }
 
-    function verifyPayment(payment,order) {
+    function verifyPayment(payment, order) {
       console.log('verify')
       axios.post('/verifyUPIOrder', { payment, order }).then((resp) => {
         if (resp.data.success) {
