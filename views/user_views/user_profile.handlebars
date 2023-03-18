@@ -183,7 +183,7 @@
           </div> --}}
 
           <!-- Button trigger modal -->
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          {{!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Wallet
           </button>
 
@@ -202,14 +202,14 @@
                 <div class="modal-body">
                   <table>
                     <thead>
-                      <tr >
+                      <tr>
                         <th class="text-center" scope="col">Sl No.</th>
                         <th class="text-center" scope="col">Refund Amount</th>
                         <th class="text-center" scope="col">Refund Date</th>
                         <th class="text-center" scope="col">Order Id</th>
                       </tr>
-                         </thead>
-                      <tbody>
+                    </thead>
+                    <tbody>
                       {{#each data.walletHistory}}
                       <tr>
                         <td>{{inc @index}}</td>
@@ -218,8 +218,8 @@
                         <td>{{this.order_id}}</td>
                       </tr>
                       {{/each}}
-                      </tbody>
-                 
+                    </tbody>
+
                   </table>
                 </div>
                 <div class="modal-footer">
@@ -227,7 +227,58 @@
                 </div>
               </div>
             </div>
+          </div> --}}
+
+          <div class="card bg-light mb-3" style="max-width: 18rem;">
+            <div class="card-header d-flex justify-content-around">My Wallet <h5 class="card-title" style="color: black;">₹:{{data.wallet}}</h5></div>
+            <div class="card-body text-center">
+              <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                View Details
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Wallet Balance ={{data.wallet}}/-</h5>
+                    </div>
+                    <div class="modal-body">
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th class="text-center" scope="col">Sl No.</th>
+                            <th class="text-center" scope="col">Credit/Debit</th>
+                            <th class="text-center" scope="col">Refund Amount</th>
+                            <th class="text-center" scope="col">Date</th>
+                            <th class="text-center" scope="col">OrderId</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {{#each data.walletHistory}}
+                      <tr>
+                        <td class="text-center">{{inc @index}}</td>
+                        <td class="text-center">{{this.transactionType}}</td>
+                        <td class="text-center">{{this.refundAmount}}</td>
+                        <td class="text-center">{{this.refundDate}}</td>
+                        <td class="text-center">{{this.order_id}}</td>
+                      </tr>
+                      {{/each}}
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal">Close</button>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+
+
         </div>
         <div class="col-12 col-md-6">
 
