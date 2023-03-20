@@ -11,6 +11,7 @@
 
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
 
 	<!-- Bootstrap -->
 	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
@@ -28,12 +29,52 @@
 	<!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="/css/style.css" />
 
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>
-		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif] -->
+	<style>
+		.dropdown-menu {
+  width: auto !important;
+  min-width: 100% !important;
+  right: 0 !important;
+  left: auto !important;
+}
+		.sidebar {
+			width: 100vw;
+			height: 100vh;
+			position: fixed;
+			top: 0px;
+			left: 0px;
+			z-index: 200;
+			transition: .3s;
+			left: -1000px;
+		}
+
+		.sidebar-container {
+			background-color: #222222;
+			display: flex;
+			flex-direction: column;
+			width: 60%;
+			height: 100%;
+			gap: 10px;
+			padding: 10px;
+			justify-content: space-between;
+		}
+
+		.side-items {
+			height: 50px;
+			display: flex;
+			gap: 20px;
+			align-items: center;
+			color: white;
+			background-color: #6a6a6a;
+			padding-left: 10px;
+			border-radius: 10px;
+		}
+
+		.side-sec-1 {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+		}
+	</style>
 
 </head>
 
@@ -41,19 +82,6 @@
 	<!-- HEADER -->
 	<header>
 		<!-- TOP HEADER -->
-		<div id="top-header">
-			<div class="container">
-				<ul class="header-links pull-left">
-					<li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
-					<li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
-					<li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
-				</ul>
-				<ul class="header-links pull-right">
-					{{!-- <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-					<li><a href="/user_login"><i class="fa fa-user-o"></i> Login</a></li> --}}
-				</ul>
-			</div>
-		</div>
 		<!-- /TOP HEADER -->
 
 		<!-- MAIN HEADER -->
@@ -61,38 +89,50 @@
 			<!-- container -->
 			<div class="container">
 				<!-- row -->
-				<div class="row align-items-center">
+				<div class="row align-items-center text-center">
 					<!-- LOGO -->
-					<div class="col-md-2">
-						<div class="header-logo ">
+					<div class="col-md-6 col-12">
+						<div class="header-logo d-flex justify-content-around">
 							<a href="#" class="logo">
 								<h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
-
 								</h1>
-
 							</a>
+							<h1 style="color: #ffff;"><i onclick="openSidebar()" class="fa fa-bars d-md-none"></i></h1>
 						</div>
 					</div>
-					<!-- /LOGO -->
+					{{!-- <div class="col-6 d-flex d-none ms-auto">
+						<div class="dropdown">
+							{{#unless userName}}
+							<button class="btn btn-secondary text-white dropdown-toggle" type="button"
+								id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false"><i class="fa fa-user-o"></i> Account</button>
+							{{else}}
+							<button class="btn btn-secondary text-white dropdown-toggle" type="button"
+								id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">{{userName}}</button>
+							{{/unless}}
 
-					<!-- SEARCH BAR -->
-					<div class="col-md-6">
-						<div class="header-search">
-							<form action="/productList" method="post">
-								<input class="input"
-									style="border-top-left-radius:2rem;border-bottom-left-radius:2rem; width: 80%;"
-									type="text" name="searchInput" placeholder="Search here">
-								<button class="search-btn">Search</button>
-							</form>
+
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								{{#unless userName}}
+								<a class="dropdown-item" href="/user_login">Login</a>
+								{{else}}
+								<a class="dropdown-item" href="/user_profile">Profile</a>
+								<a class="dropdown-item" href="/user_logOut">Log Out</a>
+								{{/unless}}
+							</div>
 						</div>
-					</div>
-					<!-- /SEARCH BAR -->
-
-					<!-- ACCOUNT -->
+					</div> --}}
+					<div class=" col-md-6 d-none d-md-flex justify-content-end ms-auto align-items-center ">
 					{{#if userName}}
-					<div class="col-md-3 clearfix">
 						<div class="header-ctn">
 							<!-- Wishlist -->
+
+							<div>
+								<a href="/getShopPage">
+									<i class="ri-shopping-bag-fill"></i> <span>Shop</span>
+								</a>
+							</div>
 
 							<div>
 								<a href="/getWhishList">
@@ -106,9 +146,7 @@
 							<!-- /Wishlist -->
 
 							<!-- Cart -->
-
-
-							<div class="dropdown">
+							<div>
 								<a href="/cart" aria-expanded="true">
 									<i class="fa fa-shopping-cart"></i>
 									<span>Your Cart</span>
@@ -117,23 +155,22 @@
 									{{/if}}
 								</a>
 							</div>
-							<!-- /Cart -->
-
-							<!-- Menu Toogle -->
-							<div class="menu-toggle">
-								<a href="#">
-									<i class="fa fa-bars"></i>
-									<span>Menu</span>
-								</a>
-							</div>
-							<!-- /Menu Toogle -->
 
 						</div>
-					</div>
-					{{/if}}
-					<div class="col-1 ms-auto">
-						<div class="dropdown">
+						{{/if}}
+						{{#unless userName}}
+						<div class="header-ctn">
+						<div>
+								<a style="color: #ffff;" href="/getShopPage">
+									<i class="ri-shopping-bag-fill"></i> <span >Shop</span>
+								</a>
+							</div>
+							</div>
+						{{/unless}}
+						<div class="dropdown ms-2">
 							{{#unless userName}}
+							<!-- Wishlist -->
+							
 							<button class="btn btn-secondary text-white dropdown-toggle" type="button"
 								id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
 								aria-expanded="false"><i class="fa fa-user-o"></i> Account</button>
@@ -161,31 +198,12 @@
 			</div>
 			<!-- container -->
 		</div>
+
 		<!-- /MAIN HEADER -->
 	</header>
 	<!-- /HEADER -->
-
-	<!-- NAVIGATION -->
-	<nav id="navigation">
-		<!-- container -->
-		<div class="container">
-			<!-- responsive-nav -->
-
-			<div id="responsive-nav">
-				<!-- NAV -->
-				<ul class="main-nav nav navbar-nav flex-row">
-					<li class="active"><a href="/home">Home</a></li>
-					<li><a href="/getShopPage">Shop</a></li>
-				</ul>
-				<!-- /NAV -->
-			</div>
-			<!-- /responsive-nav -->
-		</div>
-		<!-- /container -->
-	</nav>
-	<!-- /NAVIGATION -->
-
 	<!-- SECTION -->
+		<a href="/getShopPage">
 	<div id="hot-deal" style="background-image: url('/images/{{banners.[0].image.[0].filename}}');" class="section">
 		<!-- container -->
 		<div class="container">
@@ -222,7 +240,7 @@
 						</ul>
 						<h2 class="text-uppercase">hot deals this week</h2>
 						<p>get New Collections</p>
-						<a class="primary-btn cta-btn" href="#">Shop now</a>
+						<a class="primary-btn cta-btn" href="/getshopPage">Shop now</a>
 					</div>
 				</div>
 			</div>
@@ -230,6 +248,7 @@
 		</div>
 		<!-- /container -->
 	</div>
+		</a>
 	<!-- SECTION -->
 	<div class="section">
 		<!-- container -->
@@ -240,15 +259,7 @@
 				<!-- section title -->
 				<div class="col-md-12">
 					<div class="section-title">
-						<h3 class="title">Top Products</h3>
-						{{!-- <div class="section-nav">
-							<ul class="section-tab-nav tab-nav">
-								<li class="active"><a data-toggle="tab" href="#tab1">Laptops</a></li>
-								<li><a data-toggle="tab" href="#tab1">Smartphones</a></li>
-								<li><a data-toggle="tab" href="#tab1">Cameras</a></li>
-								<li><a data-toggle="tab" href="#tab1">Accessories</a></li>
-							</ul>
-						</div> --}}
+						<h3 class="title">Top Brands</h3>
 					</div>
 				</div>
 				<!-- /section title -->
@@ -269,8 +280,7 @@
 										<div class="product-body">
 											<p class="product-category">Category</p>
 											<h3 class="product-name"><a href="#">{{this.product_name}}</a></h3>
-											<h4 class="product-price">₹: {{this.price}}/- <del
-													class="product-old-price"> ₹: {{this.price}}/-</del></h4>
+											<h4 class="product-price">₹: {{this.price}}/- </h4>
 											<div class="product-rating">
 												<i class="fa fa-star"></i>
 												<i class="fa fa-star"></i>
@@ -278,16 +288,9 @@
 												<i class="fa fa-star"></i>
 												<i class="fa fa-star"></i>
 											</div>
-											<div class="product-btns">
-												<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
-														class="tooltipp">add to wishlist</span></button>
-												<button class="quick-view"><i class="fa fa-eye"></i><span
-														class="tooltipp">quick view</span></button>
-											</div>
 										</div>
-										<div class="add-to-cart text-center">
-											<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to
-												cart</button>
+										<div class="add-to-cart text-center mb-5">
+											<button class="add-to-cart-btn"><i class="ri-shopping-bag-fill"></i></i>Shop</button>
 										</div>
 									</div>
 									{{/each}}
@@ -337,7 +340,8 @@
 									{{#each topSelling}}
 									<div class="product">
 										<div class="product-img">
-											<img style="height:80px;object-fit: contain;" src="/images/{{this.image.[0].filename}}" alt="">
+											<img style="height:80px;object-fit: contain;"
+												src="/images/{{this.image.[0].filename}}" alt="">
 										</div>
 										<div class="product-body">
 											<p class="product-category">Category</p>
@@ -804,6 +808,26 @@
 		</div>
 		<!-- /bottom footer -->
 	</footer>
+	<div class="sidebar" id="sidebar">
+		<div class="sidebar-container">
+			<div class="side-sec-1">
+				<div class="p-1">
+					<h4 class="text-white"><i class="fa fa-bars me-3" onclick="closeSidebar()"></i><span>E-Zone</span>
+					</h4>
+				</div>
+				<a class="side-items">Wishlist</a>
+				<a class="side-items">Wishlist</a>
+				<a class="side-items">Wishlist</a>
+				<a class="side-items">Wishlist</a>
+				<a class="side-items">Wishlist</a>
+			</div>
+			<div class="side-sec-2">
+				<a class="side-items"><i class="ri-logout-circle-r-line me-2"></i>Logout</a>
+
+			</div>
+		</div>
+
+	</div>
 	<!-- /FOOTER -->
 
 	<!-- jQuery Plugins -->
@@ -815,6 +839,14 @@
 	<script src="/js/nouislider.min.js"></script>
 	<script src="/js/jquery.zoom.min.js"></script>
 	<script src="/js/main.js"></script>
+	<script>
+		function openSidebar() {
+			document.getElementById('sidebar').style.left = "0px"
+		}
+		function closeSidebar() {
+			document.getElementById('sidebar').style.left = "-1000px"
+		}
+	</script>
 
 
 

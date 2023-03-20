@@ -243,7 +243,7 @@ module.exports = {
     user_profilePage: (req, res) => {
         userService.get_userDetails(req.session.userDetails._id).then((data) => {
             for (const i of data.walletHistory) {
-                i.refundDate = new Date(i.refundDate).toLocaleDateString()
+                i.transactionDate = new Date(i.transactionDate).toLocaleDateString()
             }
             data.address.length >= 3 ? maxAddress = true : maxAddress = false
             req.session.editAddress ? edit = req.session.editAddress : edit = null

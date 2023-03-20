@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles/admin/product.css">
+    <link rel="stylesheet" href="/styles/admin/banner.css" />
     {{#if addCoupon }}
     <link rel="stylesheet" href="/css/addCoupon.css">
     {{else if editCoupon}}
@@ -131,59 +132,40 @@
         </section>
     </div>
     {{else}}
-    <nav class="navbar navbar-expand-lg  bg-light"
-        style=" background: linear-gradient(to bottom right, #ff3300 3%, #ffccff 100%);">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
-                aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                <a class="navbar-brand" href="#">kk foods</a>
-                <ul class="navbar-nav mr-auto mt-2 mt-lg-0 mx-auto">
-                    <li class="nav-item active ">
-                        <a class="nav-link " href="/admin/admin_home" style="font-weight: bold;">Dash bord</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/admin/admin_products">PRODUCT DETAILS</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/admin/user_Details">USER DETAILS</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/admin/order_Details">ORDER DETAILS</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/admin/category">CATEGORY DETAILS</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/admin/getCoupon">COUPON DETAILS</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/admin/offer_create">Offer Manage</a>
-                    </li>
-                </ul>
-
-                <a href="/admin/log_Out" class="btn btn-outline-success btn-lg  ms-auto">log out</a>
-            </div>
+    <div class="container-scroller" style="padding-top: 150px;">
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+     <nav class="navbar navbar-expand-md">
+        <div class="navbar-container container">
+          <input type="checkbox" name="" id="" />
+          <div class="hamburger-lines">
+            <span class="line line1"></span>
+            <span class="line line2"></span>
+            <span class="line line3"></span>
+          </div>
+          <ul class="menu-items" style="z-index: 1;">
+            <li><a href="/admin/admin_home">Dashboard</a></li>
+            <li><a href="/admin/category">Categories</a></li>
+            <li><a href="/admin/admin_products">Products</a></li>
+            <li><a href="/admin/user_Details">Users</a></li>
+            <li><a href="/admin/getCoupon">Coupons</a></li>
+            <li><a href="/admin/order_Details">Orders</a></li>
+            <li><a href="/admin/getSalesReport">Sales Report</a></li>
+            <li><a href="/admin/getBanner">Banner</a></li>
+            <li><a href="/admin/log_Out">Logout</a></li>
+          </ul>
+          <div class="navbar-container">
+            <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
+              {{!-- <h1 class="navbar-brand logo" style="color: white;margin-right: 70px;">Perfumio</h1> --}}
+          </div>
         </div>
-    </nav>
-    <style>
-        tr,
-        th,
-        td {
-            color: rgb(8, 8, 8);
-        }
-    </style>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light text-center">
-
-        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-            <div class="col d-flex" style="display: flex; justify-content: flex-end">
-                <a href="addCoupon"><button class="btn btn-success me-5">Add Coupon</button></a>
-            </div>
+      </nav>
+    <section style="margin-top: 10px; margin-left: 5rem;margin-right: 5rem; background-color: rgb(255, 255, 255);">
+        <div style="display: flex; justify-content: flex-end;">
+          <a href="addCoupon" style="text-decoration: none;width: 15rem;margin-left: 1rem;"><button
+              class="btn btn-outline-primary">Add Coupon</button></a>
         </div>
-    </nav>
-    <div class="container">
+         <div class="container">
         <table class="table">
             <thead>
                 <tr>
@@ -213,7 +195,6 @@
                     <td>Expired</td>
                     {{/if}}
                     <td>
-                        <div id="container">
                             <div id="menu-wrap">
                                 <input type="checkbox" class="toggler" />
                                 <div class="dots">
@@ -238,6 +219,9 @@
             </tbody>
         </table>
     </div>
+    </div>
+    </section>
+    
     {{/if}}
 
     <script>

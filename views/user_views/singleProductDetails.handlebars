@@ -11,6 +11,7 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/imageZoom.css">
     <link rel="stylesheet" href="/css/singleProduct.css">
 </head>
 <body>
@@ -20,28 +21,26 @@
             <div class="container-fliud">
                 <div class="wrapper row">
                     <div class="preview col-md-6">
-                        <div class="wrap-pic-w pos-relative" id="picZoom"
-                            style="z-index: 100; margin-bottom: 10rem; width: 80%;">
-                            <img id="firstImage" src="/images/{{result.image.[0].filename}}" />
-                        </div>
-                        <div class="preview-pic tab-content">
+                        <div style="z-index: 10;" class="show" href="/images/{{result.image.[0].filename}}">
+                    <img src="/images/{{result.image.[0].filename}}" id="show-img">
+                </div>
 
-                            <div class="tab-pane"><img src="http://placekitten.com/400/252" /></div>
-                            <div class="tab-pane" id="pic-3"><img src="http://placekitten.com/400/252" /></div>
-                            <div class="tab-pane" id="pic-4"><img src="http://placekitten.com/400/252" /></div>
-                            <div class="tab-pane" id="pic-5"><img src="http://placekitten.com/400/252" /></div>
+                <!-- Secondary carousel image thumbnail gallery -->
+
+                <div class="small-img">
+                    <img src="/pic/next-icon.png" class="icon-left" alt="" id="prev-img">
+                    <div class="small-container">
+                        <div id="small-img-roll">
+                            {{#each result.sub_image}}
+                            <img src="/images/{{result.image.[0].filename}}" class="show-small-img" alt="">
+                            <img src="http://placekitten.com/400/252" class="show-small-img" alt="">
+                            <img src="/images/{{result.image.[0].filename}}" class="show-small-img" alt="">
+                            <img src="/images/{{result.image.[0].filename}}" class="show-small-img" alt="">
+                            {{/each}}
                         </div>
-                        <ul class="preview-thumbnail nav nav-tabs">
-                            <li class="active"><a data-target="#pic-1" data-toggle="tab"><img
-                                        onclick="changeImage(this.id)" id="pic-2"
-                                        src="http://placekitten.com/200/126" /></a></li>
-                            <li><a data-target="#pic-2" data-toggle="tab"><img
-                                        src="http://placekitten.com/200/126" /></a></li>
-                            <li><a data-target="#pic-3" data-toggle="tab"><img
-                                        src="http://placekitten.com/200/126" /></a></li>
-                            <li><a data-target="#pic-4" data-toggle="tab"><img
-                                        src="http://placekitten.com/200/126" /></a></li>
-                        </ul>
+                    </div>
+                    <img src="/pic/next-icon.png" class="icon-right" alt="" id="next-img">
+                </div>
 
                     </div>
 
@@ -83,8 +82,15 @@
             </div>
         </div>
     </div>
-    <script src="https://unpkg.com/js-image-zoom@0.4.1/js-image-zoom.js" type="application/javascript"></script>
-    <script>
+    {{!-- <script src="https://unpkg.com/js-image-zoom@0.4.1/js-image-zoom.js" type="application/javascript"></script> --}}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT"
+        crossorigin="anonymous"></script>
+        <script src="/js/zoomImage.js"></script>
+     <script src="/js/zoomMain.js"></script>
+
+
+    {{!-- <script>
         function changeImage(id) {
             let pic = document.getElementById(id).src
             document.getElementById('firstImage').src = pic
@@ -99,7 +105,7 @@
         }
 
         new ImageZoom(document.getElementById("picZoom"), options)
-    </script>
+    </script> --}}
 
 </body>
 

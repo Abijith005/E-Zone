@@ -55,7 +55,7 @@ module.exports = {
                 for (i = 1; i <= pageCount; i++) {
                     pagination.push(i)
                 }
-                res.json(productData, pagination)
+                res.json({productData, pagination})
             }
         }).catch(() => {
             res.send('hello')

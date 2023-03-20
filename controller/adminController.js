@@ -38,6 +38,7 @@ module.exports = {
             }
         }])
         let totalProduct = await productModel.countDocuments()
+        let totalUsers=await userModel.countDocuments()
         let totalRevenue = 0
         let monthlyRevenue = product.map(item => {
             totalRevenue = Number(totalRevenue) + Number(item.revenue, totalOrder)
@@ -55,9 +56,12 @@ module.exports = {
             totalRevenue: total,
             totalOrder: totalOrder[0]?.count??0,
             totalProduct: totalProduct,
+            totalUsers:totalUsers,
+            totalCod:paymentMethod[0]?.cashOnDeliveryCount??0,
+            totalUPI:paymentMethod[0]?.onlinePaymentCount??0,
             paymentMethod: [paymentMethod[0]?.cashOnDeliveryCount??0, paymentMethod[0]?.onlinePaymentCount??0]
         }
-        res.render('admin_home', { monthlyRevenue, totalStatus })
+        res.render('adminHome', { monthlyRevenue, totalStatus })
     },
 
     admin_product: (req, res) => {
@@ -228,35 +232,9 @@ module.exports = {
     },
 
     salesReport: async (req, res) => {
-        console.log(req.body);
         let startDate = new Date(req.body.startDate).toISOString()
         let endDate = new Date(req.body.endDate).toISOString()
         let products = await userModel.aggregate([{ $unwind: '$orders' }, { $match: { $and: [{ 'orders.orderStatus': 'delivered' }, { 'orders.orderDate': { $gte: new Date(startDate), $lte: new Date(endDate) } }] } }])
-        // let startDate = new Date(req.body.startDate).getDate()
-        // let endDate = new Date(req.body.endDate).getDate()
-        // let user = await userModel.find({ orders: { $ne: [] } }, { name: 1, orders: 1 }).lean()
-        // let products = []
-        // let a = {}
-        // let orders = []
-        // for (const i of user) {
-        //     a.name = i.name;
-        //     a.user_id = i._id;
-        //     for (const j of i.orders) {
-        //         if (j.orderStatus == 'delivered' && j.orderDate >= startDate && j.orderDate.getTime() <= endDate) {
-        //             orders.push(j)
-        //         }
-        //     }
-        //     a.orders = orders;
-        //     products.push(a)
-        //     a = {}
-        //     orders = []
-        // }
-        // let totalRevenue = 0;
-        // for (const i of products) {
-        //     for (const j of i.orders) {
-        //         totalRevenue = Number(totalRevenue) + Number(j.totalOrderAmount);
-        //     }
-        // }
         startDate = new Date(startDate).toLocaleDateString()
         endDate = new Date(endDate).toLocaleDateString()
         let totalRevenue = 0;
@@ -264,7 +242,6 @@ module.exports = {
             totalRevenue = Number(totalRevenue) + Number(i.orders.totalOrderAmount);
         }
         products = { products, startDate, endDate,totalRevenue}
-        // res.render('salesReport', { products })
         res.json({products})
     }
 }

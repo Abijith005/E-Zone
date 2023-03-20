@@ -1,101 +1,92 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-      <!-- Latest compiled and minified CSS & JS -->
-      
-</head>
-<body >
-   <nav class="navbar navbar-expand-lg  bg-light" style=" background: linear-gradient(to bottom right, #ff3300 3%, #ffccff 100%);">
-  <div class="container">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <a class="navbar-brand" href="#"></a>
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0 mx-auto">
-        <li class="nav-item active ">
-        <a class="nav-link " href="/admin/admin_home" style="font-weight: bold;">Dash bord</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="/admin/admin_products">PRODUCT DETAILS</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/admin/user_Details">USER DETAILS</a>
-      </li>
-       <li class="nav-item">
-        <a class="nav-link" href="/admin/order_Details">ORDER DETAILS</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/admin/category">CATEGORY DETAILS</a>
-      </li>
-       <li class="nav-item">
-          <a class="nav-link"  href="/admin/getCoupon">COUPON DETAILS</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/admin/offer_create">Offer Manage</a>
-        </li>
-    </ul>
 
-    <a href="/admin/log_Out" class="btn btn-outline-success btn-lg  ms-auto" >log out</a>
-  </div>
-  </div>
-</nav>
- <style>
-tr,th,td{
-  color: rgb(8, 8, 8);
-}
- </style>
- <nav class="navbar navbar-expand-lg navbar-light bg-light text-center">
-    
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      </li>
-    </ul>
-     <div class="row">
-    <form class="form-inline my-2 my-lg-0" action="/admin/user_search" role="search" type="submit" method="post">
-        <div class="col">
-      <input class="form-control mr-sm-2" type="search" style="width: 50%;" placeholder="Search" name="name" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </div>
-      </form>
-    </div>
-  </div>
-</nav>
-<div class="container">
-<table class="table">
-  <thead>
-    <tr>
-     <th scope="col">No.</th>
-      <th scope="col">User Name</th>
-      <th scope="col">E-mail-id</th>
-      <th scope="col">Phone Number</th>
-      <th scope="col">Address</th>
-      <th scope="col">Options</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each result}}
-    <tr>
-      <th scope="row">{{@index}}</th>
-      <td>{{this.name}}</td>
-      <td>{{this.email}}</td>
-      <td>{{this.mob_no}}</td>
-      <td>{{this.address.[0].name}},{{this.address.[0].address}}</td>
-      {{#if this.block}}
-      <td><a href="user_Unblock/{{this._id}}"><button onclick="return confirm('Do you want to unblock {{this.name}}')" class="btn btn-primary btn-rounded">Unblock</button></a> </td>
-      {{else}} 
-      <td><a href="user_Block/{{this._id}}"><button class="btn btn-danger btn-rounded" onclick="return confirm('Do you want to block {{this.name}}')">Block</button></a></td>
-   {{/if}}
-    </tr>{{/each}}
-<div>
-</div>
-  </tbody>
-</table>
-</div>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link rel="stylesheet" href="/styles/admin/product.css">
+  <link rel="stylesheet" href="/styles/admin/banner.css" />
+</head>
+
+<body>
+  <div class="container-scroller" style="padding-top: 150px;">
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <nav class="navbar navbar-expand-md">
+        <div class="navbar-container container">
+          <input type="checkbox" name="" id="" />
+          <div class="hamburger-lines">
+            <span class="line line1"></span>
+            <span class="line line2"></span>
+            <span class="line line3"></span>
+          </div>
+          <ul class="menu-items" style="z-index: 1;">
+            <li><a href="/admin/admin_home">Dashboard</a></li>
+            <li><a href="/admin/category">Categories</a></li>
+            <li><a href="/admin/admin_products">Products</a></li>
+            <li><a href="/admin/user_Details">Users</a></li>
+            <li><a href="/admin/getCoupon">Coupons</a></li>
+            <li><a href="/admin/order_Details">Orders</a></li>
+            <li><a href="/admin/getSalesReport">Sales Report</a></li>
+            <li><a href="/admin/getBanner">Banner</a></li>
+            <li><a href="/admin/log_Out">Logout</a></li>
+          </ul>
+          <div class="navbar-container">
+            <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
+              {{!-- <h1 class="navbar-brand logo" style="color: white;margin-right: 70px;">Perfumio</h1> --}}
+          </div>
+        </div>
+      </nav>
+      <section style="margin-top: 10px; margin-left: 5rem;margin-right: 5rem; background-color: rgb(255, 255, 255);">
+        <div class="container d-flex justify-content-around">
+          <form class="form-inline my-2 my-lg-0 d-flex" action="/admin/user_search" role="search" type="submit"
+            method="post">
+            <input class="form-control mr-sm-2m w-100 " type="search" placeholder="Search" name="name"
+              aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+          <a href="/product_add" style="text-decoration: none;width: 15rem;margin-left: 1rem;"><button
+              class="btn btn-outline-primary">Add Banner</button></a>
+        </div>
+        <div class="" style="overflow: scroll;">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">No.</th>
+                <th scope="col">User Name</th>
+                <th scope="col">E-mail-id</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Address</th>
+                <th scope="col">Options</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each result}}
+              <tr>
+                <th scope="row">{{@index}}</th>
+                <td>{{this.name}}</td>
+                <td>{{this.email}}</td>
+                <td>{{this.mob_no}}</td>
+                <td>{{this.address.[0].name}},{{this.address.[0].address}}</td>
+                {{#if this.block}}
+                <td><a href="user_Unblock/{{this._id}}"><button
+                      onclick="return confirm('Do you want to unblock {{this.name}}')"
+                      class="btn btn-primary btn-rounded">Unblock</button></a> </td>
+                {{else}}
+                <td><a href="user_Block/{{this._id}}"><button class="btn btn-danger btn-rounded"
+                      onclick="return confirm('Do you want to block {{this.name}}')">Block</button></a></td>
+                {{/if}}
+              </tr>{{/each}}
+              <div>
+              </div>
+            </tbody>
+          </table>
+        </div>
+      </section>
 </body>
+
 </html>

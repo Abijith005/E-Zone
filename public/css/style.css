@@ -447,6 +447,7 @@ textarea.input {
 #header {
   padding-top: 15px;
   padding-bottom: 15px;
+  
   background-color: #15161D;
 }
 
@@ -471,12 +472,13 @@ textarea.input {
 }
 
 .header-search form .input-select {
+  width: 50%;
   margin-right: -4px;
   border-radius: 40px 0px 0px 40px;
 }
 
 .header-search form .input {
-  width: calc(100% - 260px);
+  width: calc(100% - 40%);
   margin-right: -4px;
 }
 
@@ -2174,6 +2176,11 @@ textarea.input {
   .section-tab-nav li {
     margin-top: 10px;
   }
+}
+
+.section-nav .tab-nav li{
+ margin-top:2rem;
+
 }
 
 @media only screen and (max-width: 480px) {

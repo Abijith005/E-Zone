@@ -38,15 +38,13 @@
 </head>
 
 <body>
-	<!-- HEADER -->
-	<header>
+		<header>
 		<!-- TOP HEADER -->
 		<div id="top-header">
 			<div class="container">
 				<ul class="header-links pull-left">
-					<li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
-					<li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
-					<li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
+					<li><a href="#"><i class="fa fa-phone"></i> +0486-2475684</a></li>
+					<li><a href="#"><i class="fa fa-envelope-o"></i> ezone@email.com</a></li>
 				</ul>
 				<ul class="header-links pull-right">
 					{{!-- <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
@@ -59,11 +57,14 @@
 		<!-- MAIN HEADER -->
 		<div id="header">
 			<!-- container -->
-			<div class="container">
+			<div class="container" >
 				<!-- row -->
 				<div class="row align-items-center">
 					<!-- LOGO -->
-					<div class="col-md-2">
+
+	     
+
+					<div class="col-md-2 col-6">
 						<div class="header-logo ">
 							<a href="#" class="logo">
 								<h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
@@ -73,21 +74,43 @@
 							</a>
 						</div>
 					</div>
+					<div class="col-6 d-flex d-md-none ms-auto">
+						<div class="dropdown">
+							{{#unless userName}}
+							<button class="btn btn-secondary text-white dropdown-toggle" type="button"
+								id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false"><i class="fa fa-user-o"></i> Account</button>
+							{{else}}
+							<button class="btn btn-secondary text-white dropdown-toggle" type="button"
+								id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">{{userName}}</button>
+							{{/unless}}
+
+
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								{{#unless userName}}
+								<a class="dropdown-item" href="/user_login">Login</a>
+								{{else}}
+								<a class="dropdown-item" href="/user_profile">Profile</a>
+								<a class="dropdown-item" href="/user_logOut">Log Out</a>
+								{{/unless}}
+							</div>
+						</div>
+					</div>
 					<!-- /LOGO -->
 
 					<!-- SEARCH BAR -->
-					<div class="col-md-6">
-						<div class="header-search">
-							<form action="/productList" onsubmit="event.preventDefault()" method="post">
+					<div class="col-md-6 col-12" >
+						<div class="header-search" >
+							<form class="text-center" action="" method="" >
 								<input class="input"
-									style="border-top-left-radius:2rem;border-bottom-left-radius:2rem; width: 80%;"
-									type="text" id="searchInput" name="searchInput" placeholder="Search here">
-								<button onclick="searchProduct()" class="search-btn">Search</button>
+									style="border-top-left-radius:2rem;border-bottom-left-radius:2rem;"
+									type="text" name="searchInput" id="searchInput" placeholder="Search here">
+								<button class="search-btn" type="button" onclick="searchProduct()">Search</button>
 							</form>
 						</div>
 					</div>
 					<!-- /SEARCH BAR -->
-
 					<!-- ACCOUNT -->
 					{{#if userName}}
 					<div class="col-md-3 clearfix">
@@ -98,8 +121,9 @@
 								<a href="/getWhishList">
 									<i class="fa fa-heart-o"></i>
 									<span>Your Wishlist</span>
-									<div id="whishListQuantity" class="qty">{{quantities.user_whishList}}</div>
-
+									{{#if quantities.user_whishList}}
+									<div id="whishListQuantity" whishListQuantity class="qty">{{quantities.user_whishList}}</div>
+									{{/if}}
 								</a>
 							</div>
 							<!-- /Wishlist -->
@@ -111,7 +135,9 @@
 								<a href="/cart" aria-expanded="true">
 									<i class="fa fa-shopping-cart"></i>
 									<span>Your Cart</span>
+									{{#if quantities.user_cart}}
 									<div id="cartQuantity" class="qty">{{quantities.user_cart}}</div>
+									{{/if}}
 								</a>
 							</div>
 							<!-- /Cart -->
@@ -128,7 +154,7 @@
 						</div>
 					</div>
 					{{/if}}
-					<div class="col-1 ms-auto">
+					<div class="col-12 col-md-1 d-none d-md-flex ms-auto">
 						<div class="dropdown">
 							{{#unless userName}}
 							<button class="btn btn-secondary text-white dropdown-toggle" type="button"
@@ -158,6 +184,7 @@
 			</div>
 			<!-- container -->
 		</div>
+		
 		<!-- /MAIN HEADER -->
 	</header>
 	<!-- /HEADER -->
@@ -167,20 +194,6 @@
 		<!-- container -->
 		<div class="container">
 			<!-- responsive-nav -->
-{{!-- 
-			<div id="responsive-nav">
-				<!-- NAV -->
-				<ul class="main-nav nav navbar-nav flex-row">
-					<li class="active"><a data-toggle="tab" href="/home">Home</a></li>
-					<li><a onclick="allProducts()">All Products</a></li>
-					{{#each category}}
-					<li><a onclick="changeCategory('{{this._id}}')">{{this.category}}</a></li>
-					{{/each}}
-				</ul>
-				<!-- /NAV -->
-			</div> --}}
-
-
 			<div class="section-nav">
 							<ul class="section-tab-nav tab-nav">
 								<li ><a class="text-dark"  href="/home">Home</a></li>
@@ -215,10 +228,6 @@
 					</div>
 				</label>
 			</div>
-			<ul class="store-grid">
-				<li class="active"><i class="fa fa-th"></i></li>
-				<li><a href="#"><i class="fa fa-th-list"></i></a></li>
-			</ul>
 		</div>
 		<!-- /store top filter -->
 	</div>

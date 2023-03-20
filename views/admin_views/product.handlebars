@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -118,4 +118,119 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
+</html> --}}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link rel="stylesheet" href="/styles/admin/product.css">
+  <link rel="stylesheet" href="/styles/admin/banner.css" />
+</head>
+
+<body>
+  <div class="container-scroller" style="padding-top: 150px;">
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <nav class="navbar navbar-expand-md">
+        <div class="navbar-container container">
+          <input type="checkbox" name="" id="" />
+          <div class="hamburger-lines">
+            <span class="line line1"></span>
+            <span class="line line2"></span>
+            <span class="line line3"></span>
+          </div>
+          <ul class="menu-items" style="z-index: 1;">
+            <li><a href="/admin/admin_home">Dashboard</a></li>
+            <li><a href="/admin/category">Categories</a></li>
+            <li><a href="/admin/admin_products">Products</a></li>
+            <li><a href="/admin/user_Details">Users</a></li>
+            <li><a href="/admin/getCoupon">Coupons</a></li>
+            <li><a href="/admin/order_Details">Orders</a></li>
+            <li><a href="/admin/getSalesReport">Sales Report</a></li>
+            <li><a href="/admin/getBanner">Banner</a></li>
+            <li><a href="/admin/log_Out">Logout</a></li>
+          </ul>
+          <div class="navbar-container">
+            <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
+              {{!-- <h1 class="navbar-brand logo" style="color: white;margin-right: 70px;">Perfumio</h1> --}}
+          </div>
+        </div>
+      </nav>
+
+      <section style="margin-top: 10px; margin-left: 5rem;margin-right: 5rem; background-color: rgb(255, 255, 255);">
+        <div class="container">
+        </div>
+        <div style="display: flex; justify-content: flex-end;">
+          <a href="/admin/product_add" style="text-decoration: none;width: 15rem;margin-left: 1rem;"><button
+              class="btn btn-outline-primary">Add Banner</button></a>
+
+        </div>
+          <div class="row mt-4">
+            <div class="col-12">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col" style="margin: right 75px;">Image</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Brand Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Stock Quantity</th>
+                    <th scope="col">Product Status</th>
+                    <th scope="col">Options</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each result}}
+                  <tr>
+                    <th scope="row">{{inc @index}}</th>
+                    <td>{{this.product_name}}</td>
+                    <td><img src="/images/{{this.image.[0].filename}}" alt="" style="width: 40px; height: 50px;"></td>
+                    <td>{{this.category}}</td>
+                    <td>{{this.brandName}}</td>
+                    <td>{{this.price}}</td>
+                    <td>{{this.stockQuantity}}</td>
+                    {{#if this.flag}}
+                    <td>flagged</td>
+                    {{else}}
+                    <td>Unflagged</td>
+                    {{/if}}
+                    <td>
+                      <div id="container">
+                        <div id="menu-wrap">
+                          <input type="checkbox" class="toggler" />
+                          <div class="dots">
+                            <div></div>
+                          </div>
+                          <div class="menu">
+                            <div>
+                              <ul>
+                                <li><a href="product_edit/{{this._id}}" class="link">Edit Product</a></li>
+                                {{#if this.flag}}
+                                <li><a href="product_unflag/{{this._id}}" class="link">Unflag Product</a></li>
+                                {{else}}
+                                <li><a href="product_flag/{{this._id}}" class="link">Flag Product</a></li>
+                                {{/if}}
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>{{/each}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+      </section>
+</body>
+
 </html>

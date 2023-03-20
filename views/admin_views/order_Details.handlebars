@@ -7,8 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-  <title>Document</title>
   <link rel="stylesheet" href="/styles/admin/product.css">
+  <link rel="stylesheet" href="/styles/admin/banner.css" />
   {{#if singleOrderDetails }}
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
@@ -17,117 +17,112 @@
   <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
   <link rel="stylesheet" href="/css/singleProduct.css">
   {{/if}}
-
+  <title>E-Zone</title>
 </head>
 
 <body>
+  {{#unless singleOrderDetails}}
 
-  <nav class="navbar navbar-expand-lg  bg-light"
-    style=" background: linear-gradient(to bottom right, #ff3300 3%, #ffccff 100%);">
-    <div class="container">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
-        aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-        <a class="navbar-brand" href="#"></a>
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0 mx-auto">
-          <li class="nav-item active ">
-            <a class="nav-link " href="/admin/admin_home" style="font-weight: bold;">Dash bord</a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="/admin/admin_products">PRODUCT DETAILS</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/user_Details">USER DETAILS</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/order_Details">ORDER DETAILS</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/category">CATEGORY DETAILS</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/getCoupon">COUPON DETAILS</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/offer_create">Offer Manage</a>
-          </li>
-        </ul>
-
-        <a href="/admin/log_Out" class="btn btn-outline-success btn-lg  ms-auto">log out</a>
+  <div class="container-scroller" style="padding-top: 150px;">
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+  <nav class="navbar navbar-expand-md">
+    <div class="navbar-container container">
+      <input type="checkbox" name="" id="" />
+      <div class="hamburger-lines">
+        <span class="line line1"></span>
+        <span class="line line2"></span>
+        <span class="line line3"></span>
+      </div>
+      <ul class="menu-items" style="z-index: 1;">
+        <li><a href="/admin/admin_home">Dashboard</a></li>
+        <li><a href="/admin/category">Categories</a></li>
+        <li><a href="/admin/admin_products">Products</a></li>
+        <li><a href="/admin/user_Details">Users</a></li>
+        <li><a href="/admin/getCoupon">Coupons</a></li>
+        <li><a href="/admin/order_Details">Orders</a></li>
+        <li><a href="/admin/getSalesReport">Sales Report</a></li>
+        <li><a href="/admin/getBanner">Banner</a></li>
+        <li><a href="/admin/log_Out">Logout</a></li>
+      </ul>
+      <div class="navbar-container">
+        <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
+          {{!-- <h1 class="navbar-brand logo" style="color: white;margin-right: 70px;">Perfumio</h1> --}}
       </div>
     </div>
   </nav>
-  {{#unless singleOrderDetails}}
-  <div class="container">
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">No.</th>
-          <th scope="col">customer Name</th>
-          <th scope="col">Product Name</th>
-          <th scope="col">Category</th>
-          <th scope="col">Order Date</th>
-          <th scope="col">Quantity</th>
-          <th scope="col">Total Amount</th>
-          <th scope="col">Order Status/Change Status</th>
-          <th scope="col">View Order</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each result}}
-        {{#each orders}}
-        <tr>
-          <td scope="row">{{@index}}</td>
-          <td>{{../name}}</td>
-          <td>{{this.productName}}</td>
-          <td>{{this.category}}</td>
-          <td>{{this.orderDate}}</td>
-          <td>{{this.quantity}}</td>
-          <td>₹: {{this.totalOrderAmount}} /-</td>
-          <td>
-            {{#if this.returnStatus}}
-            <button class="btn btn-info" type="button" data-bs-toggle="dropdown" aria-expanded="false">Returned</button>
-            {{else}}
-            {{#if this.cancelStatus }}
-            <button class="btn btn-danger" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Cancelled
-            </button>
-            {{else if this.delivered}}
-            <button class="btn btn-success" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Delivered
-            </button>
-            {{else}}
-            {{#unless this.shipped}}
-            <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              {{this.orderStatus}}
-            </button>
-            {{else}}
-            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              {{this.orderStatus}}
-            </button>
-            {{/unless}}
-            <ul class="dropdown-menu">
+  <section style="margin-top: 10px; margin-left: 5rem;margin-right: 5rem; background-color: rgb(255, 255, 255);">
+    <div style="display: flex; justify-content: flex-end;">
+      <a href="addCoupon" style="text-decoration: none;width: 15rem;margin-left: 1rem;"><button
+          class="btn btn-outline-primary">Add Coupon</button></a>
+    </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">No.</th>
+            <th scope="col">customer Name</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Order Date</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total Amount</th>
+            <th scope="col">Order Status/Change Status</th>
+            <th scope="col">View Order</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each result}}
+          {{#each orders}}
+          <tr>
+            <td scope="row">{{@index}}</td>
+            <td>{{../name}}</td>
+            <td>{{this.productName}}</td>
+            <td>{{this.category}}</td>
+            <td>{{this.orderDate}}</td>
+            <td>{{this.quantity}}</td>
+            <td>{{this.totalOrderAmount}} /-</td>
+            <td>
+              {{#if this.returnStatus}}
+              <button class="btn btn-info" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">Returned</button>
+              {{else}}
+              {{#if this.cancelStatus }}
+              <button class="btn btn-danger" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Cancelled
+              </button>
+              {{else if this.delivered}}
+              <button class="btn btn-success" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Delivered
+              </button>
+              {{else}}
               {{#unless this.shipped}}
-              <li><a class="dropdown-item"
-                  href="adminOrderUpdate/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}/shipped">Shipped</a>
-              </li>
+              <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                {{this.orderStatus}}
+              </button>
+              {{else}}
+              <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                {{this.orderStatus}}
+              </button>
               {{/unless}}
-              <li> <a class="dropdown-item"
-                  href="adminOrderUpdate/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}/delivered">Delivered</a>
-              </li>
-              <li> <a class="dropdown-item"
-                  href="adminOrderUpdate/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}/cancelled">Cancel</a>
-              </li>
-            </ul>
+              <ul class="dropdown-menu">
+                {{#unless this.shipped}}
+                <li><a class="dropdown-item"
+                    href="adminOrderUpdate/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}/shipped">Shipped</a>
+                </li>
+                {{/unless}}
+                <li> <a class="dropdown-item"
+                    href="adminOrderUpdate/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}/delivered">Delivered</a>
+                </li>
+                <li> <a class="dropdown-item"
+                    href="adminOrderUpdate/{{this.order_id}}/{{../_id}}/{{this.product_id}}/{{this.quantity}}/cancelled">Cancel</a>
+                </li>
+              </ul>
+            </td>
             {{/if}}
             {{/if}}
 
-  </div>
-  </td>
   <td><button onclick="window.location.href='viewOrder/{{this.order_id}}'" class="btn btn-info text-white" type="button"
       data-bs-toggle="dropdown" aria-expanded="false">
       View
@@ -137,6 +132,8 @@
   </tbody>
   </table>
   </div>
+  </div>
+  </section>
 
   {{!--view Order start--}}
   {{else}}
@@ -157,7 +154,7 @@
           <div class="details col-md-6" style="z-index: 0;">
             <p class="product-description"><b>Product Name&nbsp;&nbsp;&nbsp;:
                 {{singleOrderDetails.productName}}</b></p>
-                 <p class="product-description"><b>Brand Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+            <p class="product-description"><b>Brand Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
                 {{singleOrderDetails.brandName}}</b></p>
             <p class="price">current price&nbsp;: <span>₹ {{singleOrderDetails.price}} /-</span></p>
             <p class="product-description">
@@ -174,9 +171,9 @@
                 {{singleOrderDetails.orderDate}}</b></p>
             <p class="product-description"><b>Order Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
                 {{singleOrderDetails.orderStatus}}</b></p>
-           
+
           </div>
-    <div class="text-end"><a href="order_Details" class="btn btn-warning ">back</a></div>
+          <div class="text-end"><a href="order_Details" class="btn btn-warning ">back</a></div>
         </div>
       </div>
     </div>

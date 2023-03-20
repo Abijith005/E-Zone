@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link rel="stylesheet" href="/styles/admin/product.css">
+  <link rel="stylesheet" href="/styles/admin/banner.css" />
+</head>
+
+<body>
+  <div class="container-scroller" style="padding-top: 150px;">
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <nav class="navbar navbar-expand-md">
+        <div class="navbar-container container">
+          <input type="checkbox" name="" id="" />
+          <div class="hamburger-lines">
+            <span class="line line1"></span>
+            <span class="line line2"></span>
+            <span class="line line3"></span>
+          </div>
+          <ul class="menu-items" style="z-index: 1;">
+            <li><a href="/admin/admin_home">Dashboard</a></li>
+            <li><a href="/admin/category">Categories</a></li>
+            <li><a href="/admin/admin_products">Products</a></li>
+            <li><a href="/admin/user_Details">Users</a></li>
+            <li><a href="/admin/getCoupon">Coupons</a></li>
+            <li><a href="/admin/order_Details">Orders</a></li>
+            <li><a href="/admin/getSalesReport">Sales Report</a></li>
+            <li><a href="/admin/getBanner">Banner</a></li>
+            <li><a href="/admin/log_Out">Logout</a></li>
+          </ul>
+          <div class="navbar-container">
+            <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
+              {{!-- <h1 class="navbar-brand logo" style="color: white;margin-right: 70px;">Perfumio</h1> --}}
+          </div>
+        </div>
+      </nav>
+      <section style="margin-top: 10px; margin-left: 5rem;margin-right: 5rem; background-color: rgb(255, 255, 255);">
+        <div style="display: flex; justify-content: flex-end;">
+          <a href="addCoupon" style="text-decoration: none;width: 15rem;margin-left: 1rem;"><button
+              class="btn btn-outline-primary">Add Coupon</button></a>
+        </div>
+         <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Coupon Name</th>
+                    <th scope="col">Coupon Code</th>
+                    <th scope="col">Minimum Purchase Amount</th>
+                    <th scope="col">Discount Amount</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each coupon}}
+                <tr>
+                    <th scope="row">{{@index}}</th>
+                    <td>{{this.couponName}}</td>
+                    <td>{{this.couponCode}}</td>
+                    <td>{{this.minPurchaseAmount}}</td>
+                    <td>{{this.discountAmount}}</td>
+                    <td>{{this.startDate}}</td>
+                    <td>{{this.endDate}}</td>
+                    {{#if this.couponStatus}}
+                    <td>Active</td>
+                    {{else}}
+                    <td>Expired</td>
+                    {{/if}}
+                    <td>
+                        <div id="container">
+                            <div id="menu-wrap">
+                                <input type="checkbox" class="toggler" />
+                                <div class="dots">
+                                    <div></div>
+                                </div>
+                                <div class="menu">
+                                    <div>
+                                        <ul>
+                                            <li><a href="getEditCoupon/{{this._id}}/edit" class="link">Edit Coupon</a>
+                                            </li>
+                                            {{#if this.couponStatus}}
+                                            <li><a href="getEditCoupon/{{this._id}}/{{this.couponStatus}}"
+                                                    class="link">Expire</a></li>
+                                            {{/if}}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>{{/each}}
+            </tbody>
+        </table>
+    </div>
+    {{/if}}
+
+    <script>
+        document.getElementById('endDate').addEventListener('change',(e)=>{
+            let startDate=document.getElementById('startDate').value
+            let endDate=e.target.value
+console.log(e.target.value)
+if(endDate<startDate){
+    document.getElementById('endDateLabel').innerHTML='<p style="font-size: smaller;text-transform: capitalize;" class="text-danger">End Date Should Be Greater Than Start Date</p>'
+}
+else{
+    document.getElementById('endDateLabel').innerHTML=''
+}
+        })
+    </script>
+      </section>
+</body>
+
+</html>

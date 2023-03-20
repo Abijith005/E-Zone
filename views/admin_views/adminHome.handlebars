@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+<link rel="stylesheet" href="/css/adminHome.css">
+</head>
+
+<body>
+    <div class="container-scroller">
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_sidebar.html -->
+            <nav class="navbar navbar-expand-md">
+                <div class="navbar-container container">
+                    <input type="checkbox" name="" id="" />
+                    <div class="hamburger-lines">
+                        <span class="line line1"></span>
+                        <span class="line line2"></span>
+                        <span class="line line3"></span>
+                    </div>
+                    <ul class="menu-items" style="z-index: 1;">
+                        <li><a href="/admin/admin_home">Dashboard</a></li>
+                        <li><a href="/admin/category">Categories</a></li>
+                        <li><a href="/admin/admin_products">Products</a></li>
+                        <li><a href="/admin/user_Details">Users</a></li>
+                        <li><a href="/admin/getCoupon">Coupons</a></li>
+                        <li><a href="/admin/order_Details">Orders</a></li>
+                        <li><a href="/admin/getSalesReport">Sales Report</a></li>
+                        <li><a href="/admin/getBanner">Banner</a></li>
+                        <li><a href="/admin/log_Out">Logout</a></li>
+                    </ul>
+                    <div class="navbar-container">
+                        <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
+                    </div>
+                </div>
+            </nav>
+            <div class="row" style="padding-top: 150px;">
+                <div class="col-lg-3">
+                    <div class="card card-body mb-4">
+                        <article class="icontext">
+                            <span class="icon icon-sm rounded-circle bg-primary-light"><i
+                                    class="text-primary material-icons md-monetization_on"></i></span>
+                            <div class="text">
+                                <h6 class="mb-1 card-title"><img style="width: 100px; height: 80px;" class="img-fluid"
+                                        src="https://watermarkconsult.net/wp-content/uploads/2015/10/Revenue-Growth.jpg"
+                                        alt=""> Revenue</h6>
+                                <span>
+                                    <h6 style="margin-left: 105px;">Rs: <strong>{{totalStatus.totalRevenue}}</strong></h6>
+                                </span>
+
+
+
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="card card-body mb-4">
+                        <article class="icontext">
+                            <span class="icon icon-sm rounded-circle bg-success-light"><i
+                                    class="text-success material-icons md-local_shipping"></i></span>
+                            <div class="text">
+                                <h6 class="mb-1 card-title"><img style="width: 100px; height: 80px;margin-right: 20px;"
+                                        class="img-fluid"
+                                        src="https://www.cms.gov/About-CMS/Agency-Information/OMH/Images/redesign/images/CCM-Homepage/product-ordering/3col-CMS-CCM-Product-Ordering-150.png"
+                                        alt="">Orders</h6> <span
+                                    style="margin-left: 115px;"><strong>{{totalStatus.totalOrder}}</strong> Total
+                                    orders</span><br>
+
+
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="card card-body mb-4">
+                        <article class="icontext">
+                            <span class="icon icon-sm rounded-circle bg-warning-light"><i
+                                    class="text-warning material-icons md-qr_code"></i></span>
+                            <div class="text">
+                                <h6 class="mb-1 card-title"><img style="width: 100px; height: 80px;margin-right: 15px;"
+                                        class="img-fluid"
+                                        src="https://previews.123rf.com/images/aurielaki/aurielaki1806/aurielaki180600027/103746430-online-payment-internet-payments-protection-of-money-in-cellphone-transactions-can-use-for-web.jpg"
+                                        alt="">Online Payment</h6>
+                                <span style="margin-left: 115px;"><strong>{{totalStatus.totalUPI}}</strong> Total Count </span><br>
+                                <span class="text-sm">
+
+                                </span>
+
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="card card-body mb-4">
+                        <article class="icontext">
+                            <span class="icon icon-sm rounded-circle bg-warning-light"><i
+                                    class="text-warning material-icons md-qr_code"></i></span>
+                            <div class="text">
+                                <h6 class="mb-1 card-title"><img style="width: 100px; height: 80px;margin-right: 15px;"
+                                        class="img-fluid" src="https://blog.pipit.global/hubfs/COD%20blog%20image.jpeg"
+                                        alt="">COD Payment Count</h6>
+                                <span style="margin-left: 115px;"><strong>{{totalStatus.totalCod}}</strong> Total Count</span><br>
+
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="card card-body mb-4">
+                        <article class="icontext">
+                            <span class="icon icon-sm rounded-circle bg-warning-light"><i
+                                    class="text-warning material-icons md-qr_code"></i></span>
+                            <div class="text">
+                                <h6 class="mb-1 card-title"><img style="width: 100px; height: 80px;margin-right: 15px;"
+                                        class="img-fluid"
+                                        src="https://i0.wp.com/networknuts.net/wp-content/uploads/2019/11/zahir-accounting-software-have-more-than-60.000-users.png"
+                                        alt="">User Count</h6>
+                                <span style="margin-left: 115px;"><strong>{{totalStatus.totalUsers}}</strong> Total </span><br>
+
+
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="card card-body mb-4">
+                        <article class="icontext">
+                            <span class="icon icon-sm rounded-circle bg-warning-light"><i
+                                    class="text-warning material-icons md-qr_code"></i></span>
+                            <div class="text">
+                                <h6 class="mb-1 card-title"><img style="width: 100px; height: 80px;margin-right: 15px;"
+                                        class="img-fluid"
+                                        src="https://img.freepik.com/free-vector/wearable-technology-isometric-flowchart_1284-19018.jpg?size=626&ext=jpg&uid=R95547652&semt=sph"
+                                        alt="">Product Count</h6>
+                                <span style="margin-left: 115px;"><strong>{{totalStatus.totalProduct}}</strong> Total</span><br>
+
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div id="chart" style="background-color: aliceblue; overflow:scroll;">
+                        <h3 style="padding: 12px;font-weight: bold; color: darkblue;">Total Revenue</h3>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div id="piechart" class="mt-1">
+                        <h3 style="padding: 7px;font-weight: bold; color: darkblue;">Payment Method </h3>
+                    </div>
+                </div>
+            </div>
+            <script>
+
+               /* let online = {{ online }}
+                let cod = {{ cod }}*/
+                var options = {
+                    series: [
+
+                        {
+                            name: 'Revenue',
+                            data: [{{monthlyRevenue}}]
+                } 
+       
+        ],
+                chart: {
+                    type: 'bar',
+                        height: 350,
+                            width: 900
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                            columnWidth: '55%',
+                                endingShape: 'rounded'
+                    },
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    show: true,
+                        width: 2,
+                            colors: ['transparent']
+                },
+                xaxis: {
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        },
+                yaxis: {
+                    title: {
+                        text: '$ (thousands)'
+                    }
+                },
+                fill: {
+                    opacity: 1
+                },
+                tooltip: {
+                    y: {
+                        formatter: function (val) {
+                            return "$ " + val + " thousands"
+                        }
+                    }
+                }
+        };
+
+                var chart = new ApexCharts(document.querySelector("#chart"), options);
+                chart.render();
+
+                var options = {
+                    series: [{{totalStatus.paymentMethod}}],
+                    chart: {
+                        width: 400,
+                        type: 'pie',
+                    },
+                    labels: ['online', 'COD'],
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            chart: {
+                                width: 350
+                            },
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }]
+                };
+                var piechart = new ApexCharts(document.querySelector("#piechart"), options);
+                piechart.render();
+
+
+            </script>
+
+
+
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+                integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+                integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
+                integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
+                crossorigin="anonymous"></script>
+
+
+            <script>
+                $(document).ready(function () {
+                    $("#pdfTable").DataTable({
+                        dom: "Bfrtip",
+                        buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+                    });
+                });
+
+                $(document).ready(function () {
+                    $('#pdfTable').DataTable({
+                        searching: true,
+                        paging: true,
+                        dom: 'Bfrtip',
+                        buttons: [
+                            'copy', 'csv', 'excel', 'pdf'
+                        ]
+                    });
+                });
+            </script>
+</body>
+
+</html>

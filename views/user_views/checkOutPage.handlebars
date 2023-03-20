@@ -26,25 +26,6 @@
 </head>
 
 <body>
-
-  <header class="sticky-top">
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark main-menu sticky-top"
-      style=" box-shadow:none; width: 100%; z-index:100;">
-      <div class="container">
-        <a class="navbar-brand" href="#">
-          <h4 class="font-weight-bold">
-            {{!-- <h3>Gadget<font color="#FFD523">Zon</font> --}}
-            </h3>
-          </h4>
-        </a>
-
-
-      </div>
-    </nav>
-  </header>
-
-
-
   {{#unless changeAddress}}
   <form action="/placeOrder" onsubmit="event.preventDefault();" method="post" id='order'>
     <section style="height: 480px;" class="gradient-custom">
@@ -90,6 +71,31 @@
                   </div>
                 </div>
               </div>
+
+
+  <div class="card d-block d-md-none col-12" style="height: 90px; width:100%;" id="couponDiv">
+    <label for="" id="message"></label>
+    <div class="card-body p-4 d-flex flex-row align-items-center" style="margin-top: -12px;">
+      <h6>Apply Coupon&nbsp;&nbsp;</h6>
+      <div class="form-outline flex-fill ">
+        <input type="text" id="couponCode" class="form-control form-control-lg" required />
+      </div>
+      <button style="width: 127px; height: 47px;" onclick="applyCoupon()" class="btn btn-dark  ms-3">Apply</button>
+    </div>
+  </div>
+
+              <div class="card d-block d-md-none col-12" style="height: 90px; width: 100%; ">
+    <label for="" id="walletmessage"></label>
+    <div class="card-body p-4 d-flex flex-row align-items-center" style="margin-top: -12px;">
+      <h6>Apply Wallet&nbsp;&nbsp;</h6>
+      <div class="form-outline flex-fill ">
+        <input type="number" id="wallet" class="form-control form-control-lg" min="0" required />
+      </div>
+      <button style="width: 127px; height: 47px;" onclick="applyWallet()" class="btn btn-dark  ms-3">Apply</button>
+    </div>
+  </div>
+
+
             </div>
           </div>
           {{else}}
@@ -117,7 +123,6 @@
                         <a href="/deleteCheckOutAddress/{{this.address_id}}">
                           <i class="ri-delete-bin-5-line"></i>
                         </a>
-                        {{!-- <i class="ri-delete-bin-5-line" onclick="deleteAddress('<%=item.id%>')"></i> --}}
                         <a href='/editCheckOutAddress/{{this.address_id}}'><i class="ri-edit-box-line"></i></a>
                       </div>
                       <div>
@@ -224,17 +229,11 @@
 
 
 
-                  {{!--
-                  ************************************************************************************************************************
-                  --}}
-
                 </div>
                 {{/unless}}
 
                 <div class="col-md-6">
                   <div class="card mb-2">
-
-
                   </div>
                   <div class="card mb-4">
                     <div class="card-header py-3">
@@ -252,11 +251,6 @@
                         </li>
 
                         {{#each orderDatas}}
-                        {{!-- <input type="hidden" name="products_id" value="{{this._id}}">
-                        <input type="hidden" name="productsName" value="{{this.product_name}}">
-                        <input type="hidden" name="category" value="{{this.category}}">
-                        <input type="hidden" name="price" value="{{this.price}}">
-                        <input type="hidden" name="quantity" value="{{this.quantity}}"> --}}
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                           {{this.product_name}}
                           <span>
@@ -297,7 +291,9 @@
           </section>
   </form>
   {{#unless changeAddress}}
-  <div class="card" style="height: 90px; width: 35%; margin-left: 215px; margin-top: 10px;" id="couponDiv">
+ 
+
+    <div class="card d-none d-md-block" style="height: 90px; width: 35%; margin-left: 215px; margin-top: 10px;" id="couponDiv">
     <label for="" id="message"></label>
     <div class="card-body p-4 d-flex flex-row align-items-center" style="margin-top: -12px;">
       <h6>Apply Coupon&nbsp;&nbsp;</h6>
@@ -306,15 +302,17 @@
       </div>
       <button style="width: 127px; height: 47px;" onclick="applyCoupon()" class="btn btn-dark  ms-3">Apply</button>
     </div>
-    {{!-- {{#if validCoupon}}<h6 style="color: red; text-align: center;">Coupon is expired</h6>{{/if}} --}}
-    {{!-- {{#if invalidCoupon}} <h6 style="color: red; text-align: center;">Invalid coupon code </h6>{{/if}} --}}
   </div>
-  <div class="card" style="height: 90px; width: 35%; margin-left: 215px; margin-top: 10px;">
+
+  
+  
+
+  <div class="card d-none d-md-block" style="height: 90px; width: 35%; margin-left: 215px; margin-top: 10px;">
     <label for="" id="walletmessage"></label>
     <div class="card-body p-4 d-flex flex-row align-items-center" style="margin-top: -12px;">
       <h6>Apply Wallet&nbsp;&nbsp;</h6>
       <div class="form-outline flex-fill ">
-        <input type="text" id="wallet" class="form-control form-control-lg" required />
+        <input type="number" id="wallet" class="form-control form-control-lg" min="0" required />
       </div>
       <button style="width: 127px; height: 47px;" onclick="applyWallet()" class="btn btn-dark  ms-3">Apply</button>
     </div>
@@ -327,7 +325,7 @@
       document.getElementById('walletmessage').textContent =''
       let totalAmount = document.getElementById('totalAmount')
       let wallet = document.getElementById('wallet').value
-      console.log(wallet)
+      if(wallet>=0){
       axios.get('/applyWallet/' + wallet).then((result) => {
         if (result.data.success) {
           console.log(result)
@@ -345,6 +343,10 @@
         }
 
       })
+
+      }else{
+        document.getElementById('walletmessage').textContent='Please enter a valid amount'
+      }
     }
     function applyCoupon() {
       document.getElementById('message').textContent=''

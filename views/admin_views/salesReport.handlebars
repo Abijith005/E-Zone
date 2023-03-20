@@ -6,99 +6,130 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>E-zone</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link rel="stylesheet" href="/styles/admin/product.css">
+  <link rel="stylesheet" href="/styles/admin/banner.css" />
 </head>
 
 <body>
-  <section style="background-color: #eee; margin-top: 50px; ">
-
-    <div class="container vh-100   py-5">
-      <div class="row">
-        <div class="col">
-          <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
-            <ol class="breadcrumb mb-0" style="display: flex;  justify-content: space-between;">
-              <li class="breadcrumb-item">
-                <h4>Sales Report</h4>
-                {{#if products.thirtyDays}}
-                <h4>Of Last 30 Days</h4>
-                {{else}}
-                <h4>from {{products.startDate}} To {{products.endDate}}</h4>
-                {{/if}}
-              </li>
-              <div>
-                <form method="post" id="form">
-                  <label for="">Start Date</label>
-                  <input type="date" id="startDate" name="startDate" required>&nbsp;&nbsp;
-                  <label for="">End Date</label>
-                  <input type="date" id="endDate" name="endDate" required>&nbsp;
-                  <input type="button" onclick="getReport()"
-                    style="background-color: rgb(16, 14, 14); color: white; font-family: cursive; " value="Filter">
-                </form>
-              </div>
-            </ol>
-          </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <nav class="navbar navbar-expand-md">
+        <div class="navbar-container container">
+          <input type="checkbox" name="" id="" />
+          <div class="hamburger-lines">
+            <span class="line line1"></span>
+            <span class="line line2"></span>
+            <span class="line line3"></span>
+          </div>
+          <ul class="menu-items" style="z-index: 1;">
+            <li><a href="/admin/admin_home">Dashboard</a></li>
+            <li><a href="/admin/category">Categories</a></li>
+            <li><a href="/admin/admin_products">Products</a></li>
+            <li><a href="/admin/user_Details">Users</a></li>
+            <li><a href="/admin/getCoupon">Coupons</a></li>
+            <li><a href="/admin/order_Details">Orders</a></li>
+            <li><a href="/admin/getSalesReport">Sales Report</a></li>
+            <li><a href="/admin/getBanner">Banner</a></li>
+            <li><a href="/admin/log_Out">Logout</a></li>
+          </ul>
+          <div class="navbar-container">
+            <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
+              {{!-- <h1 class="navbar-brand logo" style="color: white;margin-right: 70px;">Perfumio</h1> --}}
+          </div>
         </div>
-      </div>
-      {{#if status}}
-      <h4 style="text-align: center; font-weight: bold; font-family: cursive;">No Data Available</h4>
-      {{else}}
-      <table class="table align-middle mb-0 bg-white container">
-        <thead class="bg-light">
-          <tr>
-            <th class="text-center">Sl No.</th>
-            <th class="text-center">Order ID</th>
-            <th class="text-center">Username</th>
-            <th class="text-center">Product</th>
-            <th class="text-center">price </th>
-            <th class="text-center">Qty</th>
-            <th class="text-center">Sub Total</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody">
-          {{#each products}}
-          <tr>
-            <td class="text-center">
-              <p>{{inc @index}}</p>
-            </td>
-            <td class="text-center">
-              <p class="fw-normal mb-1">{{this.orders.compoundOrder_id}}</p>
-            </td>
-            <td class="text-center">
-              <p class="fw-normal mb-1">{{this.name}}</p>
-            </td>
-            <td class="text-center">
-              <p class="fw-normal mb-1">{{this.orders.productName}}</p>
-            </td>
-            <td class="text-center">
-              <p class="fw-normal mb-1">₹: {{this.orders.price}}</p>
-            </td>
-            <td class="text-center">
-              <p class="fw-normal mb-1">{{this.orders.quantity}}</p>
-            </td>
-            <td class="text-center">
-              <p class="fw-normal mb-1">₹: {{this.orders.totalOrderAmount}}/-</p>
-            </td>
-          </tr>
-          {{/each}}
-        </tbody>
+      </nav>
+      <section style="background-color: #eee; margin-top: 50px; ">
+        <div class="container vh-100   py-5">
+          <div class="row">
+            <div class="col">
+              <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                <ol class="breadcrumb mb-0" style="display: flex;  justify-content: space-between;">
+                  <li class="breadcrumb-item">
+                    <h4>Sales Report</h4>
+                    {{#if products.thirtyDays}}
+                    <h4>Of Last 30 Days</h4>
+                    {{else}}
+                    <h4>from {{products.startDate}} To {{products.endDate}}</h4>
+                    {{/if}}
+                  </li>
+                  <div>
+                    <form method="post" id="form">
+                      <label for="">Start Date</label>
+                      <input type="date" id="startDate" name="startDate" required>&nbsp;&nbsp;
+                      <label for="">End Date</label>
+                      <input type="date" id="endDate" name="endDate" required>&nbsp;
+                      <input type="button" onclick="getReport()"
+                        style="background-color: rgb(16, 14, 14); color: white; font-family: cursive; " value="Filter">
+                    </form>
+                  </div>
+                </ol>
+              </nav>
+            </div>
+          </div>
+          {{#if status}}
+          <h4 style="text-align: center; font-weight: bold; font-family: cursive;">No Data Available</h4>
+          {{else}}
+          <table class="table align-middle mb-0 bg-white container" style="overflow-x:hidden;">
+            <thead class="bg-light">
+              <tr>
+                <th class="text-center">Sl No.</th>
+                <th class="text-center">Order ID</th>
+                <th class="text-center">Username</th>
+                <th class="text-center">Product</th>
+                <th class="text-center">price </th>
+                <th class="text-center">Qty</th>
+                <th class="text-center">Sub Total</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+              {{#each products}}
+              <tr>
+                <td class="text-center">
+                  <p>{{inc @index}}</p>
+                </td>
+                <td class="text-center">
+                  <p class="fw-normal mb-1">{{this.orders.compoundOrder_id}}</p>
+                </td>
+                <td class="text-center">
+                  <p class="fw-normal mb-1">{{this.name}}</p>
+                </td>
+                <td class="text-center">
+                  <p class="fw-normal mb-1">{{this.orders.productName}}</p>
+                </td>
+                <td class="text-center">
+                  <p class="fw-normal mb-1">₹: {{this.orders.price}}</p>
+                </td>
+                <td class="text-center">
+                  <p class="fw-normal mb-1">{{this.orders.quantity}}</p>
+                </td>
+                <td class="text-center">
+                  <p class="fw-normal mb-1">₹: {{this.orders.totalOrderAmount}}/-</p>
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
 
-      </table>
+          </table>
 
-      <div style="background-color: white;
+          <div style="background-color: white;
         height: 60px;
     display: flex;
     justify-content: flex-start;
     margin-top: 2px;
     align-content: stretch;
     flex-direction: column;">
-        <div style=" margin-top: 14px; ">
-          <h4 style="text-align: right; margin-right: 90px; font-weight: bold; font-family: cursive; ">Total Revenue ₹:
-            <i style="font-size: 25px;  " class="bi bi-currency-rupee"></i>{{products.totalRevenue}}/-
-          </h4>
+            <div style=" margin-top: 14px; ">
+              <h4 style="text-align: right; margin-right: 90px; font-weight: bold; font-family: cursive; ">Total Revenue
+                ₹:
+                <i style="font-size: 25px;  " class="bi bi-currency-rupee"></i>{{products.totalRevenue}}/-
+              </h4>
+            </div>
+          </div>
+          {{/if}}
         </div>
-      </div>
-      {{/if}}
-    </div>
-  </section>
+      </section>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script>
     function getReport() {
@@ -106,14 +137,14 @@
       let endDate = document.getElementById('endDate').value
       console.log(startDate, endDate)
       axios.post('/admin/salesReport', { startDate, endDate }).then((result) => {
-          console.log(result.data.products.products)
+        console.log(result.data.products.products)
         let table = document.getElementById('tableBody')
         table.innerHTML = ''
-        result.data.products.products.forEach((item,index)=> {
+        result.data.products.products.forEach((item, index) => {
           let tableRow = document.createElement('tr')
           tableRow.innerHTML = `
             <td class="text-center">
-              <p>${index+1}</p>
+              <p>${index + 1}</p>
             </td>
             <td class="text-center">
               <p class="fw-normal mb-1">${item.orders.compoundOrder_id}</p>
@@ -137,7 +168,7 @@
         })
       })
     }  
-    </script>
+  </script>
 </body>
 
 </html>
