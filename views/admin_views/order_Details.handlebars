@@ -59,29 +59,29 @@
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">No.</th>
-            <th scope="col">customer Name</th>
-            <th scope="col">Product Name</th>
-            <th scope="col">Category</th>
-            <th scope="col">Order Date</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">Total Amount</th>
-            <th scope="col">Order Status/Change Status</th>
-            <th scope="col">View Order</th>
+            <th class="text-center" scope="col">No.</th>
+            <th class="text-center" scope="col">customer Name</th>
+            <th class="text-center" scope="col">Product Name</th>
+            <th class="text-center" scope="col">Category</th>
+            <th class="text-center" scope="col">Order Date</th>
+            <th class="text-center" scope="col">Quantity</th>
+            <th class="text-center" scope="col">Total Amount</th>
+            <th class="text-center" scope="col">Order Status/Change Status</th>
+            <th class="text-center" scope="col">View Order</th>
           </tr>
         </thead>
         <tbody>
           {{#each result}}
           {{#each orders}}
           <tr>
-            <td scope="row">{{@index}}</td>
-            <td>{{../name}}</td>
-            <td>{{this.productName}}</td>
-            <td>{{this.category}}</td>
-            <td>{{this.orderDate}}</td>
-            <td>{{this.quantity}}</td>
-            <td>{{this.totalOrderAmount}} /-</td>
-            <td>
+            <td class="text-center" scope="row">{{@index}}</td>
+            <td class="text-center">{{../name}}</td>
+            <td class="text-center">{{this.productName}}</td>
+            <td class="text-center">{{this.category}}</td>
+            <td class="text-center">{{this.orderDate}}</td>
+            <td class="text-center">{{this.quantity}}</td>
+            <td class="text-center">{{this.totalOrderAmount}} /-</td>
+            <td class="text-center">
               {{#if this.returnStatus}}
               <button class="btn btn-info" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">Returned</button>
@@ -123,7 +123,7 @@
             {{/if}}
             {{/if}}
 
-  <td><button onclick="window.location.href='viewOrder/{{this.order_id}}'" class="btn btn-info text-white" type="button"
+  <td class="text-center"><button onclick="window.location.href='viewOrder/{{this.order_id}}'" class="btn btn-info text-white" type="button"
       data-bs-toggle="dropdown" aria-expanded="false">
       View
     </button></td>

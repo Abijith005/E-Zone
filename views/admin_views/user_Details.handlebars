@@ -56,28 +56,28 @@
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">No.</th>
-                <th scope="col">User Name</th>
-                <th scope="col">E-mail-id</th>
-                <th scope="col">Phone Number</th>
-                <th scope="col">Address</th>
-                <th scope="col">Options</th>
+                <th class="text-center" scope="col">No.</th>
+                <th class="text-center" scope="col">User Name</th>
+                <th class="text-center" scope="col">E-mail-id</th>
+                <th class="text-center" scope="col">Phone Number</th>
+                <th class="text-center" scope="col">Address</th>
+                <th class="text-center" scope="col">Options</th>
               </tr>
             </thead>
             <tbody>
               {{#each result}}
               <tr>
-                <th scope="row">{{@index}}</th>
-                <td>{{this.name}}</td>
-                <td>{{this.email}}</td>
-                <td>{{this.mob_no}}</td>
-                <td>{{this.address.[0].name}},{{this.address.[0].address}}</td>
+                <th class="text-center" scope="row">{{inc @index}}</th>
+                <td class="text-center">{{this.name}}</td>
+                <td class="text-center">{{this.email}}</td>
+                <td class="text-center">{{this.mob_no}}</td>
+                <td class="text-center">{{this.address.[0].name}},{{this.address.[0].address}}</td>
                 {{#if this.block}}
-                <td><a href="user_Unblock/{{this._id}}"><button
+                <td class="text-center"><a href="user_Unblock/{{this._id}}"><button
                       onclick="return confirm('Do you want to unblock {{this.name}}')"
                       class="btn btn-primary btn-rounded">Unblock</button></a> </td>
                 {{else}}
-                <td><a href="user_Block/{{this._id}}"><button class="btn btn-danger btn-rounded"
+                <td class="text-center"><a href="user_Block/{{this._id}}"><button class="btn btn-danger btn-rounded"
                       onclick="return confirm('Do you want to block {{this.name}}')">Block</button></a></td>
                 {{/if}}
               </tr>{{/each}}

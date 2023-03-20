@@ -156,7 +156,6 @@
           </ul>
           <div class="navbar-container">
             <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
-              {{!-- <h1 class="navbar-brand logo" style="color: white;margin-right: 70px;">Perfumio</h1> --}}
           </div>
         </div>
       </nav>
@@ -165,36 +164,35 @@
           <a href="addCoupon" style="text-decoration: none;width: 15rem;margin-left: 1rem;"><button
               class="btn btn-outline-primary">Add Coupon</button></a>
         </div>
-         <div class="container">
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">No.</th>
-                    <th scope="col">Coupon Name</th>
-                    <th scope="col">Coupon Code</th>
-                    <th scope="col">Minimum Purchase Amount</th>
-                    <th scope="col">Discount Amount</th>
-                    <th scope="col">Start Date</th>
-                    <th scope="col">End Date</th>
-                    <th scope="col">Options</th>
+                    <th class="text-center" scope="col">No.</th>
+                    <th class="text-center" scope="col">Coupon Name</th>
+                    <th class="text-center" scope="col">Coupon Code</th>
+                    <th class="text-center" scope="col">Minimum Purchase Amount</th>
+                    <th class="text-center" scope="col">Discount Amount</th>
+                    <th class="text-center" scope="col">Start Date</th>
+                    <th class="text-center" scope="col">End Date</th>
+                    <th class="text-center" scope="col">Options</th>
                 </tr>
             </thead>
             <tbody>
                 {{#each coupon}}
                 <tr>
-                    <th scope="row">{{@index}}</th>
-                    <td>{{this.couponName}}</td>
-                    <td>{{this.couponCode}}</td>
-                    <td>{{this.minPurchaseAmount}}</td>
-                    <td>{{this.discountAmount}}</td>
-                    <td>{{this.startDate}}</td>
-                    <td>{{this.endDate}}</td>
+                    <th class="text-center" scope="row">{{inc @index}}</th>
+                    <td class="text-center">{{this.couponName}}</td>
+                    <td class="text-center">{{this.couponCode}}</td>
+                    <td class="text-center">{{this.minPurchaseAmount}}</td>
+                    <td class="text-center">{{this.discountAmount}}</td>
+                    <td class="text-center">{{this.startDate}}</td>
+                    <td class="text-center">{{this.endDate}}</td>
                     {{#if this.couponStatus}}
-                    <td>Active</td>
+                    <td class="text-center">Active</td>
                     {{else}}
-                    <td>Expired</td>
+                    <td class="text-center">Expired</td>
                     {{/if}}
-                    <td>
+                    <td class="text-center">
                             <div id="menu-wrap">
                                 <input type="checkbox" class="toggler" />
                                 <div class="dots">
@@ -218,7 +216,6 @@
                 </tr>{{/each}}
             </tbody>
         </table>
-    </div>
     </div>
     </section>
     

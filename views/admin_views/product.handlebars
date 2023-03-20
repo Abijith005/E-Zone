@@ -135,9 +135,8 @@
 </head>
 
 <body>
-  <div class="container-scroller" style="padding-top: 150px;">
+  <div style="padding-top: 150px; width:100vw;">
     <!-- partial -->
-    <div class="container-fluid page-body-wrapper">
       <nav class="navbar navbar-expand-md">
         <div class="navbar-container container">
           <input type="checkbox" name="" id="" />
@@ -159,51 +158,49 @@
           </ul>
           <div class="navbar-container">
             <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
-              {{!-- <h1 class="navbar-brand logo" style="color: white;margin-right: 70px;">Perfumio</h1> --}}
           </div>
         </div>
       </nav>
+      </div>
 
       <section style="margin-top: 10px; margin-left: 5rem;margin-right: 5rem; background-color: rgb(255, 255, 255);">
-        <div class="container">
-        </div>
+       
         <div style="display: flex; justify-content: flex-end;">
           <a href="/admin/product_add" style="text-decoration: none;width: 15rem;margin-left: 1rem;"><button
-              class="btn btn-outline-primary">Add Banner</button></a>
-
+              class="btn btn-outline-primary">Add Product</button></a>
         </div>
-          <div class="row mt-4">
-            <div class="col-12">
+          <div class="row mt-4 ">
+            <div class="col-12" >
               <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">No.</th>
-                    <th scope="col">Product Name</th>
-                    <th scope="col" style="margin: right 75px;">Image</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Brand Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Stock Quantity</th>
-                    <th scope="col">Product Status</th>
-                    <th scope="col">Options</th>
+                    <th class="text-center" scope="col">No.</th>
+                    <th class="text-center" scope="col">Product Name</th>
+                    <th class="text-center" scope="col" style="margin: right 75px;">Image</th>
+                    <th class="text-center" scope="col">Category</th>
+                    <th class="text-center" scope="col">Brand Name</th>
+                    <th class="text-center" scope="col">Price</th>
+                    <th class="text-center" scope="col">Stock Quantity</th>
+                    <th class="text-center" scope="col">Product Status</th>
+                    <th class="text-center" scope="col">Options</th>
                   </tr>
                 </thead>
                 <tbody>
                   {{#each result}}
                   <tr>
-                    <th scope="row">{{inc @index}}</th>
-                    <td>{{this.product_name}}</td>
-                    <td><img src="/images/{{this.image.[0].filename}}" alt="" style="width: 40px; height: 50px;"></td>
-                    <td>{{this.category}}</td>
-                    <td>{{this.brandName}}</td>
-                    <td>{{this.price}}</td>
-                    <td>{{this.stockQuantity}}</td>
+                    <th class="text-center" scope="row">{{inc @index}}</th>
+                    <td class="text-center">{{this.product_name}}</td>
+                    <td class="text-center"><img src="/images/{{this.image.[0].filename}}" alt="" style="width: 40px; height: 50px;"></td>
+                    <td class="text-center">{{this.category}}</td>
+                    <td class="text-center">{{this.brandName}}</td>
+                    <td class="text-center">{{this.price}}</td>
+                    <td class="text-center">{{this.stockQuantity}}</td>
                     {{#if this.flag}}
-                    <td>flagged</td>
+                    <td class="text-center">flagged</td>
                     {{else}}
-                    <td>Unflagged</td>
+                    <td class="text-center">Unflagged</td>
                     {{/if}}
-                    <td>
+                    <td class="text-center">
                       <div id="container">
                         <div id="menu-wrap">
                           <input type="checkbox" class="toggler" />

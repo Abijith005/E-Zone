@@ -122,7 +122,7 @@
 									<i class="fa fa-heart-o"></i>
 									<span>Your Wishlist</span>
 									{{#if quantities.user_whishList}}
-									<div id="whishListQuantity" whishListQuantity class="qty">{{quantities.user_whishList}}</div>
+									<div id="whishListQuantity"  class="qty">{{quantities.user_whishList}}</div>
 									{{/if}}
 								</a>
 							</div>
@@ -468,7 +468,6 @@ ${a}
 
 		function addToCart(id) {
 			axios.get('/add_to_cart/' + id).then((result) => {
-				console.log(result)
 				if (result.data.login) {
 					if (result.data.success) {
 						let cartQuantiy = document.getElementById('cartQuantity')

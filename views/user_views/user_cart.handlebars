@@ -46,8 +46,6 @@
 					<li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
 				</ul>
 				<ul class="header-links pull-right">
-					{{!-- <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-					<li><a href="/user_login"><i class="fa fa-user-o"></i> Login</a></li> --}}
 				</ul>
 			</div>
 		</div>
@@ -81,7 +79,7 @@
 						<div class="dropdown">
 							<button class="btn btn-secondary text-white dropdown-toggle" type="button"
 								id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false">{{userName}}</button>
+								aria-expanded="false">{{cartDatas.userName}}</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 								<a class="dropdown-item" href="/user_profile">Profile</a>
 								<a class="dropdown-item" href="/user_logout">Log Out</a>
@@ -207,9 +205,7 @@
 			</div>
 			<div class="row mt-4 d-flex align-items-center">
 				<div class="col-sm-6 order-md-2 text-right">
-					{{!-- {{#if Checkout}} --}}
 					<a href="/checkOutPage" class="btn btn-warning mb-4 btn-lg pl-5 pr-5">Checkout</a>
-					{{!-- {{/if}} --}}
 				</div>
 				<div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
 					<a href="/">

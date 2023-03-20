@@ -262,11 +262,9 @@ module.exports = {
     user_cartPage: (req, res) => {
         try {
             return new Promise(async (resolve, reject) => {
-                let cart = await userModel.findOne({ _id: req.session.userDetails._id }, { user_cart: 1 })
-                cart.user_cart.length > 0 ? checkOut = true : checkOut = false
-                let result = await userModel.findOne({ _id: req.session.userDetails._id })
+                 let cart = await userModel.findOne({ _id: req.session.userDetails._id })
                 let cartQuantities = {}
-                const cartID = result.user_cart.map(item => {
+                const cartID = cart.user_cart.map(item => {
                     cartQuantities[item.id] = item.quantity
                     return item.id
                 })
@@ -278,9 +276,11 @@ module.exports = {
                 cartDatas.forEach(item => {
                     sum = sum + parseInt(item.price) * item.quantity
                 })
+                
                 cartDatas.totalAmount = sum
+                cartDatas.userName=cart.name
                 req.session.maxQuantityReached ? message = 'Reached limit,cant add more ' : message = false
-                res.render('user_cart', { cartDatas, message, checkOut })
+                res.render('user_cart', { cartDatas, message })
             })
 
         } catch (error) {

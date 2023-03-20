@@ -103,8 +103,7 @@ module.exports = {
     placeOrder: (req, res) => {
         return new Promise(async (resolve, reject) => {
             let data = req.body
-            console.log(data);
-            let walletDebit = parseInt(req.body.walletDebit) ?? 0
+            let walletDebit = parseInt(req.body.walletDebit)
             let { user_cart } = await userModel.findOne({ _id: req.session.userDetails._id }, { user_cart: 1, _id: 0 })
             let numberOfOrders = user_cart.length
             let discount = data.discount ? data.discount / numberOfOrders : 0;
@@ -121,13 +120,17 @@ module.exports = {
                     let product = await productModel.findOne({ _id: i.id })
                     let amount =product.price * i.quantity - discount
                     let payableAmount = (product.price * i.quantity * percentage) - discount
-                    console.log(amount);
                     await userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { compoundOrder_id: compOrder_id, order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod: 'Cash On Delivery', product_id: product._id, productName: product.product_name, category: product.category, quantity: i.quantity, couponStatus: discount, totalOrderAmount: amount, payableAmount:payableAmount, orderDate: new Date(), orderStatus: 'pending', cancelStatus: false, price: product.price } } })
                 }
-                userModel.updateOne({ _id: req.session.userDetails._id }, { $unset: { user_cart: {} }, $inc: { wallet: -walletDebit }, $push: { walletHistory: { amount: walletDebit, transactionType: 'debit', transactionDate: new Date(), orderId: compOrder_id } } }).then((result) => {
+                await userModel.updateOne({ _id: req.session.userDetails._id }, { $set: { user_cart: [] }})
+                if (walletDebit) {
+                   await userModel.updateOne({ _id: req.session.userDetails._id }, { $inc: { wallet: -walletDebit }, $push: { walletHistory: { amount: walletDebit, transactionType: 'debit', transactionDate: new Date(), orderId: compOrder_id } } })
                     res.json({ COD: true })
-                    resolve()
-                })
+                }
+                else{
+                    res.json({ COD: true })
+
+                }
             }
             else {
                 let orderId = createId()
@@ -142,13 +145,15 @@ module.exports = {
     verifyOrder: (req, res) => {
         return new Promise(async (resolve, reject) => {
             let data = req.session.orderData
-            let walletDebit = parseInt(req.body.walletDebit) ?? 0
+            let walletDebit = parseInt(req.body.walletDebit)
             let details = req.body
             let crypto = require('crypto')
             let hamc = crypto.createHmac('sha256', 'mpif2nSNnpA4zv05FD6rXoIp')
             hamc.update(details.payment.razorpay_order_id + '|' + details.payment.razorpay_payment_id)
             hamc = hamc.digest('hex')
+            console.log(hamc,details.payment.razorpay_signature,'452855');
             if (hamc == details.payment.razorpay_signature) {
+                console.log('entered');
                 let { user_cart } = await userModel.findOne({ _id: req.session.userDetails._id }, { user_cart: 1, _id: 0 })
                 let compOrder_id = uniqueid()
                 let numberOfOrders = user_cart.length
@@ -157,12 +162,22 @@ module.exports = {
                 for (const i of user_cart) {
                     let orderId = uniqueid()
                     let product = await productModel.findOne({ _id: i.id })
-                    let amount = (product.price * i.quantity * percentage) - discount
-                    await userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { compoundOrder_id: compOrder_id, order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod: 'UPI Payment', product_id: product._id, productName: product.product_name, category: product.category, quantity: i.quantity, couponStatus: data.couponStatus, totalOrderAmount: amount, orderDate: new Date(), orderStatus: 'pending', cancelStatus: false, price: product.price } } })
+                    let amount =product.price * i.quantity - discount
+                    let payableAmount = (product.price * i.quantity * percentage) - discount
+                    await userModel.updateOne({ _id: req.session.userDetails._id }, { $push: { orders: { compoundOrder_id: compOrder_id, order_id: orderId, deliveryAddress: data.deliveryAddress, paymentMethod: 'UPI Payment', product_id: product._id, productName: product.product_name, category: product.category, quantity: i.quantity, couponStatus: data.couponStatus, totalOrderAmount: amount,payableAmount:payableAmount,orderDate: new Date(), orderStatus: 'pending', cancelStatus: false, price: product.price } } })
                 }
-                await userModel.updateOne({ _id: req.session.userDetails._id }, { $unset: { user_cart: {} }, $inc: { wallet: -walletDebit }, $push: { walletHistory: { amount: walletDebit, transactionType: 'debit', transactionDate: new Date(), orderId: compOrder_id } } })
+                await userModel.updateOne({ _id: req.session.userDetails._id }, { $set: { user_cart: [] }})
+                if (walletDebit) {
+                   await userModel.updateOne({ _id: req.session.userDetails._id }, { $inc: { wallet: -walletDebit }, $push: { walletHistory: { amount: walletDebit, transactionType: 'debit', transactionDate: new Date(), orderId: compOrder_id } } })
+                    res.json({ UPI: true })
+                }
+                else{
+                    res.json({ UPI: true })
+
+                }
                 req.session.orderData = null
             } else {
+                console.log('rejected');
                 reject()
             }
         })
@@ -246,7 +261,6 @@ module.exports = {
         let wallet = await userModel.findOne({ _id: req.session.userDetails._id }, { wallet: 1, _id: 0 })
         if (req.params.wallet <= wallet) {
             if (req.params.wallet <= req.session.totalAmount) {
-                console.log(req.session.discountedAmount, '41567458');
                 let discountedAmount = Number(req.session.discountedAmount) - Number(req.params.wallet);
                 res.json({ success: true, totalAmount: discountedAmount, walletAmount: req.params.wallet })
             } else {

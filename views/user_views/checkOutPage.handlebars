@@ -72,16 +72,17 @@
                 </div>
               </div>
 
-
-  <div class="card d-block d-md-none col-12" style="height: 90px; width:100%;" id="couponDiv">
+<div id="couponDiv"id="couponDiv">
+  <div class="card d-block d-md-none col-12" style="height: 90px; width:100%;" >
     <label for="" id="message"></label>
     <div class="card-body p-4 d-flex flex-row align-items-center" style="margin-top: -12px;">
       <h6>Apply Coupon&nbsp;&nbsp;</h6>
       <div class="form-outline flex-fill ">
-        <input type="text" id="couponCode" class="form-control form-control-lg" required />
+        <input type="text" id="couponCode" class="form-control form-control-lg"/>
       </div>
       <button style="width: 127px; height: 47px;" onclick="applyCoupon()" class="btn btn-dark  ms-3">Apply</button>
     </div>
+  </div>
   </div>
 
               <div class="card d-block d-md-none col-12" style="height: 90px; width: 100%; ">
@@ -89,7 +90,7 @@
     <div class="card-body p-4 d-flex flex-row align-items-center" style="margin-top: -12px;">
       <h6>Apply Wallet&nbsp;&nbsp;</h6>
       <div class="form-outline flex-fill ">
-        <input type="number" id="wallet" class="form-control form-control-lg" min="0" required />
+        <input type="number" id="wallet" class="form-control form-control-lg" min="0"/>
       </div>
       <button style="width: 127px; height: 47px;" onclick="applyWallet()" class="btn btn-dark  ms-3">Apply</button>
     </div>
@@ -292,29 +293,30 @@
   </form>
   {{#unless changeAddress}}
  
-
+<div id="couponDiv1">
     <div class="card d-none d-md-block" style="height: 90px; width: 35%; margin-left: 215px; margin-top: 10px;" id="couponDiv">
-    <label for="" id="message"></label>
+    <label for="" id="message1"></label>
     <div class="card-body p-4 d-flex flex-row align-items-center" style="margin-top: -12px;">
       <h6>Apply Coupon&nbsp;&nbsp;</h6>
       <div class="form-outline flex-fill ">
-        <input type="text" id="couponCode" class="form-control form-control-lg" required />
+        <input type="text" id="couponCode1" class="form-control form-control-lg"  />
       </div>
-      <button style="width: 127px; height: 47px;" onclick="applyCoupon()" class="btn btn-dark  ms-3">Apply</button>
+      <button style="width: 127px; height: 47px;" onclick="applyCoupon1()" class="btn btn-dark  ms-3">Apply</button>
     </div>
+  </div>
   </div>
 
   
   
 
   <div class="card d-none d-md-block" style="height: 90px; width: 35%; margin-left: 215px; margin-top: 10px;">
-    <label for="" id="walletmessage"></label>
+    <label for="" id="walletmessage1"></label>
     <div class="card-body p-4 d-flex flex-row align-items-center" style="margin-top: -12px;">
       <h6>Apply Wallet&nbsp;&nbsp;</h6>
       <div class="form-outline flex-fill ">
-        <input type="number" id="wallet" class="form-control form-control-lg" min="0" required />
+        <input type="number" id="wallet1" class="form-control form-control-lg" min="0"  />
       </div>
-      <button style="width: 127px; height: 47px;" onclick="applyWallet()" class="btn btn-dark  ms-3">Apply</button>
+      <button style="width: 127px; height: 47px;" onclick="applyWallet1()" class="btn btn-dark  ms-3">Apply</button>
     </div>
   </div>
   {{/unless}}
@@ -327,12 +329,11 @@
       let wallet = document.getElementById('wallet').value
       if(wallet>=0){
       axios.get('/applyWallet/' + wallet).then((result) => {
+                console.log(result,'sdfghjk')
         if (result.data.success) {
-          console.log(result)
           document.getElementById('walletAmount').textContent = wallet
           let totalAmount = document.getElementById('totalAmount').value
-          document.getElementById('discountedAmount').textContent = `₹ :${Number(totalAmount) - Number(wallet)} /-`
-          totalAmount = Number(totalAmount) - Number(wallet)
+          document.getElementById('discountedAmount').textContent = `₹ :${result.data.totalAmount} /-`
           document.getElementById('totalAmount').value = result.data.totalAmount
           document.getElementById('walletDebit').value = result.data.walletAmount
           document.getElementById('couponDiv').innerHTML = ''
@@ -348,6 +349,7 @@
         document.getElementById('walletmessage').textContent='Please enter a valid amount'
       }
     }
+
     function applyCoupon() {
       document.getElementById('message').textContent=''
       let couponCode = document.getElementById('couponCode').value
@@ -366,6 +368,59 @@
           else {
             console.log(result.data)
             document.getElementById('message').textContent = `Coupon ${result.data.coupon}`
+          }
+        })
+      }
+      else {
+        window.location.reload()
+      }
+
+    }
+
+     function applyWallet1() {
+      document.getElementById('walletmessage1').textContent =''
+      let totalAmount = document.getElementById('totalAmount')
+      let wallet = document.getElementById('wallet1').value
+      if(wallet>=0){
+      axios.get('/applyWallet/' + wallet).then((result) => {
+        console.log(result,'sdfghjk')
+        if (result.data.success) {
+          document.getElementById('walletAmount').textContent = wallet
+          let totalAmount = document.getElementById('totalAmount').value
+          document.getElementById('discountedAmount').textContent = `₹ :${result.data.totalAmount} /-`
+          document.getElementById('totalAmount').value = result.data.totalAmount
+          document.getElementById('walletDebit').value = result.data.walletAmount
+          document.getElementById('couponDiv1').innerHTML = ''
+        } else {
+          console.log(result.data.message)
+         document.getElementById('walletmessage1').textContent=result.data.message
+         
+        }
+
+      })
+
+      }else{
+        document.getElementById('walletmessage1').textContent='Please enter a valid amount'
+      }
+    }
+
+    function applyCoupon1() {
+      document.getElementById('message1').textContent=''
+      let couponCode = document.getElementById('couponCode1').value
+      document.getElementById('couponCode1').value = ''
+      if (couponCode) {
+        let totalAmount = document.getElementById('totalAmount').value
+        axios.post('/couponApply', { couponCode, totalAmount }).then((result) => {
+          if (result.data.success) {
+            console.log(result.data.success)
+            document.getElementById('discountedAmount').innerHTML = `₹ :${result.data.totalAmount} /-`
+            document.getElementById('totalAmount').value = result.data.totalAmount
+            document.getElementById('discount').innerHTML = `₹ :${result.data._doc.discountAmount} /-`
+            document.getElementById('discountPrice').value = result.data._doc.discountAmount
+          }
+          else {
+            console.log(result.data)
+            document.getElementById('message1').textContent = `Coupon ${result.data.coupon}`
           }
         })
       }
@@ -423,7 +478,8 @@
     function verifyPayment(payment, order) {
       console.log('verify')
       axios.post('/verifyUPIOrder', { payment, order }).then((resp) => {
-        if (resp.data.success) {
+        console.log(resp)
+        if (resp.data.UPI) {
           window.location.href = 'orderSuccess'
         } else {
           console.log("Payment failed")
