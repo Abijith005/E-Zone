@@ -62,7 +62,7 @@ module.exports = {
                     resolve()
 
                 }).catch(() => {
-                    res.send(error404)
+                    res.render('404')
                 })
             }
             else {
@@ -70,7 +70,7 @@ module.exports = {
                     res.redirect('back')
                     resolve()
                 }).catch(() => {
-                    res.send(error404)
+                    res.render('404')
                 })
             }
         })

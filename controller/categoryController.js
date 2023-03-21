@@ -13,7 +13,7 @@ module.exports = {
             await categoryModel.find().lean().then((result) => {
                 res.render('category', { result })
             }).catch(()=>{
-                res.send(error404)
+                res.render('404')
             })
         })
     },
@@ -36,7 +36,7 @@ module.exports = {
         adminService.flag_or_unflagCategory(req.params.id).then(() => {
             res.redirect('/admin/category')
         }).catch(()=>{
-            res.send(error404)
+            res.render('404')
         })
     },
 
@@ -46,7 +46,7 @@ module.exports = {
                 req.session.categoryDetails = result
                 res.redirect('/admin/add_categoryPage')
             }).catch(()=>{
-                res.send(error404)
+                res.render('404')
             })
         })
     },

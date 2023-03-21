@@ -39,7 +39,7 @@ module.exports = {
                 res.redirect('/cart')
             }
         }).catch(() => {
-            res.send(error404)
+            res.render('404')
         })
     },
 
@@ -195,14 +195,14 @@ module.exports = {
                         res.redirect('/admin/order_Details')
                     })
                 }).catch(() => {
-                    res.send(error404)
+                    res.render('404')
                 })
             }
             else if (req.params.update == 'delivered') {
                 userModel.updateOne({ _id: req.params.user_id, orders: { $elemMatch: { order_id: req.params.id } } }, { $set: { 'orders.$.orderStatus': 'delivered' } }).then((result) => {
                     res.redirect('/admin/order_Details')
                 }).catch(() => {
-                    res.send(error404)
+                    res.render('404')
                 })
             }
             else {
@@ -211,7 +211,7 @@ module.exports = {
                         res.redirect('/admin/order_Details')
                     })
                 }).catch(() => {
-                    res.send(error404)
+                    res.render('404')
                 })
 
             }
@@ -229,7 +229,7 @@ module.exports = {
                     res.redirect('/orderHistory')
                 })
             }).catch(() => {
-                res.send(error404)
+                res.render('404')
             })
         }
     },

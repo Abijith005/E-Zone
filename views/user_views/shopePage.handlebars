@@ -121,9 +121,7 @@
 								<a href="/getWhishList">
 									<i class="fa fa-heart-o"></i>
 									<span>Your Wishlist</span>
-									{{#if quantities.user_whishList}}
 									<div id="whishListQuantity"  class="qty">{{quantities.user_whishList}}</div>
-									{{/if}}
 								</a>
 							</div>
 							<!-- /Wishlist -->
@@ -135,9 +133,7 @@
 								<a href="/cart" aria-expanded="true">
 									<i class="fa fa-shopping-cart"></i>
 									<span>Your Cart</span>
-									{{#if quantities.user_cart}}
-									<div id="cartQuantity" class="qty">{{quantities.user_cart}}</div>
-									{{/if}}
+									<p id="cartQuantity" class="qty">{{quantities.user_cart}}</p>
 								</a>
 							</div>
 							<!-- /Cart -->
@@ -471,7 +467,12 @@ ${a}
 				if (result.data.login) {
 					if (result.data.success) {
 						let cartQuantiy = document.getElementById('cartQuantity')
+						if(cartQuantiy==null){
+							cartQuantiy.innerText =1
+						}
+						else{
 						cartQuantiy.textContent = Number(cartQuantiy.textContent) + 1
+						}
 					}
 					else {
 

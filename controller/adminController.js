@@ -21,7 +21,7 @@ module.exports = {
             else
                 res.redirect('/admin')
         }).catch(() => {
-            res.send(error404)
+            res.render('404')
         })
     },
 
@@ -68,7 +68,7 @@ module.exports = {
         adminService.list_product().then((result) => {
             res.render('product', { result })
         }).catch(() => {
-            res.send(error404)
+            res.render('404')
         })
     },
 
@@ -80,7 +80,7 @@ module.exports = {
             res.render('user_Details', { result })
             datas = null;
         }).catch(() => {
-            res.send(error404)
+            res.render('404')
         })
     },
 
@@ -111,9 +111,9 @@ module.exports = {
                 res.render('order_Details', { result, singleOrderDetails })
                 req.session.singleOrderDetails = null
             })
-            // .catch(()=>{
-            //     res.send(error404)
-            // }) 
+            .catch(()=>{
+                res.render('404')
+            }) 
         })
     },
 
@@ -137,7 +137,6 @@ module.exports = {
 
     admin_productEditPage: async (req, res) => {
         let data = await adminService.findToUpdate(req.params.id, productModel)
-        // let result=await adminService.list_productOrCategory(categoryModel)
         let result = await categoryModel.find().sort({ name: 1 }).lean()
         res.render('edit_product', { data, result })
     },
@@ -156,10 +155,6 @@ module.exports = {
     admin_productAddPage: (req, res) => {
         return new Promise(async (resolve, reject) => {
             let result = await categoryModel.find({}).lean()
-            // let result=await categoryModel.find({},{brandName:0}).lean()
-            // let brandName=req.session.brandForProduct
-            // res.render('add_product', { result,brandName })
-            // brandName=null
             res.render('add_product', { result })
 
         })
@@ -175,7 +170,7 @@ module.exports = {
         adminService.add_product(req.body, req.files).then(() => {
             res.redirect('/admin/admin_products')
         }).catch(() => {
-            res.send(error404)
+            res.render('404')
         })
     },
     admin_productFlag: (req, res) => {
@@ -205,19 +200,6 @@ module.exports = {
     },
 
     getSalesReport: async (req, res) => {
-        // if (req.session.salesReport) {
-        //     let products = req.session.salesReport.products
-        //     products.startDate = new Date(req.session.salesReport.startDate).toLocaleDateString()
-        //     products.endDate = new Date(req.session.salesReport.endDate).toLocaleDateString()
-        //     let totalRevenue = 0;
-        //     for (const i of products) {
-        //         totalRevenue = Number(totalRevenue) + Number(i.orders.totalOrderAmount);
-        //     }
-        //     products.totalRevenue = totalRevenue
-        //     res.render('salesReport', { products })
-        //     req.session.salesReport = null
-        // }
-        // else {
             let thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
             thirtyDaysAgo = thirtyDaysAgo.toISOString()
             let products = await userModel.aggregate([{ $unwind: '$orders' }, { $match: { $and: [{ 'orders.orderStatus': 'delivered' }, { 'orders.orderDate': { $gte: new Date(thirtyDaysAgo), $lte: new Date() } }] } }])
@@ -228,7 +210,6 @@ module.exports = {
             products.thirtyDays = true
             products.totalRevenue = totalRevenue
             res.render('salesReport', { products })
-        // }
     },
 
     salesReport: async (req, res) => {

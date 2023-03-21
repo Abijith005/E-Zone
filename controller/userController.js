@@ -22,9 +22,6 @@ module.exports = {
         let category = await categoryModel.find().lean()
         let brands
         let quantities = await userModel.findOne({ _id: req.session.userDetails?._id ?? null }, { user_cart: 1, user_whishList: 1, _id: 0 }).lean()
-        // if (products) {
-        //     brands = category.find(e => e._id == products[0].category)
-        // }
         let banners = await bannerModel.find().lean()
         let topBrands = await productModel.find().sort({ price: -1 }).lean().limit(6)
         let topSelling = await productModel.find().sort({ 'productReview.rating': -1 }).lean().limit(6)
@@ -88,7 +85,7 @@ module.exports = {
                     res.redirect('/user_login')
                 }
             }).catch(() => {
-                res.send(error404)
+                res.render('404')
             })
         }
     },
@@ -102,7 +99,6 @@ module.exports = {
 
 
     user_signUp: (req, res) => {
-
         const errors = validationResult(req)
         let error1 = errors.errors.find(item => item.param === 'name') || '';
         let error2 = errors.errors.find(item => item.param === 'email') || '';
@@ -126,7 +122,7 @@ module.exports = {
                     res.redirect('/signup_otp')
                 }
             }).catch(() => {
-                res.send(error404)
+                res.render('404')
             })
         }
 
@@ -141,7 +137,7 @@ module.exports = {
                 req.session.checkOtp = null;
                 req.session.signUpDetails = null;
             }).catch(() => {
-                res.send(error404)
+                res.render('404')
             })
         }
         else {
@@ -154,13 +150,11 @@ module.exports = {
     },
 
     user_signUpPage: (req, res) => {
-
         res.render('user_signup', { nameMsg, emailMsg, passwordMsg, mobnoMsg })
         nameMsg = null, emailMsg = null, passwordMsg = null; mobnoMsg = null
     },
 
     user_forgotPassword: (req, res) => {
-
         let display;
         let matchPassword;
         let message;
@@ -174,7 +168,6 @@ module.exports = {
     },
 
     user_otp: (req, res) => {
-
         if (req.session.invalid_otp) {
             res.render('signup_OTP', { message: 'Invalid OTP' })
             req.session.invalid_otp = false
@@ -195,11 +188,10 @@ module.exports = {
                 res.redirect('/forgot_password')
             }
             else {
-
                 res.redirect('/forgot_password')
             }
         }).catch(() => {
-            res.send(error404)
+            res.render('404')
         })
     },
 
@@ -224,7 +216,7 @@ module.exports = {
                 res.redirect('/user_login')
                 req.session.resetPassword_id = null
             }).catch(() => {
-                res.send(error404)
+                res.render('404')
             })
         }
         else {
@@ -254,7 +246,7 @@ module.exports = {
             edit = null
             addAddress = false
         }).catch(() => {
-            res.send(error404)
+            res.render('404')
         })
 
     },
@@ -284,7 +276,7 @@ module.exports = {
             })
 
         } catch (error) {
-            res.send(error404)
+            res.render('404')
         }
     },
 
@@ -297,7 +289,7 @@ module.exports = {
         userService.user_addAddress(req.session.userDetails._id, req.body).then(() => {
             res.redirect('/user_profile')
         }).catch(() => {
-            res.send(error404)
+            res.render('404')
         })
     },
 
@@ -305,7 +297,7 @@ module.exports = {
         userService.user_delete_address(req.session.userDetails._id, parseInt(req.params.id)).then(() => {
             res.redirect('/user_profile')
         }).catch(() => {
-            res.send(error404)
+            res.render('404')
         })
     },
 
@@ -314,7 +306,7 @@ module.exports = {
             req.session.editAddress = result;
             res.redirect('/addAddress')
         }).catch(() => {
-            res.send(error404)
+            res.render('404')
         })
     },
 
@@ -322,7 +314,7 @@ module.exports = {
         userService.addressUpdate(parseInt(req.params.id), req.body).then(() => {
             res.redirect('/user_profile')
         }).catch(() => {
-            res.send(error404)
+            res.render('404')
         })
     },
 
@@ -330,7 +322,7 @@ module.exports = {
         userService.singleProductDetails(req.params.id).then((result) => {
             res.render('singleProductDetails', { result })
         }).catch(() => {
-            res.send(error404)
+            res.render('404')
         })
     },
 
@@ -363,9 +355,9 @@ module.exports = {
                 }
                 res.render('orderHistory', { products })
             })
-            // .catch(() => {
-            //     res.send(error404)
-            // })
+            .catch(() => {
+                res.render('404')
+            })
         })
     },
 
@@ -396,7 +388,7 @@ module.exports = {
                 }
                 res.render('whishList', { productDatas })
             }).catch(() => {
-                res.send(error404)
+                res.render('404')
             })
         })
     },
@@ -406,7 +398,7 @@ module.exports = {
             userModel.updateOne({ _id: req.session.userDetails._id }, { $pull: { user_whishList: { product_id: req.params.id } } }).then(() => {
                 res.json({ success: true })
             }).catch(() => {
-                res.send(error404)
+                res.render('404')
             })
         })
     },
@@ -418,7 +410,7 @@ module.exports = {
                     res.redirect('/cart')
                 })
             }).catch(() => {
-                res.send(error404)
+                res.render('404')
             })
 
         })

@@ -97,7 +97,7 @@
 								<h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
 								</h1>
 							</a>
-							<h1 style="color: #ffff;" ><i id="hamsBurger" onclick="openSidebar()" class="fa fa-bars d-md-none"></i></h1>
+							<h1 style="color: #ffff;" id="hamsBurger" ><i  onclick="openSidebar()" class="fa fa-bars d-md-none"></i></h1>
 						</div>
 					</div>
 					{{!-- <div class="col-6 d-flex d-none ms-auto">
@@ -842,12 +842,12 @@
 	<script>
 		function openSidebar() {
 			document.getElementById('sidebar').style.left = "0px"
-			console.log('jaaaaaaaaaaaaaaaa')
-			document.getElementById('hamsBurger').setAttribute("onclick","closeSidebar();")
+			document.getElementById('hamsBurger').innerHTML=''
 
 		}
 		function closeSidebar() {
 			document.getElementById('sidebar').style.left = "-1000px"
+			document.getElementById('hamsBurger').innerHTML='<i  onclick="openSidebar()" class="fa fa-bars d-md-none">'
 		}
 	</script>
 

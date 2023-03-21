@@ -58,7 +58,7 @@ module.exports = {
                 res.json({productData, pagination})
             }
         }).catch(() => {
-            res.send('hello')
+            res.render('404')
         })
     },
 
@@ -147,6 +147,7 @@ module.exports = {
             }
             res.json({ products, pagination })
         } catch (error) {
+            res.render('404')
         }
     },
 
@@ -178,7 +179,7 @@ module.exports = {
                 }
                 res.json({ productData, pagination })
             }).catch(() => {
-                res.send(error404)
+                res.render('404')
             })
         } else {
             userService.searchProductWithCategory(req.body.searchInput, req.session.category).then(async (productData) => {
@@ -204,7 +205,7 @@ module.exports = {
                 }
                 res.json({ productData, pagination })
             }).catch(() => {
-                res.send(error404)
+                res.render('404')
             })
         }
     },
@@ -215,7 +216,7 @@ module.exports = {
                 result.login = true
                 res.json(result)
             }).catch(() => {
-                res.send(error404)
+                res.render('404')
             })
         } else {
             res.json({ login: false })
@@ -259,7 +260,7 @@ module.exports = {
                     res.json({ message: 'cant add more Stock Out' })
                 }
             }).catch(() => {
-                res.send(error404)
+                res.render('404')
             })
         })
     },
@@ -272,7 +273,7 @@ module.exports = {
                 })
             })
         }).catch(() => {
-            res.send(error404)
+            res.render('404')
         })
     },
 
@@ -340,7 +341,6 @@ module.exports = {
         let productData = await productModel.find({ $and: [{ category: category }, { brandName: req.params.brand }] }).sort({ price: value }).lean()
         req.session.productList = productData
         res.json({ productData })
-        // res.redirect('/')
     },
 
     pagination: (req, res) => {
@@ -373,8 +373,6 @@ module.exports = {
        })
         res.render('',{product})
     }
-
-
 
 
 }
