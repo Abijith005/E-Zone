@@ -175,59 +175,6 @@
               <i class="ri-shopping-bag-2-line mx-2"></i>
             </a>
           </div>
-          {{!-- <div class="porfile-items">
-            <a href="/coupons" class="profile-item">
-              <b>Wallet</b>
-              <i class="ri-coupon-2-line"></i>
-            </a>
-          </div> --}}
-
-          <!-- Button trigger modal -->
-          {{!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Wallet
-          </button>
-
-          <!-- Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Your Wallet</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  Wallet Amount ₹:{{data.wallet}}
-                </div>
-                <div class="modal-body">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th class="text-center" scope="col">Sl No.</th>
-                        <th class="text-center" scope="col">Refund Amount</th>
-                        <th class="text-center" scope="col">Refund Date</th>
-                        <th class="text-center" scope="col">Order Id</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {{#each data.walletHistory}}
-                      <tr>
-                        <td>{{inc @index}}</td>
-                        <td>{{this.refundAmount}}</td>
-                        <td>{{this.refundDate}}</td>
-                        <td>{{this.order_id}}</td>
-                      </tr>
-                      {{/each}}
-                    </tbody>
-
-                  </table>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-              </div>
-            </div>
-          </div> --}}
 
           <div class="card bg-light mb-3" style="max-width: 18rem;">
             <div class="card-header d-flex justify-content-around">My Wallet <h5 class="card-title" style="color: black;">₹:{{data.wallet}}</h5></div>

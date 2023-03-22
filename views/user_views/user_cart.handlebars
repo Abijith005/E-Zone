@@ -6,12 +6,13 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Wishlist</title>
+	<title>E-Zone</title>
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.0.2/css/boxicons.min.css">
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
 
 	<!-- Bootstrap -->
 	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
@@ -26,9 +27,57 @@
 
 	<!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="/css/style.css" />
-	{{#unless cartDatas}}
-	<link rel="stylesheet" href="/css/emptyCart.css">
-	{{/unless}}
+	<style>
+		.dropdown-menu {
+			width: auto !important;
+			min-width: 100% !important;
+			right: 0 !important;
+			left: auto !important;
+		}
+
+		.sidebar {
+			width: 100vw;
+			height: 100vh;
+			position: fixed;
+			top: 0px;
+			left: 0px;
+			z-index: 200;
+			transition: .3s;
+			left: -1000px;
+		}
+
+		.sidebar-container {
+			background-color: #222222;
+			display: flex;
+			flex-direction: column;
+			width: 60%;
+			height: 100%;
+			gap: 10px;
+			padding: 10px;
+			justify-content: space-between;
+		}
+
+		.side-items {
+			height: 50px;
+			display: flex;
+			gap: 20px;
+			align-items: center;
+			color: white;
+			background-color: #6a6a6a;
+			padding-left: 10px;
+			border-radius: 10px;
+		}
+
+		.side-sec-1 {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+		}
+
+		#header {
+			border-bottom: 3px solid red;
+		}
+	</style>
 
 </head>
 
@@ -36,65 +85,59 @@
 
 	{{!-- ****************************************************************************************************** --}}
 	<!-- HEADER -->
-	<header>
-		<!-- TOP HEADER -->
-		<div id="top-header">
-			<div class="container">
-				<ul class="header-links pull-left">
-					<li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
-					<li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
-					<li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
-				</ul>
-				<ul class="header-links pull-right">
-				</ul>
-			</div>
-		</div>
-		<!-- /TOP HEADER -->
-
-		<!-- MAIN HEADER -->
-		<div id="header">
-			<!-- container -->
-			<div class="container">
-				<!-- row -->
-				<div class="row align-items-center">
-					<!-- LOGO -->
-					<div class="col-md-2">
-						<div class="header-logo ">
-							<a href="#" class="logo">
-								<h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
-
-								</h1>
+	<div id="header" style="position: fixed; top: 0; width: 100%; z-index:200;">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row align-items-center text-center">
+				<!-- LOGO -->
+				<div class="col-md-6 col-12">
+					<div class="header-logo d-flex justify-content-around">
+						<a href="#" class="logo">
+							<h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
+							</h1>
+						</a>
+						<h1 style="color: #ffff;" id="hamsBurger"><i onclick="openSidebar()"
+								class="fa fa-bars d-md-none"></i></h1>
+					</div>
+				</div>
+				<div class=" col-md-6 d-none d-md-flex justify-content-end ms-auto align-items-center ">
+					<div class="header-ctn">
+						<div>
+							<a href="/getShopPage">
+								<i class="ri-shopping-bag-fill"></i> <span>Shop</span>
+							</a>
+						</div>
+						<div>
+							<a href="/getWhishList">
+								<i class="fa fa-heart-o"></i>
+								<span>Your Wishlist</span>
+							</a>
+						</div>
+						<div>
+							<a href="/cart" aria-expanded="true">
+								<i class="fa fa-shopping-cart"></i>
+								<span>Your Cart</span>
 							</a>
 						</div>
 					</div>
-					<!-- /LOGO -->
-
-					<!-- SEARCH BAR -->
-					<div class="col-md-8 text-center">
-						<div class="header-search">
-							<h1 class="text-white">Cart</h1>
+					<div class="dropdown ms-2">
+						<button class="btn btn-secondary text-white dropdown-toggle" type="button"
+							id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false">{{cartDatas.userName}}</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="/user_profile">Profile</a>
+							<a class="dropdown-item" href="/user_logOut">Log Out</a>
 						</div>
 					</div>
-					<div class="col-2 ms-auto">
-						<div class="dropdown">
-							<button class="btn btn-secondary text-white dropdown-toggle" type="button"
-								id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false">{{cartDatas.userName}}</button>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item" href="/user_profile">Profile</a>
-								<a class="dropdown-item" href="/user_logout">Log Out</a>
-							</div>
-						</div>
-					</div>
-
-					<!-- /ACCOUNT -->
 				</div>
-				<!-- row -->
+
+				<!-- /ACCOUNT -->
 			</div>
-			<!-- container -->
+			<!-- row -->
 		</div>
-		<!-- /MAIN HEADER -->
-	</header>
+		<!-- container -->
+	</div>
 	<!-- /HEADER -->
 	{{!-- ****************************************************************************************************** --}}
 	{{#if cartDatas}}
@@ -121,7 +164,7 @@
 						<tbody>
 							{{#each cartDatas}}
 							<tr>
-								<td data-th="Product" class="align-middle ">
+								<td data-th="Product" class="align-middle">
 									<div class="row justify-content-between">
 										<div class="col-md-6 col-12 ">
 											<img src="images/{{this.image.[0].filename}}" alt="" class="img-fluid  ">
@@ -147,15 +190,6 @@
 											class="btn btn-success mx-1 align-middle">+</button>
 									</div>
 								</td>
-								{{!-- <td class="actions align-middle" data-th="">
-									<div class="align-middle text-center">
-										<a class="btn btn-white  bg-white btn-md mb-2"
-											href="/deleteFromCart/{{this._id}}/{{this.quantity}}">
-											<i class="fas fa-trash"></i><br>Remove
-										</a>
-									</div>
-								</td> --}}
-
 								<td class="text-center align-middle">
 									<!-- Button trigger modal -->
 									<button type="button" class="btn btn-danger btn-md mb-2" data-toggle="modal"
@@ -208,42 +242,51 @@
 					<a href="/checkOutPage" class="btn btn-warning mb-4 btn-lg pl-5 pr-5">Checkout</a>
 				</div>
 				<div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
-					<a href="/">
+					<a href="/getShopPage">
 						<i class="fas fa-arrow-left mr-2"></i> Continue Shopping</a>
 				</div>
 			</div>
 		</div>
 	</section>
 	{{else}}
-	<div class="container-fluid  mt-100">
+	<div class="container-fluid d-flex justify-content-center align-items-center m-t-50">
 		<div class="row">
-
-			<div class="col-md-12">
-
-				<div class="card">
-					<div class="card-header">
-					</div>
-					<div class="card-body cart">
-						<div class="col-sm-12 empty-cart-cls text-center">
-							<img src="https://i.imgur.com/dCdflKN.png" width="130" height="130"
-								class="img-fluid mb-4 mr-3">
-							<h3><strong>Your Cart is Empty</strong></h3>
-							<h4>Add Products To Your Cart :)</h4>
-							<a href="/" class="btn btn-primary cart-btn-transform m-3" data-abc="true">continue
-								shopping</a>
-
-
-						</div>
-					</div>
+			<div class="col-lg-8 col-xl-6 m-lr-auto m-b-50 m-t-50">
+				<div class="text-center">
+					<h1 class="text-danger">It's Empty</h1>
+					<img src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-2130356-1800917.png"
+						alt="IMG" class="img-fluid">
 				</div>
-
+			</div>
+		</div>
+	</div>
+	{{/if}}
+	<div class="sidebar d-md-none" id="sidebar">
+		<div class="sidebar-container">
+			<div class="side-sec-1">
+				<div class="p-1">
+					<h4 class="text-white"><i class="fa fa-bars me-3" onclick="closeSidebar()"></i><span>E-Zone</span>
+					</h4>
+				</div>
+				<a class="side-items" href="/getShopPage">
+					<i class="ri-shopping-bag-fill text-white"></i> <span class="text-white">Shop</span>
+				</a>
+				<a class="side-items" href="/getWhishList">
+					<i class="fa fa-heart-o"></i>
+					<span>Your Wishlist</span>
+				</a>
+				<a class="side-items" href="/cart">
+					<i class="fa fa-shopping-cart text-white"></i>
+					<span>Your Cart</span></a>
+				<a class="side-items" href="/user_profile"><i class="fa fa-user-o"></i><span>Profile</span></a>
+			</div>
+			<div class="side-sec-2">
+				<a href="/user_logOut" class="side-items"><i class="ri-logout-circle-r-line me-2"></i>Logout</a>
 
 			</div>
-
 		</div>
 
 	</div>
-	{{/if}}
 
 	<script src="/js/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
@@ -254,7 +297,7 @@
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script>
 		function changeQuantity(id, cond) {
-			let quantity = parseInt(document.getElementById('quantityBox'+ id).value)
+			let quantity = parseInt(document.getElementById('quantityBox' + id).value)
 			axios.post('/changeQuantity', { id, quantity, cond, }).then((result) => {
 				if (result.data.success) {
 					let quantityBox = document.getElementById("quantityBox" + id);
@@ -268,9 +311,19 @@
 						document.getElementById('total').innerHTML = `₹:${result.data.totalAmount}/-`
 					}
 				} else {
-					document.getElementById('message' + id).innerHTML = result.data.message				
+					document.getElementById('message' + id).innerHTML = result.data.message
 				}
 			})
+		}
+		function openSidebar() {
+			console.log('asdfghjk')
+			document.getElementById('sidebar').style.left = "0px"
+			document.getElementById('hamsBurger').innerHTML = ''
+
+		}
+		function closeSidebar() {
+			document.getElementById('sidebar').style.left = "-1000px"
+			document.getElementById('hamsBurger').innerHTML = '<i  onclick="openSidebar()" class="fa fa-bars d-md-none">'
 		}
 	</script>
 </body>

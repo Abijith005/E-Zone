@@ -169,7 +169,7 @@ module.exports = {
 
     user_otp: (req, res) => {
         if (req.session.invalid_otp) {
-            res.render('signup_OTP', { message: 'Invalid OTP' })
+            res.render('signup_otp', { message: 'Invalid OTP' })
             req.session.invalid_otp = false
         }
         else
@@ -333,7 +333,6 @@ module.exports = {
                 let p = [];
                 for (const i of result.orders) {
                     await productModel.findOne({ _id: i.product_id }, { product_name: 1, brandName: 1, price: 1, image: 1 }).lean().then((product) => {
-                        console.log(product);
                         product.quantity =i.quantity
                         product.totalAmount = product.price * i.quantity
                         product.order_id = i.order_id
@@ -386,6 +385,7 @@ module.exports = {
                 for (const i of productDatas) {
                     i.stockQuantity > 0 ? i.stockQuantity = true : i.stockQuantity = false
                 }
+                productDatas.userName=req.session.userDetails.name
                 res.render('whishList', { productDatas })
             }).catch(() => {
                 res.render('404')
@@ -395,8 +395,13 @@ module.exports = {
 
     removeFromWishList: (req, res) => {
         return new Promise((resolve, reject) => {
-            userModel.updateOne({ _id: req.session.userDetails._id }, { $pull: { user_whishList: { product_id: req.params.id } } }).then(() => {
-                res.json({ success: true })
+            userModel.findByIdAndUpdate({ _id: req.session.userDetails._id }, { $pull: { user_whishList: { product_id: req.params.id } } }).then((result) => {
+                if (result.user_whishList.length<=1) {
+                    res.json({ success:false})
+                    
+                } else {
+                    res.json({success:true})
+                }
             }).catch(() => {
                 res.render('404')
             })
@@ -406,8 +411,13 @@ module.exports = {
     addToCartFromWishList: (req, res) => {
         return new Promise((resolve, reject) => {
             userService.user_add_to_cart(req.session.userDetails._id, req.params.id).then(() => {
-                userModel.updateOne({ _id: req.session.userDetails._id }, { $pull: { user_whishList: { product_id: req.params.id } } }).then(() => {
-                    res.redirect('/cart')
+                userModel.findByIdAndUpdate({ _id: req.session.userDetails._id }, { $pull: { user_whishList: { product_id: req.params.id } } }).then((result) => {
+                    if (result.user_whishList.length<=1) {
+                        res.json({success:false})
+                    }
+                    else{
+                        res.json({success:true})
+                    }
                 })
             }).catch(() => {
                 res.render('404')
@@ -415,10 +425,7 @@ module.exports = {
 
         })
     },
-
-    returnProduct: (req, res) => {
-        userModel.updateOne({ _id: req.session.userDetails._id }, {})
-    }
+ 
 
 }
 

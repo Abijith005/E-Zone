@@ -125,7 +125,6 @@ module.exports = {
                     if (!duplicate) {
                         await userModel.updateOne({ _id: user_id }, { $addToSet: { user_cart: { id: product_id, quantity: 1 } } }, { upsert: true }).then(async () => {
                             await productModel.updateOne({ _id: product_id }, { $inc: { stockQuantity: -1 } })
-
                             resolve({success:true})
                         }).catch(() => {
                             reject()
@@ -154,16 +153,6 @@ module.exports = {
 
     user_addAddress: (user_id, userData) => {
         return new Promise(async (resolve, reject) => {
-            // let { address } = await db.get().collection(collections.USER_COLLECTION).findOne({ _id: ObjectId(user_id) }, { address: 1 })
-            // address.forEach(element => {
-            //     if (element == userData) {
-            //         console.log(element);
-            //     }
-            //     else {
-            //         console.log("dfdf");
-            //     }
-            // });
-            // console.log({ address });
             userData.address_id = Date.now()
             await userModel.updateOne({ _id: user_id }, { $addToSet: { address: userData } }).then(() => {
                 resolve()

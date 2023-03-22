@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>E-Zone</title>
 </head>
 <style>
 
@@ -13,7 +13,7 @@
 
 <body>
 
-{{#unless data}}
+    {{#unless data}}
     <div class="row d-flex justify-content-center">
         <div class="d-flex justify-content-center my-4">
             <h1>ADD CATEGORY</h1>
@@ -23,20 +23,17 @@
                 <label for="">Category :</label><br>
                 <input class="form-control" type="text" name="category"><br>
                 <label for="">Brand :</label><br>
-                {{!-- <input class="form-control" type="text" id="brand" name="brandName"><br><br> --}}
                 <textarea class="form-control" name="brandName" cols="50" rows="5"></textarea>
-                {{!-- <button class="btn-success rounded-pill my-5" onclick="getBrand()" type="submit">submit</button>
-                --}}
                 <div class="text-center">
 
                     <button class="btn-success rounded-pill my-5" type="submit">submit</button>
                 </div>
 
             </form>
- </div>
+        </div>
     </div>
-{{else}} 
-<div class="row d-flex justify-content-center">
+    {{else}}
+    <div class="row d-flex justify-content-center">
         <div class="d-flex justify-content-center my-4">
             <h1>EDIT CATEGORY</h1>
         </div>
@@ -57,13 +54,13 @@
             </form>
         </div>
     </div>
-{{/unless}}
+    {{/unless}}
 
-            {{!-- <div class="d-flex align-items-center"> --}}
-                {{!-- <button style="height:2rem; width:7rem; margin-left:2rem; border-radius: 2rem; margin-top:7rem;"
-                    onclick="addBrands()">Add Brands</button><br><br> --}}
-                {{!-- </div> --}}
-            
+    {{!-- <div class="d-flex align-items-center"> --}}
+        {{!-- <button style="height:2rem; width:7rem; margin-left:2rem; border-radius: 2rem; margin-top:7rem;"
+            onclick="addBrands()">Add Brands</button><br><br> --}}
+        {{!-- </div> --}}
+
 
 
     <script>

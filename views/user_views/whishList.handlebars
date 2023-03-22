@@ -2,128 +2,322 @@
 <html lang="en">
 
 <head>
+    <title>Shoping Cart</title>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/orderHistory.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="/images/icons/favicon.png" />
+    <link rel="stylesheet" type="text/css" href="/styles/user/whislit.css">
+    <link rel="stylesheet" type="text/css" href="/styles/main.css">
     <link type="text/css" rel="stylesheet" href="/css/style.css" />
-    {{!--
-    <link rel="stylesheet" href="/css/font-awesome.min.css">
-    <link type="text/css" rel="stylesheet" href="/css/nouislider.min.css" />
-    <link type="text/css" rel="stylesheet" href="/css/slick.css" />
-    <link type="text/css" rel="stylesheet" href="/css/slick-theme.css" />
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet"> --}}
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
 
+	<!-- Bootstrap -->
+	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
 
+	<!-- Slick -->
+	<link type="text/css" rel="stylesheet" href="/css/slick.css" />
+	<link type="text/css" rel="stylesheet" href="/css/slick-theme.css" />
 
+	<!-- nouislider -->
+	<link type="text/css" rel="stylesheet" href="/css/nouislider.min.css" />
 
-    <title>E-Zone</title>
+	<!-- Font Awesome Icon -->
+	<link rel="stylesheet" href="/css/font-awesome.min.css" />
+
+	<!-- Custom stlylesheet -->
+	<link type="text/css" rel="stylesheet" href="/css/style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+    <!--===============================================================================================-->
+    <style>
+        .dropdown-menu {
+            width: auto !important;
+            min-width: 100% !important;
+            right: 0 !important;
+            left: auto !important;
+        }
+
+        .sidebar {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            z-index: 200;
+            transition: .3s;
+            left: -1000px;
+        }
+
+        .sidebar-container {
+            background-color: #222222;
+            display: flex;
+            flex-direction: column;
+            width: 60%;
+            height: 100%;
+            gap: 10px;
+            padding: 10px;
+            justify-content: space-between;
+        }
+
+        .side-items {
+            height: 50px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            color: white;
+            background-color: #6a6a6a;
+            padding-left: 10px;
+            border-radius: 10px;
+        }
+
+        .side-sec-1 {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        #header {
+    border-bottom: 3px solid red;
+}
+    </style>
 </head>
 
-<body>
-    <div id="header">
+<body class="animsition">
+    <div id="header" style="position: fixed; top: 0; width: 100%; z-index:200;">
+        <!-- container -->
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-2">
-                    <div class="header-logo ">
-                        <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
-                        </h1>
+            <!-- row -->
+            <div class="row align-items-center text-center">
+                <!-- LOGO -->
+                <div class="col-md-6 col-12">
+                    <div class="header-logo d-flex justify-content-around">
+                        <a href="#" class="logo">
+                            <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
+                            </h1>
+                        </a>
+                        <h1 style="color: #ffff;" id="hamsBurger"><i onclick="openSidebar()"
+                                class="fa fa-bars d-md-none"></i></h1>
                     </div>
                 </div>
-                <div class="col-10 text-center">
-                    <h2 class="text-white">Whish List</h2>
+                <div class=" col-md-6 d-none d-md-flex justify-content-end ms-auto align-items-center ">
+                    <div class="header-ctn">
+                        <div>
+                            <a href="/getShopPage">
+                                <i class="ri-shopping-bag-fill"></i> <span>Shop</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="/getWhishList">
+                                <i class="fa fa-heart-o"></i>
+                                <span>Your Wishlist</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="/cart" aria-expanded="true">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>Your Cart</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="dropdown ms-2">
+                        <button class="btn btn-secondary text-white dropdown-toggle" type="button"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">{{productDatas.userName}}</button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="/user_profile">Profile</a>
+                            <a class="dropdown-item" href="/user_logOut">Log Out</a>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- /ACCOUNT -->
             </div>
+            <!-- row -->
         </div>
+        <!-- container -->
     </div>
-    {{#each productDatas}}
-    <section class="h-100 gradient-custom">
-        <div class="container py-2 h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-lg-12 col-xl-12">
-                    {{!-- <div class="card-header px-4 py-5">
-                        <h5 class="text-muted mb-0 text-center"></h5>
-                    </div> --}}
-                    <div class="card-body ">
-                        <div class="card-body  ">
-                            <div class="card shadow-0 border mb-4" style=" background-color: #E4E7ED ;">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <img src="/images/{{this.image.[0].filename}}" class="img-fluid"
-                                                alt="Phone">
+    {{#if productDatas}}
+    <form class="bg0 p-t-75" style="padding-top: 15rem;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-xl-12 m-lr-auto m-b-50 m-t-50">
+                    <div class="m-l-25 m-r--38 m-lr-0-xl">
+                        <div class="wrap-table-shopping-cart">
+                            <table class="table-shopping-cart">
+                                <thead>
+                                <tr class="table_head">
+                                    <th class="column text-center">Product</th>
+                                    <th class="column text-center">name</th>
+                                    <th class="column text-center">Price</th>
+                                    <th class="column text-center">Stock Status</th>
+                                    <th class="column text-center">Remove</th>
+                                    <th class="column text-center">Add to Cart</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each productDatas}}
+                                <tr class="table_row " id="productRow{{this._id}}">
+                                    <td class="column ">
+                                        <div class="how-itemcart1 mx-auto">
+                                            <img src="/images/{{this.image.[0].filename}}" alt="IMG">
                                         </div>
-
-                                        <div
-                                            class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0 small" style="text-align:start;">
-                                                {{this.product_Details}}</p>
-                                        </div>
-
-                                        <div
-                                            class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0 small">{{this.product_name}}</p>
-                                        </div>
-                                        <div
-                                            class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0 small">Price ₹: {{this.price}} /-</p>
-                                        </div>
-                                        {{#if this.stockQuantity}}
-                                        <div
-                                            class="col-md-1 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0 small"><span style="color: green;">In Stock</span>
-                                            </p>
-                                        </div>
-                                        {{else}}
-                                        <div
-                                            class="col-md-1 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0 small"><span style="color: rgb(201, 8, 8);">Out Of Stock</span>
-                                            </p>
-                                        </div>
-                                        {{/if}}
-                                        <div
-                                            class="col-md-1 text-center d-flex justify-content-center align-items-center">
-                                            <a href="/removeFromWishList/{{this._id}}"
-                                                class="btn btn-info rounded-pill text-white">Remove</a>
-                                        </div>
-
-                                        <div
-                                            class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <a href="addToCartFromWishList/{{this._id}}" 
-                                                class="btn rounded-pill text-white" style="background-color: green;">Add To Cart</a>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
+                                    </td>
+                                    <td class="column text-center">{{this.product_name}}</td>
+                                    <td class="column text-center">Price:{{this.price}}</td>
+                                    {{#if this.stockQuantity}}
+                                    <td class="column text-center" style="color: green;">In Stock</td>
+                                    {{else}}
+                                    <td class="column text-center" style="color: rgb(201, 8, 8);">Out Of Stock</td>
+                                    {{/if}}
+                                    <td class="column text-center">
+                                        <a onclick="removeFromWhisList('{{this._id}}')"
+                                            class="btn btn-info rounded-pill text-white">Remove</a>
+                                    </td>
+                                    <td class="column text-center">
+                                        <a onclick="addToCartFromWishList('{{this._id}}')"> <button type="button"
+                                                class=" btn btn-success">
+                                                Add To
+                                                Cart</button></a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                {{/each}}
+                            </table>
                         </div>
-                        {{!-- <div class="d-flex justify-content-between pt-2">
-                            <p class="fw-bold mb-0">Order Details</p>
-                            <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> $898.00</p>
-                        </div>
-
-                        <div class="d-flex justify-content-between pt-2">
-                            <p class="text-muted mb-0">Invoice Number : 788152</p>
-                            <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> $19.00</p>
-                        </div>
-
-                        <div class="d-flex justify-content-between">
-                            <p class="text-muted mb-0">Invoice Date : 22 Dec,2019</p>
-                            <p class="text-muted mb-0"><span class="fw-bold me-4">GST 18%</span> 123</p>
-                        </div> --}}
-
-                        {{!-- <div class="d-flex justify-content-between mb-5">
-                            <p class="text-muted mb-0">Recepits Voucher : 18KU-62IIK</p>
-                            <p class="text-muted mb-0"><span class="fw-bold me-4">Delivery Charges</span> Free</p>
-                        </div> --}}
-
                     </div>
                 </div>
-
             </div>
         </div>
-    </section>
-    {{/each}}
+    </form>
+
+    {{else}}
+    <div class="container-fluid d-flex justify-content-center align-items-center m-t-50">
+  <div class="row">
+    <div class="col-lg-8 col-xl-6 m-lr-auto m-b-50 m-t-50">
+      <div class="text-center">
+        <h1 class="text-danger my-3">It's Empty</h1>
+        <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-626.jpg?w=826&t=st=1679396610~exp=1679397210~hmac=f5555d17be2bb2ab3668c0bea1d7f5bf6b2597764599ad04764052d7591cc588"
+             alt="IMG" class="img-fluid">
+      </div>
+    </div>
+  </div>
+</div>
+    {{/if}}
+    <!-- Back to top -->
+    <div class="btn-back-to-top" id="myBtn">
+        <span class="symbol-btn-back-to-top">
+            <i class="zmdi zmdi-chevron-up"></i>
+        </span>
+    </div>
+    
+    <div class="sidebar d-md-none" id="sidebar">
+		<div class="sidebar-container">
+			<div class="side-sec-1">
+				<div class="p-1">
+					<h4 class="text-white"><i class="fa fa-bars me-3" onclick="closeSidebar()"></i><span>E-Zone</span>
+					</h4>
+				</div>
+				<a class="side-items" href="/getShopPage">
+									<i class="ri-shopping-bag-fill text-white"></i> <span class="text-white">Shop</span>
+								</a>
+				<a class="side-items" href="/getWhishList">
+						<i class="fa fa-heart-o"></i>
+						<span>Your Wishlist</span>
+					</a>
+				<a class="side-items" href="/cart">
+						<i class="fa fa-shopping-cart text-white"></i>
+						<span>Your Cart</span></a>
+				<a class="side-items" href="/user_profile"><i class="fa fa-user-o"></i><span >Profile</span></a>
+			</div>
+			<div class="side-sec-2">
+				<a href="/user_logOut" class="side-items"><i class="ri-logout-circle-r-line me-2"></i>Logout</a>
+
+			</div>
+		</div>
+
+	</div>
+
+    <!--===============================================================================================-->
+    <script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="/vendor/bootstrap/js/popper.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="/vendor/select2/select2.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function removeFromWhisList(id) {
+            axios.get('/removeFromWishList/' + id).then((result) => {
+                if (result.data.success) {
+                    document.getElementById('productRow' + id).remove()
+                } else {
+                    window.location.reload()
+                }
+            })
+        }
+        function addToCartFromWishList(id){
+            axios.get('/addToCartFromWishList/'+id).then((result)=>{
+                if(result.data.success){
+                document.getElementById('productRow' + id).remove()
+                }
+                else{
+                    window.location.reload()
+                }
+            })
+        }
+    </script>
+
+    <script>
+        $(".js-select2").each(function () {
+            $(this).select2({
+                minimumResultsForSearch: 20,
+                dropdownParent: $(this).next('.dropDownSelect2')
+            });
+        })
+    </script>
+    <!--===============================================================================================-->
+    <script src="/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script>
+        $('.js-pscroll').each(function () {
+            $(this).css('position', 'relative');
+            $(this).css('overflow', 'hidden');
+            var ps = new PerfectScrollbar(this, {
+                wheelSpeed: 1,
+                scrollingThreshold: 1000,
+                wheelPropagation: false,
+            });
+
+            $(window).on('resize', function () {
+                ps.update();
+            })
+        });
+    </script>
+    <!--===============================================================================================-->
+    <script src="/js/main.js"></script>
+   <script>
+        function addToCart(id) {
+        }
+    </script>
+    	<script>
+		function openSidebar() {
+            console.log('dfghjk')
+			document.getElementById('sidebar').style.left ="0px"
+			document.getElementById('hamsBurger').innerHTML = ''
+
+		}
+		function closeSidebar() {
+            console.log('8952784512')
+			document.getElementById('sidebar').style.left = "-1000px"
+			document.getElementById('hamsBurger').innerHTML = '<i  onclick="openSidebar()" class="fa fa-bars d-md-none">'
+		}
+	</script>
+    <script src="/js/jquery.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>

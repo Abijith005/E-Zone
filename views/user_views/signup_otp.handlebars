@@ -1,66 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
-    <style></style>
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-</head>
     <title>E-Zone</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    {{!--
+    <link rel="stylesheet" type="text/css" href="css/util.css"> --}}
+    <link rel="stylesheet" type="text/css" href="/css/userLogin.css">
+    <!--===============================================================================================-->
 </head>
-<body style="background-color:#000; overflow-y: hidden;overflow-x: hidden;">
-    <div class="container" style=" height: 100vh;">
-        <div class="text-center mt-3"><p style="color:rgb(225,171,43); font-size:3.5rem;font-weight: 600; font-family:it"><span style="color: #ffff;">E-</span> Zone</p></div>
-        <div class="row" style="padding-top:1rem;display: flex; justify-content: center;">
-            <div class="col" style="border-style: solid; height:33rem ; max-width:45%;display: flex; border-radius: 2rem; background-color: rgba(129, 129, 129);">
-                <div style="width:100%;">
-               <div style="margin-top:1rem;text-align: center;">
-               <h3 style="margin-top:2rem; font-weight: 700;">Verify Mail Id</h3></div> 
-<div class="my-5" style="text-align: center;">
-   
-    <p>A text with a One time password(OTP) has been been sent to your mail id</p>
-    
-</div>
 
-<div style="text-align: center;">
-    {{#if message}}
-    <h5>{{message}}</h5>
-    {{else}}
-        <h5 class="mb-3">Enter OTP :</h5>
-        {{/if}}
-<form action="" method="post">
- {{#unless message}}
-<input style="width:40%;" class="form-control-lg" type="text" maxlength="6" minlength="6" name="otp" required><br> 
-    {{/unless}}
+<body>
 
-<div class="text-center pt-2" style="color: rgb(10, 65, 100);" id="otpdiv"></div>
-
-   
-
-<div class="text-center">
-<button  type="submit" class="btn  rounded-pill mt-5 text-white"  style="background-color: rgb(4, 107, 4);">Submit</button>
-</form>
-</div>
-</div>
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <div class="login100-pic js-tilt" data-tilt>
+                    <img src="images/img-01.png" alt="IMG">
+                </div>
+                <div>
+                    <h1 class="login100-form-title">
+                        OTP Verification
+                    </h1>
+                    <form class="login100-form validate-form" action="/signup_otp" method="post">
+                        <div class="wrap-input100 validate-input">
+                            <input class="input100" type="text" maxlength="6" minlength="6" name="otp">
+                            {{#if message}}
+                            <p class="text-center text-danger">{{message}}</p>
+                            {{else}}
+                            <p class="my-2 text-center">Enter the OTP send to your mail id</p>
+                            {{/if}}
+                            <div class="text-center mt-3 " style="color: rgb(10, 65, 100); font-size: small;"
+                                id="otpdiv"></div>
+                            <div class="container-login100-form-btn d-flex justify-content-between" id="otpbutton">
+                                <button class='btn btn-warning rounded-pill' type="button"
+                                    onclick="window.location.href='/user_signUp'">Back</button>
+                                <button class="login100-form-btn" type="submit">
+                                    SUBMIT
+                                </button>
+                            </div>
+                    </form>
+                </div>
             </div>
         </div>
-        </div>
-        
-    </div> 
+    </div>
+
+
+    <!--===============================================================================================-->
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/tilt/tilt.jquery.min.js"></script>
     <script>
-        let count=30
-let countdown=setInterval(()=>{
-    count--;
-    document.getElementById('otpdiv').innerHTML='Resend OTP in '+count+' seconds'
-    if(count==0){
-        clearInterval(countdown)
-        document.getElementById('otpdiv').innerHTML='<a href="/resendOTP">resend OTP</a>'
-    }
-},1000)
+        $('.js-tilt').tilt({
+            scale: 1.1
+        })
+    </script>
+    <!--===============================================================================================-->
+    <script src="js/main.js"></script>
+    <script>
 
+        let count = 30;
+        let countDown = setInterval(() => {
+            count--
+            document.getElementById('otpdiv').innerHTML = 'Resend OTP in ' + count + ' Seconds'
 
-    </script>  
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+            if (count == 0) {
+                clearInterval(countDown)
+                document.getElementById('otpdiv').innerHTML = '<a a href = "/resendOTP" > Resend OTP</a>'
+
+            }
+        }, 1000)
+
+    </script>
 </body>
+
 </html>

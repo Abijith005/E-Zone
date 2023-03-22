@@ -46,7 +46,6 @@ module.exports = {
     },
 
     add_product: (productData, imag) => {
-        console.log(imag, 'asdfghjkasdfghjk');
         productData.flag = false;
         return new Promise((resolve, reject) => {
             categoryModel.findOne({ category: productData.category }).then((result) => {

@@ -323,11 +323,27 @@ module.exports = {
                 let input = req.session.searchInput
                 productData = await productModel.find({ $and: [{ flag: false }, { $or: [{ product_name: new RegExp(input, 'i') }, { brandName: new RegExp(input, 'i') }] }] }).sort({ price: value }).lean()
                 req.session.productList = productData
-                res.json({ productData })
+                let pageNum = 1;
+                let productCount = productData.length
+                productData = productData.slice((pageNum - 1) * req.session.productPerPage, pageNum * req.session.productPerPage)
+                let pageCount = Math.ceil(productCount / req.session.productPerPage)
+                let pagination = []
+                for (i = 1; i <= pageCount; i++) {
+                    pagination.push(i)
+                }
+                res.json({ productData,pagination })
             } else {
                 productData = await productModel.find().sort({ price: value }).lean()
                 req.session.productList = productData
-                res.json({ productData })
+                let pageNum = 1;
+                let productCount = productData.length
+                productData = productData.slice((pageNum - 1) * req.session.productPerPage, pageNum * req.session.productPerPage)
+                let pageCount = Math.ceil(productCount / req.session.productPerPage)
+                let pagination = []
+                for (i = 1; i <= pageCount; i++) {
+                    pagination.push(i)
+                }
+                res.json({ productData,pagination })
 
             }
 

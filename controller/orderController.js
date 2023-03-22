@@ -151,9 +151,7 @@ module.exports = {
             let hamc = crypto.createHmac('sha256', 'mpif2nSNnpA4zv05FD6rXoIp')
             hamc.update(details.payment.razorpay_order_id + '|' + details.payment.razorpay_payment_id)
             hamc = hamc.digest('hex')
-            console.log(hamc,details.payment.razorpay_signature,'452855');
             if (hamc == details.payment.razorpay_signature) {
-                console.log('entered');
                 let { user_cart } = await userModel.findOne({ _id: req.session.userDetails._id }, { user_cart: 1, _id: 0 })
                 let compOrder_id = uniqueid()
                 let numberOfOrders = user_cart.length
@@ -177,7 +175,6 @@ module.exports = {
                 }
                 req.session.orderData = null
             } else {
-                console.log('rejected');
                 reject()
             }
         })

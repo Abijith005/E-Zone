@@ -7,11 +7,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>E-zone</title>
+	<title>E-Zone</title>
 
 	<!-- Google font -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
-
 	<!-- Bootstrap -->
 	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
 
@@ -28,41 +28,23 @@
 	<!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="/css/style.css" />
 
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>
-		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif] -->
-
 </head>
 
 <body>
-		<header>
+	<header>
 		<!-- TOP HEADER -->
-		<div id="top-header">
-			<div class="container">
-				<ul class="header-links pull-left">
-					<li><a href="#"><i class="fa fa-phone"></i> +0486-2475684</a></li>
-					<li><a href="#"><i class="fa fa-envelope-o"></i> ezone@email.com</a></li>
-				</ul>
-				<ul class="header-links pull-right">
-					{{!-- <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-					<li><a href="/user_login"><i class="fa fa-user-o"></i> Login</a></li> --}}
-				</ul>
-			</div>
-		</div>
+
 		<!-- /TOP HEADER -->
 
 		<!-- MAIN HEADER -->
 		<div id="header">
 			<!-- container -->
-			<div class="container" >
+			<div class="container">
 				<!-- row -->
 				<div class="row align-items-center">
 					<!-- LOGO -->
 
-	     
+
 
 					<div class="col-md-2 col-6">
 						<div class="header-logo ">
@@ -100,11 +82,10 @@
 					<!-- /LOGO -->
 
 					<!-- SEARCH BAR -->
-					<div class="col-md-6 col-12" >
-						<div class="header-search" >
-							<form class="text-center" action="" method="" >
-								<input class="input"
-									style="border-top-left-radius:2rem;border-bottom-left-radius:2rem;"
+					<div class="col-md-6 col-12">
+						<div class="header-search">
+							<form class="text-center" action="" method="">
+								<input class="input" style="border-top-left-radius:2rem;border-bottom-left-radius:2rem;"
 									type="text" name="searchInput" id="searchInput" placeholder="Search here">
 								<button class="search-btn" type="button" onclick="searchProduct()">Search</button>
 							</form>
@@ -121,7 +102,7 @@
 								<a href="/getWhishList">
 									<i class="fa fa-heart-o"></i>
 									<span>Your Wishlist</span>
-									<div id="whishListQuantity"  class="qty">{{quantities.user_whishList}}</div>
+									<div id="whishListQuantity" class="qty">{{quantities.user_whishList}}</div>
 								</a>
 							</div>
 							<!-- /Wishlist -->
@@ -180,7 +161,7 @@
 			</div>
 			<!-- container -->
 		</div>
-		
+
 		<!-- /MAIN HEADER -->
 	</header>
 	<!-- /HEADER -->
@@ -191,14 +172,14 @@
 		<div class="container">
 			<!-- responsive-nav -->
 			<div class="section-nav">
-							<ul class="section-tab-nav tab-nav">
-								<li ><a class="text-dark"  href="/home">Home</a></li>
-								<li class="active"><a data-toggle="tab" onclick="allProducts()">All Products</a></li>
-								{{#each category}}
-								<li><a data-toggle="tab" onclick="changeCategory('{{this._id}}')" >{{this.category}}</a></li>
-								{{/each}}
-							</ul>
-						</div>
+				<ul class="section-tab-nav tab-nav">
+					<li><a class="text-dark" href="/home">Home</a></li>
+					<li class="active"><a data-toggle="tab" onclick="allProducts()">All Products</a></li>
+					{{#each category}}
+					<li><a data-toggle="tab" onclick="changeCategory('{{this._id}}')">{{this.category}}</a></li>
+					{{/each}}
+				</ul>
+			</div>
 			<!-- /responsive-nav -->
 		</div>
 		<!-- /container -->
@@ -384,7 +365,7 @@
 
 	<!-- jQuery Plugins -->
 
-
+	<script src="sweetalert2.all.min.js"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script>
 		function paginate(pageNum) {
@@ -467,15 +448,11 @@ ${a}
 				if (result.data.login) {
 					if (result.data.success) {
 						let cartQuantiy = document.getElementById('cartQuantity')
-						if(cartQuantiy==null){
-							cartQuantiy.innerText =1
-						}
-						else{
 						cartQuantiy.textContent = Number(cartQuantiy.textContent) + 1
-						}
+						swal.fire({ title: "Product added to cart!!", icon: "success", showConfirmButton: false, timer: 1100 })
 					}
 					else {
-
+						swal.fire({ title: "Product added to cart!!", icon: "success", showConfirmButton: false, timer: 1100 })
 					}
 				} else {
 					window.location.href = '/user_login'
@@ -773,11 +750,11 @@ ${a}
 					}
 
 					let b;
-					if(item.stockQuantity<=0){
-						b=`&nbsp;&nbsp;<span
+					if (item.stockQuantity <= 0) {
+						b = `&nbsp;&nbsp;<span
 							class="text-danger product-category">Out Of Stock</span>`
-					}else{
-						b=`&nbsp;&nbsp;<span
+					} else {
+						b = `&nbsp;&nbsp;<span
 							class="text-success product-category">In Stock</span>`
 					}
 					let div = document.createElement('div')
@@ -845,11 +822,11 @@ ${a}
 					}
 
 					let b;
-					if(item.stockQuantity<=0){
-						b=`&nbsp;&nbsp;<span
+					if (item.stockQuantity <= 0) {
+						b = `&nbsp;&nbsp;<span
 							class="text-danger product-category">Out Of Stock</span>`
-					}else{
-						b=`&nbsp;&nbsp;<span
+					} else {
+						b = `&nbsp;&nbsp;<span
 							class="text-success product-category">In Stock</span>`
 					}
 					let div = document.createElement('div')
