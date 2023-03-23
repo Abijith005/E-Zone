@@ -226,7 +226,7 @@
                 <button onclick=" downloadExcel()" class="ms-3 btn btn-sm btn-dark rounded">Download as
                     Excel</button>
             </div>
-            <h3 class="text-dark mt-4">Orders</h3>
+            <h3 class="text-dark mt-4">Orders <span id="order">Of Last 30 Days</span></h3>
             <div class="card mt-3" style="margin-right: 2rem;">
                 <div class="card-body pt-2">
                     <div style="overflow: scroll;">
@@ -309,6 +309,7 @@
           table.appendChild(tableRow)
           
         })
+        document.getElementById('order').textContent=''
       })
       }else{
         document.getElementById('message').textContent='Please Enter A Valid Date'

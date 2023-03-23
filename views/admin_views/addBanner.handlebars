@@ -25,7 +25,7 @@
                     <h2 class="title">Add Banner</h2>
                 </div>
                 <div class="card-body">
-                    <form  action="/admin/postAddBanner" method="post" id="formData" enctype="multipart/form-data">
+                    <form action="/admin/postAddBanner" method="post" id="formData" enctype="multipart/form-data">
                         <div class="form-row m-b-55">
                             <div class="name"></div>
                             <div class="value">
@@ -70,7 +70,7 @@
                         </div>
 
                         <div class="text-center">
-                            <button onclick="get()" class="btn btn--radius-2 btn--red" type="button">Submit</button>
+                            <button class="btn btn--radius-2 btn--red" type="submit">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -81,12 +81,22 @@
     <!-- Jquery JS-->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
-        function get() {
-            let a = document.querySelector('#formData')
-            let formData = new FormData(a);
-        }
-
-        document.getElementById('category').addEventListener('change', (e) => {
+        const form = document.getElementById('formData');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const brandName=formData.get('bannerName').trim()
+            console.log(brandName)
+            if(brandName==null){
+            console.log('sdfghjsdfghasdfghj')
+            }
+            axios.post('/admin/postAddBanner', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+        })
+       /* document.getElementById('category').addEventListener('change', (e) => {
             axios.get('getBrands/' + e.target.value).then((response) => {
                 let brandDiv = document.getElementById('brandName')
                 brandDiv.innerHTML = ''
@@ -104,7 +114,7 @@
                     select.appendChild(option)
                 })
             })
-        })
+        })*/
     </script>
     <script src="vendor/jquery/jquery.min.js"></script>
     <!-- Main JS-->

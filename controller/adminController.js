@@ -204,9 +204,6 @@ module.exports = {
 
     getSalesReport: async (req, res) => {
         let thirtyDaysAgo =new Date(new Date().setDate(new Date().getDate()-30))
-        console.log(thirtyDaysAgo,'asdfghjk');
-        thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
-        thirtyDaysAgo = thirtyDaysAgo.toISOString()
         let products = await userModel.aggregate([{ $unwind: '$orders' }, { $match: { $and: [{ 'orders.orderStatus': 'delivered' }, { 'orders.orderDate': { $gte: new Date(thirtyDaysAgo), $lte: new Date() } }] } }])
         let totalRevenue = 0;
         for (const i of products) {
@@ -223,18 +220,18 @@ module.exports = {
     },
 
     salesReport: async (req, res) => {
-        let startDate = new Date(req.body.startDate).toISOString()
-        let endDate = new Date(req.body.endDate).toISOString()
+        let startDate = new Date(req.body.startDate)
+        let endDate = new Date(req.body.endDate)
+        startDate.setHours(0,0,0,0)
+        endDate.setHours(24,0,0,0)
         let products = await userModel.aggregate([{ $unwind: '$orders' }, { $match: { $and: [{ 'orders.orderStatus': 'delivered' }, { 'orders.orderDate': { $gte: new Date(startDate), $lte: new Date(endDate) } }] } }])
-        startDate = new Date(startDate).toLocaleDateString()
-        endDate = new Date(endDate).toLocaleDateString()
         let totalRevenue = 0;
         for (const i of products) {
             i.orders.orderDate = new Date(i.orders.orderDate).toLocaleDateString()
             i.orders.totalOrderAmount=Math.ceil(i.orders.totalOrderAmount)
             totalRevenue = Number(totalRevenue) + Number(i.orders.totalOrderAmount);
         }
-        products = { products, startDate, endDate, totalRevenue }
+        products = { products,totalRevenue }
         res.json({ products })
     }
 }

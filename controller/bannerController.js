@@ -13,8 +13,9 @@ module.exports = {
         let category = await categoryModel.find({}, { category: 1, _id: 0 }).lean()
         res.render('addBanner', { category })
     },
-
+    
     postAddBanner: (req, res) => {
+        console.log('asdfghjsdfghj',req.body,req.files);
         let data = req.body
         let file = req.files
         bannerModel.create({ ...data, ...file })
