@@ -1,21 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>E-Zone</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Dashboard - Admin </title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <link rel="stylesheet" href="/styles/admin/product.css">
   <link rel="stylesheet" href="/styles/admin/banner.css" />
+        
+    <style>
+      tr th , tr td{
+        text-align: center;
+      }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 999;
+        }
+        .card{
+            --bs-card-border-width:0
+        }
+        @media screen and (max-width: 768px) {
+            .logout {
+                display: block;
+                padding: 1rem;
+                border-bottom: 1px solid #ddd;
+            }
+
+            input[type="checkbox"]:checked+.menu-items {
+                display: block;
+            }
+
+            input[type="checkbox"]:not(:checked)+.logout {
+                display: none;
+            }
+
+            .navbar-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .logo {
+                margin-top: 1rem;
+            }
+
+            .menu-items {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                padding: 0;
+                background-color: #fff;
+                z-index: 1;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            }
+
+            .menu-items li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .menu-items li a {
+                display: block;
+                padding: 1rem;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .hamburger-lines {
+                display: block;
+                position: relative;
+                width: 2rem;
+                height: 1rem;
+                cursor: pointer;
+            }
+
+            .line {
+                display: block;
+                position: absolute;
+                height: 2px;
+                width: 100%;
+                background-color: #333;
+                transition: transform 0.3s ease-out;
+            }
+
+            .line1 {
+                transform: translateY(-0.5rem);
+            }
+
+            .line2 {
+                transform: translateY(0);
+            }
+
+            .line3 {
+                transform: translateY(0.5rem);
+            }
+
+            input[type="checkbox"] {
+                display: none;
+            }
+
+            input[type="checkbox"]:checked+.menu-items {
+                display: block;
+            }
+
+            @media screen and (max-width: 992px) {
+                .dashboard .card {
+                    width: 100%;
+                    max-width: 300px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    </style>
+
 </head>
 
 <body>
-    <!-- partial -->
-    <div class="container-fluid page-body-wrapper">
-      <nav class="navbar navbar-expand-md">
+
+    <nav class="navbar navbar-expand-md">
         <div class="navbar-container container">
           <input type="checkbox" name="" id="" />
           <div class="hamburger-lines">
@@ -36,139 +152,213 @@
           </ul>
           <div class="navbar-container">
             <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
-              {{!-- <h1 class="navbar-brand logo" style="color: white;margin-right: 70px;">Perfumio</h1> --}}
           </div>
         </div>
       </nav>
-      <section style="background-color: #eee; margin-top: 50px; ">
-        <div class="container vh-100   py-5">
-          <div class="row">
-            <div class="col">
-              <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
-                <ol class="breadcrumb mb-0" style="display: flex;  justify-content: space-between;">
-                  <li class="breadcrumb-item">
-                    <h4>Sales Report</h4>
-                    {{#if products.thirtyDays}}
-                    <h4>Of Last 30 Days</h4>
-                    {{else}}
-                    <h4>from {{products.startDate}} To {{products.endDate}}</h4>
-                    {{/if}}
-                  </li>
-                  <div>
-                    <form method="post" id="form">
-                      <label for="">Start Date</label>
-                      <input type="date" id="startDate" name="startDate" required>&nbsp;&nbsp;
-                      <label for="">End Date</label>
-                      <input type="date" id="endDate" name="endDate" required>&nbsp;
-                      <input type="button" onclick="getReport()"
-                        style="background-color: rgb(16, 14, 14); color: white; font-family: cursive; " value="Filter">
-                    </form>
-                  </div>
-                </ol>
-              </nav>
+    <main id="main" class="main" style="margin-left: 2rem; padding-top: 130px;">
+        <section class="section dashboard">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <div class="col-md-4 col-lg-4 mb-3" >
+                                <div class="card info-card sales-card" style="background-color: #c0e5f3;margin-left: 0px;">
+                                    <div class="card-body">
+                                        <h5 class="card-title  text-center">Sales Count <i class="bi bi-cart ms-2"></i> <span></span></h5>
+                                        <div class="text-center">
+                                            <div class="card-icon rounded-circle  text-center">
+                                            </div>
+                                            <div>
+                                                <h6>{{products.salesCount}}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-lg-4 mb-3">
+                                <div class="card info-card revenue-card" style="background-color: #c0e5f3;margin-left: 0px;">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-center">Revenue <i class="bi bi-currency-rupee ms-2"></i></h5>
+                                        <div class="text-center">
+                                            <div class="card-icon rounded-circle">
+                                              
+                                            </div>
+                                            <div>
+                                                  <h6></i>{{products.totalRevenue}}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-lg-4 mb-3">
+                                <div class="card info-card customers-card" style="background-color: #c0e5f3; margin-left: 0px;">
+                                    <div class="card-body">
+                                        <h5 class="card-title  text-center">Customers <i class="bi bi-people ms-2"></i></h5>
+                                        <div class="text-center">
+                                            <div
+                                                class="card-icon rounded-circle text-center">
+                                            </div>
+                                            <div >
+                                                <h6>{{products.userCount}}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          {{#if status}}
-          <h4 style="text-align: center; font-weight: bold; font-family: cursive;">No Data Available</h4>
-          {{else}}
-          <table class="table align-middle mb-0 bg-white container" style="overflow-x:hidden;">
-            <thead class="bg-light">
-              <tr>
-                <th class="text-center">Sl No.</th>
-                <th class="text-center">Order ID</th>
-                <th class="text-center">Username</th>
-                <th class="text-center">Product</th>
-                <th class="text-center">price </th>
-                <th class="text-center">Qty</th>
-                <th class="text-center">Sub Total</th>
-              </tr>
-            </thead>
-            <tbody id="tableBody">
-              {{#each products}}
-              <tr>
-                <td class="text-center">
-                  <p>{{inc @index}}</p>
-                </td>
-                <td class="text-center">
-                  <p class="fw-normal mb-1">{{this.orders.compoundOrder_id}}</p>
-                </td>
-                <td class="text-center">
-                  <p class="fw-normal mb-1">{{this.name}}</p>
-                </td>
-                <td class="text-center">
-                  <p class="fw-normal mb-1">{{this.orders.productName}}</p>
-                </td>
-                <td class="text-center">
-                  <p class="fw-normal mb-1">₹: {{this.orders.price}}</p>
-                </td>
-                <td class="text-center">
-                  <p class="fw-normal mb-1">{{this.orders.quantity}}</p>
-                </td>
-                <td class="text-center">
-                  <p class="fw-normal mb-1">₹: {{this.orders.totalOrderAmount}}/-</p>
-                </td>
-              </tr>
-              {{/each}}
-            </tbody>
+        </section>
 
-          </table>
+        <div class="mt-4">
+            <div class="input-group">
+                <form  method="get">
+                  <label class="text-danger" id="message"></label><br>
+                    From: <input class="form-control" type="date" id="start" name="start"> To: <input id="end"
+                        class="form-control" type="date" name="end">
+                    <button type="button" onclick="getReport()" class="btn btn-sm btn-dark rounded mt-4 mb-2">Filter</button>
+                </form>
 
-          <div style="background-color: white;
-        height: 60px;
-    display: flex;
-    justify-content: flex-start;
-    margin-top: 2px;
-    align-content: stretch;
-    flex-direction: column;">
-            <div style=" margin-top: 14px; ">
-              <h4 style="text-align: right; margin-right: 90px; font-weight: bold; font-family: cursive; ">Total Revenue
-                ₹:
-                <i style="font-size: 25px;  " class="bi bi-currency-rupee"></i>{{products.totalRevenue}}/-
-              </h4>
             </div>
-          </div>
-          {{/if}}
+            <div class="d-flex justify-content-end" style="margin-right: 5rem;">
+                <button onclick=" downloadPdf()" class="btn btn-sm btn-dark rounded">Download as PDF</button>
+                <button onclick=" downloadExcel()" class="ms-3 btn btn-sm btn-dark rounded">Download as
+                    Excel</button>
+            </div>
+            <h3 class="text-dark mt-4">Orders</h3>
+            <div class="card mt-3" style="margin-right: 2rem;">
+                <div class="card-body pt-2">
+                    <div style="overflow: scroll;">
+                    <table class="table table-hover table-borderless mt-2 ">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Product</th>
+                                <th scope="col">Order Date</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">TotalAmount</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Payment Status</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            {{#each products}}
+                            <tr>
+                                <th scope="row">{{inc @index}}</th>
+                                <td>{{this.name}}</td>
+                                <td>{{this.orders.productName}}</td>
+                                <td>{{this.orders.orderDate}}</td>
+                                <td>{{this.orders.price}}</td>
+                                <td>{{this.orders.quantity}}</td>
+                                <td>{{this.orders.totalOrderAmount}}</td>
+                                <td> <span class="badge text-bg-success">{{this.orders.orderStatus}}</span></td>
+                                <td>Paid</td>
+                            </tr>
+                            {{/each}}
+                            <tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+
         </div>
-      </section>
+    </main>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.1/xlsx.full.min.js"></script>
+
+
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script>
+
+     let orders = []
+        {{#each products}}
+        orders.push(['{{this.name}}', '{{this.orders.productName}}', '{{this.orders.orderDate}}', '{{this.orders.quantity}}', '{{this.orders.totalOrderAmount}}'
+            , '{{this.orders.orderStatus}}'])
+        {{/each}}
     function getReport() {
-      let startDate = document.getElementById('startDate').value
-      let endDate = document.getElementById('endDate').value
-      console.log(startDate, endDate)
+      document.getElementById('message').textContent=''
+      let startDate =document.getElementById('start').value
+      let endDate =document.getElementById('end').value
+      if(endDate>=startDate){
       axios.post('/admin/salesReport', { startDate, endDate }).then((result) => {
+        orders=[]
+        products=result.data.products
         console.log(result.data.products.products)
         let table = document.getElementById('tableBody')
         table.innerHTML = ''
         result.data.products.products.forEach((item, index) => {
+            orders.push([item.name,item.orders.productName,item.orders.orderDate,item.orders.quantity,item.orders.totalOrderAmount])
           let tableRow = document.createElement('tr')
-          tableRow.innerHTML = `
-            <td class="text-center">
-              <p>${index + 1}</p>
-            </td>
-            <td class="text-center">
-              <p class="fw-normal mb-1">${item.orders.compoundOrder_id}</p>
-            </td>
-            <td class="text-center">
-              <p class="fw-normal mb-1">${item.name}</p>
-            </td>
-            <td class="text-center">
-              <p class="fw-normal mb-1">${item.orders.productName}</p>
-            </td>
-            <td class="text-center">
-              <p class="fw-normal mb-1">₹:${item.orders.price}</p>
-            </td>
-            <td class="text-center">
-              <p class="fw-normal mb-1">${item.orders.quantity}</p>
-            </td>
-            <td class="text-center">
-              <p class="fw-normal mb-1">₹:${item.orders.totalOrderAmount}/-</p>
-            </td>`
+          tableRow.innerHTML =` <th scope="row">${index+1}</th>
+                                <td>${item.name}</td>
+                                <td>${item.orders.productName}</td>
+                                <td>${item.orders.orderDate}</td>
+                                <td>${item.orders.price}</td>
+                                <td>${item.orders.quantity}</td>
+                                <td>${item.orders.totalOrderAmount}</td>
+                                <td> <span class="badge text-bg-success">${item.orders.orderStatus}</span></td>
+                                <td>Paid</td>`
           table.appendChild(tableRow)
+          
         })
       })
+      }else{
+        document.getElementById('message').textContent='Please Enter A Valid Date'
+      }
     }  
-  </script>
+       
+                let totalRevenue = '{{products.totalRevenue}}'
+                let totalOrders = '{{products.salesCount}}'
+                let Customers = '{{products.userCount}}'
+                const { jsPDF } = window.jspdf;
+                function downloadPdf() {
+                    const doc = new jsPDF();
+                    doc.text(15, 20, "E-Zone Sales Report");
+                    doc.autoTable({
+                        head: [['Type', 'Details']],
+                        body: [
+                            ['Total Sales', totalOrders],
+                            ['Total Revenue', totalRevenue],
+                            ['Total Customers', Customers],
+                        ],
+                        startY: 40
+                    })
+                    doc.text(15, doc.lastAutoTable.finalY + 20, "order info");
+                    doc.autoTable({
+                        head: [['User Name', 'Product', 'Odrer Date', 'Quantity', 'Total Amount', "Status"]],
+                        body: orders,
+                        startY: doc.lastAutoTable.finalY + 30
+                    })
+                    doc.save('sales-report.pdf');
+                }
+                function downloadExcel() {
+                    let report = [
+                        { type: "Total Sales", value: totalOrders },
+                        { type: "Total Revenue", value: totalRevenue },
+                        { type: "Total Customers", value: Customers },
+                    ]
+
+                    var sheet1 = XLSX.utils.json_to_sheet(report);
+                    var wb = XLSX.utils.book_new();
+                    XLSX.utils.book_append_sheet(wb, sheet1, "Sales Report");
+
+
+                    XLSX.writeFile(wb, 'sales-report.xlsx');
+                }
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+
 </body>
 
 </html>

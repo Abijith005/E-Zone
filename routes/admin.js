@@ -50,8 +50,6 @@ router.get('/category',adminSession.ifAdmin,categoryController.admin_categoryPag
 
 router.get('/add_categoryPage',adminSession.ifAdmin,categoryController.admin_addCategoryPage)
 
-// router.post('/getCategoryForProduct',adminSession.ifAdmin,categoryController.categoryForProduct)
-
 router.post('/add_category',adminSession.ifAdmin,categoryController.admin_addCategory)
 
 router.get('/flag_and_unFlag_category/:id',adminSession.ifAdmin,categoryController.flagAndUnflag_category)

@@ -13,8 +13,9 @@
     <link rel="stylesheet" href="/css/addCoupon.css">
 
     {{/if}}
-<title>E-Zone</title>
+    <title>E-Zone</title>
 </head>
+
 <body>
     {{#if addCoupon}}
     <div class="main">
@@ -84,13 +85,13 @@
                         <div class="form-row">
                             <div class="form-group form-icon">
                                 <label for="birth_date">Start Date :</label>
-                                <input type="date" class="form-input" id="startDate" name="startDate" placeholder="MM/DD/YYYY"
-                                    value="{{editCoupon.startDate}}" />
+                                <input type="date" class="form-input" id="startDate" name="startDate"
+                                    placeholder="MM/DD/YYYY" value="{{editCoupon.startDate}}" />
                             </div>
                             <div class="form-group form-icon">
                                 <label id="endDateLabel" for="birth_date">End Date :</label>
-                                <input type="date" class="form-input" id="endDate" name="endDate" placeholder="MM/DD/YYYY"
-                                    value="{{editCoupon.endDate}}" />
+                                <input type="date" class="form-input" id="endDate" name="endDate"
+                                    placeholder="MM/DD/YYYY" value="{{editCoupon.endDate}}" />
                             </div>
                         </div>
                         <div class="form-row">
@@ -132,105 +133,101 @@
     </div>
     {{else}}
     <div class="container-scroller" style="padding-top: 150px;">
-    <!-- partial -->
-    <div class="container-fluid page-body-wrapper">
-     <nav class="navbar navbar-expand-md">
-        <div class="navbar-container container">
-          <input type="checkbox" name="" id="" />
-          <div class="hamburger-lines">
-            <span class="line line1"></span>
-            <span class="line line2"></span>
-            <span class="line line3"></span>
-          </div>
-          <ul class="menu-items" style="z-index: 1;">
-            <li><a href="/admin/admin_home">Dashboard</a></li>
-            <li><a href="/admin/category">Categories</a></li>
-            <li><a href="/admin/admin_products">Products</a></li>
-            <li><a href="/admin/user_Details">Users</a></li>
-            <li><a href="/admin/getCoupon">Coupons</a></li>
-            <li><a href="/admin/order_Details">Orders</a></li>
-            <li><a href="/admin/getSalesReport">Sales Report</a></li>
-            <li><a href="/admin/getBanner">Banner</a></li>
-            <li><a href="/admin/log_Out">Logout</a></li>
-          </ul>
-          <div class="navbar-container">
-            <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
-          </div>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <nav class="navbar navbar-expand-md">
+                <div class="navbar-container container">
+                    <input type="checkbox" name="" id="" />
+                    <div class="hamburger-lines">
+                        <span class="line line1"></span>
+                        <span class="line line2"></span>
+                        <span class="line line3"></span>
+                    </div>
+                    <ul class="menu-items" style="z-index: 1;">
+                        <li><a href="/admin/admin_home">Dashboard</a></li>
+                        <li><a href="/admin/category">Categories</a></li>
+                        <li><a href="/admin/admin_products">Products</a></li>
+                        <li><a href="/admin/user_Details">Users</a></li>
+                        <li><a href="/admin/getCoupon">Coupons</a></li>
+                        <li><a href="/admin/order_Details">Orders</a></li>
+                        <li><a href="/admin/getSalesReport">Sales Report</a></li>
+                        <li><a href="/admin/getBanner">Banner</a></li>
+                        <li><a href="/admin/log_Out">Logout</a></li>
+                    </ul>
+                    <div class="navbar-container">
+                        <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
+                    </div>
+                </div>
+            </nav>
+            <section
+                style="margin-top: 10px; margin-left: 5rem;margin-right: 5rem; background-color: rgb(255, 255, 255);">
+                <div style="display: flex; justify-content: flex-end;">
+                    <a href="addCoupon" style="text-decoration: none;width: 15rem;margin-left: 1rem;"><button
+                            class="btn btn-outline-primary">Add Coupon</button></a>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-center" scope="col">No.</th>
+                            <th class="text-center" scope="col">Coupon Name</th>
+                            <th class="text-center" scope="col">Coupon Code</th>
+                            <th class="text-center" scope="col">Minimum Purchase Amount</th>
+                            <th class="text-center" scope="col">Discount Amount</th>
+                            <th class="text-center" scope="col">Start Date</th>
+                            <th class="text-center" scope="col">End Date</th>
+                            <th class="text-center" scope="col">Status</th>
+                            <th class="text-center" scope="col">Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each coupon}}
+                        <tr>
+                            <th class="text-center" scope="row">{{inc @index}}</th>
+                            <td class="text-center">{{this.couponName}}</td>
+                            <td class="text-center">{{this.couponCode}}</td>
+                            <td class="text-center">{{this.minPurchaseAmount}}</td>
+                            <td class="text-center">{{this.discountAmount}}</td>
+                            <td class="text-center">{{this.startDate}}</td>
+                            <td class="text-center">{{this.endDate}}</td>
+                            {{#if this.couponStatus}}
+                            <td class="text-center">Active</td>
+                            {{else}}
+                            <td class="text-center">Expired</td>
+                            {{/if}}
+                            <td class="text-center">
+
+                                <button class="btn btn-secondary dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">Options</button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="getEditCoupon/{{this._id}}/edit"
+                                            class="link">Edit Coupon</a>
+                                    </li>
+                                    {{#if this.couponStatus}}
+                                    <li><a class="dropdown-item" href="getEditCoupon/{{this._id}}/{{this.couponStatus}}"
+                                            class="link">Expire</a></li>
+                                    {{/if}}
+                                </ul>
         </div>
-      </nav>
-    <section style="margin-top: 10px; margin-left: 5rem;margin-right: 5rem; background-color: rgb(255, 255, 255);">
-        <div style="display: flex; justify-content: flex-end;">
-          <a href="addCoupon" style="text-decoration: none;width: 15rem;margin-left: 1rem;"><button
-              class="btn btn-outline-primary">Add Coupon</button></a>
-        </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th class="text-center" scope="col">No.</th>
-                    <th class="text-center" scope="col">Coupon Name</th>
-                    <th class="text-center" scope="col">Coupon Code</th>
-                    <th class="text-center" scope="col">Minimum Purchase Amount</th>
-                    <th class="text-center" scope="col">Discount Amount</th>
-                    <th class="text-center" scope="col">Start Date</th>
-                    <th class="text-center" scope="col">End Date</th>
-                    <th class="text-center" scope="col">Options</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each coupon}}
-                <tr>
-                    <th class="text-center" scope="row">{{inc @index}}</th>
-                    <td class="text-center">{{this.couponName}}</td>
-                    <td class="text-center">{{this.couponCode}}</td>
-                    <td class="text-center">{{this.minPurchaseAmount}}</td>
-                    <td class="text-center">{{this.discountAmount}}</td>
-                    <td class="text-center">{{this.startDate}}</td>
-                    <td class="text-center">{{this.endDate}}</td>
-                    {{#if this.couponStatus}}
-                    <td class="text-center">Active</td>
-                    {{else}}
-                    <td class="text-center">Expired</td>
-                    {{/if}}
-                    <td class="text-center">
-                            <div id="menu-wrap">
-                                <input type="checkbox" class="toggler" />
-                                <div class="dots">
-                                    <div></div>
-                                </div>
-                                <div class="menu">
-                                    <div>
-                                        <ul>
-                                            <li><a href="getEditCoupon/{{this._id}}/edit" class="link">Edit Coupon</a>
-                                            </li>
-                                            {{#if this.couponStatus}}
-                                            <li><a href="getEditCoupon/{{this._id}}/{{this.couponStatus}}"
-                                                    class="link">Expire</a></li>
-                                            {{/if}}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>{{/each}}
-            </tbody>
+        </td>
+        </tr>{{/each}}
+        </tbody>
         </table>
     </div>
     </section>
-    
+
     {{/if}}
 
     <script>
-        document.getElementById('endDate').addEventListener('change',(e)=>{
-            let startDate=document.getElementById('startDate').value
-            let endDate=e.target.value
-console.log(e.target.value)
-if(endDate<startDate){
-    document.getElementById('endDateLabel').innerHTML='<p style="font-size: smaller;text-transform: capitalize;" class="text-danger">End Date Should Be Greater Than Start Date</p>'
-}
-else{
-    document.getElementById('endDateLabel').innerHTML=''
-}
+        document.getElementById('endDate').addEventListener('change', (e) => {
+            let startDate = document.getElementById('startDate').value
+            let endDate = e.target.value
+            console.log(e.target.value)
+            if (endDate < startDate) {
+                document.getElementById('endDateLabel').innerHTML = '<p style="font-size: smaller;text-transform: capitalize;" class="text-danger">End Date Should Be Greater Than Start Date</p>'
+            }
+            else {
+                document.getElementById('endDateLabel').innerHTML = ''
+            }
         })
     </script>
 </body>

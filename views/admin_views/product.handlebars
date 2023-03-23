@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,97 +15,90 @@
 <body>
   <div style="padding-top: 150px; width:100vw;">
     <!-- partial -->
-      <nav class="navbar navbar-expand-md">
-        <div class="navbar-container container">
-          <input type="checkbox" name="" id="" />
-          <div class="hamburger-lines">
-            <span class="line line1"></span>
-            <span class="line line2"></span>
-            <span class="line line3"></span>
-          </div>
-          <ul class="menu-items" style="z-index: 1;">
-            <li><a href="/admin/admin_home">Dashboard</a></li>
-            <li><a href="/admin/category">Categories</a></li>
-            <li><a href="/admin/admin_products">Products</a></li>
-            <li><a href="/admin/user_Details">Users</a></li>
-            <li><a href="/admin/getCoupon">Coupons</a></li>
-            <li><a href="/admin/order_Details">Orders</a></li>
-            <li><a href="/admin/getSalesReport">Sales Report</a></li>
-            <li><a href="/admin/getBanner">Banner</a></li>
-            <li><a href="/admin/log_Out">Logout</a></li>
-          </ul>
-          <div class="navbar-container">
-            <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
-          </div>
+    <nav class="navbar navbar-expand-md">
+      <div class="navbar-container container">
+        <input type="checkbox" name="" id="" />
+        <div class="hamburger-lines">
+          <span class="line line1"></span>
+          <span class="line line2"></span>
+          <span class="line line3"></span>
         </div>
-      </nav>
+        <ul class="menu-items" style="z-index: 1;">
+          <li><a href="/admin/admin_home">Dashboard</a></li>
+          <li><a href="/admin/category">Categories</a></li>
+          <li><a href="/admin/admin_products">Products</a></li>
+          <li><a href="/admin/user_Details">Users</a></li>
+          <li><a href="/admin/getCoupon">Coupons</a></li>
+          <li><a href="/admin/order_Details">Orders</a></li>
+          <li><a href="/admin/getSalesReport">Sales Report</a></li>
+          <li><a href="/admin/getBanner">Banner</a></li>
+          <li><a href="/admin/log_Out">Logout</a></li>
+        </ul>
+        <div class="navbar-container">
+          <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
+        </div>
       </div>
+    </nav>
+  </div>
 
-      <section style="margin-top: 10px; margin-left: 5rem;margin-right: 5rem; background-color: rgb(255, 255, 255);">
-       
-        <div style="display: flex; justify-content: flex-end;">
-          <a href="/admin/product_add" style="text-decoration: none;width: 15rem;margin-left: 1rem;"><button
-              class="btn btn-outline-primary">Add Product</button></a>
-        </div>
-          <div class="row mt-4 ">
-            <div class="col-12" >
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th class="text-center" scope="col">No.</th>
-                    <th class="text-center" scope="col">Product Name</th>
-                    <th class="text-center" scope="col" style="margin: right 75px;">Image</th>
-                    <th class="text-center" scope="col">Category</th>
-                    <th class="text-center" scope="col">Brand Name</th>
-                    <th class="text-center" scope="col">Price</th>
-                    <th class="text-center" scope="col">Stock Quantity</th>
-                    <th class="text-center" scope="col">Product Status</th>
-                    <th class="text-center" scope="col">Options</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {{#each result}}
-                  <tr>
-                    <th class="text-center" scope="row">{{inc @index}}</th>
-                    <td class="text-center">{{this.product_name}}</td>
-                    <td class="text-center"><img src="/images/{{this.image.[0].filename}}" alt="" style="width: 40px; height: 50px;"></td>
-                    <td class="text-center">{{this.category}}</td>
-                    <td class="text-center">{{this.brandName}}</td>
-                    <td class="text-center">{{this.price}}</td>
-                    <td class="text-center">{{this.stockQuantity}}</td>
-                    {{#if this.flag}}
-                    <td class="text-center">flagged</td>
-                    {{else}}
-                    <td class="text-center">Unflagged</td>
-                    {{/if}}
-                    <td class="text-center">
-                      <div id="container">
-                        <div id="menu-wrap">
-                          <input type="checkbox" class="toggler" />
-                          <div class="dots">
-                            <div></div>
-                          </div>
-                          <div class="menu">
-                            <div>
-                              <ul>
-                                <li><a href="product_edit/{{this._id}}" class="link">Edit Product</a></li>
-                                {{#if this.flag}}
-                                <li><a href="product_unflag/{{this._id}}" class="link">Unflag Product</a></li>
-                                {{else}}
-                                <li><a href="product_flag/{{this._id}}" class="link">Flag Product</a></li>
-                                {{/if}}
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>{{/each}}
-                </tbody>
-              </table>
-            </div>
-          </div>
-      </section>
+  <section style="margin-top: 10px; margin-left: 5rem;margin-right: 5rem; background-color: rgb(255, 255, 255);">
+
+    <div style="display: flex; justify-content: flex-end;">
+      <a href="/admin/product_add" style="text-decoration: none;width: 15rem;margin-left: 1rem;"><button
+          class="btn btn-outline-primary">Add Product</button></a>
+    </div>
+    <div class="row mt-4 ">
+      <div class="col-12">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="text-center" scope="col">No.</th>
+              <th class="text-center" scope="col">Product Name</th>
+              <th class="text-center" scope="col" style="margin: right 75px;">Image</th>
+              <th class="text-center" scope="col">Category</th>
+              <th class="text-center" scope="col">Brand Name</th>
+              <th class="text-center" scope="col">Price</th>
+              <th class="text-center" scope="col">Stock Quantity</th>
+              <th class="text-center" scope="col">Product Status</th>
+              <th class="text-center" scope="col">Options</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each result}}
+            <tr>
+              <th class="text-center" scope="row">{{inc @index}}</th>
+              <td class="text-center">{{this.product_name}}</td>
+              <td class="text-center"><img src="/images/{{this.image.[0].filename}}" alt=""
+                  style="width: 40px; height: 50px;"></td>
+              <td class="text-center">{{this.category}}</td>
+              <td class="text-center">{{this.brandName}}</td>
+              <td class="text-center">{{this.price}}</td>
+              <td class="text-center">{{this.stockQuantity}}</td>
+              {{#if this.flag}}
+              <td class="text-center">flagged</td>
+              {{else}}
+              <td class="text-center">Unflagged</td>
+              {{/if}}
+              <td class="text-center">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">Options</button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="product_edit/{{this._id}}" class="link">Edit Product</a></li>
+                  {{#if this.flag}}
+                  <li><a class="dropdown-item" href="product_unflag/{{this._id}}" class="link">Unflag Product</a></li>
+                  {{else}}
+                  <li><a class="dropdown-item" href="product_flag/{{this._id}}" class="link">Flag Product</a></li>
+                  {{/if}}
+                </ul>
+              </td>
+            </tr>{{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+
 </body>
 
 </html>

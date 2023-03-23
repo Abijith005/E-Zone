@@ -51,11 +51,6 @@
       </div>
     </div>
   </nav>
-  <section style="margin-top: 10px; margin-left: 5rem;margin-right: 5rem; background-color: rgb(255, 255, 255);">
-    <div style="display: flex; justify-content: flex-end;">
-      <a href="addCoupon" style="text-decoration: none;width: 15rem;margin-left: 1rem;"><button
-          class="btn btn-outline-primary">Add Coupon</button></a>
-    </div>
       <table class="table">
         <thead>
           <tr>
@@ -133,7 +128,6 @@
   </table>
   </div>
   </div>
-  </section>
 
   {{!--view Order start--}}
   {{else}}
@@ -166,7 +160,7 @@
               <p><b>&nbsp;&nbsp; {{singleOrderDetails.deliveryAddress}}</b></p>
             </div>
             <p class="product-description"><b>Total Amount&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: ₹
-                {{singleOrderDetails.totalAmount}} /-</b></p>
+                {{singleOrderDetails.totalOrderAmount}} /-</b></p>
             <p class="product-description"><b>Order Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
                 {{singleOrderDetails.orderDate}}</b></p>
             <p class="product-description"><b>Order Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:

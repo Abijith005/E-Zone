@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>E-Zone</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <link rel="stylesheet" href="/styles/admin/product.css">
   <link rel="stylesheet" href="/styles/admin/banner.css" />
@@ -16,94 +16,82 @@
   <div class="container-scroller" style="padding-top: 150px;">
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
-     <nav class="navbar navbar-expand-md">
-                <div class="navbar-container container">
-                    <input type="checkbox" name="" id="" />
-                    <div class="hamburger-lines">
-                        <span class="line line1"></span>
-                        <span class="line line2"></span>
-                        <span class="line line3"></span>
-                    </div>
-                    <ul class="menu-items" style="z-index: 1;">
-                        <li><a href="/admin/admin_home">Dashboard</a></li>
-                        <li><a href="/admin/category">Categories</a></li>
-                        <li><a href="/admin/admin_products">Products</a></li>
-                        <li><a href="/admin/user_Details">Users</a></li>
-                        <li><a href="/admin/getCoupon">Coupons</a></li>
-                        <li><a href="/admin/order_Details">Orders</a></li>
-                        <li><a href="/admin/getSalesReport">Sales Report</a></li>
-                        <li><a href="/admin/getBanner">Banner</a></li>
-                        <li><a href="/admin/log_Out">Logout</a></li>
-                    </ul>
-                    <div class="navbar-container">
-                        <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
-                        {{!-- <h1 class="navbar-brand logo" style="color: white;margin-right: 70px;">Perfumio</h1> --}}
-                    </div>
-                </div>
-            </nav>
-            
+      <nav class="navbar navbar-expand-md">
+        <div class="navbar-container container">
+          <input type="checkbox" name="" id="" />
+          <div class="hamburger-lines">
+            <span class="line line1"></span>
+            <span class="line line2"></span>
+            <span class="line line3"></span>
+          </div>
+          <ul class="menu-items" style="z-index: 1;">
+            <li><a href="/admin/admin_home">Dashboard</a></li>
+            <li><a href="/admin/category">Categories</a></li>
+            <li><a href="/admin/admin_products">Products</a></li>
+            <li><a href="/admin/user_Details">Users</a></li>
+            <li><a href="/admin/getCoupon">Coupons</a></li>
+            <li><a href="/admin/order_Details">Orders</a></li>
+            <li><a href="/admin/getSalesReport">Sales Report</a></li>
+            <li><a href="/admin/getBanner">Banner</a></li>
+            <li><a href="/admin/log_Out">Logout</a></li>
+          </ul>
+          <div class="navbar-container">
+            <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
+              {{!-- <h1 class="navbar-brand logo" style="color: white;margin-right: 70px;">Perfumio</h1> --}}
+          </div>
+        </div>
+      </nav>
+
       <section style="margin-top: 10px; margin-left: 5rem;margin-right: 5rem; background-color: rgb(255, 255, 255);">
         <div class="container">
         </div>
-        <div  style="display: flex; justify-content: flex-end;">
+        <div style="display: flex; justify-content: flex-end;">
           <a href="add_categoryPage" style="text-decoration: none;width: 15rem;margin-left: 1rem;"><button
-              class="btn btn-outline-primary mb-2">Add Banner</button></a>
+              class="btn btn-outline-primary mb-2">Add Category</button></a>
 
         </div>
-<table class="table">
-  <thead>
-    <tr>
-     <th scope="col" class="text-center">No.</th>
-      <th scope="col" class="text-center">Category</th>
-      <th scope="col" class="text-center">Brand</th>
-      <th scope="col" class="text-center">Status</th>
-      <th scope="col" class="text-center">Options</th>
-      
-    </tr>
-  </thead>
-  <tbody>
-    {{#each result}}
-    <tr>
-      <th class="text-center">{{inc @index}}</th>
-      <td class="text-center">{{this.category}}</td>
-      <td class="text-center">{{this.brandName}}</td>
-      {{#if this.flag}}
-      <td class="text-center">Flagged</td>
-      {{else}}
-      <td class="text-center">Unflagged</td>
-      {{/if}}
-    
-<td >
-  <button class="btn btn-info" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">Returned</button>
-  {{!-- <div id="container">
-                  <div id="menu-wrap">
-                    <input type="checkbox" class="toggler" />
-                    <div class="dots">
-                      <div></div>
-                    </div>
-                    <div class="menu">
-                      <div>
-                        <ul>
-                          <li><a href="editCategory/{{this._id}}" class="link">Edit Category</a></li>
-                          {{#if this.flag}}
-                          <li><a href="flag_and_unFlag_category/{{this._id}}" class="link">Unflag</a></li>
-                          {{else}}
-                          <li><a href="flag_and_unFlag_category/{{this._id}}" class="link">Flag</a></li>
-                          {{/if}}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div> --}}
-</td>
-   
-    </tr>{{/each}}
-<div>
-</div>
-  </tbody>
-</table>
-    </section>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col" class="text-center">No.</th>
+              <th scope="col" class="text-center">Category</th>
+              <th scope="col" class="text-center">Brand</th>
+              <th scope="col" class="text-center">Status</th>
+              <th scope="col" class="text-center">Options</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            {{#each result}}
+            <tr>
+              <th class="text-center">{{inc @index}}</th>
+              <td class="text-center">{{this.category}}</td>
+              <td class="text-center">{{this.brandName}}</td>
+              {{#if this.flag}}
+              <td class="text-center">Flagged</td>
+              {{else}}
+              <td class="text-center">Unflagged</td>
+              {{/if}}
+
+              <td class="text-center">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">Options</button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="editCategory/{{this._id}}" class="link">Edit Category</a></li>
+                  {{#if this.flag}}
+                  <li><a class="dropdown-item" href="flag_and_unFlag_category/{{this._id}}" class="link">Unflag</a></li>
+                  {{else}}
+                  <li><a class="dropdown-item" href="flag_and_unFlag_category/{{this._id}}" class="link">Flag</a></li>
+                  {{/if}}
+                </ul>
+              </td>
+
+            </tr>{{/each}}
+            <div>
+            </div>
+          </tbody>
+        </table>
+      </section>
 </body>
 
 </html>

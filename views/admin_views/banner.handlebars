@@ -2,18 +2,18 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>E-Zone</title>
-  <link rel="stylesheet" href="/styles/admin/banner.css" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Zone</title>
+    <link rel="stylesheet" href="/styles/admin/banner.css" />
 </head>
 
 <body>
-  <div class="container-scroller" style="padding-top: 150px;">
-    <!-- partial -->
-    <div class="container-fluid page-body-wrapper">
-     <nav class="navbar navbar-expand-md">
+    <div class="container-scroller" style="padding-top: 150px;">
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <nav class="navbar navbar-expand-md">
                 <div class="navbar-container container">
                     <input type="checkbox" name="" id="" />
                     <div class="hamburger-lines">
@@ -34,76 +34,81 @@
                     </ul>
                     <div class="navbar-container">
                         <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
-                        {{!-- <h1 class="navbar-brand logo" style="color: white;margin-right: 70px;">Perfumio</h1> --}}
+                            {{!-- <h1 class="navbar-brand logo" style="color: white;margin-right: 70px;">Perfumio</h1>
+                            --}}
                     </div>
                 </div>
             </nav>
-            
-      <section style="margin-top: 10px; margin-left: 5rem;margin-right: 5rem; background-color: rgb(255, 255, 255);">
-        <div class="container">
-          {{!-- <div class="row">
-            <form class="form-inline my-2 my-lg-0">
-              <div class="d-flex">
-                <input class="form-control mr-sm-2" style="width: 80%;" type="text" placeholder="Search product">
-                <button class="btn btn-outline-success my-2 my-sm-0 " type="submit">Search</button>
 
-            </form>
-          </div> --}}
+            <section
+                style="margin-top: 10px; margin-left: 5rem;margin-right: 5rem; background-color: rgb(255, 255, 255);">
+                <div class="container">
+                    {{!-- <div class="row">
+                        <form class="form-inline my-2 my-lg-0">
+                            <div class="d-flex">
+                                <input class="form-control mr-sm-2" style="width: 80%;" type="text"
+                                    placeholder="Search product">
+                                <button class="btn btn-outline-success my-2 my-sm-0 " type="submit">Search</button>
 
-        </div>
-        <div  style="display: flex; justify-content: flex-end;">
-          <a href="/admin/addBanner" style="text-decoration: none;width: 15rem;margin-left: 1rem;"><button
-              class="btn btn-outline-primary">Add Banner</button></a>
+                        </form>
+                    </div> --}}
 
+                </div>
+                <div style="display: flex; justify-content: flex-end;">
+                    <a href="/admin/addBanner" style="text-decoration: none;width: 15rem;margin-left: 1rem;"><button
+                            class="btn btn-outline-primary">Add Banner</button></a>
+
+                </div>
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" scope="col">No.</th>
+                                    <th class="text-center" scope="col">Product Name</th>
+                                    <th class="text-center" scope="col" style="margin: right 75px;">Image</th>
+                                    <th class="text-center" scope="col">Target</th>
+                                    <th class="text-center" scope="col">Status</th>
+                                    <th class="text-center" scope="col">Options</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each banners}}
+                                <tr>
+                                    <th class="text-center" scope="row">{{inc @index}}</th>
+                                    <td class="text-center">{{this.bannerName}}</td>
+                                    <td class="text-center"><img src="/images/{{this.image.[0].filename}}" alt=""
+                                            style="width: 40px; height: 50px;"></td>
+                                    <td class="text-center">{{this.target}}</td>
+                                    {{#if this.flag}}
+                                    <td class="text-center"><a
+                                            href="/admin/bannerFlagandUnFlag/{{this._id}}/unflag"><button
+                                                class="btn btn-info">Flag</button></a></td>
+                                    {{else}}
+                                    <td class="text-center"><a
+                                            href="/admin/bannerFlagandUnFlag/{{this._id}}/flag"><button
+                                                class="btn btn-info">UnFlag</button></a></td>
+                                    {{/if}}
+                                    <td class="text-center">
+                                        <button class="btn btn-primary dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">Options</button>
+                                        <ul class="dropdown-menu ">
+                                            <li><a class="dropdown-item"
+                                                    href="/admin/bannerUpdate?id={{this._id}}&cond=Edit">Edit</a>
+                                            </li>
+                                            <li> <a class="dropdown-item"
+                                                    href="/admin/bannerUpdate?id={{this._id}}&cond=Delete">Delete</a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
         </div>
-        <div class="row mt-4">
-            <div class="col-12">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th class="text-center" scope="col">No.</th>
-                            <th class="text-center" scope="col">Product Name</th>
-                            <th class="text-center" scope="col" style="margin: right 75px;">Image</th>
-                            <th class="text-center" scope="col">Target</th>
-                            <th class="text-center" scope="col">Target</th>
-                            <th class="text-center" scope="col">Target</th>
-                            <th class="text-center" scope="col">Status</th>
-                            <th class="text-center" scope="col">Options</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each banners}}
-                        <tr>
-                            <th class="text-center" scope="row">{{inc @index}}</th>
-                            <td class="text-center">{{this.bannerName}}</td>
-                            <td class="text-center"><img src="/images/{{this.image.[0].filename}}" alt=""
-                                    style="width: 40px; height: 50px;"></td>
-                            <td class="text-center">{{this.target}}</td>
-                            {{#if this.flag}}
-                            <td class="text-center"><a href="/admin/bannerFlagandUnFlag/{{this._id}}/unflag"><button class="btn btn-info" >Flag</button></a></td>
-                            {{else}}
-                            <td class="text-center"><a href="/admin/bannerFlagandUnFlag/{{this._id}}/flag"><button class="btn btn-info" >UnFlag</button></a></td>
-                            {{/if}}
-                            <td class="text-center">
-                                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">Options</button>
-                                <ul class="dropdown-menu ">
-                                    <li><a class="dropdown-item"
-                                            href="/admin/bannerUpdate?id={{this._id}}&cond=Edit">Edit</a>
-                                    </li>
-                                    <li> <a class="dropdown-item"
-                                            href="/admin/bannerUpdate?id={{this._id}}&cond=Delete">Delete</a>
-                                    </li>
-                                </ul>
-                            </td>
-                        </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    </section>
+        </section>
 </body>
 
 </html>

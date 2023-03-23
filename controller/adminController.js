@@ -1,4 +1,4 @@
-const { now } = require('mongoose');
+const { now, set } = require('mongoose');
 const { resolve } = require('promise');
 const { error404 } = require('../middleware/error');
 const categoryModel = require('../models/categoryModel');
@@ -38,7 +38,7 @@ module.exports = {
             }
         }])
         let totalProduct = await productModel.countDocuments()
-        let totalUsers=await userModel.countDocuments()
+        let totalUsers = await userModel.countDocuments()
         let totalRevenue = 0
         let monthlyRevenue = product.map(item => {
             totalRevenue = Number(totalRevenue) + Number(item.revenue, totalOrder)
@@ -53,13 +53,13 @@ module.exports = {
         }
 
         let totalStatus = {
-            totalRevenue: total,
-            totalOrder: totalOrder[0]?.count??0,
+            totalRevenue:Math.ceil(total),
+            totalOrder: totalOrder[0]?.count ?? 0,
             totalProduct: totalProduct,
-            totalUsers:totalUsers,
-            totalCod:paymentMethod[0]?.cashOnDeliveryCount??0,
-            totalUPI:paymentMethod[0]?.onlinePaymentCount??0,
-            paymentMethod: [paymentMethod[0]?.cashOnDeliveryCount??0, paymentMethod[0]?.onlinePaymentCount??0]
+            totalUsers: totalUsers,
+            totalCod: paymentMethod[0]?.cashOnDeliveryCount ?? 0,
+            totalUPI: paymentMethod[0]?.onlinePaymentCount ?? 0,
+            paymentMethod: [paymentMethod[0]?.onlinePaymentCount ?? 0,paymentMethod[0]?.cashOnDeliveryCount ?? 0]
         }
         res.render('adminHome', { monthlyRevenue, totalStatus })
     },
@@ -96,6 +96,7 @@ module.exports = {
                             j.orderStatus == 'shipped' || j.orderStatus == 'delivered' ? j.shipped = true : j.shipped = false
                             j.orderStatus == 'delivered' ? j.delivered = true : j.delivered = false
                             j.orderStatus == 'returned' ? j.returnStatus = true : j.returnStatus = false
+                            j.totalOrderAmount=Math.ceil(j.totalOrderAmount)
                         })
                     }
                 }
@@ -107,13 +108,15 @@ module.exports = {
                     singleOrderDetails.productDetails = product.product_Details;
                     singleOrderDetails.price = product.price;
                     singleOrderDetails.image = product.image;
+                    singleOrderDetails.totalOrderAmount=Math.ceil(singleOrderDetails.totalOrderAmount)
+                    
                 }
                 res.render('order_Details', { result, singleOrderDetails })
                 req.session.singleOrderDetails = null
             })
-            .catch(()=>{
-                res.render('404')
-            }) 
+                .catch(() => {
+                    res.render('404')
+                })
         })
     },
 
@@ -161,8 +164,8 @@ module.exports = {
     },
 
     getBrands: async (req, res) => {
-        let brand= await categoryModel.find({ category: req.params.category }, { brandName: 1, _id: 0 })
-        let brands=brand[0].brandName
+        let brand = await categoryModel.find({ category: req.params.category }, { brandName: 1, _id: 0 })
+        let brands = brand[0].brandName
         res.json({ brands })
     },
 
@@ -200,16 +203,23 @@ module.exports = {
     },
 
     getSalesReport: async (req, res) => {
-            let thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
-            thirtyDaysAgo = thirtyDaysAgo.toISOString()
-            let products = await userModel.aggregate([{ $unwind: '$orders' }, { $match: { $and: [{ 'orders.orderStatus': 'delivered' }, { 'orders.orderDate': { $gte: new Date(thirtyDaysAgo), $lte: new Date() } }] } }])
-            let totalRevenue = 0;
-            for (const i of products) {
-                totalRevenue = Number(totalRevenue) + Number(i.orders.totalOrderAmount);
-            }
-            products.thirtyDays = true
-            products.totalRevenue = totalRevenue
-            res.render('salesReport', { products })
+        let thirtyDaysAgo =new Date(new Date().setDate(new Date().getDate()-30))
+        console.log(thirtyDaysAgo,'asdfghjk');
+        thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+        thirtyDaysAgo = thirtyDaysAgo.toISOString()
+        let products = await userModel.aggregate([{ $unwind: '$orders' }, { $match: { $and: [{ 'orders.orderStatus': 'delivered' }, { 'orders.orderDate': { $gte: new Date(thirtyDaysAgo), $lte: new Date() } }] } }])
+        let totalRevenue = 0;
+        for (const i of products) {
+            i.orders.orderDate = new Date(i.orders.orderDate).toLocaleDateString()
+            i.orders.totalOrderAmount=Math.ceil(i.orders.totalOrderAmount)
+            totalRevenue = Number(totalRevenue) + Number(i.orders.totalOrderAmount);
+        }
+        products.thirtyDays = true
+        products.totalRevenue = Math.ceil(totalRevenue)
+        products.salesCount=products.length
+        const uniqueUsers=new Set(products.map(e=>e._id.toString()));
+        products.userCount=uniqueUsers.size
+        res.render('salesReport', { products })
     },
 
     salesReport: async (req, res) => {
@@ -220,9 +230,11 @@ module.exports = {
         endDate = new Date(endDate).toLocaleDateString()
         let totalRevenue = 0;
         for (const i of products) {
+            i.orders.orderDate = new Date(i.orders.orderDate).toLocaleDateString()
+            i.orders.totalOrderAmount=Math.ceil(i.orders.totalOrderAmount)
             totalRevenue = Number(totalRevenue) + Number(i.orders.totalOrderAmount);
         }
-        products = { products, startDate, endDate,totalRevenue}
-        res.json({products})
+        products = { products, startDate, endDate, totalRevenue }
+        res.json({ products })
     }
 }
