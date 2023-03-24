@@ -41,10 +41,10 @@
                 <div class="card-body">
                     <form  action="/admin/postBannerUpdate" method="post" id="formData" enctype="multipart/form-data">
                         <div class="form-row m-b-55">
-                            <div class="name"></div>
+                            <div class="name" ></div>
                             <div class="value">
                                 <div class="input-group-desc">
-                                    <label class="label--desc mb-2">Banner Name :</label>
+                                    <label class="label--desc mb-2">Banner Name :</label> 
                                     <input type="hidden" name="id" value="{{banner._id}}">
                                     <input class="input--style-5" type="text" name="bannerName" value="{{banner.bannerName}}">
                                 </div>
@@ -87,6 +87,7 @@
                         </div>
 
                         <div class="text-center">
+                            <label class="text-danger" id="message"></label> <br><br>
                             <button class="btn btn--radius-2 btn--red" type="submit">Submit</button>
                         </div>
                     </form>
@@ -94,7 +95,29 @@
             </div>
         </div>
     </div>
-
+ <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const form = document.getElementById('formData');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+        document.getElementById('message').textContent=''
+            const formData = new FormData(form);
+            const bannerName=formData.get('bannerName').trim()
+            const image=formData.get('image')
+            const target=formData.get('target')
+            if(bannerName==formData.get('bannerName')&&target!=''&&bannerName!=''){
+          axios.post('/admin/postBannerUpdate',formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then((response)=>{
+                window.location.href='/admin/getBanner'
+            })
+            }else{
+              document.getElementById('message').textContent='** Invalid form data or please fill all the fields.'
+            }
+        })
+    </script>
     <!-- Jquery JS-->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="vendor/jquery/jquery.min.js"></script>

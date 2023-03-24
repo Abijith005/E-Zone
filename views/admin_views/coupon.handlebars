@@ -23,7 +23,8 @@
             <!-- <img src="images/signup-bg.jpg" alt=""> -->
             <div class="container">
                 <div class="signup-content">
-                    <form action="/admin/addCoupon" method="POST" id="signup-form" class="signup-form">
+                    <div class="text-center"><label id="addmessage"></label></div>
+                    <form action="/admin/addCoupon" method="post" id="addForm" class="signup-form">
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="first_name">Coupon Name :</label>
@@ -55,7 +56,8 @@
                             </div>
                         </div>
                         <div class="form-group d-flex justify-content-end">
-                            <button class="btn btn-success" id="submit" class="form-submit">Add</button>
+                            <button class="btn btn-success" onclick="add()" type="button"
+                                class="form-submit">Add</button>
                         </div>
                     </form>
                 </div>
@@ -65,10 +67,10 @@
     {{else if editCoupon}}
     <div class="main">
         <section class="signup">
-            <!-- <img src="images/signup-bg.jpg" alt=""> -->
             <div class="container">
                 <div class="signup-content">
-                    <form action="/admin/editCoupon" method="POST" id="signup-form" class="signup-form">
+                    <div class="text-center"><label class="text-danger" id="message"></label></div>
+                    <form action="/admin/editCoupon" method="post" id="editForm" class="signup-form">
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="first_name">Coupon Name :</label>
@@ -124,7 +126,7 @@
                             </div>
                         </div>
                         <div class="form-group d-flex justify-content-end">
-                            <button class="btn btn-success" id="submit" class="form-submit">Update</button>
+                            <button class="btn btn-success" onclick="edit()" type="button">Update</button>
                         </div>
                     </form>
                 </div>
@@ -216,19 +218,58 @@
     </section>
 
     {{/if}}
-
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
-        document.getElementById('endDate').addEventListener('change', (e) => {
-            let startDate = document.getElementById('startDate').value
-            let endDate = e.target.value
-            console.log(e.target.value)
-            if (endDate < startDate) {
-                document.getElementById('endDateLabel').innerHTML = '<p style="font-size: smaller;text-transform: capitalize;" class="text-danger">End Date Should Be Greater Than Start Date</p>'
+
+        function edit() {
+            document.getElementById('message').textContent = ''
+            const form = document.getElementById('editForm')
+            const formData = new FormData(form)
+            const startDate = new Date(formData.get('startDate'))
+            const endDate = new Date(formData.get('endDate'))
+            const couponName = formData.get('couponName')
+            const couponCode = formData.get('couponCode')
+            if (endDate >= startDate && couponCode == couponCode.trim() && couponName == couponName.trim() && couponCode.trim() != '' && couponName.trim() != '') {
+                axios.post('/admin/editCoupon', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then((result) => {
+                    window.location.href = '/admin/getCoupon'
+                })
             }
             else {
-                document.getElementById('endDateLabel').innerHTML = ''
+                console.log('else case')
+                document.getElementById('message').textContent = 'invalid data'
             }
-        })
+        }
+        function add() {
+            const addform = document.getElementById('addForm')
+            const formData = new FormData(addform)
+            const startDate = new Date(formData.get('startDate'))
+            const endDate = new Date(formData.get('endDate'))
+            const couponName = formData.get('couponName')
+            const couponCode = formData.get('couponCode')
+            console.log(startDate, endDate, couponCode, couponName)
+            if (endDate >= startDate && couponCode == couponCode.trim() && couponName == couponName.trim() && couponCode.trim() != '' && couponName.trim() != '') {
+                axios.post('/admin/addCoupon', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then((response) => {
+                    console.log(response)
+                    if (response.data.success) {
+                        window.location.href = '/admin/getCoupon'
+                    }
+                    else {
+                        document.getElementById('addmessage').textContent = 'Coupon Exists'
+                    }
+                })
+            }
+            else {
+                document.getElementById('addmessage').textContent = 'invalid data'
+            }
+        }
     </script>
 </body>
 

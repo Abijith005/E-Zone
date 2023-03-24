@@ -27,7 +27,7 @@
                 <div class="card-body">
                     <form action="/admin/postAddBanner" method="post" id="formData" enctype="multipart/form-data">
                         <div class="form-row m-b-55">
-                            <div class="name"></div>
+                            <div class="name text-danger text-center" id="message"></div>
                             <div class="value">
                                 <div class="input-group-desc">
                                     <label class="label--desc mb-2">Banner Name :</label>
@@ -42,7 +42,7 @@
                                     <div class="col-2">
                                         <div class="input-group-desc">
                                             <label class="label--desc mb-2">Target Category :</label>
-                                            <select class="input--style-5" name="target" id="category" required>
+                                            <select class="input--style-5" name="target" id="category">
                                                 <option value="">Select Category</option>
                                                 {{#each category}}
                                                 <option value="{{this.category}}">{{this.category}}</option>
@@ -85,36 +85,21 @@
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             const formData = new FormData(form);
-            const brandName=formData.get('bannerName').trim()
-            console.log(brandName)
-            if(brandName==null){
-            console.log('sdfghjsdfghasdfghj')
-            }
-            axios.post('/admin/postAddBanner', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
-        })
-       /* document.getElementById('category').addEventListener('change', (e) => {
-            axios.get('getBrands/' + e.target.value).then((response) => {
-                let brandDiv = document.getElementById('brandName')
-                brandDiv.innerHTML = ''
-                let select = document.createElement('select')
-                select.setAttribute('class', "input--style-5")
-                select.name = `brandName`
-                brandDiv.appendChild(select)
-                let first = document.createElement('option')
-                first.text = `Select Category`
-                select.appendChild(first)
-                response.data.brands.forEach(item => {
-                    let option = document.createElement('option')
-                    option.value = `${item}`
-                    option.text = `${item}`
-                    select.appendChild(option)
+            const bannerName = formData.get('bannerName').trim()
+            const image = formData.get('image')
+            const target = formData.get('target')
+            if (bannerName == formData.get('bannerName') && target != '' && bannerName != '' && image.size != 0) {
+                axios.post('/admin/postAddBanner', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then((respose) => {
+                    window.location.href = '/admin/getBanner'
                 })
-            })
-        })*/
+            } else {
+                document.getElementById('message').textContent = 'Invalid form data or please fill all the fields.'
+            }
+        })
     </script>
     <script src="vendor/jquery/jquery.min.js"></script>
     <!-- Main JS-->

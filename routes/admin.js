@@ -64,7 +64,7 @@ router.get('/getCoupon',ifAdmin,couponController.getCoupon)
 
 router.get('/addCoupon',ifAdmin,couponController.getAddCoupon)
 
-router.post('/addCoupon',ifAdmin,couponController.addCoupon)
+router.post('/addCoupon',ifAdmin,multiUpload,couponController.addCoupon)
 
 router.get('/getBanner',ifAdmin,bannerController.getBanner)
 
@@ -80,7 +80,7 @@ router.post('/postBannerUpdate',ifAdmin,multiUpload,bannerController.postBannerU
 
 router.get('/getEditCoupon/:id/:status',ifAdmin,couponController.getEditCoupon)
 
-router.post('/editCoupon',ifAdmin,couponController.editCoupon)
+router.post('/editCoupon',ifAdmin,multiUpload,couponController.editCoupon)
 
 router.get('/log_Out',adminController.adminLogOut)
 

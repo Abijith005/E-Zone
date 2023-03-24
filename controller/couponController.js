@@ -38,14 +38,16 @@ module.exports = {
     },
 
     addCoupon: (req, res) => {
+        console.log(req.body,'add');
         return new Promise((resolve, reject) => {
-            couponModel.find({couponCode:new RegExp(req.body.couponCode)}).then(async(result)=>{
-                if (result==null) {
-                 await couponModel.create({ ...req.body, couponStatus: true })
-                 res.redirect('back')
+            couponModel.find({ couponCode:req.body.couponCode }).then(async (result) => {
+                console.log(result,'sdfghjksdfghjkdfghjk',result=='');
+                if (result =='') {
+                    await couponModel.create({ ...req.body, couponStatus: true })
+                    res.json({ success: true })
                 }
-                else{
-                    res.json({couponExist:true})
+                else {
+                    res.json({ success: false })
                 }
             }).catch(() => {
                 res.send(error404)
@@ -76,19 +78,19 @@ module.exports = {
         })
     },
 
-    editCoupon: (req, res) => {
-        return new Promise(async(resolve, reject) => {
-            let date = new Date(req.body.endDate)
-            if (date < new Date() || req.body.couponStatus == 'Expired') {
-                req.body.couponStatus = false
-            }
-            else {
-                req.body.couponStatus = true
-            }
-            let id = req.body.id
-            delete req.body.id
-            await couponModel.findByIdAndUpdate(id, { ...req.body })
-            res.redirect('back')
+    editCoupon: async (req, res) => {
+        let date = new Date(req.body.endDate)
+        if (date < new Date() || req.body.couponStatus == 'Expired') {
+            req.body.couponStatus = false
+        }
+        else {
+            req.body.couponStatus = true
+        }
+        let id = req.body.id
+        delete req.body.id
+        couponModel.findByIdAndUpdate(id, { ...req.body }).then((result) => {
+            res.json({ success: true })
+
         })
     }
 

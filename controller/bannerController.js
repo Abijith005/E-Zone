@@ -14,12 +14,12 @@ module.exports = {
         res.render('addBanner', { category })
     },
     
-    postAddBanner: (req, res) => {
-        console.log('asdfghjsdfghj',req.body,req.files);
+    postAddBanner:async (req, res) => {
         let data = req.body
+        console.log(data);
         let file = req.files
-        bannerModel.create({ ...data, ...file })
-        res.redirect('/admin/getBanner')
+        await bannerModel.create({ ...data, ...file })
+        res.json({success:true})
     },
 
     getBannerUpdate: async (req, res) => {
@@ -50,13 +50,14 @@ module.exports = {
         }
     },
 
-    postBannerUpdate: (req, res) => {
+    postBannerUpdate:async (req, res) => {
+        console.log(req.body,'werftghyjsdfghj');
         let id = req.body.id
         let data = req.body
         let file = req.files
         delete data.id;
-        bannerModel.updateOne({ _id:id }, { $set: { ...data, ...file } }).then((result) => {
-            res.redirect('/admin/getBanner')
-        })
+       await bannerModel.updateOne({ _id:id }, { $set: { ...data, ...file } })
+            res.json({success:true})
+        
     }
 } 
