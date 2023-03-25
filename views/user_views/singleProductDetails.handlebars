@@ -13,7 +13,9 @@
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/imageZoom.css">
     <link rel="stylesheet" href="/css/singleProduct.css">
+    
 </head>
+
 <body>
 
     <div class="container">
@@ -22,25 +24,23 @@
                 <div class="wrapper row">
                     <div class="preview col-md-6">
                         <div style="z-index: 10;" class="show" href="/images/{{result.image.[0].filename}}">
-                    <img src="/images/{{result.image.[0].filename}}" id="show-img">
-                </div>
-
-                <!-- Secondary carousel image thumbnail gallery -->
-
-                <div class="small-img">
-                    <img src="/pic/next-icon.png" class="icon-left" alt="" id="prev-img">
-                    <div class="small-container">
-                        <div id="small-img-roll">
-                            {{#each result.sub_image}}
-                            <img src="/images/{{result.image.[0].filename}}" class="show-small-img" alt="">
-                            <img src="http://placekitten.com/400/252" class="show-small-img" alt="">
-                            <img src="/images/{{result.image.[0].filename}}" class="show-small-img" alt="">
-                            <img src="/images/{{result.image.[0].filename}}" class="show-small-img" alt="">
-                            {{/each}}
+                            <img src="/images/{{result.image.[0].filename}}" id="show-img">
                         </div>
-                    </div>
-                    <img src="/pic/next-icon.png" class="icon-right" alt="" id="next-img">
-                </div>
+
+                        <div class="small-img">
+                            <img src="/pic/next-icon.png" class="icon-left" alt="" id="prev-img">
+                            <div class="small-container">
+                                <div id="small-img-roll">
+                                    {{#each result.sub_image}}
+                                    <img src="/images/{{result.image.[0].filename}}" class="show-small-img" alt="">
+                                    <img src="http://placekitten.com/400/252" class="show-small-img" alt="">
+                                    <img src="/images/{{result.image.[0].filename}}" class="show-small-img" alt="">
+                                    <img src="/images/{{result.image.[0].filename}}" class="show-small-img" alt="">
+                                    {{/each}}
+                                </div>
+                            </div>
+                            <img src="/pic/next-icon.png" class="icon-right" alt="" id="next-img">
+                        </div>
 
                     </div>
 
@@ -49,29 +49,22 @@
                         <h3 class="product-title">{{result.product_name}}</h3>
                         <div class="rating">
                             <div class="stars">
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
+                                {{#each result.rating}}
+                                {{#ifEquals this '1'}}
+                                <i class="fa fa-star text-danger"></i>
+                                {{else}}
+                                <i class="fa fa-star-o text-secondary"></i>
+                                {{/ifEquals}}
+                                {{/each}}
                             </div>
-                            <span class="review-no">41 reviews</span>
+                            {{#if result.productReview.totalCustomers}}
+                            <span class="review-no">{{result.productReview.totalCustomers}} reviews</span>
+                            {{else}}
+                            <span class="review-no">0 reviews</span>
+                            {{/if}}
                         </div>
                         <p class="product-description">{{result.product_Details}}</p>
                         <h4 class="price">current price: <span>₹ {{result.price}}</span></h4>
-                        {{!-- <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87
-                                votes)</strong></p> --}}
-                        {{!-- <h5 class="sizes">sizes:
-                            <span class="size" data-toggle="tooltip" title="small">s</span>
-                            <span class="size" data-toggle="tooltip" title="medium">m</span>
-                            <span class="size" data-toggle="tooltip" title="large">l</span>
-                            <span class="size" data-toggle="tooltip" title="xtra large">xl</span>
-                        </h5> --}}
-                        {{!-- <h5 class="colors">colors:
-                            <span class="color orange not-available" data-toggle="tooltip" title="Not In store"></span>
-                            <span class="color green"></span>
-                            <span class="color blue"></span>
-                        </h5> --}}
                         <div class="action">
                             <a href="/add_to_cart/{{result._id}}" class="add-to-cart btn btn-default">add to cart</a>
                             <button class="like btn btn-default" type="button"><span
@@ -82,31 +75,11 @@
             </div>
         </div>
     </div>
-    {{!-- <script src="https://unpkg.com/js-image-zoom@0.4.1/js-image-zoom.js" type="application/javascript"></script> --}}
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT"
         crossorigin="anonymous"></script>
-        <script src="/js/zoomImage.js"></script>
-     <script src="/js/zoomMain.js"></script>
-
-
-    {{!-- <script>
-        function changeImage(id) {
-            let pic = document.getElementById(id).src
-            document.getElementById('firstImage').src = pic
-        }
-
-        var options = {
-            width: 420,
-            height: 350,
-            zoomwidth: 400,
-            offset: { vertical: 0, horizontal: 10 },
-            scale: 1.5
-        }
-
-        new ImageZoom(document.getElementById("picZoom"), options)
-    </script> --}}
-
+    <script src="/js/zoomImage.js"></script>
+    <script src="/js/zoomMain.js"></script>
 </body>
 
 </html>

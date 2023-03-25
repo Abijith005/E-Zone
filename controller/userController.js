@@ -24,8 +24,8 @@ module.exports = {
         let quantities = await userModel.findOne({ _id: req.session.userDetails?._id ?? null }, { user_cart: 1, user_whishList: 1, _id: 0 }).lean()
         let banners = await bannerModel.find().lean()
         let topBrands = await productModel.find().sort({ price: -1 }).lean().limit(6)
-        let topSelling = await productModel.find().sort({ 'productReview.rating': -1 }).lean().limit(6)
-        for (const i of topSelling) {
+        let topRated= await productModel.find().sort({ 'productReview.rating': -1 }).lean().limit(6)
+        for (const i of topRated) {
             let array = []
                 let limit=Math.floor(i.productReview?.rating??0)
                 for (let i = 0; i < 5; i++) {
@@ -43,7 +43,7 @@ module.exports = {
         }
         let userName;
         req.session.userDetails ? userName = req.session.userDetails.name : userName = null
-        res.render('user_home', { userName, quantities, banners, topBrands, topSelling })
+        res.render('user_home', { userName, quantities, banners, topBrands, topRated })
     },
 
     home: (req, res) => {
@@ -321,6 +321,18 @@ module.exports = {
 
     singleProductPage: (req, res) => {
         userService.singleProductDetails(req.params.id).then((result) => {
+            let limit=result.productReview?.rating??0
+            let rating=[]
+            for(let i=0;i<5;i++){
+                if (i<limit) {
+                    rating.push('1')
+                }
+                else{
+                    rating.push('0')
+                }
+            }
+            result.rating=rating
+            console.log(result,'sdfghnm');
             res.render('singleProductDetails', { result })
         }).catch(() => {
             res.render('404')

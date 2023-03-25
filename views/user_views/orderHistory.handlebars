@@ -89,7 +89,7 @@
                                 <div class="card shadow-0 border mb-4" style=" background-color: #E4E7ED ;">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-2">
+                                            <div class="col-md-2 text-center">
                                                 <img src="/images/{{this.image.[0].filename}}" class="img-fluid"
                                                     alt="Phone">
                                                 <p class="text-muted mb-0">{{this.product_name}}</p>
@@ -113,7 +113,7 @@
                                             </div>
                                             {{#unless this.cancelStatus}}
                                             <div
-                                                class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                class="col-md-2 text-center d-flex justify-content-center align-items-center ">
                                                 <p class="text-muted my-auto">Order Status :</p>
                                                 <p class="text-primary my-auto"> {{this.orderStatus}}</p>
                                             </div>
@@ -131,7 +131,7 @@
                                                 <p class="text-muted mb-0 small">Order Date: {{this.orderDate}}</p>
                                             </div>
                                             <div class="col-md-10">
-                                                <div class="d-flex justify-content-around mb-1">
+                                                <div class="d-flex justify-content-around my-1 text-center">
                                                     <p class="text-muted mt-1 mb-0 small ms-xl-5"></p>
                                                     {{#unless this.cancelStatus}}
                                                     {{#unless this.deliveryStatus}}
