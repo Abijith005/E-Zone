@@ -16,7 +16,6 @@ module.exports = {
     
     postAddBanner:async (req, res) => {
         let data = req.body
-        console.log(data);
         let file = req.files
         await bannerModel.create({ ...data, ...file })
         res.json({success:true})
@@ -51,7 +50,6 @@ module.exports = {
     },
 
     postBannerUpdate:async (req, res) => {
-        console.log(req.body,'werftghyjsdfghj');
         let id = req.body.id
         let data = req.body
         let file = req.files

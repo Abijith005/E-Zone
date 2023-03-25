@@ -117,7 +117,7 @@ router.get('/filterProducts/:brand',productController.filterProducts)
 
 router.get('/pagination/:pageNum',productController.pagination)
 
-router.post('/productReview',ifUser,productController.productReview)
+router.get('/productReview',ifUser,productController.productReview)
 
 
 

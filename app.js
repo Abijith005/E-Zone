@@ -30,6 +30,14 @@ app.use(session({
 // hbs helper
 let hbs = require('handlebars');
 
+hbs.registerHelper('times', function(n, block) {
+    let accum = '';
+    for(let i = 0; i < n; ++i) {
+      accum += block.fn(i);
+    }
+    return accum;
+  });
+
 hbs.registerHelper("inc", function(value, options)
 {
     return parseInt(value) + 1;

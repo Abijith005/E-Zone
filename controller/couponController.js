@@ -13,7 +13,6 @@ module.exports = {
                 }
                 let addCoupon;
                 let editCoupon;
-                let couponExpire
                 if (req.session.editCoupon) {
                     editCoupon = req.session.editCoupon
                     editCoupon.startDate = moment(editCoupon.startDate).utc().format("YYYY-MM-DD");
@@ -23,11 +22,9 @@ module.exports = {
                     editCoupon = null
                 }
                 req.session.couponAdd == true ? addCoupon = true : addCoupon = false
-                // req.session.couponExpire==true?couponExpire=true:couponExpire=false
                 res.render('coupon', { coupon, addCoupon, editCoupon })
                 req.session.couponAdd = false
                 req.session.editCoupon = null
-                // req.session.couponExpire=null
             })
         })
     },
@@ -38,10 +35,8 @@ module.exports = {
     },
 
     addCoupon: (req, res) => {
-        console.log(req.body,'add');
         return new Promise((resolve, reject) => {
             couponModel.find({ couponCode:req.body.couponCode }).then(async (result) => {
-                console.log(result,'sdfghjksdfghjkdfghjk',result=='');
                 if (result =='') {
                     await couponModel.create({ ...req.body, couponStatus: true })
                     res.json({ success: true })

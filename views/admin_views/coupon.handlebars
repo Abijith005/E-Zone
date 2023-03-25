@@ -257,11 +257,11 @@
                         'Content-Type': 'multipart/form-data'
                     }
                 }).then((response) => {
-                    console.log(response)
                     if (response.data.success) {
-                        window.location.href = '/admin/getCoupon'
+                      window.location.href = '/admin/getCoupon'
                     }
                     else {
+                        console.log('coupon existis')
                         document.getElementById('addmessage').textContent = 'Coupon Exists'
                     }
                 })

@@ -27,15 +27,16 @@ module.exports = {
         let topSelling = await productModel.find().sort({ 'productReview.rating': -1 }).lean().limit(6)
         for (const i of topSelling) {
             let array = []
-            if (i.productReview?.rating) {
                 let limit=Math.floor(i.productReview?.rating??0)
-                for (let i = 0; i < limit; i++) {
-                    array.push(i)
+                for (let i = 0; i < 5; i++) {
+                    if (i<limit) {
+                        array.push('1')
+                    } else {
+                        array.push('0')
+                    }
                 }
                 i.rating = array
-            }
         }
-
         if (quantities) {
             quantities.user_whishList = quantities.user_whishList?.length ?? null
             quantities.user_cart = quantities.user_cart?.length ?? null

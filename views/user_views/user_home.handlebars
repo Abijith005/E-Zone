@@ -330,7 +330,12 @@
 													class="product-old-price">$990.00</del></h4>
 											<div class="product-rating">
 												{{#each this.rating}}
+												{{#ifEquals this '1'}}
 												<i class="fa fa-star"></i>
+												{{else}}
+												<i class="fa fa-star-o text-secondary"></i>
+												{{/ifEquals}}
+												
 												{{/each}}
 											</div>
 											<div class="product-btns">
