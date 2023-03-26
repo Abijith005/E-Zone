@@ -94,7 +94,7 @@
 					<!-- /SEARCH BAR -->
 					<!-- ACCOUNT -->
 					{{#if userName}}
-					<div class="col-md-3 clearfix">
+					<div class="col-md-3 clearfix d-flex justify-content-between">
 						<div class="header-ctn">
 							<!-- Wishlist -->
 
@@ -445,6 +445,7 @@ ${a}
 
 		function addToCart(id) {
 			axios.get('/add_to_cart/' + id).then((result) => {
+				console.log(result)
 				if (result.data.login) {
 					if (result.data.success) {
 						let cartQuantiy = document.getElementById('cartQuantity')
@@ -452,7 +453,11 @@ ${a}
 						swal.fire({ title: "Product added to cart!!", icon: "success", showConfirmButton: false, timer: 1100 })
 					}
 					else {
-						swal.fire({ title: "Product added to cart!!", icon: "success", showConfirmButton: false, timer: 1100 })
+						if (!result.data.stock) {
+							swal.fire({ title: "Can't Add To Cart!!  Stock Out", icon: "error", showConfirmButton: false, timer: 1100 })
+						} else {
+							swal.fire({ title: "Can't Add More!!", icon: "error", showConfirmButton: false, timer: 1100 })
+						}
 					}
 				} else {
 					window.location.href = '/user_login'
@@ -481,7 +486,7 @@ ${a}
 				if (result.data.success) {
 					let whishListButtonDiv = document.getElementById('whishListButtonDiv' + id)
 					whishListButtonDiv.innerHTML = ''
-					whishListButtonDiv.innerHTML = `<button onclick = "addToWhishList('${id}')" class= "add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add towishlist</span></button> <button onclick="window.location.href='/singleProductPage/${id}'" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quickview</span></button>`
+					whishListButtonDiv.innerHTML = `<button onclick = "addToWhishList('${id}')" class= "add-to-wishlist"><i class="fa fa-heart-o" aria-hidden="true"></i><span class="tooltipp">add towishlist</span></button> <button onclick="window.location.href='/singleProductPage/${id}'" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quickview</span></button>`
 					let whishListQuantity = document.getElementById('whishListQuantity')
 					whishListQuantity.textContent = Number(whishListQuantity.textContent) - 1
 

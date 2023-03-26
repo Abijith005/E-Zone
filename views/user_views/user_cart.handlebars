@@ -5,7 +5,6 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-
 	<title>E-Zone</title>
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.0.2/css/boxicons.min.css">
@@ -21,7 +20,6 @@
 	<link type="text/css" rel="stylesheet" href="/css/slick-theme.css" />
 	<!-- nouislider -->
 	<link type="text/css" rel="stylesheet" href="/css/nouislider.min.css" />
-
 	<!-- Font Awesome Icon -->
 	<link rel="stylesheet" href="/css/font-awesome.min.css" />
 
@@ -139,7 +137,6 @@
 		<!-- container -->
 	</div>
 	<!-- /HEADER -->
-	{{!-- ****************************************************************************************************** --}}
 	{{#if cartDatas}}
 	<section class="pt-5 pb-5">
 		<div class="container">
@@ -250,12 +247,16 @@
 	</section>
 	{{else}}
 	<div style="padding-top: 15rem;" class="container-fluid d-flex justify-content-center align-items-center m-t-50">
-		<div class="row">
-			<div class="col-lg-8 col-xl-6 m-lr-auto m-b-50 m-t-50">
+		<div class="row justify-content-around">
+			<div class="col-lg-8 col-xl-6 m-b-50 m-t-50">
 				<div class="text-center">
-					<h1 class="text-danger">It's Empty</h1>
 					<img src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-2130356-1800917.png"
 						alt="IMG" class="img-fluid">
+				</div>
+					<h1 class="text-danger mt-3 text-center">Cart is empty</h1>
+					<div class="text-center">
+					<a href="/getShopPage" class="btn btn-dark">
+						<i class="fas fa-arrow-left mr-2"></i> Start Shopping</a>
 				</div>
 			</div>
 		</div>

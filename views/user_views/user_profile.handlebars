@@ -8,8 +8,22 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+  
+	<!-- Slick -->
+	<link type="text/css" rel="stylesheet" href="/css/slick.css" />
+	<link type="text/css" rel="stylesheet" href="/css/slick-theme.css" />
+	<!-- nouislider -->
+	<link type="text/css" rel="stylesheet" href="/css/nouislider.min.css" />
+	<!-- Font Awesome Icon -->
+	<link rel="stylesheet" href="/css/font-awesome.min.css" />
+
+	<!-- Custom stlylesheet -->
+	<link type="text/css" rel="stylesheet" href="/css/style.css" />
   <style>
-    <style>.profile-main {
+    body{
+      overflow-y: hidden;
+    }
+    .profile-main {
       width: 100vw;
       min-height: 100vh;
       background-color: var(--lightWhite);
@@ -23,7 +37,9 @@
       gap: 10px;
       margin-top: 20px;
     }
-
+a{
+  text-decoration: none;
+}
     .profil-row button {
       width: 70px;
       height: 35px;
@@ -56,7 +72,7 @@
       justify-content: flex-start;
       align-items: center;
       background-color: #fff;
-      margin-top: 20px;
+      margin-top: 10px;
       padding: 0px 20px;
       color: var(--black);
     }
@@ -100,37 +116,114 @@
       align-items: center;
       height: 120px;
     }
+    .dropdown-menu {
+			width: auto !important;
+			min-width: 100% !important;
+			right: 0 !important;
+			left: auto !important;
+		}
+
+		.sidebar {
+			width: 100vw;
+			height: 100vh;
+			position: fixed;
+			top: 0px;
+			left: 0px;
+			z-index: 200;
+			transition: .3s;
+			left: -1000px;
+		}
+
+		.sidebar-container {
+			background-color: #222222;
+			display: flex;
+			flex-direction: column;
+			width: 60%;
+			height: 100%;
+			gap: 10px;
+			padding: 10px;
+			justify-content: space-between;
+		}
+
+		.side-items {
+			height: 50px;
+			display: flex;
+			gap: 20px;
+			align-items: center;
+			color: white;
+			background-color: #6a6a6a;
+			padding-left: 10px;
+			border-radius: 10px;
+		}
+
+		.side-sec-1 {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+		}
+
+		#header {
+			border-bottom: 3px solid red;
+		}
   </style>
-
-
   <title>E-Zone</title>
 </head>
 
 <body>
 
+  <div id="header">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row align-items-center text-center">
+				<!-- LOGO -->
+				<div class="col-md-6 col-12">
+					<div class="header-logo d-flex justify-content-around">
+						<a href="#" class="logo ">
+							<h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
+							</h1>
+						</a>
+						<h1 style="color: #ffff;" id="hamsBurger"><i onclick="openSidebar()"
+								class="fa fa-bars d-md-none"></i></h1>
+					</div>
+				</div>
+				<div class=" col-md-6 d-none d-md-flex justify-content-end ms-auto align-items-center ">
+					<div class="header-ctn">
+						<div>
+							<a href="/getShopPage">
+								<i class="ri-shopping-bag-fill"></i> <span>Shop</span>
+							</a>
+						</div>
+						<div>
+							<a href="/getWhishList">
+								<i class="fa fa-heart-o"></i>
+								<span>Your Wishlist</span>
+							</a>
+						</div>
+						<div>
+							<a href="/cart" aria-expanded="true">
+								<i class="fa fa-shopping-cart"></i>
+								<span>Your Cart</span>
+							</a>
+						</div>
+					</div>
+					<div class="dropdown ms-2">
+						<button class="btn btn-secondary text-white dropdown-toggle" type="button"
+							id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false">{{data.name}}</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="/user_profile">Profile</a>
+							<a class="dropdown-item" href="/user_logOut">Log Out</a>
+						</div>
+					</div>
+				</div>
 
-  <div class="bg-dark navBar">
-    <!-- container -->
-    <div class="container">
-      <!-- row -->
-      <div class="row align-items-center">
-        <!-- LOGO -->
-        <div class="col-md-2">
-          <div class="header-logo ">
-            <a href="/" class="logo" style="text-decoration: none;">
-              <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
-
-              </h1>
-
-            </a>
-          </div>
-        </div>
-        <div class="col-md-6 text-center">
-          <h2 class="text-white "> PROFILE MANAGER</h2>
-        </div>
-      </div>
-    </div>
-  </div>
+				<!-- /ACCOUNT -->
+			</div>
+			<!-- row -->
+		</div>
+		<!-- container -->
+	</div>
 
 
 
@@ -149,30 +242,21 @@
               <b>Mob No : </b><span>{{data.mob_no}}</span>
             </div>
 
-            <div class="profil-row">
-              <button onclick="window.location.href='/edit-profile/{{data.address.address_id}}'">Edit</button>
-              <a href="/user_logOut">
-                <button>Logout</button>
-
-              </a>
-            </div>
           </div>
           <div class="porfile-items">
             <a href="/cart" class="profile-item">
-              <b>Cart</b>
-              <i class="ri-shopping-cart-line mx-2"></i>
+              <button class="btn btn-dark">Cart <i class="ri-shopping-cart-line mx-2"></i></button>
+              
             </a>
           </div>
           <div class="porfile-items">
             <a href="/getWhishList" class="profile-item">
-              <b>Wishlist</b>
-              <i class="ri-heart-line mx-2"></i>
+              <button class="btn btn-dark">Wishlist <i class="ri-heart-line mx-2"></i></button>
             </a>
           </div>
           <div class="porfile-items">
             <a href="/orderHistory" class="profile-item">
-              <b>Order History</b>
-              <i class="ri-shopping-bag-2-line mx-2"></i>
+              <button class="btn btn-dark">Order History <i class="ri-shopping-bag-2-line mx-2"></i></button>
             </a>
           </div>
 
@@ -365,6 +449,8 @@
       }
     }
   </script> --}}
+    <script src="/js/jquery.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
     crossorigin="anonymous"></script>

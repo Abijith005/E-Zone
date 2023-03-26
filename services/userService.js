@@ -133,7 +133,7 @@ module.exports = {
 
                 }
                 else {
-                    resolve({success:false})
+                    resolve({success:false,stock:false})
                 }
             }).catch(() => {
                 reject()

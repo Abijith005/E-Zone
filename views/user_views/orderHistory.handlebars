@@ -128,14 +128,14 @@
                                         <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
                                         <div class="row d-flex align-items-center">
                                             <div class="col-md-2">
-                                                <p class="text-muted mb-0 small">Order Date: {{this.orderDate}}</p>
+                                                <p class="text-muted mb-0 small text-center">Order Date: {{this.orderDate}}</p>
                                             </div>
                                             <div class="col-md-10">
-                                                <div class="d-flex justify-content-around my-1 text-center">
-                                                    <p class="text-muted mt-1 mb-0 small ms-xl-5"></p>
+                                                <div class="d-flex justify-content-around my-1 ">
+                                                    <p class="text-muted mt-1 mb-0 small text-center ms-xl-5"></p>
                                                     {{#unless this.cancelStatus}}
                                                     {{#unless this.deliveryStatus}}
-                                                    <p class="text-muted mt-1 mb-0 small ms-xl-5"><a
+                                                    <p class="text-muted mt-1 mb-0 small ms-xl-5 "><a
                                                             href="/userOrderUpdate?order_id={{this.order_id}}&product_id={{this._id}}&quantity={{this.quantity}}"
                                                             class="btn btn-danger rounded-pill my-auto">Cancel Order</a>
                                                     </p>
@@ -143,47 +143,6 @@
                                                     <a href="/userOrderUpdate?order_id={{this.order_id}}&returnAmount={{this.totalAmount}}&cond=return"
                                                         class="btn btn-info rounded-pill my-auto">Return Product</a>
                                                     {{#unless this.rating}}
-                                                    {{!-- <div class="container">
-                                                        <div class="row" style="margin-top:40px;">
-                                                            <div class="col-md-6">
-                                                                <div class="well well-sm">
-                                                                    <div class="text-right">
-                                                                        <a class="btn btn-success btn-green"
-                                                                            href="#reviews-anchor"
-                                                                            id="open-review-box{{this._id}}">Leave a
-                                                                            Review</a>
-                                                                    </div>
-                                                                    <div class="row" id="post-review-box{{this._id}}"
-                                                                        style="display:none;">
-                                                                        <div class="col-md-12">
-                                                                            <form accept-charset="UTF-8"
-                                                                                action="/productReview" method="post">
-                                                                                <input type="hidden" name="order_id"
-                                                                                    value="{{this.order_id}}">
-                                                                                <input type="hidden" name="product_id"
-                                                                                    value="{{this._id}}">
-                                                                                <input id="ratings-hidden" name="rating"
-                                                                                    type="hidden">
-                                                                                <div class="stars starrr"
-                                                                                    data-rating="0"></div>
-                                                                                <a class="btn btn-danger btn-sm"
-                                                                                    href="#" id="close-review-box"
-                                                                                    style="display:none; margin-right: 10px;">
-                                                                                    <span
-                                                                                        class="glyphicon glyphicon-remove"></span>Cancel</a>
-                                                                                <button class="btn btn-success btn-lg"
-                                                                                    type="submit">Save</button>
-
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </div> --}}
-
-                                                    <!-- Button trigger modal -->
                                                     <div id="reviewButton{{this.order_id}}" >
                                                     <button  type="button" class="btn btn-success" data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal{{this.order_id}}">

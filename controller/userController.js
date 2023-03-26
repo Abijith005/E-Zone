@@ -410,10 +410,9 @@ module.exports = {
         return new Promise((resolve, reject) => {
             userModel.findByIdAndUpdate({ _id: req.session.userDetails._id }, { $pull: { user_whishList: { product_id: req.params.id } } }).then((result) => {
                 if (result.user_whishList.length<=1) {
-                    res.json({ success:false})
-                    
+                    res.json({ success:true,remove:false})
                 } else {
-                    res.json({success:true})
+                    res.json({success:true,remove:true})
                 }
             }).catch(() => {
                 res.render('404')

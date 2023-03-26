@@ -192,7 +192,7 @@
 
     {{else}}
     <div style="padding-top: 15rem;" class="container-fluid d-flex justify-content-center align-items-center m-t-50">
-  <div class="row">
+  <div class="row justify-content-around">
     <div class="col-lg-8 col-xl-6 m-lr-auto m-b-50 m-t-50">
       <div class="text-center">
         <h1 class="text-danger my-3">It's Empty</h1>
@@ -250,7 +250,7 @@
     <script>
         function removeFromWhisList(id) {
             axios.get('/removeFromWishList/' + id).then((result) => {
-                if (result.data.success) {
+                if (result.data.remove) {
                     document.getElementById('productRow' + id).remove()
                 } else {
                     window.location.reload()
@@ -269,19 +269,19 @@
         }
     </script>
 
-    <script>
+    {{!-- <script>
         $(".js-select2").each(function () {
             $(this).select2({
                 minimumResultsForSearch: 20,
                 dropdownParent: $(this).next('.dropDownSelect2')
             });
         })
-    </script>
+    </script> --}}
     <!--===============================================================================================-->
     <script src="/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
     <!--===============================================================================================-->
     <script src="/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script>
+    {{!-- <script>
         $('.js-pscroll').each(function () {
             $(this).css('position', 'relative');
             $(this).css('overflow', 'hidden');
@@ -295,7 +295,7 @@
                 ps.update();
             })
         });
-    </script>
+    </script> --}}
     <!--===============================================================================================-->
     <script src="/js/main.js"></script>
    <script>
