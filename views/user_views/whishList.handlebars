@@ -267,7 +267,20 @@
                 }
             })
         }
-    </script>
+		function openSidebar() {
+            console.log('dfghjk')
+			document.getElementById('sidebar').style.left ="0px"
+			document.getElementById('hamsBurger').innerHTML = ''
+
+		}
+		function closeSidebar() {
+            console.log('8952784512')
+			document.getElementById('sidebar').style.left = "-1000px"
+			document.getElementById('hamsBurger').innerHTML = '<i  onclick="openSidebar()" class="fa fa-bars d-md-none">'
+		}
+	</script>
+    <script src="/js/jquery.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
 
     {{!-- <script>
         $(".js-select2").each(function () {
@@ -297,26 +310,8 @@
         });
     </script> --}}
     <!--===============================================================================================-->
-    <script src="/js/main.js"></script>
-   <script>
-        function addToCart(id) {
-        }
     </script>
-    	<script>
-		function openSidebar() {
-            console.log('dfghjk')
-			document.getElementById('sidebar').style.left ="0px"
-			document.getElementById('hamsBurger').innerHTML = ''
-
-		}
-		function closeSidebar() {
-            console.log('8952784512')
-			document.getElementById('sidebar').style.left = "-1000px"
-			document.getElementById('hamsBurger').innerHTML = '<i  onclick="openSidebar()" class="fa fa-bars d-md-none">'
-		}
-	</script>
-    <script src="/js/jquery.min.js"></script>
-	<script src="/js/bootstrap.min.js"></script>
+    
 
 </body>
 

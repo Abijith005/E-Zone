@@ -5,10 +5,12 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
-  
 	<!-- Slick -->
 	<link type="text/css" rel="stylesheet" href="/css/slick.css" />
 	<link type="text/css" rel="stylesheet" href="/css/slick-theme.css" />
@@ -19,10 +21,16 @@
 
 	<!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="/css/style.css" />
+  
   <style>
-    body{
+   
+
+    	@media screen and (min-width: 742px) {
+  body{
       overflow-y: hidden;
     }
+}
+
     .profile-main {
       width: 100vw;
       min-height: 100vh;
@@ -207,9 +215,9 @@ a{
 							</a>
 						</div>
 					</div>
-					<div class="dropdown ms-2">
+					<div class="dropdown">
 						<button class="btn btn-secondary text-white dropdown-toggle" type="button"
-							id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+							id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false">{{data.name}}</button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 							<a class="dropdown-item" href="/user_profile">Profile</a>
@@ -241,12 +249,10 @@ a{
             <div class="profil-row">
               <b>Mob No : </b><span>{{data.mob_no}}</span>
             </div>
-
           </div>
           <div class="porfile-items">
             <a href="/cart" class="profile-item">
               <button class="btn btn-dark">Cart <i class="ri-shopping-cart-line mx-2"></i></button>
-              
             </a>
           </div>
           <div class="porfile-items">
@@ -259,13 +265,15 @@ a{
               <button class="btn btn-dark">Order History <i class="ri-shopping-bag-2-line mx-2"></i></button>
             </a>
           </div>
-
-          <div class="card bg-light mb-3" style="max-width: 18rem;">
-            <div class="card-header d-flex justify-content-around">My Wallet <h5 class="card-title" style="color: black;">₹:{{data.wallet}}</h5></div>
-            <div class="card-body text-center">
-              <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                View Details
+          <div class="porfile-items">
+            <a  class="profile-item">
+               <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                View Wallet
               </button>
+            </a>
+          </div>
+
+          
 
               <!-- Modal -->
               <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -306,8 +314,8 @@ a{
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            {{!-- </div>
+          </div> --}}
 
 
         </div>
@@ -381,9 +389,6 @@ a{
                     <button type="submit" class="btn btn-primary px-3 rounded-3">
                       Save
                     </button>
-
-
-
                   </div>
                 </form>
                 {{else}}
@@ -393,19 +398,16 @@ a{
                     <span class="form-label d-block">Name :</span>
                     <input style="width: 100%;" name="name" type="text" class="form-control" value="{{edit.name}}" />
                   </label>
-
                   <label class="d-block mb-4">
                     <span class="form-label d-block">Mobile No :</span>
                     <input style="width: 100%;" name="mob_no" type="text" class="form-control" placeholder=""
                       value="{{edit.mob_no}}" />
                   </label>
-
                   <label class="d-block mb-4">
                     <span class="form-label d-block">Pin Code :</span>
                     <input style="width: 100%;" name="pincode" type="text" class="form-control" placeholder=""
                       value="{{edit.pincode}}" />
                   </label>
-
                   <label class="d-block mb-4">
                     <span class="form-label d-block">Address :</span>
                     <input style="width: 100%; height: 5rem;" name="address" type="text" class="form-control"
@@ -429,9 +431,6 @@ a{
           </div>
 
           {{/unless}}
-
-
-
           {{!--
           ************************************************************************************************************************
           --}}
@@ -441,20 +440,27 @@ a{
     </div>
   </div>
 
-  {{!--
-  <script>
-    function deleteAddress(id) {
-      if (confirm("Are you sure delete this address")) {
-        window.location.href = "/delete-address/" + id
-      }
-    }
-  </script> --}}
+ 
     <script src="/js/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
     crossorigin="anonymous"></script>
+<script>
+  <script>
+    function openSidebar() {
+            console.log('dfghjk')
+			document.getElementById('sidebar').style.left ="0px"
+			document.getElementById('hamsBurger').innerHTML = ''
 
+		}
+		function closeSidebar() {
+            console.log('8952784512')
+			document.getElementById('sidebar').style.left = "-1000px"
+			document.getElementById('hamsBurger').innerHTML = '<i  onclick="openSidebar()" class="fa fa-bars d-md-none">'
+		}
+  </script>
+</script>
 </body>
 
 </html>

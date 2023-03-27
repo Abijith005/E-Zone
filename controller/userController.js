@@ -365,6 +365,7 @@ module.exports = {
                         products.push(product)
                     })
                 }
+                products.userName=req.session.userDetails.name
                 res.render('orderHistory', { products })
             })
             .catch(() => {

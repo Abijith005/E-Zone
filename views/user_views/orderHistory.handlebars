@@ -12,11 +12,29 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
         crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/font-awesome.min.css" />
+    <link type="text/css" rel="stylesheet" href="/css/style.css" />
+
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="/js/productReview.js"></script>
-    <!------ Include the above in your HEAD tag ---------->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+      <script src="/js/jquery.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
     <style>
-        <style>@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+        #navigation{
+			padding-top: 10rem;
+		}
+		@media screen and (max-width: 414px) {
+  #navigation {
+    padding-top: 6rem;
+  }
+}
+
+        a {
+            text-decoration: none;
+        }
 
         .rating-box {
             padding: 25px 50px;
@@ -38,6 +56,13 @@
             gap: 25px;
         }
 
+        @media screen and (max-width: 414px) {
+    .rating-box .stars {
+        
+        gap: 10px;
+    }
+}
+
         .stars i {
             font-size: 35px;
             color: #b5b8b1;
@@ -49,7 +74,56 @@
             color: #ffb851;
             transform: scale(1.2);
         }
-    </style>
+
+        .dropdown-menu {
+            width: auto !important;
+            min-width: 100% !important;
+            right: 0 !important;
+            left: auto !important;
+        }
+
+        .sidebar {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            z-index: 200;
+            transition: .3s;
+            left: -1000px;
+        }
+
+        .sidebar-container {
+            background-color: #222222;
+            display: flex;
+            flex-direction: column;
+            width: 60%;
+            height: 100%;
+            gap: 10px;
+            padding: 10px;
+            justify-content: space-between;
+        }
+
+        .side-items {
+            height: 50px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            color: white;
+            background-color: #6a6a6a;
+            padding-left: 10px;
+            border-radius: 10px;
+        }
+
+        .side-sec-1 {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #header {
+            border-bottom: 3px solid red;
+        }
     </style>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
@@ -58,28 +132,63 @@
 </head>
 
 <body>
-
-
-
-
-    <div id="header">
+    <div id="header" style="position: fixed; top: 0; width: 100%; z-index:200;">
+        <!-- container -->
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-2">
-                    <div class="header-logo ">
-                        <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
-                        </h1>
+            <!-- row -->
+            <div class="row align-items-center text-center">
+                <!-- LOGO -->
+                <div class="col-md-6 col-12">
+                    <div class="header-logo d-flex justify-content-around">
+                        <a href="#" class="logo">
+                            <h1 class="font-weight-bold" style="color: #ffff;">E-<font color="#FFD523">Zone</font>
+                            </h1>
+                        </a>
+                        <h1 style="color: #ffff;" id="hamsBurger"><i onclick="openSidebar()"
+                                class="fa fa-bars d-md-none"></i></h1>
                     </div>
                 </div>
-                <div class="col-10 text-center">
-                    <h2 class="text-white">ORDER HISTORY</h2>
+                <div class=" col-md-6 d-none d-md-flex justify-content-end ms-auto align-items-center ">
+                    <div class="header-ctn">
+                        <div>
+                            <a href="/getShopPage">
+                                <i class="ri-shopping-bag-fill"></i> <span>Shop</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="/getWhishList">
+                                <i class="fa fa-heart-o"></i>
+                                <span>Your Wishlist</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="/cart" aria-expanded="true">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>Your Cart</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="dropdown ms-2">
+                        <button class="btn btn-secondary text-white dropdown-toggle" type="button"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">{{products.userName}}</button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="/user_profile">Profile</a>
+                            <a class="dropdown-item" href="/user_logOut">Log Out</a>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- /ACCOUNT -->
             </div>
+            <!-- row -->
         </div>
+        <!-- container -->
     </div>
 
+<div id="navigation">
     {{#each products}}
-    <section class="h-100 gradient-custom">
+    <section  class="h-100 gradient-custom">
         <div class="container py-2 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-lg-12 col-xl-12">
@@ -128,7 +237,8 @@
                                         <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
                                         <div class="row d-flex align-items-center">
                                             <div class="col-md-2">
-                                                <p class="text-muted mb-0 small text-center">Order Date: {{this.orderDate}}</p>
+                                                <p class="text-muted mb-0 small text-center">Order Date:
+                                                    {{this.orderDate}}</p>
                                             </div>
                                             <div class="col-md-10">
                                                 <div class="d-flex justify-content-around my-1 ">
@@ -137,17 +247,19 @@
                                                     {{#unless this.deliveryStatus}}
                                                     <p class="text-muted mt-1 mb-0 small ms-xl-5 "><a
                                                             href="/userOrderUpdate?order_id={{this.order_id}}&product_id={{this._id}}&quantity={{this.quantity}}"
-                                                            class="btn btn-danger rounded-pill my-auto">Cancel Order</a>
+                                                            class="btn btn-danger rounded-pill my-auto" style="font-size:.7rem">Cancel Order</a>
                                                     </p>
                                                     {{else}}
                                                     <a href="/userOrderUpdate?order_id={{this.order_id}}&returnAmount={{this.totalAmount}}&cond=return"
-                                                        class="btn btn-info rounded-pill my-auto">Return Product</a>
+                                                        class="btn btn-info my-auto" style="font-size:.7rem">Return </a>
                                                     {{#unless this.rating}}
-                                                    <div id="reviewButton{{this.order_id}}" >
-                                                    <button  type="button" class="btn btn-success" data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModal{{this.order_id}}">
-                                                        Rate Product
-                                                    </button>
+                                                    <div id="reviewButton{{this.order_id}}">
+                                                        <button type="button" class="btn btn-success"
+                                                         style="font-size:.7rem"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#exampleModal{{this.order_id}}">
+                                                            Rating
+                                                        </button>
                                                     </div>
 
                                                     <!-- Modal -->
@@ -157,12 +269,11 @@
                                                         <div class="modal-dialog modal-dialog-centered ">
                                                             <div class="modal-content ">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLabel">Modal
-                                                                        title</h5>
+                                                                    <h5 class="modal-title" id="exampleModalLabel">How was your experience??</h5>
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <div class="rating-box">
-                                                                        <h3>How was your experience?</h3>
+                                                                        <h3>Rate the Product?</h3>
                                                                         <div class="stars">
                                                                             <i class="fa-solid fa-star"
                                                                                 onclick="rating('1')"></i>
@@ -202,7 +313,32 @@
             </div>
     </section>
     {{/each}}
+</div>
+<div class="sidebar" id="sidebar">
+		<div class="sidebar-container">
+			<div class="side-sec-1">
+				<div class="p-1">
+					<h4 class="text-white"><i class="fa fa-bars me-3" onclick="closeSidebar()"></i><span>E-Zone</span>
+					</h4>
+				</div>
+				<a class="side-items" href="/getShopPage">
+									<i class="ri-shopping-bag-fill text-white"></i> <span class="text-white">Shop</span>
+								</a>
+				<a class="side-items" href="/getWhishList">
+						<i class="fa fa-heart-o"></i>
+						<span>Your Wishlist</span>
+					</a>
+				<a class="side-items" href="/cart">
+						<i class="fa fa-shopping-cart text-white"></i>
+						<span>Your Cart</span></a>
+				<a class="side-items" href="/user_profile"><i class="fa fa-user-o"></i><span >Profile</span></a>
+			</div>
+			<div class="side-sec-2">
+				<a href="/user_logOut" class="side-items"><i class="ri-logout-circle-r-line me-2"></i>Logout</a>
+			</div>
+		</div>
 
+	</div>
     <script>
         const stars = document.querySelectorAll('.stars i');
         const starsNone = document.querySelector('.rating-box');
@@ -230,11 +366,24 @@
             console.log(star, 'sub', orderId, productId)
             axios.get(`/productReview?product_id=${productId}&order_id=${orderId}&rating=${star}`).then(() => {
                 console.log('dfghjkl')
-                document.getElementById('reviewButton'+orderId)=''
+                document.getElementById('reviewButton' + orderId) = ''
             })
 
         }
+
+        function openSidebar() {
+            console.log('dfghjk')
+			document.getElementById('sidebar').style.left ="0px"
+			document.getElementById('hamsBurger').innerHTML = ''
+
+		}
+		function closeSidebar() {
+            console.log('8952784512')
+			document.getElementById('sidebar').style.left = "-1000px"
+			document.getElementById('hamsBurger').innerHTML = '<i  onclick="openSidebar()" class="fa fa-bars d-md-none">'
+		}
     </script>
+   
 </body>
 
 </html>//
