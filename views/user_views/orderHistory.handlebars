@@ -19,18 +19,20 @@
     <script src="/js/productReview.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-      <script src="/js/jquery.min.js"></script>
-	<script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
-        #navigation{
-			padding-top: 10rem;
-		}
-		@media screen and (max-width: 414px) {
-  #navigation {
-    padding-top: 6rem;
-  }
-}
+
+        #navigation {
+            padding-top: 10rem;
+        }
+
+        @media screen and (max-width: 414px) {
+            #navigation {
+                padding-top: 6rem;
+            }
+        }
 
         a {
             text-decoration: none;
@@ -57,11 +59,11 @@
         }
 
         @media screen and (max-width: 414px) {
-    .rating-box .stars {
-        
-        gap: 10px;
-    }
-}
+            .rating-box .stars {
+
+                gap: 10px;
+            }
+        }
 
         .stars i {
             font-size: 35px;
@@ -186,121 +188,128 @@
         <!-- container -->
     </div>
 
-<div id="navigation">
-    {{#each products}}
-    <section  class="h-100 gradient-custom">
-        <div class="container py-2 h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-lg-12 col-xl-12">
-                    <div class="card" style="border-radius: 10px; border-color: black;">
-                        <div class="card-body p-4 ">
+    <div id="navigation">
+        {{#each products}}
+        <section class="h-100 gradient-custom">
+            <div class="container py-2 h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-lg-12 col-xl-12">
+                        <div class="card" style="border-radius: 10px; border-color: black;">
                             <div class="card-body p-4 ">
-                                <div class="card shadow-0 border mb-4" style=" background-color: #E4E7ED ;">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-2 text-center">
-                                                <img src="/images/{{this.image.[0].filename}}" class="img-fluid"
-                                                    alt="Phone">
-                                                <p class="text-muted mb-0">{{this.product_name}}</p>
-                                            </div>
-                                            <div
-                                                class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                                <p class="text-muted mb-0 small">Brand: {{this.brandName}}</p>
-                                            </div>
-                                            <div
-                                                class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                                <p class="text-muted mb-0 small">Price ₹: {{this.price}} /-</p>
-                                            </div>
-                                            <div
-                                                class="col-md-1 text-center d-flex justify-content-center align-items-center">
-                                                <p class="text-muted mb-0 small">Quantity: {{this.quantity}}</p>
-                                            </div>
-                                            <div
-                                                class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                                <p class="text-muted mb-0 small">Total Amount ₹: {{this.totalAmount}} /-
-                                                </p>
-                                            </div>
-                                            {{#unless this.cancelStatus}}
-                                            <div
-                                                class="col-md-2 text-center d-flex justify-content-center align-items-center ">
-                                                <p class="text-muted my-auto">Order Status :</p>
-                                                <p class="text-primary my-auto"> {{this.orderStatus}}</p>
-                                            </div>
-                                            {{else}}
-                                            <div
-                                                class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                                <p class="text-muted my-auto">Order Status :</p>
-                                                <p class="text-danger my-auto">Cancelled</p>
-                                            </div>
-                                            {{/unless}}
-                                        </div>
-                                        <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
-                                        <div class="row d-flex align-items-center">
-                                            <div class="col-md-2">
-                                                <p class="text-muted mb-0 small text-center">Order Date:
-                                                    {{this.orderDate}}</p>
-                                            </div>
-                                            <div class="col-md-10">
-                                                <div class="d-flex justify-content-around my-1 ">
-                                                    <p class="text-muted mt-1 mb-0 small text-center ms-xl-5"></p>
-                                                    {{#unless this.cancelStatus}}
-                                                    {{#unless this.deliveryStatus}}
-                                                    <p class="text-muted mt-1 mb-0 small ms-xl-5 "><a
-                                                            href="/userOrderUpdate?order_id={{this.order_id}}&product_id={{this._id}}&quantity={{this.quantity}}"
-                                                            class="btn btn-danger rounded-pill my-auto" style="font-size:.7rem">Cancel Order</a>
+                                <div class="card-body p-4 ">
+                                    <div class="card shadow-0 border mb-4" style=" background-color: #E4E7ED ;">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-2 text-center">
+                                                    <img src="/images/{{this.image.[0].filename}}" class="img-fluid"
+                                                        alt="Phone">
+                                                    <p class="text-muted mb-0">{{this.product_name}}</p>
+                                                </div>
+                                                <div
+                                                    class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                    <p class="text-muted mb-0 small">Brand: {{this.brandName}}</p>
+                                                </div>
+                                                <div
+                                                    class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                    <p class="text-muted mb-0 small">Price ₹: {{this.price}} /-</p>
+                                                </div>
+                                                <div
+                                                    class="col-md-1 text-center d-flex justify-content-center align-items-center">
+                                                    <p class="text-muted mb-0 small">Quantity: {{this.quantity}}</p>
+                                                </div>
+                                                <div
+                                                    class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                    <p class="text-muted mb-0 small">Total Amount ₹:
+                                                        {{this.totalAmount}} /-
                                                     </p>
-                                                    {{else}}
-                                                    <a href="/userOrderUpdate?order_id={{this.order_id}}&returnAmount={{this.totalAmount}}&cond=return"
-                                                        class="btn btn-info my-auto" style="font-size:.7rem">Return </a>
-                                                    {{#unless this.rating}}
-                                                    <div id="reviewButton{{this.order_id}}">
-                                                        <button type="button" class="btn btn-success"
-                                                        style="font-size:.7rem"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#exampleModal{{this.order_id}}">
-                                                            Rating
-                                                        </button>
-                                                    </div>
+                                                </div>
+                                                {{#unless this.cancelStatus}}
+                                                <div
+                                                    class="col-md-2 text-center d-flex justify-content-center align-items-center ">
+                                                    <p class="text-muted my-auto">Order Status :</p>
+                                                    <p class="text-primary my-auto"> {{this.orderStatus}}</p>
+                                                </div>
+                                                {{else}}
+                                                <div
+                                                    class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                    <p class="text-muted my-auto">Order Status :</p>
+                                                    <p class="text-danger my-auto">Cancelled</p>
+                                                </div>
+                                                {{/unless}}
+                                            </div>
+                                            <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
+                                            <div class="row d-flex align-items-center">
+                                                <div class="col-md-2">
+                                                    <p class="text-muted mb-0 small text-center">Order Date:
+                                                        {{this.orderDate}}</p>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <div class="d-flex justify-content-around my-1 ">
+                                                        <p class="text-muted mt-1 mb-0 small text-center ms-xl-5"></p>
+                                                        {{#unless this.cancelStatus}}
+                                                        {{#unless this.deliveryStatus}}
+                                                        <p class="text-muted mt-1 mb-0 small ms-xl-5 "><a
+                                                                href="/userOrderUpdate?order_id={{this.order_id}}&product_id={{this._id}}&quantity={{this.quantity}}"
+                                                                class="btn btn-danger rounded-pill my-auto"
+                                                                style="font-size:.7rem">Cancel Order</a>
+                                                        </p>
+                                                        {{else}}
+                                                        {{#ifNotEquals this.orderStatus 'returned' }}
+                                                        <a href="/userOrderUpdate?order_id={{this.order_id}}&returnAmount={{this.totalAmount}}&cond=return"
+                                                            class="btn btn-info my-auto" style="font-size:.7rem">Return
+                                                        </a>
+                                                        {{/ifNotEquals}}
+                                                        {{#unless this.rating}}
+                                                        <div id="reviewButton{{this.order_id}}">
+                                                            <button type="button" class="btn btn-success"
+                                                                style="font-size:.7rem" data-bs-toggle="modal"
+                                                                data-bs-target="#exampleModal{{this.order_id}}">
+                                                                Rating
+                                                            </button>
+                                                        </div>
 
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="exampleModal{{this.order_id}}"
-                                                        tabindex="-1" aria-labelledby="exampleModalLabel"
-                                                        aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered ">
-                                                            <div class="modal-content ">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLabel">How was your experience??</h5>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="rating-box">
-                                                                        <h3>Rate the Product?</h3>
-                                                                        <div class="stars">
-                                                                            <i class="fa-solid fa-star"
-                                                                                onclick="rating('1')"></i>
-                                                                            <i class="fa-solid fa-star"
-                                                                                onclick="rating('2')"></i>
-                                                                            <i class="fa-solid fa-star"
-                                                                                onclick="rating('3')"></i>
-                                                                            <i class="fa-solid fa-star"
-                                                                                onclick="rating('4')"></i>
-                                                                            <i class="fa-solid fa-star"
-                                                                                onclick="rating('5')"></i>
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="exampleModal{{this.order_id}}"
+                                                            tabindex="-1" aria-labelledby="exampleModalLabel"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered ">
+                                                                <div class="modal-content ">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">
+                                                                            How was your experience??</h5>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="rating-box">
+                                                                            <h3>Rate the Product?</h3>
+                                                                            <div class="stars">
+                                                                                <i class="fa-solid fa-star"
+                                                                                    onclick="rating('1')"></i>
+                                                                                <i class="fa-solid fa-star"
+                                                                                    onclick="rating('2')"></i>
+                                                                                <i class="fa-solid fa-star"
+                                                                                    onclick="rating('3')"></i>
+                                                                                <i class="fa-solid fa-star"
+                                                                                    onclick="rating('4')"></i>
+                                                                                <i class="fa-solid fa-star"
+                                                                                    onclick="rating('5')"></i>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-bs-dismiss="modal">Close</button>
-                                                                    <button type="button"
-                                                                        onclick="submit('{{this.order_id}}','{{this._id}}')"
-                                                                        class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">Close</button>
+                                                                        <button type="button"
+                                                                            onclick="submit('{{this.order_id}}','{{this._id}}')"
+                                                                            class="btn btn-primary"
+                                                                            data-bs-dismiss="modal">Submit</button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        {{/unless}}
+                                                        {{/unless}}
+                                                        {{/unless}}
                                                     </div>
-                                                    {{/unless}}
-                                                    {{/unless}}
-                                                    {{/unless}}
                                                 </div>
                                             </div>
                                         </div>
@@ -310,35 +319,34 @@
                         </div>
                     </div>
                 </div>
+        </section>
+        {{/each}}
+    </div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-container">
+            <div class="side-sec-1">
+                <div class="p-1">
+                    <h4 class="text-white"><i class="fa fa-bars me-3" onclick="closeSidebar()"></i><span>E-Zone</span>
+                    </h4>
+                </div>
+                <a class="side-items" href="/getShopPage">
+                    <i class="ri-shopping-bag-fill text-white"></i> <span class="text-white">Shop</span>
+                </a>
+                <a class="side-items" href="/getWhishList">
+                    <i class="fa fa-heart-o"></i>
+                    <span>Your Wishlist</span>
+                </a>
+                <a class="side-items" href="/cart">
+                    <i class="fa fa-shopping-cart text-white"></i>
+                    <span>Your Cart</span></a>
+                <a class="side-items" href="/user_profile"><i class="fa fa-user-o"></i><span>Profile</span></a>
             </div>
-    </section>
-    {{/each}}
-</div>
-<div class="sidebar" id="sidebar">
-		<div class="sidebar-container">
-			<div class="side-sec-1">
-				<div class="p-1">
-					<h4 class="text-white"><i class="fa fa-bars me-3" onclick="closeSidebar()"></i><span>E-Zone</span>
-					</h4>
-				</div>
-				<a class="side-items" href="/getShopPage">
-									<i class="ri-shopping-bag-fill text-white"></i> <span class="text-white">Shop</span>
-								</a>
-				<a class="side-items" href="/getWhishList">
-						<i class="fa fa-heart-o"></i>
-						<span>Your Wishlist</span>
-					</a>
-				<a class="side-items" href="/cart">
-						<i class="fa fa-shopping-cart text-white"></i>
-						<span>Your Cart</span></a>
-				<a class="side-items" href="/user_profile"><i class="fa fa-user-o"></i><span >Profile</span></a>
-			</div>
-			<div class="side-sec-2">
-				<a href="/user_logOut" class="side-items"><i class="ri-logout-circle-r-line me-2"></i>Logout</a>
-			</div>
-		</div>
+            <div class="side-sec-2">
+                <a href="/user_logOut" class="side-items"><i class="ri-logout-circle-r-line me-2"></i>Logout</a>
+            </div>
+        </div>
 
-	</div>
+    </div>
     <script>
         const stars = document.querySelectorAll('.stars i');
         const starsNone = document.querySelector('.rating-box');
@@ -366,24 +374,24 @@
             console.log(star, 'sub', orderId, productId)
             axios.get(`/productReview?product_id=${productId}&order_id=${orderId}&rating=${star}`).then(() => {
                 console.log('dfghjkl')
-                document.getElementById('reviewButton' + orderId).innerHTML=''
+                document.getElementById('reviewButton' + orderId).innerHTML = ''
             })
 
         }
 
         function openSidebar() {
             console.log('dfghjk')
-			document.getElementById('sidebar').style.left ="0px"
-			document.getElementById('hamsBurger').innerHTML = ''
+            document.getElementById('sidebar').style.left = "0px"
+            document.getElementById('hamsBurger').innerHTML = ''
 
-		}
-		function closeSidebar() {
+        }
+        function closeSidebar() {
             console.log('8952784512')
-			document.getElementById('sidebar').style.left = "-1000px"
-			document.getElementById('hamsBurger').innerHTML = '<i  onclick="openSidebar()" class="fa fa-bars d-md-none">'
-		}
+            document.getElementById('sidebar').style.left = "-1000px"
+            document.getElementById('hamsBurger').innerHTML = '<i  onclick="openSidebar()" class="fa fa-bars d-md-none">'
+        }
     </script>
-   
+
 </body>
 
 </html>//
