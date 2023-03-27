@@ -374,7 +374,6 @@ module.exports = {
     },
 
     productReview: async (req, res) => {
-        console.log(req.query,'sdfghjkl');
         let id = req.query.product_id
         let product = await productModel.findOne({_id:id}).lean()
         product={...product,

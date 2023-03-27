@@ -332,7 +332,6 @@ module.exports = {
                 }
             }
             result.rating=rating
-            console.log(result,'sdfghnm');
             res.render('singleProductDetails', { result })
         }).catch(() => {
             res.render('404')

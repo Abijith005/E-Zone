@@ -255,7 +255,7 @@
                                                     {{#unless this.rating}}
                                                     <div id="reviewButton{{this.order_id}}">
                                                         <button type="button" class="btn btn-success"
-                                                         style="font-size:.7rem"
+                                                        style="font-size:.7rem"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#exampleModal{{this.order_id}}">
                                                             Rating
@@ -293,7 +293,7 @@
                                                                         data-bs-dismiss="modal">Close</button>
                                                                     <button type="button"
                                                                         onclick="submit('{{this.order_id}}','{{this._id}}')"
-                                                                        class="btn btn-primary">Submit</button>
+                                                                        class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -366,7 +366,7 @@
             console.log(star, 'sub', orderId, productId)
             axios.get(`/productReview?product_id=${productId}&order_id=${orderId}&rating=${star}`).then(() => {
                 console.log('dfghjkl')
-                document.getElementById('reviewButton' + orderId) = ''
+                document.getElementById('reviewButton' + orderId).innerHTML=''
             })
 
         }
