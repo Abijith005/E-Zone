@@ -650,9 +650,7 @@
 					</div>
 				</div>
 			</div>
-			<!-- /container -->
 		</div>
-		<!-- /bottom footer -->
 	</footer>
 	<div class="sidebar" id="sidebar">
 		<div class="sidebar-container">
@@ -673,10 +671,15 @@
 						<span>Your Cart</span></a>
 				<a class="side-items" href="/user_profile"><i class="fa fa-user-o"></i><span >Profile</span></a>
 			</div>
+			{{#if userName}}
 			<div class="side-sec-2">
 				<a href="/user_logOut" class="side-items"><i class="ri-logout-circle-r-line me-2"></i>Logout</a>
-
 			</div>
+			{{else}}
+			<div class="side-sec-2">
+				<a href="/user_login" class="side-items"><i class="ri-logout-circle-r-line me-2"></i>Login</a>
+			</div>
+			{{/if}}
 		</div>
 
 	</div>

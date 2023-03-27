@@ -27,6 +27,16 @@
 
 	<!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="/css/style.css" />
+	<style>
+		#navigation{
+			padding-top: 10rem;
+		}
+		@media screen and (max-width: 414px) {
+  #navigation {
+    padding-top: 20rem;
+  }
+}
+	</style>
 
 </head>
 
@@ -37,7 +47,7 @@
 		<!-- /TOP HEADER -->
 
 		<!-- MAIN HEADER -->
-		<div id="header">
+		<div id="header" style="position: fixed; top: 0; width: 100%; z-index:200;">
 			<!-- container -->
 			<div class="container">
 				<!-- row -->
@@ -120,12 +130,12 @@
 							<!-- /Cart -->
 
 							<!-- Menu Toogle -->
-							<div class="menu-toggle">
+							{{!-- <div class="menu-toggle">
 								<a href="#">
 									<i class="fa fa-bars"></i>
 									<span>Menu</span>
 								</a>
-							</div>
+							</div> --}}
 							<!-- /Menu Toogle -->
 
 						</div>
@@ -445,7 +455,6 @@ ${a}
 
 		function addToCart(id) {
 			axios.get('/add_to_cart/' + id).then((result) => {
-				console.log(result)
 				if (result.data.login) {
 					if (result.data.success) {
 						let cartQuantiy = document.getElementById('cartQuantity')

@@ -174,7 +174,7 @@ module.exports = {
             req.session.invalid_otp = false
         }
         else
-            res.render('signup_OTP')
+            res.render('signup_otp')
 
 
 

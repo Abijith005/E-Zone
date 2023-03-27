@@ -13,7 +13,24 @@
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/imageZoom.css">
     <link rel="stylesheet" href="/css/singleProduct.css">
-    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        /* Default styles for the image */
+        .show img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Styles for the image when the screen width is less than or equal to 768px */
+        @media screen and (max-width: 768px) {
+            .show img {
+                max-width: 50%;
+                max-height: 50%;
+                height: auto;
+            }
+        }
+    </style>
+
 </head>
 
 <body>
@@ -66,15 +83,37 @@
                         <p class="product-description">{{result.product_Details}}</p>
                         <h4 class="price">current price: <span>₹ {{result.price}}</span></h4>
                         <div class="action">
-                            <a href="/add_to_cart/{{result._id}}" class="add-to-cart btn btn-default">add to cart</a>
-                            <button class="like btn btn-default" type="button"><span
-                                    class="fa fa-heart"></span></button>
+                            <a onclick="addToCart('{{result._id}}')" class="add-to-cart btn btn-default">add to cart</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="sweetalert2.all.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function addToCart(id) {
+            axios.get('/add_to_cart/' + id).then((result) => {
+                if (result.data.login) {
+                    if (result.data.success) {
+                        swal.fire({ title: "Product added to cart!!", icon: "success", showConfirmButton: false, timer: 1100 })
+                    }
+                    else {
+                        if (!result.data.stock) {
+                            swal.fire({ title: "Can't Add To Cart!!  Stock Out", icon: "error", showConfirmButton: false, timer: 1100 })
+                        } else {
+                            swal.fire({ title: "Can't Add More!!", icon: "error", showConfirmButton: false, timer: 1100 })
+                        }
+                    }
+                } else {
+                    window.location.href = '/user_login'
+                }
+
+
+            })
+        }
+    </script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT"
         crossorigin="anonymous"></script>
