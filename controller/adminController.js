@@ -40,18 +40,23 @@ module.exports = {
         let totalProduct = await productModel.countDocuments()
         let totalUsers = await userModel.countDocuments()
         let totalRevenue = 0
-        let monthlyRevenue = product.map(item => {
+        let revenue = product.map(item => {
             totalRevenue = Number(totalRevenue) + Number(item.revenue, totalOrder)
-            return item.revenue
+            return {revenue:item.revenue,month:item._id.month}
         })
         let total = 0
-        monthlyRevenue.forEach(item => {
-            total = Number(total) + Number(item)
+        revenue.forEach(item => {
+            total = Number(total) + Number(item.revenue)
         })
-        for (let i = monthlyRevenue.length; i <= 12; i++) {
-            monthlyRevenue.push(0)
+        const monthlyRevenue=[]
+        for (let i = 1; i <= 12; i++) {
+           const month=revenue.find(e=>e.month==i)
+            if (month) {
+                monthlyRevenue.push(month.revenue)
+            } else {
+                monthlyRevenue.push(0)
+            }
         }
-
         let totalStatus = {
             totalRevenue:Math.ceil(total),
             totalOrder: totalOrder[0]?.count ?? 0,

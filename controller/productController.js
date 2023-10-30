@@ -230,32 +230,34 @@ module.exports = {
                 let value;
                 req.body.cond == 1 ? value = 1 : value = -1
                 if (result.stockQuantity > 0 || value == -1) {
-                    if (value == -1 && req.body.quantity > 1) {
+                    if (value == -1) {
                         console.log(req.body.quantity,'dec');
-                        userModel.updateOne({ _id: req.session.userDetails._id, user_cart: { $elemMatch: { id: req.body.id } } }, { $inc: { 'user_cart.$.quantity': value } }).then(() => {
-                            productModel.updateOne({ _id: req.body.id }, { $inc: { stockQuantity: 1 } }).then(() => {
-                                userService.cartProductDatas(req.session.userDetails._id).then((result) => {
-                                    res.json({ totalAmount:result.totalAmount, success: true })
+                        userModel.updateOne({ _id: req.session.userDetails._id, user_cart: { $elemMatch: {$and:[{id: req.body.id},{quantity:{$gt:1}}] } } }, { $inc: { 'user_cart.$.quantity': value } }).then((result) => {
+                            console.log(result);
+                            if (result.modifiedCount) {
+                                productModel.updateOne({ _id: req.body.id }, { $inc: { stockQuantity: 1 } }).then(() => {
+                                    userService.cartProductDatas(req.session.userDetails._id).then((result) => {
+                                        res.json({ totalAmount:result.totalAmount, success: true })
+                                    })
                                 })
-                            })
-                        })
-                    }
-                    else if (value == 1 && req.body.quantity < 10) {
-                        console.log(req.body.quantity,'inc');
-                        userModel.updateOne({ _id: req.session.userDetails._id, user_cart: { $elemMatch: { id: req.body.id } } }, { $inc: { 'user_cart.$.quantity': value } }).then(() => {
-                            productModel.updateOne({ _id: req.body.id }, { $inc: { stockQuantity: -1 } }).then((result) => {
-                                userService.cartProductDatas(req.session.userDetails._id).then((result) => {
-                                    res.json({ totalAmount: result.totalAmount, success: true })
-                                })
-                            })
+                            } else {
+                                res.json({ message: 'Reached limit,cant remove more' })
+                            }
                         })
                     }
                     else {
-                        if (value == 1) {
-                            res.json({ message: 'Reached limit,cant add more' })
-                        } else {
-                            res.json({ message: 'Reached limit,cant remove more' })
-                        }
+                        console.log(req.body.quantity,'inc');
+                        userModel.updateOne({ _id: req.session.userDetails._id, user_cart: { $elemMatch: {$and:[{id: req.body.id},{quantity:{$lte:9}}] } } }, { $inc: { 'user_cart.$.quantity': value } }).then((result) => {
+                            if (result.modifiedCount) {
+                                productModel.updateOne({ _id: req.body.id }, { $inc: { stockQuantity: -1 } }).then(() => {
+                                    userService.cartProductDatas(req.session.userDetails._id).then((result) => {
+                                        res.json({ totalAmount: result.totalAmount, success: true })
+                                    })
+                                })
+                            } else {
+                                res.json({ message: 'Reached limit,cant add more' })
+                            }
+                        })
                     }
                 }
                 else {

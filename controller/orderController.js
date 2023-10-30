@@ -217,7 +217,9 @@ module.exports = {
 
     userOrderUpdate: (req, res) => {
         if (req.query.cond == 'return') {
-            userModel.updateOne({ _id: req.session.userDetails._id, orders: { $elemMatch: { order_id: req.query.order_id } } }, { $set: { 'orders.$.orderStatus': 'returned', returnDate: new Date() }, $inc: { wallet: req.query.returnAmount }, $push: { walletHistory: { amount: req.query.returnAmount, transactionType: 'credit', transactionDate: new Date(),  orderId: req.query.order_id } } }).then(() => {
+            const date=new Date(new Date().setDate(new Date().getDate()-14))
+            userModel.updateOne({ _id: req.session.userDetails._id, orders: { $elemMatch: {$and:[{order_id: req.query.order_id},{orderDate:{$gte:date}}] } } }, { $set: { 'orders.$.orderStatus': 'returned', returnDate: new Date() }, $inc: { wallet: req.query.returnAmount }, $push: { walletHistory: { amount: req.query.returnAmount, transactionType: 'credit', transactionDate: new Date(),  orderId: req.query.order_id } } }).then((result) => {
+                console.log(result);
                 res.redirect('/orderHistory')
             })
         } else {
@@ -228,7 +230,7 @@ module.exports = {
             }).catch(() => {
                 res.render('404')
             })
-        }
+        }   
     },
 
     couponApply: (req, res) => {

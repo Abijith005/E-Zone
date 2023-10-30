@@ -258,7 +258,7 @@
                                                         <a href="/userOrderUpdate?order_id={{this.order_id}}&returnAmount={{this.totalAmount}}&cond=return"
                                                             class="btn btn-info my-auto" style="font-size:.7rem">Return
                                                         </a>
-                                                        {{/ifNotEquals}}
+                                                        
                                                         {{#unless this.rating}}
                                                         <div id="reviewButton{{this.order_id}}">
                                                             <button type="button" class="btn btn-success"
@@ -307,6 +307,7 @@
                                                             </div>
                                                         </div>
                                                         {{/unless}}
+                                                        {{/ifNotEquals}}
                                                         {{/unless}}
                                                         {{/unless}}
                                                     </div>

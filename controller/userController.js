@@ -96,7 +96,7 @@ module.exports = {
         res.redirect('/')
     },
 
-
+  
 
 
     user_signUp: (req, res) => {

@@ -10,6 +10,7 @@ const session = require('express-session');
 const dbConnect = require('./config/connection');
 const moment=require('moment')
 const uniqueid=require('uniqid')
+const logger=require('morgan')
 
 app.use((req,res,next)=>{
       res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
@@ -27,6 +28,7 @@ app.use(session({
     resave:true
 }))
 
+app.use(logger('dev'))
 // hbs helper
 let hbs = require('handlebars');
 
